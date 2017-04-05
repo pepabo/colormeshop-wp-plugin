@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  wordpress:
+    image: wordpress:php7.0
+    ports:
+      - 8080:80
+    env_file: wp.env
+    volumes:
+      - .:/var/www/html/wp-content/plugins/colormeshop-wp-plugin
+
+  mysql:
+    image: mariadb
+    env_file: wp.env
