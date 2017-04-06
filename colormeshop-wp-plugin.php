@@ -102,8 +102,16 @@ class Colormeshop_wp_plugin {
 		return $content;
 	}
 
+        public function fetch_shop() {
+		$url      = "https://api.shop-pro.jp/v1/shop.json";
+		$response = wp_remote_get( $url, array( 'headers' => array( 'Authorization' => "Bearer " . $this->token ) ) );
+		$content  = json_decode( $response["body"] );
+
+		return $content->shop;
+        }
+
 	public function show_cart_button( $atts, $content = null ) {
-		return "<script type='text/javascript' src='http://" . $this->url . "/?mode=cartjs&pid=" . $this->target_id . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
+		return "<script type='text/javascript' src='" . $this->fetch_shop()->url . "/?mode=cartjs&pid=" . $this->target_id . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
 	}
 
 	public function show_authentication_link( $attr, $content = null ) {
