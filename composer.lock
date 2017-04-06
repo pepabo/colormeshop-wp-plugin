@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a1af73a43c4dd078ed904e92e928fe5",
+    "content-hash": "e888afbf59b85416fcfc417692cd2320",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -305,12 +305,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pepabo/oauth2-colormeshop.git",
-                "reference": "f8349cd1a6d2306258a06f479422ba8061aa6e4d"
+                "reference": "83d73476ac58b18b3e4a5fd445cac1272f78bd6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pepabo/oauth2-colormeshop/zipball/f8349cd1a6d2306258a06f479422ba8061aa6e4d",
-                "reference": "f8349cd1a6d2306258a06f479422ba8061aa6e4d",
+                "url": "https://api.github.com/repos/pepabo/oauth2-colormeshop/zipball/83d73476ac58b18b3e4a5fd445cac1272f78bd6c",
+                "reference": "83d73476ac58b18b3e4a5fd445cac1272f78bd6c",
                 "shasum": ""
             },
             "require": {
@@ -318,19 +318,15 @@
             },
             "require-dev": {
                 "mockery/mockery": "*",
-                "phpunit/phpunit": "*"
+                "phpunit/phpunit": "^5.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Ackintosh\\OAuth2\\Client\\": "src/"
+                    "Pepabo\\OAuth2\\Client\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Ackintosh\\OAuth2\\Client\\Test\\": "test/src/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -350,11 +346,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "support": {
-                "source": "https://github.com/pepabo/oauth2-colormeshop/tree/master",
-                "issues": "https://github.com/pepabo/oauth2-colormeshop/issues"
-            },
-            "time": "2017-04-05 05:44:24"
+            "time": "2017-04-06 07:24:31"
         },
         {
             "name": "psr/http-message",

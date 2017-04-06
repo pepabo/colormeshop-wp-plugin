@@ -44,7 +44,7 @@ class Colormeshop_wp_plugin {
 	}
 
 	public function colormeshop_callback() {
-		$provider         = new \Ackintosh\OAuth2\Client\Provider\ColorMeShop( [
+		$provider         = new \Pepabo\OAuth2\Client\Provider\ColorMeShop( [
 			'clientId'     => $this->client_id,
 			'clientSecret' => $this->client_secret,
 			'redirectUri'  => admin_url( 'admin-ajax.php?action=colormeshop_callback' ),
@@ -107,7 +107,7 @@ class Colormeshop_wp_plugin {
 	}
 
 	public function show_authentication_link( $attr, $content = null ) {
-		$provider = new \Ackintosh\OAuth2\Client\Provider\ColorMeShop( [
+		$provider = new \Pepabo\OAuth2\Client\Provider\ColorMeShop( [
 			'clientId'     => $this->client_id,
 			'clientSecret' => $this->client_secret,
 			'redirectUri'  => admin_url( 'admin-ajax.php?action=colormeshop_callback' ),

@@ -6,12 +6,6 @@
       "email": "kenichi.taka@gmail.com"
     }
   ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/pepabo/oauth2-colormeshop"
-    }
-  ],
   "require": {
     "pepabo/oauth2-colormeshop": "dev-master"
   }
