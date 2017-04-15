@@ -1,2 +1,4 @@
 vendor
 wp.env
+composer.phar
+.idea
