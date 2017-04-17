@@ -111,7 +111,12 @@ class Colormeshop_wp_plugin {
         }
 
 	public function show_cart_button( $atts, $content = null ) {
-		return "<script type='text/javascript' src='" . $this->fetch_shop()->url . "/?mode=cartjs&pid=" . $this->target_id . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
+		$filteredAtts = shortcode_atts(
+			array( 'product_id' => $this->target_id ),
+			$atts
+		);
+
+		return "<script type='text/javascript' src='" . $this->fetch_shop()->url . "/?mode=cartjs&pid=" . $filteredAtts['product_id'] . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
 	}
 
 	public function show_authentication_link( $attr, $content = null ) {
