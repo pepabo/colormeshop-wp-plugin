@@ -83,15 +83,15 @@ class Colormeshop_wp_plugin {
 	}
 
 	public function front_controller() {
-		global $wp_query;
-		if ( isset( $wp_query->query_vars['colorme_item'] ) ) {
-			$this->target_id = $wp_query->query_vars['colorme_item'];
-			do_action( 'colormeshop_item' );
-		}
+		do_action( 'colormeshop_item' );
 	}
 
 	public function show_product() {
-		$response = $this->fetch_product( $this->target_id );
+		if (!$target_id = $this->container['target_id']) {
+			return;
+		}
+
+		$response = $this->fetch_product( $target_id );
 
 		if ( $response->product ) {
 			$product = $response->product;
@@ -113,7 +113,7 @@ class Colormeshop_wp_plugin {
 
 	public function show_cart_button( $atts, $content = null ) {
 		$filteredAtts = shortcode_atts(
-			array( 'product_id' => $this->target_id ),
+			array( 'product_id' => $this->container['target_id'] ),
 			$atts
 		);
 
@@ -200,6 +200,11 @@ class Colormeshop_wp_plugin {
 		$container['token'] = $container->factory(function ($c) {
 			$options = get_option( 'colorme_wp_settings' );
 			return array_key_exists( 'token', $options ) ? $options['token'] : '';
+		});
+
+		$container['target_id'] = $container->factory(function ($c) {
+			global $wp_query;
+			return isset( $wp_query->query_vars['colorme_item'] ) ? $wp_query->query_vars['colorme_item'] : null;
 		});
 
 		$container['model.shop'] = function ($c) {
