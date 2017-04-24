@@ -11,13 +11,23 @@
 
 require_once( "vendor/autoload.php" );
 
+use Pimple\Container;
+
 class Colormeshop_wp_plugin {
 	private $token;
 	private $client_id;
 	private $client_secret;
 	private $target_id;
 
+	/**
+     * DI コンテナ
+	 *
+	 * @var Pimple\Container
+	 */
+	private $container;
+
 	public function __construct() {
+		$this->initializeContainer();
 		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
 		add_action( 'admin_init', array( $this, 'page_init' ) );
 
@@ -37,7 +47,6 @@ class Colormeshop_wp_plugin {
 		$options = get_option( 'colorme_wp_settings' );
 
 		if ( $options ) {
-			$this->token         = array_key_exists( 'token', $options ) ? $options['token'] : '';
 			$this->client_id     = array_key_exists( 'client_id', $options ) ? $options['client_id'] : '';
 			$this->client_secret = array_key_exists( 'client_secret', $options ) ? $options['client_secret'] : '';
 		}
@@ -50,9 +59,8 @@ class Colormeshop_wp_plugin {
 			'redirectUri'  => admin_url( 'admin-ajax.php?action=colormeshop_callback' ),
 		] );
 		$access_token     = $provider->getAccessToken( 'authorization_code', [ 'code' => $_GET['code'] ] );
-		$this->token      = $access_token->getToken();
 		$options          = get_option( 'colorme_wp_settings' );
-		$options['token'] = $this->token;
+		$options['token'] = $access_token->getToken();
 		update_option( "colorme_wp_settings", $options, true );
 
 		header( "Location: " . admin_url( '?page=colorme_wp_settings' ), true );
@@ -96,7 +104,7 @@ class Colormeshop_wp_plugin {
 
 	public function fetch_product( $id ) {
 		$url      = "https://api.shop-pro.jp/v1/products/$id.json";
-		$response = wp_remote_get( $url, array( 'headers' => array( 'Authorization' => "Bearer " . $this->token ) ) );
+		$response = wp_remote_get( $url, array( 'headers' => array( 'Authorization' => "Bearer " . $this->container['token'] ) ) );
 		$content  = json_decode( $response["body"] );
 
 		return $content;
@@ -104,7 +112,7 @@ class Colormeshop_wp_plugin {
 
         public function fetch_shop() {
 		$url      = "https://api.shop-pro.jp/v1/shop.json";
-		$response = wp_remote_get( $url, array( 'headers' => array( 'Authorization' => "Bearer " . $this->token ) ) );
+		$response = wp_remote_get( $url, array( 'headers' => array( 'Authorization' => "Bearer " . $this->container['token'] ) ) );
 		$content  = json_decode( $response["body"] );
 
 		return $content->shop;
@@ -164,7 +172,7 @@ class Colormeshop_wp_plugin {
 
 	public function token_setting_callback() {
 		?>
-        <input type="text" id="message" name="colorme_wp_settings[token]" value="<?php esc_attr_e( $this->token ) ?>"/>
+        <input type="text" id="message" name="colorme_wp_settings[token]" value="<?php esc_attr_e( $this->container['token'] ) ?>"/>
         <br/>
 		<?php
 
@@ -188,6 +196,20 @@ class Colormeshop_wp_plugin {
 
 	public function settings_sanitize( $inputs ) {
 		return $inputs;
+	}
+
+	/**
+	 * @return void
+	 */
+	private function initializeContainer()
+	{
+		$container = new Container();
+		$container['token'] = $container->factory(function ($c) {
+			$options = get_option( 'colorme_wp_settings' );
+			return array_key_exists( 'token', $options ) ? $options['token'] : '';
+		});
+
+		$this->container = $container;
 	}
 }
 
