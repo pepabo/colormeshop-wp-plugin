@@ -15,10 +15,8 @@ use ColormeShop\Model\Shop;
 use Pimple\Container;
 
 class Colormeshop_wp_plugin {
-	private $token;
 	private $client_id;
 	private $client_secret;
-	private $target_id;
 
 	/**
      * DI コンテナ
