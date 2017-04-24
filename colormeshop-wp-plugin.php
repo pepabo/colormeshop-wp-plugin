@@ -11,6 +11,7 @@
 
 require_once( "vendor/autoload.php" );
 
+use ColormeShop\Model\Shop;
 use Pimple\Container;
 
 class Colormeshop_wp_plugin {
@@ -110,21 +111,13 @@ class Colormeshop_wp_plugin {
 		return $content;
 	}
 
-        public function fetch_shop() {
-		$url      = "https://api.shop-pro.jp/v1/shop.json";
-		$response = wp_remote_get( $url, array( 'headers' => array( 'Authorization' => "Bearer " . $this->container['token'] ) ) );
-		$content  = json_decode( $response["body"] );
-
-		return $content->shop;
-        }
-
 	public function show_cart_button( $atts, $content = null ) {
 		$filteredAtts = shortcode_atts(
 			array( 'product_id' => $this->target_id ),
 			$atts
 		);
 
-		return "<script type='text/javascript' src='" . $this->fetch_shop()->url . "/?mode=cartjs&pid=" . $filteredAtts['product_id'] . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
+		return "<script type='text/javascript' src='" . $this->container['model.shop']->fetch()->url . "/?mode=cartjs&pid=" . $filteredAtts['product_id'] . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
 	}
 
 	public function show_authentication_link( $attr, $content = null ) {
@@ -208,6 +201,10 @@ class Colormeshop_wp_plugin {
 			$options = get_option( 'colorme_wp_settings' );
 			return array_key_exists( 'token', $options ) ? $options['token'] : '';
 		});
+
+		$container['model.shop'] = function ($c) {
+			return new Shop($c['token']);
+		};
 
 		$this->container = $container;
 	}
