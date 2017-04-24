@@ -7,6 +7,7 @@
     }
   ],
   "require": {
-    "pepabo/oauth2-colormeshop": "dev-master"
+    "pepabo/oauth2-colormeshop": "dev-master",
+    "pimple/pimple": "~3.0"
   }
 }
