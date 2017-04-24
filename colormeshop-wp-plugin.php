@@ -27,8 +27,8 @@ class Colormeshop_wp_plugin {
 	private $container;
 
 	public function __construct() {
-		$this->initializeContainer();
-		$this->registerShorcode();
+		$this->initialize_container();
+		$this->register_shortcode();
 
 		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
 		add_action( 'admin_init', array( $this, 'page_init' ) );
@@ -185,7 +185,7 @@ class Colormeshop_wp_plugin {
 	/**
 	 * @return void
 	 */
-	private function initializeContainer()
+	private function initialize_container()
 	{
 		$container = new Container();
 		$container['token'] = $container->factory(function ($c) {
@@ -210,7 +210,7 @@ class Colormeshop_wp_plugin {
 	 *
 	 * @return void
 	 */
-	private function registerShorcode()
+	private function register_shortcode()
 	{
 		$extractRelativePath = function ($absolutePath) {
 			return str_replace(__DIR__ . '/src/', '', $absolutePath);
