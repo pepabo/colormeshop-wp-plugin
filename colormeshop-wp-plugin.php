@@ -12,6 +12,7 @@
 require_once( "vendor/autoload.php" );
 
 use ColormeShop\Model\Shop;
+use ColormeShop\ShortcodeInvoker;
 use Pimple\Container;
 
 class Colormeshop_wp_plugin {
@@ -27,6 +28,8 @@ class Colormeshop_wp_plugin {
 
 	public function __construct() {
 		$this->initializeContainer();
+		$this->registerShorcode();
+
 		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
 		add_action( 'admin_init', array( $this, 'page_init' ) );
 
@@ -36,7 +39,6 @@ class Colormeshop_wp_plugin {
 		add_action( 'template_redirect', array( $this, 'front_controller' ) );
 		add_action( 'colormeshop_item', array( $this, 'show_product' ) );
 		add_action( 'colormeshop_category', array( $this, 'show_category' ) );
-		add_shortcode( 'cart_button', array( $this, 'show_cart_button' ) );
 		add_shortcode( 'authentication_link', array( $this, 'show_authentication_link' ) );
 
 		add_action( 'wp_ajax_colormeshop_callback', array( $this, 'colormeshop_callback' ) );
@@ -107,15 +109,6 @@ class Colormeshop_wp_plugin {
 		$content  = json_decode( $response["body"] );
 
 		return $content;
-	}
-
-	public function show_cart_button( $atts, $content = null ) {
-		$filteredAtts = shortcode_atts(
-			array( 'product_id' => $this->container['target_id'] ),
-			$atts
-		);
-
-		return "<script type='text/javascript' src='" . $this->container['model.shop']->fetch()->url . "/?mode=cartjs&pid=" . $filteredAtts['product_id'] . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
 	}
 
 	public function show_authentication_link( $attr, $content = null ) {
@@ -210,6 +203,42 @@ class Colormeshop_wp_plugin {
 		};
 
 		$this->container = $container;
+	}
+
+	/**
+	 * src/Shortcode 配下に定義されたショートコードを登録する
+	 *
+	 * @return void
+	 */
+	private function registerShorcode()
+	{
+		$extractRelativePath = function ($absolutePath) {
+			return str_replace(__DIR__ . '/src/', '', $absolutePath);
+		};
+		$stripExtension = function ($path) {
+			return str_replace('.php', '', $path);
+		};
+		$convertPathnameToInvokerMethodname = function ($path) use ($extractRelativePath, $stripExtension) {
+			return '_Colormeshop_' . str_replace('/', '_', $stripExtension($extractRelativePath($path)));
+		};
+		$convertClassnameToInvokerMethodname = function ($path) use ($extractRelativePath, $stripExtension) {
+			return '\Colormeshop\\' . str_replace('/', '\\', $stripExtension($extractRelativePath($path)));
+		};
+
+		$shortcodeInvoker = new ShortcodeInvoker($this->container);
+
+		$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__ . '/src/Shortcode'));
+		foreach ($iterator as $i) {
+			if ($i->getExtension() !== 'php') {
+				continue;
+			}
+			require_once($i->getPathname());
+			$classname = $convertClassnameToInvokerMethodname($i->getPathname());
+			add_shortcode(
+				call_user_func(array($classname, 'name' )),
+				array($shortcodeInvoker, $convertPathnameToInvokerMethodname($i->getPathname()))
+			);
+		}
 	}
 }
 
