@@ -212,20 +212,20 @@ class Colormeshop_wp_plugin {
 	 */
 	private function register_shortcode()
 	{
-		$extractRelativePath = function ($absolutePath) {
-			return str_replace(__DIR__ . '/src/', '', $absolutePath);
+		$extract_relative_path = function ($absolute_path) {
+			return str_replace(__DIR__ . '/src/', '', $absolute_path);
 		};
-		$stripExtension = function ($path) {
+		$strip_extension = function ($path) {
 			return str_replace('.php', '', $path);
 		};
-		$convertPathnameToInvokerMethodname = function ($path) use ($extractRelativePath, $stripExtension) {
-			return '_Colormeshop_' . str_replace('/', '_', $stripExtension($extractRelativePath($path)));
+		$convert_pathname_to_invoker_methodname = function ($path) use ($extract_relative_path, $strip_extension) {
+			return '_Colormeshop_' . str_replace('/', '_', $strip_extension($extract_relative_path($path)));
 		};
-		$convertClassnameToInvokerMethodname = function ($path) use ($extractRelativePath, $stripExtension) {
-			return '\Colormeshop\\' . str_replace('/', '\\', $stripExtension($extractRelativePath($path)));
+		$convert_classname_to_invoker_methodname = function ($path) use ($extract_relative_path, $strip_extension) {
+			return '\Colormeshop\\' . str_replace('/', '\\', $strip_extension($extract_relative_path($path)));
 		};
 
-		$shortcodeInvoker = new ShortcodeInvoker($this->container);
+		$shortcode_invoker = new ShortcodeInvoker($this->container);
 
 		$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__ . '/src/Shortcode'));
 		foreach ($iterator as $i) {
@@ -233,10 +233,10 @@ class Colormeshop_wp_plugin {
 				continue;
 			}
 			require_once($i->getPathname());
-			$classname = $convertClassnameToInvokerMethodname($i->getPathname());
+			$classname = $convert_classname_to_invoker_methodname($i->getPathname());
 			add_shortcode(
 				call_user_func(array($classname, 'name' )),
-				array($shortcodeInvoker, $convertPathnameToInvokerMethodname($i->getPathname()))
+				array($shortcode_invoker, $convert_pathname_to_invoker_methodname($i->getPathname()))
 			);
 		}
 	}
