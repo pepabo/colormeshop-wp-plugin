@@ -233,9 +233,8 @@ class Colormeshop_wp_plugin {
 				continue;
 			}
 			require_once($i->getPathname());
-			$classname = $to_shortcode_classname($i->getPathname());
 			add_shortcode(
-				call_user_func(array($classname, 'name' )),
+				call_user_func(array($to_shortcode_classname($i->getPathname()), 'name' )),
 				array($shortcode_invoker, $to_invoker_methodname($i->getPathname()))
 			);
 		}
