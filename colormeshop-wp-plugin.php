@@ -221,7 +221,7 @@ class Colormeshop_wp_plugin {
 		$convert_pathname_to_invoker_methodname = function ($path) use ($extract_relative_path, $strip_extension) {
 			return '_Colormeshop_' . str_replace('/', '_', $strip_extension($extract_relative_path($path)));
 		};
-		$convert_classname_to_invoker_methodname = function ($path) use ($extract_relative_path, $strip_extension) {
+		$convert_pathname_to_shortcode_classname = function ($path) use ($extract_relative_path, $strip_extension) {
 			return '\Colormeshop\\' . str_replace('/', '\\', $strip_extension($extract_relative_path($path)));
 		};
 
@@ -233,7 +233,7 @@ class Colormeshop_wp_plugin {
 				continue;
 			}
 			require_once($i->getPathname());
-			$classname = $convert_classname_to_invoker_methodname($i->getPathname());
+			$classname = $convert_pathname_to_shortcode_classname($i->getPathname());
 			add_shortcode(
 				call_user_func(array($classname, 'name' )),
 				array($shortcode_invoker, $convert_pathname_to_invoker_methodname($i->getPathname()))
