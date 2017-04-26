@@ -20,7 +20,7 @@ class ColorMeshop_wp_plugin {
 	private $client_secret;
 
 	/**
-     * DI コンテナ
+	 * DI コンテナ
 	 *
 	 * @var Pimple\Container
 	 */
@@ -87,7 +87,7 @@ class ColorMeshop_wp_plugin {
 	}
 
 	public function show_product() {
-		if (!$target_id = $this->container['target_id']) {
+		if ( ! $target_id = $this->container['target_id'] ) {
 			return;
 		}
 
@@ -156,24 +156,25 @@ class ColorMeshop_wp_plugin {
 
 	public function token_setting_callback() {
 		?>
-        <input type="text" id="message" name="colorme_wp_settings[token]" value="<?php esc_attr_e( $this->container['token'] ) ?>"/>
-        <br/>
+		<input type="text" id="message" name="colorme_wp_settings[token]"
+		       value="<?php esc_attr_e( $this->container['token'] ) ?>"/>
+		<br/>
 		<?php
 
 	}
 
 	public function client_id_setting_callback() {
 		?>
-        <input type="text" id="message" name="colorme_wp_settings[client_id]"
-               value="<?php esc_attr_e( $this->client_id ) ?>"/><br/>
+		<input type="text" id="message" name="colorme_wp_settings[client_id]"
+		       value="<?php esc_attr_e( $this->client_id ) ?>"/><br/>
 		<?php
 
 	}
 
 	public function client_secret_setting_callback() {
 		?>
-        <input type="text" id="message" name="colorme_wp_settings[client_secret]"
-               value="<?php esc_attr_e( $this->client_secret ) ?>"/><br/>
+		<input type="text" id="message" name="colorme_wp_settings[client_secret]"
+		       value="<?php esc_attr_e( $this->client_secret ) ?>"/><br/>
 		<?php
 
 	}
@@ -185,21 +186,22 @@ class ColorMeshop_wp_plugin {
 	/**
 	 * @return void
 	 */
-	private function initialize_container()
-	{
-		$container = new Container();
-		$container['token'] = $container->factory(function ($c) {
+	private function initialize_container() {
+		$container          = new Container();
+		$container['token'] = $container->factory( function ( $c ) {
 			$options = get_option( 'colorme_wp_settings' );
+
 			return array_key_exists( 'token', $options ) ? $options['token'] : '';
-		});
+		} );
 
-		$container['target_id'] = $container->factory(function ($c) {
+		$container['target_id'] = $container->factory( function ( $c ) {
 			global $wp_query;
-			return isset( $wp_query->query_vars['colorme_item'] ) ? $wp_query->query_vars['colorme_item'] : null;
-		});
 
-		$container['model.shop'] = function ($c) {
-			return new Shop($c['token']);
+			return isset( $wp_query->query_vars['colorme_item'] ) ? $wp_query->query_vars['colorme_item'] : null;
+		} );
+
+		$container['model.shop'] = function ( $c ) {
+			return new Shop( $c['token'] );
 		};
 
 		$this->container = $container;
@@ -210,32 +212,31 @@ class ColorMeshop_wp_plugin {
 	 *
 	 * @return void
 	 */
-	private function register_shortcode()
-	{
-		$extract_relative_path = function ($absolute_path) {
-			return str_replace(__DIR__ . '/src/', '', $absolute_path);
+	private function register_shortcode() {
+		$extract_relative_path = function ( $absolute_path ) {
+			return str_replace( __DIR__ . '/src/', '', $absolute_path );
 		};
-		$strip_extension = function ($path) {
-			return str_replace('.php', '', $path);
+		$strip_extension = function ( $path ) {
+			return str_replace( '.php', '', $path );
 		};
-		$to_invoker_methodname = function ($path) use ($extract_relative_path, $strip_extension) {
-			return '_ColorMeShop_' . str_replace('/', '_', $strip_extension($extract_relative_path($path)));
+		$to_invoker_methodname = function ( $path ) use ( $extract_relative_path, $strip_extension ) {
+			return '_ColorMeShop_' . str_replace( '/', '_', $strip_extension( $extract_relative_path( $path ) ) );
 		};
-		$to_shortcode_classname = function ($path) use ($extract_relative_path, $strip_extension) {
-			return '\ColorMeShop\\' . str_replace('/', '\\', $strip_extension($extract_relative_path($path)));
+		$to_shortcode_classname = function ( $path ) use ( $extract_relative_path, $strip_extension ) {
+			return '\ColorMeShop\\' . str_replace( '/', '\\', $strip_extension( $extract_relative_path( $path ) ) );
 		};
 
-		$shortcode_invoker = new ShortcodeInvoker($this->container);
+		$shortcode_invoker = new ShortcodeInvoker( $this->container );
 
-		$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__ . '/src/Shortcode'));
-		foreach ($iterator as $i) {
-			if ($i->getExtension() !== 'php') {
+		$iterator = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( __DIR__ . '/src/Shortcode' ) );
+		foreach ( $iterator as $i ) {
+			if ( $i->getExtension() !== 'php' ) {
 				continue;
 			}
-			require_once($i->getPathname());
+			require_once( $i->getPathname() );
 			add_shortcode(
-				call_user_func(array($to_shortcode_classname($i->getPathname()), 'name' )),
-				array($shortcode_invoker, $to_invoker_methodname($i->getPathname()))
+				call_user_func( array( $to_shortcode_classname( $i->getPathname() ), 'name' ) ),
+				array( $shortcode_invoker, $to_invoker_methodname( $i->getPathname() ) )
 			);
 		}
 	}
