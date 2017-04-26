@@ -1,7 +1,7 @@
 <?php
-namespace ColormeShop\Shortcode\Cart;
+namespace ColorMeShop\Shortcode\Cart;
 
-use ColormeShop\ShortcodeInterface;
+use ColorMeShop\ShortcodeInterface;
 
 class Button implements ShortcodeInterface
 {

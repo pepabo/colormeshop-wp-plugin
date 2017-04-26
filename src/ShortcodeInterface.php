@@ -1,5 +1,5 @@
 <?php
-namespace ColormeShop;
+namespace ColorMeShop;
 
 interface ShortcodeInterface
 {

@@ -11,11 +11,11 @@
 
 require_once( "vendor/autoload.php" );
 
-use ColormeShop\Model\Shop;
-use ColormeShop\ShortcodeInvoker;
+use ColorMeShop\Model\Shop;
+use ColorMeShop\ShortcodeInvoker;
 use Pimple\Container;
 
-class Colormeshop_wp_plugin {
+class ColorMeshop_wp_plugin {
 	private $client_id;
 	private $client_secret;
 
@@ -219,10 +219,10 @@ class Colormeshop_wp_plugin {
 			return str_replace('.php', '', $path);
 		};
 		$to_invoker_methodname = function ($path) use ($extract_relative_path, $strip_extension) {
-			return '_Colormeshop_' . str_replace('/', '_', $strip_extension($extract_relative_path($path)));
+			return '_ColorMeShop_' . str_replace('/', '_', $strip_extension($extract_relative_path($path)));
 		};
 		$to_shortcode_classname = function ($path) use ($extract_relative_path, $strip_extension) {
-			return '\Colormeshop\\' . str_replace('/', '\\', $strip_extension($extract_relative_path($path)));
+			return '\ColorMeShop\\' . str_replace('/', '\\', $strip_extension($extract_relative_path($path)));
 		};
 
 		$shortcode_invoker = new ShortcodeInvoker($this->container);
@@ -241,4 +241,4 @@ class Colormeshop_wp_plugin {
 	}
 }
 
-$colorme = new Colormeshop_wp_plugin();
+$colorme = new ColorMeshop_wp_plugin();
