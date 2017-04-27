@@ -46,7 +46,7 @@ class ColorMeShop_WP_Plugin {
 
 	public function colormeshop_callback() {
 		$access_token     = $this->container['oauth2_client']->getAccessToken( 'authorization_code', [ 'code' => $_GET['code'] ] );
-		$options          = get_option( 'colorme_wp_settings' );
+		$options          = $this->container['colorme_wp_settings'];
 		$options['token'] = $access_token->getToken();
 		update_option( "colorme_wp_settings", $options, true );
 
