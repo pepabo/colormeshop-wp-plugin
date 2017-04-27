@@ -20,7 +20,7 @@ class Button implements Shortcode_Interface {
 	 */
 	public static function show( $container, $atts, $content, $tag ) {
 		$filtered_atts = shortcode_atts(
-			array( 'product_id' => $container['target_id'] ),
+			[ 'product_id' => $container['target_id'] ],
 			$atts
 		);
 

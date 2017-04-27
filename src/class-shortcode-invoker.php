@@ -23,6 +23,6 @@ class Shortcode_Invoker {
 		array_unshift( $arguments, $this->container );
 		$class = str_replace( '_', '\\', $name );
 
-		return call_user_func_array( array( $class, 'show' ), $arguments );
+		return call_user_func_array( [ $class, 'show' ], $arguments );
 	}
 }

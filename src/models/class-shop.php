@@ -19,7 +19,7 @@ class Shop {
      */
 	public function fetch() {
 		$url        = "https://api.shop-pro.jp/v1/shop.json";
-		$response   = wp_remote_get( $url, array( 'headers' => array( 'Authorization' => "Bearer " . $this->token ) ) );
+		$response   = wp_remote_get( $url, [ 'headers' => [ 'Authorization' => "Bearer " . $this->token ] ] );
 		$content    = json_decode( $response["body"] );
 
         return $content->shop;

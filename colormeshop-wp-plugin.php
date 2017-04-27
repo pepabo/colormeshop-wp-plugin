@@ -28,18 +28,18 @@ class ColorMeShop_WP_Plugin {
 		$this->initialize_container();
 		$this->register_shortcode();
 
-		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
-		add_action( 'admin_init', array( $this, 'page_init' ) );
+		add_action( 'admin_menu', [ $this, 'add_plugin_page' ] );
+		add_action( 'admin_init', [ $this, 'page_init' ] );
 
-		add_action( 'init', array( $this, 'manage_item_routes' ) );
-		add_action( 'init', array( $this, 'custom_rewrite_tag' ), 10, 0 );
-		register_activation_hook( __FILE__, array( $this, 'flush_application_rewrite_rules' ) );
-		add_action( 'template_redirect', array( $this, 'front_controller' ) );
-		add_action( 'colormeshop_item', array( $this, 'show_product' ) );
-		add_action( 'colormeshop_category', array( $this, 'show_category' ) );
-		add_shortcode( 'authentication_link', array( $this, 'show_authentication_link' ) );
+		add_action( 'init', [ $this, 'manage_item_routes' ] );
+		add_action( 'init', [ $this, 'custom_rewrite_tag' ], 10, 0 );
+		register_activation_hook( __FILE__, [ $this, 'flush_application_rewrite_rules' ] );
+		add_action( 'template_redirect', [ $this, 'front_controller' ] );
+		add_action( 'colormeshop_item', [ $this, 'show_product' ] );
+		add_action( 'colormeshop_category', [ $this, 'show_category' ] );
+		add_shortcode( 'authentication_link', [ $this, 'show_authentication_link' ] );
 
-		add_action( 'wp_ajax_colormeshop_callback', array( $this, 'colormeshop_callback' ) );
+		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
 
 		remove_action( 'wp_head', '_wp_render_title_tag', 1 );
 	}
@@ -82,7 +82,7 @@ class ColorMeShop_WP_Plugin {
 		if ( $response->product ) {
 			$product = $response->product;
 
-			add_action( 'wp_head', array( $this, 'product_title_tag' ) );
+			add_action( 'wp_head', [ $this, 'product_title_tag' ] );
 			do_action( 'wp_head', $product->name );
 
 			include plugin_dir_path( __FILE__ ) . '/templates/item.php';
@@ -91,14 +91,14 @@ class ColorMeShop_WP_Plugin {
 
 	public function fetch_product( $id ) {
 		$url      = "https://api.shop-pro.jp/v1/products/$id.json";
-		$response = wp_remote_get( $url, array( 'headers' => array( 'Authorization' => "Bearer " . $this->container['token'] ) ) );
+		$response = wp_remote_get( $url, [ 'headers' => [ 'Authorization' => "Bearer " . $this->container['token'] ] ] );
 		$content  = json_decode( $response["body"] );
 
 		return $content;
 	}
 
 	public function show_authentication_link( $attr, $content = null ) {
-		return '<a href="' . $this->container['oauth2_client']->getAuthorizationUrl( array( 'scope' => [ 'read_products write_products' ] ) ) . '">カラーミーショップアカウントで認証する</a>';
+		return '<a href="' . $this->container['oauth2_client']->getAuthorizationUrl( [ 'scope' => [ 'read_products write_products' ] ] ) . '">カラーミーショップアカウントで認証する</a>';
 	}
 
 	public function product_title_tag( $title ) {
@@ -107,27 +107,27 @@ class ColorMeShop_WP_Plugin {
 
 	// 設定ページ関連
 	public function add_plugin_page() {
-		add_menu_page( 'カラーミーショップ', 'カラーミーショップ', 'manage_options', 'colorme_wp_settings', array(
+		add_menu_page( 'カラーミーショップ', 'カラーミーショップ', 'manage_options', 'colorme_wp_settings', [
 			$this,
 			'create_admin_page'
-		) );
+		] );
 	}
 
 	public function page_init() {
-		register_setting( 'colorme_wp_settings', 'colorme_wp_settings', array( $this, 'settings_sanitize' ) );
+		register_setting( 'colorme_wp_settings', 'colorme_wp_settings', [ $this, 'settings_sanitize' ] );
 		add_settings_section( 'general', '基本設定', '', 'colorme_wp_settings' );
-		add_settings_field( 'token', 'トークン', array(
+		add_settings_field( 'token', 'トークン', [
 			$this,
 			'token_setting_callback'
-		), 'colorme_wp_settings', 'general' );
-		add_settings_field( 'client_id', 'クライアントID', array(
+		], 'colorme_wp_settings', 'general' );
+		add_settings_field( 'client_id', 'クライアントID', [
 			$this,
 			'client_id_setting_callback'
-		), 'colorme_wp_settings', 'general' );
-		add_settings_field( 'client_secret', 'クライアントシークレット', array(
+		], 'colorme_wp_settings', 'general' );
+		add_settings_field( 'client_secret', 'クライアントシークレット', [
 			$this,
 			'client_secret_setting_callback'
-		), 'colorme_wp_settings', 'general' );
+		], 'colorme_wp_settings', 'general' );
 	}
 
 	public function create_admin_page() {
@@ -229,8 +229,8 @@ class ColorMeShop_WP_Plugin {
 				continue;
 			}
 			add_shortcode(
-				call_user_func( array( $class, 'name' ) ),
-				array( $shortcode_invoker, $to_invoker_methodname( $class ) )
+				call_user_func( [ $class, 'name' ] ),
+				[ $shortcode_invoker, $to_invoker_methodname( $class ) ]
 			);
 		}
 	}
