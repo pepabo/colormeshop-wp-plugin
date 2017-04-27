@@ -16,9 +16,6 @@ use ColorMeShop\Shortcode_Invoker;
 use Pimple\Container;
 
 class ColorMeShop_WP_Plugin {
-	private $client_id;
-	private $client_secret;
-
 	/**
 	 * DI コンテナ
 	 *
@@ -44,19 +41,12 @@ class ColorMeShop_WP_Plugin {
 		add_action( 'wp_ajax_colormeshop_callback', array( $this, 'colormeshop_callback' ) );
 
 		remove_action( 'wp_head', '_wp_render_title_tag', 1 );
-
-		$options = get_option( 'colorme_wp_settings' );
-
-		if ( $options ) {
-			$this->client_id     = array_key_exists( 'client_id', $options ) ? $options['client_id'] : '';
-			$this->client_secret = array_key_exists( 'client_secret', $options ) ? $options['client_secret'] : '';
-		}
 	}
 
 	public function colormeshop_callback() {
 		$provider         = new \Pepabo\OAuth2\Client\Provider\ColorMeShop( [
-			'clientId'     => $this->client_id,
-			'clientSecret' => $this->client_secret,
+			'clientId'     => $this->container['client_id'],
+			'clientSecret' => $this->container['client_secret'],
 			'redirectUri'  => admin_url( 'admin-ajax.php?action=colormeshop_callback' ),
 		] );
 		$access_token     = $provider->getAccessToken( 'authorization_code', [ 'code' => $_GET['code'] ] );
@@ -113,8 +103,8 @@ class ColorMeShop_WP_Plugin {
 
 	public function show_authentication_link( $attr, $content = null ) {
 		$provider = new \Pepabo\OAuth2\Client\Provider\ColorMeShop( [
-			'clientId'     => $this->client_id,
-			'clientSecret' => $this->client_secret,
+			'clientId'     => $this->container['client_id'],
+			'clientSecret' => $this->container['client_secret'],
 			'redirectUri'  => admin_url( 'admin-ajax.php?action=colormeshop_callback' ),
 		] );
 
@@ -166,7 +156,7 @@ class ColorMeShop_WP_Plugin {
 	public function client_id_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_id]"
-		       value="<?php esc_attr_e( $this->client_id ) ?>"/><br/>
+		       value="<?php esc_attr_e( $this->container['client_id'] ) ?>"/><br/>
 		<?php
 
 	}
@@ -174,7 +164,7 @@ class ColorMeShop_WP_Plugin {
 	public function client_secret_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_secret]"
-		       value="<?php esc_attr_e( $this->client_secret ) ?>"/><br/>
+		       value="<?php esc_attr_e( $this->container['client_secret'] ) ?>"/><br/>
 		<?php
 
 	}
@@ -192,6 +182,18 @@ class ColorMeShop_WP_Plugin {
 			$options = get_option( 'colorme_wp_settings' );
 
 			return array_key_exists( 'token', $options ) ? $options['token'] : '';
+		} );
+
+		$container['client_id'] = $container->factory( function ( $c ) {
+			$options = get_option( 'colorme_wp_settings' );
+
+			return array_key_exists( 'client_id', $options ) ? $options['client_id'] : '';
+		} );
+
+		$container['client_secret'] = $container->factory( function ( $c ) {
+			$options = get_option( 'colorme_wp_settings' );
+
+			return array_key_exists( 'client_secret', $options ) ? $options['client_secret'] : '';
 		} );
 
 		$container['target_id'] = $container->factory( function ( $c ) {
