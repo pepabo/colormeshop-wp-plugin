@@ -213,30 +213,19 @@ class ColorMeshop_wp_plugin {
 	 * @return void
 	 */
 	private function register_shortcode() {
-		$extract_relative_path = function ( $absolute_path ) {
-			return str_replace( __DIR__ . '/src/', '', $absolute_path );
-		};
-		$strip_extension = function ( $path ) {
-			return str_replace( '.php', '', $path );
-		};
-		$to_invoker_methodname = function ( $path ) use ( $extract_relative_path, $strip_extension ) {
-			return '_ColorMeShop_' . str_replace( '/', '_', $strip_extension( $extract_relative_path( $path ) ) );
-		};
-		$to_shortcode_classname = function ( $path ) use ( $extract_relative_path, $strip_extension ) {
-			return '\ColorMeShop\\' . str_replace( '/', '\\', $strip_extension( $extract_relative_path( $path ) ) );
+		$to_invoker_methodname = function ( $class ) {
+			return '_' . str_replace( '/', '_', $class );
 		};
 
 		$shortcode_invoker = new Shortcode_Invoker( $this->container );
-
-		$iterator = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( __DIR__ . '/src/shortcodes' ) );
-		foreach ( $iterator as $i ) {
-			if ( $i->getExtension() !== 'php' ) {
+		$classmap = include( __DIR__ . '/vendor/composer/autoload_classmap.php' );
+		foreach ( $classmap as $class => $path ) {
+			if ( strpos( $path, $baseDir . '/src/shortcodes/' ) !== 0) {
 				continue;
 			}
-			require_once( $i->getPathname() );
 			add_shortcode(
-				call_user_func( array( $to_shortcode_classname( $i->getPathname() ), 'name' ) ),
-				array( $shortcode_invoker, $to_invoker_methodname( $i->getPathname() ) )
+				call_user_func( array( $class, 'name' ) ),
+				array( $shortcode_invoker, $to_invoker_methodname( $class ) )
 			);
 		}
 	}
