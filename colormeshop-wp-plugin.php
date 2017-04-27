@@ -15,7 +15,7 @@ use ColorMeShop\Models\Shop;
 use ColorMeShop\Shortcode_Invoker;
 use Pimple\Container;
 
-class ColorMeshop_wp_plugin {
+class ColorMeShop_WP_Plugin {
 	private $client_id;
 	private $client_secret;
 
@@ -231,4 +231,4 @@ class ColorMeshop_wp_plugin {
 	}
 }
 
-$colorme = new ColorMeshop_wp_plugin();
+$colorme = new ColorMeShop_WP_Plugin();

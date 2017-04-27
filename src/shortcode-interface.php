@@ -1,14 +1,13 @@
 <?php
 namespace ColorMeShop;
 
-interface Shortcode_Interface
-{
+interface Shortcode_Interface {
     /**
      * ショートコード名を返す
      *
      * @return string
      */
-    public static function name();
+	public static function name();
 
     /**
      * ショートコード出力の文字列を返す
@@ -20,5 +19,5 @@ interface Shortcode_Interface
      * @param string $tag
      * @return string
      */
-    public static function show($container, $atts, $content, $tag);
+	public static function show( $container, $atts, $content, $tag );
 }

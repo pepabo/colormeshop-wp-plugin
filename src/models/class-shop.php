@@ -1,8 +1,7 @@
 <?php
 namespace ColorMeShop\Models;
 
-class Shop
-{
+class Shop {
     /**
      * @var string
      */
@@ -11,19 +10,17 @@ class Shop
     /**
      * @param string $token OAuth トークン
      */
-    public function __construct($token)
-    {
+	public function __construct( $token ) {
         $this->token = $token;
     }
 
     /**
      * @return \stdClass
      */
-    public function fetch()
-    {
-        $url      = "https://api.shop-pro.jp/v1/shop.json";
-        $response = wp_remote_get( $url, array( 'headers' => array( 'Authorization' => "Bearer " . $this->token ) ) );
-        $content  = json_decode( $response["body"] );
+	public function fetch() {
+		$url        = "https://api.shop-pro.jp/v1/shop.json";
+		$response   = wp_remote_get( $url, array( 'headers' => array( 'Authorization' => "Bearer " . $this->token ) ) );
+		$content    = json_decode( $response["body"] );
 
         return $content->shop;
     }
