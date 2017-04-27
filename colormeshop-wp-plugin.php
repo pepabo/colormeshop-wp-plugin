@@ -13,6 +13,7 @@ require_once( "vendor/autoload.php" );
 
 use ColorMeShop\Models\Shop;
 use ColorMeShop\Shortcode_Invoker;
+use Pepabo\OAuth2\Client\Provider\ColorMeShop as OAuth2Client;
 use Pimple\Container;
 
 class ColorMeShop_WP_Plugin {
@@ -44,12 +45,7 @@ class ColorMeShop_WP_Plugin {
 	}
 
 	public function colormeshop_callback() {
-		$provider         = new \Pepabo\OAuth2\Client\Provider\ColorMeShop( [
-			'clientId'     => $this->container['client_id'],
-			'clientSecret' => $this->container['client_secret'],
-			'redirectUri'  => admin_url( 'admin-ajax.php?action=colormeshop_callback' ),
-		] );
-		$access_token     = $provider->getAccessToken( 'authorization_code', [ 'code' => $_GET['code'] ] );
+		$access_token     = $this->container['oauth2_client']->getAccessToken( 'authorization_code', [ 'code' => $_GET['code'] ] );
 		$options          = get_option( 'colorme_wp_settings' );
 		$options['token'] = $access_token->getToken();
 		update_option( "colorme_wp_settings", $options, true );
@@ -102,13 +98,7 @@ class ColorMeShop_WP_Plugin {
 	}
 
 	public function show_authentication_link( $attr, $content = null ) {
-		$provider = new \Pepabo\OAuth2\Client\Provider\ColorMeShop( [
-			'clientId'     => $this->container['client_id'],
-			'clientSecret' => $this->container['client_secret'],
-			'redirectUri'  => admin_url( 'admin-ajax.php?action=colormeshop_callback' ),
-		] );
-
-		return '<a href="' . $provider->getAuthorizationUrl( array( 'scope' => [ 'read_products write_products' ] ) ) . '">カラーミーショップアカウントで認証する</a>';
+		return '<a href="' . $this->container['oauth2_client']->getAuthorizationUrl( array( 'scope' => [ 'read_products write_products' ] ) ) . '">カラーミーショップアカウントで認証する</a>';
 	}
 
 	public function product_title_tag( $title ) {
@@ -199,6 +189,14 @@ class ColorMeShop_WP_Plugin {
 			$settings = $c['colorme_wp_settings'];
 
 			return array_key_exists( 'client_secret', $settings ) ? $settings['client_secret'] : '';
+		};
+
+		$container['oauth2_client'] = function ( $c ) {
+			return new OAuth2Client( [
+				'clientId'     => $c['client_id'],
+				'clientSecret' => $c['client_secret'],
+				'redirectUri'  => admin_url( 'admin-ajax.php?action=colormeshop_callback' ),
+			] );
 		};
 
 		$container['target_id'] = function ( $c ) {
