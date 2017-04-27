@@ -178,22 +178,27 @@ class ColorMeShop_WP_Plugin {
 	 */
 	private function initialize_container() {
 		$container          = new Container();
-		$container['token'] = $container->factory( function ( $c ) {
-			$options = get_option( 'colorme_wp_settings' );
 
-			return array_key_exists( 'token', $options ) ? $options['token'] : '';
+		$container['colorme_wp_settings'] = function ( $c ) {
+			return get_option( 'colorme_wp_settings' );
+		};
+
+		$container['token'] = $container->factory( function ( $c ) {
+			$settings = $c['colorme_wp_settings'];
+
+			return array_key_exists( 'token', $settings ) ? $settings['token'] : '';
 		} );
 
 		$container['client_id'] = $container->factory( function ( $c ) {
-			$options = get_option( 'colorme_wp_settings' );
+			$settings = $c['colorme_wp_settings'];
 
-			return array_key_exists( 'client_id', $options ) ? $options['client_id'] : '';
+			return array_key_exists( 'client_id', $settings ) ? $settings['client_id'] : '';
 		} );
 
 		$container['client_secret'] = $container->factory( function ( $c ) {
-			$options = get_option( 'colorme_wp_settings' );
+			$settings = $c['colorme_wp_settings'];
 
-			return array_key_exists( 'client_secret', $options ) ? $options['client_secret'] : '';
+			return array_key_exists( 'client_secret', $settings ) ? $settings['client_secret'] : '';
 		} );
 
 		$container['target_id'] = $container->factory( function ( $c ) {
