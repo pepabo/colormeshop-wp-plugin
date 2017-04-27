@@ -11,8 +11,8 @@
 
 require_once( "vendor/autoload.php" );
 
-use ColorMeShop\Model\Shop;
-use ColorMeShop\ShortcodeInvoker;
+use ColorMeShop\Models\Shop;
+use ColorMeShop\Shortcode_Invoker;
 use Pimple\Container;
 
 class ColorMeshop_wp_plugin {
@@ -208,7 +208,7 @@ class ColorMeshop_wp_plugin {
 	}
 
 	/**
-	 * src/Shortcode 配下に定義されたショートコードを登録する
+	 * src/shortcodes 配下に定義されたショートコードを登録する
 	 *
 	 * @return void
 	 */
@@ -226,9 +226,9 @@ class ColorMeshop_wp_plugin {
 			return '\ColorMeShop\\' . str_replace( '/', '\\', $strip_extension( $extract_relative_path( $path ) ) );
 		};
 
-		$shortcode_invoker = new ShortcodeInvoker( $this->container );
+		$shortcode_invoker = new Shortcode_Invoker( $this->container );
 
-		$iterator = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( __DIR__ . '/src/Shortcode' ) );
+		$iterator = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( __DIR__ . '/src/shortcodes' ) );
 		foreach ( $iterator as $i ) {
 			if ( $i->getExtension() !== 'php' ) {
 				continue;

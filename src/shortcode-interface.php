@@ -1,7 +1,7 @@
 <?php
 namespace ColorMeShop;
 
-interface ShortcodeInterface
+interface Shortcode_Interface
 {
     /**
      * ショートコード名を返す

@@ -1,5 +1,5 @@
 <?php
-namespace ColorMeShop\Model;
+namespace ColorMeShop\Models;
 
 class Shop
 {

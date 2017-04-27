@@ -1,7 +1,7 @@
 <?php
 namespace ColorMeShop;
 
-class ShortcodeInvoker
+class Shortcode_Invoker
 {
     /**
      * @var \Pimple\Container
