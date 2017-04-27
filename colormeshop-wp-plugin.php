@@ -183,29 +183,29 @@ class ColorMeShop_WP_Plugin {
 			return get_option( 'colorme_wp_settings' );
 		};
 
-		$container['token'] = $container->factory( function ( $c ) {
+		$container['token'] = function ( $c ) {
 			$settings = $c['colorme_wp_settings'];
 
 			return array_key_exists( 'token', $settings ) ? $settings['token'] : '';
-		} );
+		};
 
-		$container['client_id'] = $container->factory( function ( $c ) {
+		$container['client_id'] = function ( $c ) {
 			$settings = $c['colorme_wp_settings'];
 
 			return array_key_exists( 'client_id', $settings ) ? $settings['client_id'] : '';
-		} );
+		};
 
-		$container['client_secret'] = $container->factory( function ( $c ) {
+		$container['client_secret'] = function ( $c ) {
 			$settings = $c['colorme_wp_settings'];
 
 			return array_key_exists( 'client_secret', $settings ) ? $settings['client_secret'] : '';
-		} );
+		};
 
-		$container['target_id'] = $container->factory( function ( $c ) {
+		$container['target_id'] = function ( $c ) {
 			global $wp_query;
 
 			return isset( $wp_query->query_vars['colorme_item'] ) ? $wp_query->query_vars['colorme_item'] : null;
-		} );
+		};
 
 		$container['model.shop'] = function ( $c ) {
 			return new Shop( $c['token'] );
