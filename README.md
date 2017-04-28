@@ -14,7 +14,7 @@ WordPress で [カラーミーショップ](https://shop-pro.jp/) に登録し�
 ## 一緒に開発しませんか？
 
 当プラグインについて、お気づきの点やアイデアをお持ちのかたはぜひ開発にご参加ください。  
-また、「こんな機能あったら良さそうなんだけど、どうでしょう？」といったお話も大歓迎ですので気軽に [Issues](https://github.com/pepabo/omniauth-colormeshop/issues) に投稿してみましょう!
+また、「こんな機能あったら良さそうなんだけど、どうでしょう？」といったお話も大歓迎ですので気軽に [Issues](https://github.com/pepabo/colormeshop-wp-plugin/issues) に投稿してみましょう!
 
 ### 開発の流れ
 
