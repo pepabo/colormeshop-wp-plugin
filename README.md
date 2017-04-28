@@ -24,3 +24,13 @@ WordPress で [カラーミーショップ](https://shop-pro.jp/) に登録し�
 1. 変更をコミット (`git commit -am 'Add some feature`)
 1. ブランチをプッシュ (`git push origin my-new-feature`)
 1. Pull Request を作成
+
+### すぐに開発を始められます
+
+[docker](https://www.docker.com/) 用のコンテナ定義ファイル `docker-compose.yml` を用意していますので、ローカル環境にすばやく WordPress を立ち上げてプラグインの開発を始められます。
+
+```
+$ cp wp.env.sample wp.env
+$ docker-compose up -d
+$ open http://localhost:8080
+```
