@@ -23,7 +23,7 @@ class Page implements Shortcode_Interface {
 			[ 'product_id' => $container['target_id'], 'template' => 'item' ],
 			$atts
 		);
-		$template_file = $container['templates_dir'] . '/' . $filtered_atts['template'] . '.php';
+		$template_file = $container['templates_dir'] . '/product/' . $filtered_atts['template'] . '.php';
 
 		if (
 			preg_match( '/\A[a-z]+\z/', $filtered_atts['template'] ) !== 1
