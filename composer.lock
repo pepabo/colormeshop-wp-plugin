@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e888afbf59b85416fcfc417692cd2320",
+    "content-hash": "7be7f721f2e19b2d439b685f492bb7be",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -186,21 +186,21 @@
         },
         {
             "name": "league/oauth2-client",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-client.git",
-                "reference": "5f57366c99ac013ee9d78670c1fc0b9ca7871d95"
+                "reference": "313250eab923e673a5c0c8f463f443ee79f4383f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/5f57366c99ac013ee9d78670c1fc0b9ca7871d95",
-                "reference": "5f57366c99ac013ee9d78670c1fc0b9ca7871d95",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/313250eab923e673a5c0c8f463f443ee79f4383f",
+                "reference": "313250eab923e673a5c0c8f463f443ee79f4383f",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^6.0",
-                "paragonie/random_compat": "^2.0",
+                "paragonie/random_compat": "^1|^2",
                 "php": ">=5.6.0"
             },
             "require-dev": {
@@ -249,7 +249,7 @@
                 "oauth2",
                 "single sign on"
             ],
-            "time": "2017-02-02T04:08:45+00:00"
+            "time": "2017-04-25T14:43:14+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -305,12 +305,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pepabo/oauth2-colormeshop.git",
-                "reference": "83d73476ac58b18b3e4a5fd445cac1272f78bd6c"
+                "reference": "30c555cba829cec4bba452ca5f09963c53be9768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pepabo/oauth2-colormeshop/zipball/83d73476ac58b18b3e4a5fd445cac1272f78bd6c",
-                "reference": "83d73476ac58b18b3e4a5fd445cac1272f78bd6c",
+                "url": "https://api.github.com/repos/pepabo/oauth2-colormeshop/zipball/30c555cba829cec4bba452ca5f09963c53be9768",
+                "reference": "30c555cba829cec4bba452ca5f09963c53be9768",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +346,53 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2017-04-06 07:24:31"
+            "time": "2017-04-10 08:33:37"
+        },
+        {
+            "name": "pimple/pimple",
+            "version": "v3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silexphp/Pimple.git",
+                "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/a30f7d6e57565a2e1a316e1baf2a483f788b258a",
+                "reference": "a30f7d6e57565a2e1a316e1baf2a483f788b258a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Pimple": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Pimple, a simple Dependency Injection Container",
+            "homepage": "http://pimple.sensiolabs.org",
+            "keywords": [
+                "container",
+                "dependency injection"
+            ],
+            "time": "2015-09-11T15:10:35+00:00"
         },
         {
             "name": "psr/http-message",

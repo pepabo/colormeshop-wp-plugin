@@ -10,6 +10,9 @@ WordPress で [カラーミーショップ](https://shop-pro.jp/) に登録し�
 - [カラーミーデベロッパーアカウント](https://api.shop-pro.jp/developers/sign_up)
 - [OAuthアプリケーション登録](https://api.shop-pro.jp/oauth/applications/new)
 
+## 動作環境
+
+PHP 5.6 以上
 
 ## 一緒に開発しませんか？
 
