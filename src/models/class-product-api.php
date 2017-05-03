@@ -7,6 +7,11 @@ class ProductApi {
      */
     private $token;
 
+	/**
+	 * @var array
+	 */
+	private $caches = [];
+
     /**
      * @param string $token OAuth トークン
      */
@@ -19,6 +24,19 @@ class ProductApi {
      * @throws \RuntimeException
      */
 	public function fetch( $product_id ) {
+		return new Product( $this->callApi( $product_id ) );
+    }
+
+	/**
+	 * @param int $product_id
+	 * @return array
+	 * @throws \RuntimeException
+	 */
+	private function callApi( $product_id ) {
+		if ( isset( $this->caches[ $product_id ] ) ) {
+			return $this->caches[ $product_id ];
+		}
+
 		$url      = "https://api.shop-pro.jp/v1/products/{$product_id}.json";
 		$response = wp_remote_get( $url, [ 'headers' => [ 'Authorization' => 'Bearer ' . $this->token ] ] );
 		if ( is_wp_error( $response ) || $response['response']['code'] !== 200 ) {
@@ -30,6 +48,8 @@ class ProductApi {
 			throw new \RuntimeException( '商品情報のデコードに失敗しました. product_id: ' . $product_id );
 		}
 
-		return new Product( $content );
-    }
+		$this->caches[ $product_id ] = $content;
+
+		return $content;
+	}
 }
