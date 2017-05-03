@@ -23,7 +23,15 @@ class Page implements Shortcode_Interface {
 			[ 'product_id' => $container['target_id'] ],
 			$atts
 		);
-		$product = $container['model.product_api']->fetch($filtered_atts['product_id']);
+
+		try {
+			$product = $container['model.product_api']->fetch( $filtered_atts['product_id'] );
+		} catch ( \RuntimeException $e ) {
+			if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+				error_log( $e );
+			}
+			return '';
+		}
 
 		ob_start();
 		include $container['templates_dir'] . '/item.php';
