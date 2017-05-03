@@ -174,6 +174,10 @@ class ColorMeShop_WP_Plugin {
 			return get_option( 'colorme_wp_settings' );
 		};
 
+		$container['templates_dir'] = function ( $c ) {
+			return __DIR__ . '/templates';
+		};
+
 		$container['token'] = function ( $c ) {
 			$settings = $c['colorme_wp_settings'];
 

@@ -26,7 +26,7 @@ class Page implements Shortcode_Interface {
 		$product = $container['model.product_api']->fetch($filtered_atts['product_id']);
 
 		ob_start();
-		include __DIR__ . '/../../../templates/item.php';
+		include $container['templates_dir'] . '/item.php';
 		return ob_get_clean();
 	}
 }
