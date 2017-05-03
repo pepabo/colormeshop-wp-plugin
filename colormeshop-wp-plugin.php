@@ -176,19 +176,19 @@ class ColorMeShop_WP_Plugin {
 		$container['token'] = function ( $c ) {
 			$settings = $c['colorme_wp_settings'];
 
-			return array_key_exists( 'token', $settings ) ? $settings['token'] : '';
+			return $settings && array_key_exists( 'token', $settings ) ? $settings['token'] : '';
 		};
 
 		$container['client_id'] = function ( $c ) {
 			$settings = $c['colorme_wp_settings'];
 
-			return array_key_exists( 'client_id', $settings ) ? $settings['client_id'] : '';
+			return $settings && array_key_exists( 'client_id', $settings ) ? $settings['client_id'] : '';
 		};
 
 		$container['client_secret'] = function ( $c ) {
 			$settings = $c['colorme_wp_settings'];
 
-			return array_key_exists( 'client_secret', $settings ) ? $settings['client_secret'] : '';
+			return $settings && array_key_exists( 'client_secret', $settings ) ? $settings['client_secret'] : '';
 		};
 
 		$container['oauth2_client'] = function ( $c ) {
