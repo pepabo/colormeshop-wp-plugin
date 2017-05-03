@@ -20,9 +20,17 @@ class Page implements Shortcode_Interface {
 	 */
 	public static function show( $container, $atts, $content, $tag ) {
 		$filtered_atts = shortcode_atts(
-			[ 'product_id' => $container['target_id'] ],
+			[ 'product_id' => $container['target_id'], 'template' => 'item' ],
 			$atts
 		);
+		$template_file = $container['templates_dir'] . '/' . $filtered_atts['template'] . '.php';
+
+		if (
+			preg_match( '/\A[a-z]+\z/', $filtered_atts['template'] ) !== 1
+			|| !file_exists( $template_file )
+		) {
+			return '';
+		}
 
 		try {
 			$product = $container['model.product_api']->fetch( $filtered_atts['product_id'] );
@@ -34,7 +42,7 @@ class Page implements Shortcode_Interface {
 		}
 
 		ob_start();
-		include $container['templates_dir'] . '/item.php';
+		include $template_file;
 		return ob_get_clean();
 	}
 }
