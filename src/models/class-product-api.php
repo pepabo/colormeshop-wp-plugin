@@ -1,6 +1,11 @@
 <?php
 namespace ColorMeShop\Models;
 
+/**
+ * 商品データAPI
+ *
+ * @see https://shop-pro.jp/?mode=api_interface#get-v1productsjson
+ */
 class Product_Api {
 	/**
 	 * @var string
@@ -20,6 +25,7 @@ class Product_Api {
 	}
 
 	/**
+	 * @param int $product_id
 	 * @return Product
 	 * @throws \RuntimeException
 	 */
