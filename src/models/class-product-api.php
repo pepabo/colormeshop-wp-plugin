@@ -49,7 +49,7 @@ class Product_Api {
 				'Authorization' => 'Bearer ' . $this->token,
 			],
 		] );
-		if ( is_wp_error( $response ) || $response['response']['code'] !== 200 ) {
+		if ( is_wp_error( $response ) || 200 !== $response['response']['code'] ) {
 			throw new \RuntimeException( '商品情報取得に失敗しました. product_id: ' . $product_id );
 		}
 
