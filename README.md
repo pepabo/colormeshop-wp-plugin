@@ -55,3 +55,13 @@ $ wpcs/vendor/bin/phpcs --standard=WordPress-Core hoge.php
 # インデントなどは自動整形できます
 $ wpcs/vendor/bin/phpcbf --standard=WordPress-Core hoge.php
 ```
+
+### モデルやショートコードを追加したけどオートロードされない場合は
+
+[dump-autoload](https://getcomposer.org/doc/03-cli.md#dump-autoload) を実行してクラスマップを再生成してください。  
+WordPress の命名規則は [PSR](http://www.php-fig.org/psr/psr-4/) と異なるので、[classmap](https://getcomposer.org/doc/04-schema.md#classmap) を利用しています。
+
+
+```
+$ composer dump-autoload
+```
