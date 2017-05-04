@@ -240,7 +240,7 @@ class Plugin {
 		$shortcode_invoker = new Shortcode_Invoker( $this->container );
 		$classmap = include( __DIR__ . '/../vendor/composer/autoload_classmap.php' );
 		foreach ( $classmap as $class => $path ) {
-			if ( strpos( $path, $baseDir . '/src/shortcodes/' ) !== 0 ) {
+			if ( strpos( $path, dirname( __DIR__ ) . '/src/shortcodes/' ) !== 0 ) {
 				continue;
 			}
 			add_shortcode(
