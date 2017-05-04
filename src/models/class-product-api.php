@@ -30,7 +30,7 @@ class Product_Api {
 	 * @throws \RuntimeException
 	 */
 	public function fetch( $product_id ) {
-		return new Product( $this->callApi( $product_id ) );
+		return new Product( $this->call_api( $product_id ) );
 	}
 
 	/**
@@ -38,7 +38,7 @@ class Product_Api {
 	 * @return array
 	 * @throws \RuntimeException
 	 */
-	private function callApi( $product_id ) {
+	private function call_api( $product_id ) {
 		if ( isset( $this->caches[ $product_id ] ) ) {
 			return $this->caches[ $product_id ];
 		}
