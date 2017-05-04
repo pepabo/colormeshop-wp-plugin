@@ -37,3 +37,21 @@ $ cp wp.env.sample wp.env
 $ docker-compose up -d
 $ open http://localhost:8080
 ```
+
+## 開発ガイド
+
+### コーディング規約
+
+PHP_CodeSniffer の WordPress 用ルールセットである [WordPress-Coding-Standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards) を利用することを推奨しています。
+
+当プラグインでは上記ルールセットの [WordPress-Extra](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards#rulesets) に準拠していますので、Pull Request を作成される際は予め規約違反がないことを確認してください。
+
+
+```
+# インストール
+$ composer create-project wp-coding-standards/wpcs --no-dev
+# 規約チェック
+$ wpcs/vendor/bin/phpcs --standard=WordPress-Extra hoge.php
+# インデントなどは自動整形できます
+$ wpcs/vendor/bin/phpcbf --standard=WordPress-Extra hoge.php
+```
