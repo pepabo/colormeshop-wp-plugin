@@ -24,6 +24,12 @@ class Plugin {
 	 */
 	public function __construct() {
 		$this->initialize_container();
+	}
+
+	/**
+	 * @return void
+	 */
+	public function register() {
 		$this->register_shortcode();
 
 		add_action( 'admin_menu', [ $this, 'add_plugin_page' ] );
