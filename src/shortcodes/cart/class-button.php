@@ -20,10 +20,12 @@ class Button implements Shortcode_Interface {
 	 */
 	public static function show( $container, $atts, $content, $tag ) {
 		$filtered_atts = shortcode_atts(
-			[ 'product_id' => $container['target_id'] ],
+			[
+				'product_id' => $container['target_id'],
+			],
 			$atts
 		);
 
-		return "<script type='text/javascript' src='" . $container['model.shop']->fetch()->url . "/?mode=cartjs&pid=" . $filtered_atts['product_id'] . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
+		return "<script type='text/javascript' src='" . $container['model.shop']->fetch()->url . '/?mode=cartjs&pid=' . $filtered_atts['product_id'] . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
 	}
 }

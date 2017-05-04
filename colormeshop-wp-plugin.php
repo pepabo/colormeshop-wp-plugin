@@ -9,7 +9,7 @@
  * License: GPL2
  */
 
-require_once( "vendor/autoload.php" );
+require_once( 'vendor/autoload.php' );
 
 use ColorMeShop\Models\Shop;
 use ColorMeShop\Models\Product_Api;
@@ -44,12 +44,14 @@ class ColorMeShop_WP_Plugin {
 	}
 
 	public function colormeshop_callback() {
-		$access_token     = $this->container['oauth2_client']->getAccessToken( 'authorization_code', [ 'code' => $_GET['code'] ] );
+		$access_token     = $this->container['oauth2_client']->getAccessToken( 'authorization_code', [
+			'code' => $_GET['code'],
+		] );
 		$options          = $this->container['colorme_wp_settings'];
 		$options['token'] = $access_token->getToken();
-		update_option( "colorme_wp_settings", $options, true );
+		update_option( 'colorme_wp_settings', $options, true );
 
-		header( "Location: " . admin_url( '?page=colorme_wp_settings' ), true );
+		header( 'Location: ' . admin_url( '?page=colorme_wp_settings' ), true );
 
 		return;
 	}
@@ -68,7 +70,9 @@ class ColorMeShop_WP_Plugin {
 	}
 
 	public function show_authentication_link( $attr, $content = null ) {
-		return '<a href="' . $this->container['oauth2_client']->getAuthorizationUrl( [ 'scope' => [ 'read_products write_products' ] ] ) . '">カラーミーショップアカウントで認証する</a>';
+		return '<a href="' . $this->container['oauth2_client']->getAuthorizationUrl( [
+			'scope' => [ 'read_products write_products' ],
+		] ) . '">カラーミーショップアカウントで認証する</a>';
 	}
 
 	public function product_title_tag( $title ) {
@@ -79,7 +83,7 @@ class ColorMeShop_WP_Plugin {
 	public function add_plugin_page() {
 		add_menu_page( 'カラーミーショップ', 'カラーミーショップ', 'manage_options', 'colorme_wp_settings', [
 			$this,
-			'create_admin_page'
+			'create_admin_page',
 		] );
 	}
 
@@ -88,15 +92,15 @@ class ColorMeShop_WP_Plugin {
 		add_settings_section( 'general', '基本設定', '', 'colorme_wp_settings' );
 		add_settings_field( 'token', 'トークン', [
 			$this,
-			'token_setting_callback'
+			'token_setting_callback',
 		], 'colorme_wp_settings', 'general' );
 		add_settings_field( 'client_id', 'クライアントID', [
 			$this,
-			'client_id_setting_callback'
+			'client_id_setting_callback',
 		], 'colorme_wp_settings', 'general' );
 		add_settings_field( 'client_secret', 'クライアントシークレット', [
 			$this,
-			'client_secret_setting_callback'
+			'client_secret_setting_callback',
 		], 'colorme_wp_settings', 'general' );
 	}
 
@@ -107,7 +111,7 @@ class ColorMeShop_WP_Plugin {
 	public function token_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[token]"
-		       value="<?php esc_attr_e( $this->container['token'] ) ?>"/>
+			   value="<?php esc_attr_e( $this->container['token'] ) ?>"/>
 		<br/>
 		<?php
 
@@ -116,7 +120,7 @@ class ColorMeShop_WP_Plugin {
 	public function client_id_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_id]"
-		       value="<?php esc_attr_e( $this->container['client_id'] ) ?>"/><br/>
+			   value="<?php esc_attr_e( $this->container['client_id'] ) ?>"/><br/>
 		<?php
 
 	}
@@ -124,7 +128,7 @@ class ColorMeShop_WP_Plugin {
 	public function client_secret_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_secret]"
-		       value="<?php esc_attr_e( $this->container['client_secret'] ) ?>"/><br/>
+			   value="<?php esc_attr_e( $this->container['client_secret'] ) ?>"/><br/>
 		<?php
 
 	}
@@ -203,7 +207,7 @@ class ColorMeShop_WP_Plugin {
 		$shortcode_invoker = new Shortcode_Invoker( $this->container );
 		$classmap = include( __DIR__ . '/vendor/composer/autoload_classmap.php' );
 		foreach ( $classmap as $class => $path ) {
-			if ( strpos( $path, $baseDir . '/src/shortcodes/' ) !== 0) {
+			if ( strpos( $path, $baseDir . '/src/shortcodes/' ) !== 0 ) {
 				continue;
 			}
 			add_shortcode(

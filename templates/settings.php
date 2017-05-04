@@ -6,12 +6,12 @@
 		require( ABSPATH . 'wp-admin/options-head.php' );
 	}
 	?>
-    <form method="post" action="options.php">
+	<form method="post" action="options.php">
 		<?php
 		settings_fields( 'colorme_wp_settings' );
 		do_settings_sections( 'colorme_wp_settings' );
 		submit_button();
 		?>
-    </form>
+	</form>
 	<?php echo do_shortcode( '[authentication_link]' ); ?>
 </div>

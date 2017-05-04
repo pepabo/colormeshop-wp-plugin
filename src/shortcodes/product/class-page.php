@@ -27,7 +27,7 @@ class Page implements Shortcode_Interface {
 
 		if (
 			preg_match( '/\A[a-z]+\z/', $filtered_atts['template'] ) !== 1
-			|| !file_exists( $template_file )
+			|| ! file_exists( $template_file )
 		) {
 			return '';
 		}
