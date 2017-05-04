@@ -12,6 +12,7 @@
 require_once( "vendor/autoload.php" );
 
 use ColorMeShop\Models\Shop;
+use ColorMeShop\Models\Product_Api;
 use ColorMeShop\Shortcode_Invoker;
 use Pepabo\OAuth2\Client\Provider\ColorMeShop as OAuth2Client;
 use Pimple\Container;
@@ -34,8 +35,6 @@ class ColorMeShop_WP_Plugin {
 		add_action( 'init', [ $this, 'manage_item_routes' ] );
 		add_action( 'init', [ $this, 'custom_rewrite_tag' ], 10, 0 );
 		register_activation_hook( __FILE__, [ $this, 'flush_application_rewrite_rules' ] );
-		add_action( 'template_redirect', [ $this, 'front_controller' ] );
-		add_action( 'colormeshop_item', [ $this, 'show_product' ] );
 		add_action( 'colormeshop_category', [ $this, 'show_category' ] );
 		add_shortcode( 'authentication_link', [ $this, 'show_authentication_link' ] );
 
@@ -66,35 +65,6 @@ class ColorMeShop_WP_Plugin {
 	public function flush_application_rewrite_rules() {
 		$this->manage_item_routes();
 		flush_rewrite_rules();
-	}
-
-	public function front_controller() {
-		do_action( 'colormeshop_item' );
-	}
-
-	public function show_product() {
-		if ( ! $target_id = $this->container['target_id'] ) {
-			return;
-		}
-
-		$response = $this->fetch_product( $target_id );
-
-		if ( $response->product ) {
-			$product = $response->product;
-
-			add_action( 'wp_head', [ $this, 'product_title_tag' ] );
-			do_action( 'wp_head', $product->name );
-
-			include plugin_dir_path( __FILE__ ) . '/templates/item.php';
-		}
-	}
-
-	public function fetch_product( $id ) {
-		$url      = "https://api.shop-pro.jp/v1/products/$id.json";
-		$response = wp_remote_get( $url, [ 'headers' => [ 'Authorization' => "Bearer " . $this->container['token'] ] ] );
-		$content  = json_decode( $response["body"] );
-
-		return $content;
 	}
 
 	public function show_authentication_link( $attr, $content = null ) {
@@ -173,22 +143,26 @@ class ColorMeShop_WP_Plugin {
 			return get_option( 'colorme_wp_settings' );
 		};
 
+		$container['templates_dir'] = function ( $c ) {
+			return __DIR__ . '/templates';
+		};
+
 		$container['token'] = function ( $c ) {
 			$settings = $c['colorme_wp_settings'];
 
-			return array_key_exists( 'token', $settings ) ? $settings['token'] : '';
+			return $settings && array_key_exists( 'token', $settings ) ? $settings['token'] : '';
 		};
 
 		$container['client_id'] = function ( $c ) {
 			$settings = $c['colorme_wp_settings'];
 
-			return array_key_exists( 'client_id', $settings ) ? $settings['client_id'] : '';
+			return $settings && array_key_exists( 'client_id', $settings ) ? $settings['client_id'] : '';
 		};
 
 		$container['client_secret'] = function ( $c ) {
 			$settings = $c['colorme_wp_settings'];
 
-			return array_key_exists( 'client_secret', $settings ) ? $settings['client_secret'] : '';
+			return $settings && array_key_exists( 'client_secret', $settings ) ? $settings['client_secret'] : '';
 		};
 
 		$container['oauth2_client'] = function ( $c ) {
@@ -207,6 +181,10 @@ class ColorMeShop_WP_Plugin {
 
 		$container['model.shop'] = function ( $c ) {
 			return new Shop( $c['token'] );
+		};
+
+		$container['model.product_api'] = function ( $c ) {
+			return new Product_Api( $c['token'] );
 		};
 
 		$this->container = $container;
