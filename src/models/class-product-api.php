@@ -2,30 +2,30 @@
 namespace ColorMeShop\Models;
 
 class ProductApi {
-    /**
-     * @var string
-     */
-    private $token;
+	/**
+	 * @var string
+	 */
+	private $token;
 
 	/**
 	 * @var array
 	 */
 	private $caches = [];
 
-    /**
-     * @param string $token OAuth トークン
-     */
+	/**
+	 * @param string $token OAuth トークン
+	 */
 	public function __construct( $token ) {
-        $this->token = $token;
-    }
+		$this->token = $token;
+	}
 
-    /**
-     * @return Product
-     * @throws \RuntimeException
-     */
+	/**
+	 * @return Product
+	 * @throws \RuntimeException
+	 */
 	public function fetch( $product_id ) {
 		return new Product( $this->callApi( $product_id ) );
-    }
+	}
 
 	/**
 	 * @param int $product_id
@@ -38,7 +38,11 @@ class ProductApi {
 		}
 
 		$url      = "https://api.shop-pro.jp/v1/products/{$product_id}.json";
-		$response = wp_remote_get( $url, [ 'headers' => [ 'Authorization' => 'Bearer ' . $this->token ] ] );
+		$response = wp_remote_get( $url, [
+			'headers' => [
+				'Authorization' => 'Bearer ' . $this->token,
+			],
+		] );
 		if ( is_wp_error( $response ) || $response['response']['code'] !== 200 ) {
 			throw new \RuntimeException( '商品情報取得に失敗しました. product_id: ' . $product_id );
 		}
