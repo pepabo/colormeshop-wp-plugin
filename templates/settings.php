@@ -2,7 +2,7 @@
     <h2>カラーミーショップ連携設定</h2>
 	<?php
 	global $parent_file;
-	if ( $parent_file != 'options-general.php' ) {
+	if ( 'options-general.php' !== $parent_file ) {
 		require( ABSPATH . 'wp-admin/options-head.php' );
 	}
 	?>
