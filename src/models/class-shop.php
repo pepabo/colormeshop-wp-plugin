@@ -2,26 +2,30 @@
 namespace ColorMeShop\Models;
 
 class Shop {
-    /**
-     * @var string
-     */
-    private $token;
+	/**
+	 * @var string
+	 */
+	private $token;
 
-    /**
-     * @param string $token OAuth トークン
-     */
+	/**
+	 * @param string $token OAuth トークン
+	 */
 	public function __construct( $token ) {
-        $this->token = $token;
-    }
+		$this->token = $token;
+	}
 
-    /**
-     * @return \stdClass
-     */
+	/**
+	 * @return \stdClass
+	 */
 	public function fetch() {
-		$url        = "https://api.shop-pro.jp/v1/shop.json";
-		$response   = wp_remote_get( $url, [ 'headers' => [ 'Authorization' => "Bearer " . $this->token ] ] );
-		$content    = json_decode( $response["body"] );
+		$url        = 'https://api.shop-pro.jp/v1/shop.json';
+		$response   = wp_remote_get( $url, [
+			'headers' => [
+				'Authorization' => 'Bearer ' . $this->token,
+			],
+		] );
+		$content    = json_decode( $response['body'] );
 
-        return $content->shop;
-    }
+		return $content->shop;
+	}
 }

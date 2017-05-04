@@ -20,14 +20,17 @@ class Page implements Shortcode_Interface {
 	 */
 	public static function show( $container, $atts, $content, $tag ) {
 		$filtered_atts = shortcode_atts(
-			[ 'product_id' => $container['target_id'], 'template' => 'default' ],
+			[
+				'product_id' => $container['target_id'],
+				'template' => 'default',
+			],
 			$atts
 		);
 		$template_file = $container['templates_dir'] . '/product/' . $filtered_atts['template'] . '.php';
 
 		if (
 			preg_match( '/\A[a-z]+\z/', $filtered_atts['template'] ) !== 1
-			|| !file_exists( $template_file )
+			|| ! file_exists( $template_file )
 		) {
 			return '';
 		}

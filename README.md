@@ -37,3 +37,31 @@ $ cp wp.env.sample wp.env
 $ docker-compose up -d
 $ open http://localhost:8080
 ```
+
+## 開発ガイド
+
+### コーディング規約
+
+PHP_CodeSniffer の WordPress 用ルールセットである [WordPress-Coding-Standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards) を利用することを推奨しています。
+
+当プラグインでは上記ルールセットの [WordPress-Core](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards#rulesets) に準拠していますので、Pull Request を作成される際は予め規約エラーがないことを確認してください。
+
+
+```
+# インストール
+$ composer create-project wp-coding-standards/wpcs --no-dev
+# 規約チェック
+$ wpcs/vendor/bin/phpcs --standard=WordPress-Core hoge.php
+# インデントなどは自動整形できます
+$ wpcs/vendor/bin/phpcbf --standard=WordPress-Core hoge.php
+```
+
+### モデルやショートコードを追加したけどオートロードされない場合は
+
+[dump-autoload](https://getcomposer.org/doc/03-cli.md#dump-autoload) を実行してクラスマップを再生成してください。  
+WordPress の命名規則は [PSR](http://www.php-fig.org/psr/psr-4/) と異なるので、[classmap](https://getcomposer.org/doc/04-schema.md#classmap) を利用しています。
+
+
+```
+$ composer dump-autoload
+```
