@@ -1,7 +1,7 @@
 <?php
 namespace ColorMeShop\Models;
 
-class ProductApi {
+class Product_Api {
 	/**
 	 * @var string
 	 */

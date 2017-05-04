@@ -12,7 +12,7 @@
 require_once( "vendor/autoload.php" );
 
 use ColorMeShop\Models\Shop;
-use ColorMeShop\Models\ProductApi;
+use ColorMeShop\Models\Product_Api;
 use ColorMeShop\Shortcode_Invoker;
 use Pepabo\OAuth2\Client\Provider\ColorMeShop as OAuth2Client;
 use Pimple\Container;
@@ -184,7 +184,7 @@ class ColorMeShop_WP_Plugin {
 		};
 
 		$container['model.product_api'] = function ( $c ) {
-			return new ProductApi( $c['token'] );
+			return new Product_Api( $c['token'] );
 		};
 
 		$this->container = $container;
