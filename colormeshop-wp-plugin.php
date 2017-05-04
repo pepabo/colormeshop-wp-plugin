@@ -111,7 +111,7 @@ class ColorMeShop_WP_Plugin {
 	public function token_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[token]"
-			   value="<?php esc_attr_e( $this->container['token'] ) ?>"/>
+			   value="<?php esc_attr( $this->container['token'] ) ?>"/>
 		<br/>
 		<?php
 
@@ -120,7 +120,7 @@ class ColorMeShop_WP_Plugin {
 	public function client_id_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_id]"
-			   value="<?php esc_attr_e( $this->container['client_id'] ) ?>"/><br/>
+			   value="<?php esc_attr( $this->container['client_id'] ) ?>"/><br/>
 		<?php
 
 	}
@@ -128,7 +128,7 @@ class ColorMeShop_WP_Plugin {
 	public function client_secret_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_secret]"
-			   value="<?php esc_attr_e( $this->container['client_secret'] ) ?>"/><br/>
+			   value="<?php esc_attr( $this->container['client_secret'] ) ?>"/><br/>
 		<?php
 
 	}
