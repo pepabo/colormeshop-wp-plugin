@@ -65,3 +65,13 @@ WordPress の命名規則は [PSR](http://www.php-fig.org/psr/psr-4/) と異な�
 ```
 $ composer dump-autoload
 ```
+
+### ユニットテスト
+
+docker コンテナ内でユニットテストを実行するためのスクリプトを用意しています。  
+
+```
+$ tests/run.sh
+```
+
+初回実行時はテスト環境のインストールが走るので少し時間がかかります。
