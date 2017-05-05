@@ -1,6 +1,11 @@
 <?php
 namespace ColorMeShop\Models;
 
+/**
+ * ショップデータAPI
+ *
+ * @see https://shop-pro.jp/?mode=api_interface#get-v1shopjson
+ */
 class Shop {
 	/**
 	 * @var string
