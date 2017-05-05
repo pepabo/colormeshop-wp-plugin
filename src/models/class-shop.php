@@ -26,6 +26,7 @@ class Shop {
 
 	/**
 	 * @return \stdClass
+	 * @throws \RuntimeException
 	 */
 	public function fetch() {
 		if ( $this->cache ) {
@@ -38,7 +39,16 @@ class Shop {
 				'Authorization' => 'Bearer ' . $this->token,
 			],
 		] );
-		$this->cache = json_decode( $response['body'] );
+		if ( is_wp_error( $response ) || 200 !== $response['response']['code'] ) {
+			throw new \RuntimeException( 'ショップ情報取得に失敗しました.' );
+		}
+
+		$content = json_decode( $response['body'] );
+		if ( ! $content ) {
+			throw new \RuntimeException( 'ショップ情報のデコードに失敗しました.' );
+		}
+
+		$this->cache = $content;
 
 		return $this->cache->shop;
 	}

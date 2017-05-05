@@ -26,6 +26,13 @@ class Button implements Shortcode_Interface {
 			$atts
 		);
 
-		return "<script type='text/javascript' src='" . $container['model.shop']->fetch()->url . '/?mode=cartjs&pid=' . $filtered_atts['product_id'] . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
+		try {
+			return "<script type='text/javascript' src='" . $container['model.shop']->fetch()->url . '/?mode=cartjs&pid=' . $filtered_atts['product_id'] . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
+		} catch (\RuntimeException $e) {
+			if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+				error_log( $e );
+			}
+			return '';
+		}
 	}
 }
