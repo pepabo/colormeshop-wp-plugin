@@ -1,7 +1,7 @@
 <?php
 namespace ColorMeShop;
 
-use ColorMeShop\Models\Shop;
+use ColorMeShop\Models\Shop_Api;
 use ColorMeShop\Models\Product_Api;
 use Pepabo\OAuth2\Client\Provider\ColorMeShop as OAuth2Client;
 use Pimple\Container;
@@ -222,8 +222,8 @@ class Plugin {
 			return isset( $wp_query->query_vars['colorme_item'] ) ? $wp_query->query_vars['colorme_item'] : null;
 		};
 
-		$container['model.shop'] = function ( $c ) {
-			return new Shop( $c['token'] );
+		$container['model.shop_api'] = function ( $c ) {
+			return new Shop_Api( $c['token'] );
 		};
 
 		$container['model.product_api'] = function ( $c ) {

@@ -6,7 +6,7 @@ namespace ColorMeShop\Models;
  *
  * @see https://shop-pro.jp/?mode=api_interface#get-v1shopjson
  */
-class Shop {
+class Shop_Api {
 	/**
 	 * @var string
 	 */
