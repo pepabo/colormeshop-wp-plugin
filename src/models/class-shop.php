@@ -8,6 +8,11 @@ class Shop {
 	private $token;
 
 	/**
+	 * @var \stdClass
+	 */
+	private $cache;
+
+	/**
 	 * @param string $token OAuth トークン
 	 */
 	public function __construct( $token ) {
@@ -18,14 +23,18 @@ class Shop {
 	 * @return \stdClass
 	 */
 	public function fetch() {
+		if ( $this->cache ) {
+			return $this->cache->shop;
+		}
+
 		$url        = 'https://api.shop-pro.jp/v1/shop.json';
 		$response   = wp_remote_get( $url, [
 			'headers' => [
 				'Authorization' => 'Bearer ' . $this->token,
 			],
 		] );
-		$content    = json_decode( $response['body'] );
+		$this->cache = json_decode( $response['body'] );
 
-		return $content->shop;
+		return $this->cache->shop;
 	}
 }
