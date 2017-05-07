@@ -23,3 +23,14 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
+
+/**
+ * @return \Pimple\Container
+ */
+function _get_container() {
+	$plugin = new \ColorMeShop\Plugin();
+	$prop = (new \ReflectionClass( $plugin ))->getProperty( 'container' );
+	$prop->setAccessible( true );
+
+	return $prop->getValue( $plugin );
+}
