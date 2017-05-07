@@ -2,7 +2,8 @@ version: '2'
 
 services:
   wordpress:
-    image: wordpress:php7.0
+    build: .
+    container_name: "colormeshop_wp_plugin_wordpress"
     ports:
       - 8080:80
     env_file: wp.env
