@@ -54,6 +54,8 @@ class Product implements Shortcode_Interface {
 				[ $container, $filtered_atts, $content, $tag ]
 			);
 		}
+
+		return '';
 	}
 
 	/**

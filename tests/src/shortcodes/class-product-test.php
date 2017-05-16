@@ -102,6 +102,24 @@ class Product_Test extends \WP_UnitTestCase {
 	/**
 	 * @test
 	 */
+	public function show_存在しないdataが指定された場合_空文字を返す() {
+		$this->assertSame(
+			'',
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'XXX',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
 	public function id_商品IDを返す() {
 		$this->assertSame(
 			123,
