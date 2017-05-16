@@ -7,6 +7,9 @@ class Product_Test extends \WP_UnitTestCase {
 	/** @var \Pimple\Container */
 	private $container;
 
+	/** @var string */
+	private $error_log;
+
 	public function setUp() {
 		parent::setUp();
 		$product = new ProductModel([
@@ -31,6 +34,10 @@ class Product_Test extends \WP_UnitTestCase {
 		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
 			return $product_api;
 		};
+
+		// ログ出力先
+		$this->error_log = tempnam( sys_get_temp_dir(), 'TEST' );
+		ini_set( 'error_log', $this->error_log );
 	}
 
 	/**
@@ -72,6 +79,24 @@ class Product_Test extends \WP_UnitTestCase {
 				null
 			)
 		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function show_パラメータが不足している_デバッグが有効な場合_ログを出力する() {
+		$this->container['WP_DEBUG_LOG'] = function ( $c ) {
+			return true;
+		};
+
+		Product::show(
+			$this->container,
+			[],
+			null,
+			null
+		);
+
+		$this->assertStringMatchesFormat( '%aパラメータが不足しています%a',  file_get_contents( $this->error_log ) );
 	}
 
 	/**
@@ -120,6 +145,39 @@ class Product_Test extends \WP_UnitTestCase {
 				null
 			)
 		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function show_商品情報の取得に失敗した_デバッグが有効な場合_ログを出力する() {
+		$this->container['WP_DEBUG_LOG'] = function ( $c ) {
+			return true;
+		};
+
+		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
+							->setConstructorArgs( [ 'dummy_token' ] )
+							->setMethods( [ 'fetch' ] )
+							->getMock();
+		$product_api->expects( $this->any() )
+					->method( 'fetch' )
+					->will( $this->throwException( new \RuntimeException() ) );
+
+		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
+			return $product_api;
+		};
+
+		Product::show(
+			$this->container,
+			[
+				'product_id' => 123,
+				'data' => 'id',
+			],
+			null,
+			null
+		);
+
+		$this->assertStringMatchesFormat( '%aException%a',  file_get_contents( $this->error_log ) );
 	}
 
 	/**
