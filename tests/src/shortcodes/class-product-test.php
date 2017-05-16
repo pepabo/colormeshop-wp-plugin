@@ -16,19 +16,19 @@ class Product_Test extends \WP_UnitTestCase {
 				'price' => 1200,
 				'sales_price' => 1000,
 				'members_price' => 800,
-			]
+			],
 		]);
 
-		$product_api = $this->getMockBuilder('\ColorMeShop\Models\Product_Api')
-			->setConstructorArgs(['dummy_token'])
-			->setMethods([ 'fetch'])
+		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
+			->setConstructorArgs( [ 'dummy_token' ] )
+			->setMethods( [ 'fetch' ] )
 			->getMock();
-		$product_api->expects($this->any())
-			->method('fetch')
-			->willReturn($product);
+		$product_api->expects( $this->any() )
+			->method( 'fetch' )
+			->willReturn( $product );
 
 		$this->container = _get_container();
-		$this->container['model.product_api'] = function ($c) use ($product_api) {
+		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
 			return $product_api;
 		};
 	}
@@ -38,6 +38,40 @@ class Product_Test extends \WP_UnitTestCase {
 	 */
 	public function name_ショートコード名を返す() {
 		$this->assertSame( 'colormeshop_product', Product::name() );
+	}
+
+	/**
+	 * @test
+	 */
+	public function show_product_idが無い場合_空文字を返す() {
+		$this->assertSame(
+			'',
+			Product::show(
+				$this->container,
+				[
+					'data' => 'id',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function show_dataが無い場合_空文字を返す() {
+		$this->assertSame(
+			'',
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+				],
+				null,
+				null
+			)
+		);
 	}
 
 	/**
