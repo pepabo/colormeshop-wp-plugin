@@ -95,6 +95,36 @@ class Product_Test extends \WP_UnitTestCase {
 	/**
 	 * @test
 	 */
+	public function show_商品情報の取得に失敗した場合_空文字を返す() {
+		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
+							->setConstructorArgs( [ 'dummy_token' ] )
+							->setMethods( [ 'fetch' ] )
+							->getMock();
+		$product_api->expects( $this->any() )
+					->method( 'fetch' )
+					->will( $this->throwException( new \RuntimeException() ) );
+
+		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
+			return $product_api;
+		};
+
+		$this->assertSame(
+			'',
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'id',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
 	public function name_商品名を返す() {
 		$this->assertSame(
 			'テスト商品',
