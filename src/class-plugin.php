@@ -190,6 +190,10 @@ class Plugin {
 			return __DIR__ . '/../templates';
 		};
 
+		$container['WP_DEBUG_LOG'] = function ( $c ) {
+			return defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG;
+		};
+
 		$container['token'] = function ( $c ) {
 			$settings = $c['colorme_wp_settings'];
 
