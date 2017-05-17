@@ -10,6 +10,9 @@ class Product_Test extends \WP_UnitTestCase {
 	/** @var string */
 	private $error_log;
 
+	/** @var string */
+	private $original_error_log;
+
 	public function setUp() {
 		parent::setUp();
 		$product = new ProductModel([
@@ -37,7 +40,12 @@ class Product_Test extends \WP_UnitTestCase {
 
 		// ログ出力先
 		$this->error_log = tempnam( sys_get_temp_dir(), 'TEST' );
-		ini_set( 'error_log', $this->error_log );
+		$this->original_error_log = ini_set( 'error_log', $this->error_log );
+	}
+
+	public function tearDown() {
+		parent::tearDown();
+		ini_set( 'error_log', $this->original_error_log );
 	}
 
 	/**
