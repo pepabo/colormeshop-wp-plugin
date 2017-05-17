@@ -38,7 +38,7 @@ class Page implements Shortcode_Interface {
 		try {
 			$product = $container['model.product_api']->fetch( $filtered_atts['product_id'] );
 		} catch ( \RuntimeException $e ) {
-			if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+			if ( $container['WP_DEBUG_LOG'] ) {
 				error_log( $e );
 			}
 			return '';
