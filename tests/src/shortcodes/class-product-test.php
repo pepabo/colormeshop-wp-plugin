@@ -19,6 +19,7 @@ class Product_Test extends \WP_UnitTestCase {
 			'product' => [
 				'id' => 123,
 				'name' => 'テスト商品',
+                'model_number' => 'テスト型番',
 				'price' => 1200,
 				'sales_price' => 1000,
 				'members_price' => 800,
@@ -277,4 +278,22 @@ class Product_Test extends \WP_UnitTestCase {
 			)
 		);
 	}
+
+    /**
+     * @test
+     */
+    public function model_型番を返す() {
+        $this->assertSame(
+            'テスト型番',
+            Product::show(
+                $this->container,
+                [
+                    'product_id' => 123,
+                    'data' => 'model',
+                ],
+                null,
+                null
+            )
+        );
+    }
 }

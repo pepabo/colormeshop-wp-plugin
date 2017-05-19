@@ -84,6 +84,19 @@ class Product implements Shortcode_Interface {
 		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->name;
 	}
 
+    /**
+     * 型番
+     *
+     * @param \Pimple\Container $container
+     * @param array $filtered_atts
+     * @param string $content
+     * @param string $tag
+     * @return string
+     */
+    private static function _model( $container, $filtered_atts, $content, $tag ) {
+        return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->model_number;
+    }
+
 	/**
 	 * 定価
 	 *
