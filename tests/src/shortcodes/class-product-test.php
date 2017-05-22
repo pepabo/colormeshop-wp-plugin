@@ -23,6 +23,7 @@ class Product_Test extends \WP_UnitTestCase {
 				'price' => 1200,
 				'sales_price' => 1000,
 				'members_price' => 800,
+				'unit' => '個',
 			],
 		]);
 
@@ -296,4 +297,22 @@ class Product_Test extends \WP_UnitTestCase {
             )
         );
     }
+
+	/**
+	 * @test
+	 */
+	public function unit_単位を返す() {
+		$this->assertSame(
+			'個',
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'unit',
+				],
+				null,
+				null
+			)
+		);
+	}
 }
