@@ -185,6 +185,12 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _explain( $container, $filtered_atts, $content, $tag ) {
-		return nl2br($container['model.product_api']->fetch( $filtered_atts['product_id'] )->expl);
+		$p = $container['model.product_api']->fetch( $filtered_atts['product_id'] );
+		// モバイルデバイスの場合はスマートフォン用の説明を返す(フィーチャーフォン未対応)
+		if ( $p->smartphone_expl !== null && $p->smartphone_expl !== '' && $container['is_mobile'] ) {
+			return nl2br($p->smartphone_expl);
+		}
+
+		return nl2br($p->expl);
 	}
 }

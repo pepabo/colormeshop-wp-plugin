@@ -20,6 +20,11 @@ class Product_Test extends \WP_UnitTestCase {
 説明のテスト
 説明のテスト
 __EOS__;
+		$smartphone_expl = <<<"__EOS__"
+説明のテスト(スマートフォン)
+説明のテスト(スマートフォン)
+説明のテスト(スマートフォン)
+__EOS__;
 
 		$product = new ProductModel([
 			'product' => [
@@ -33,6 +38,7 @@ __EOS__;
 				'weight' => 2000,
 				'simple_expl' => '簡易説明のテスト',
 				'expl' => $expl,
+				'smartphone_expl' => $smartphone_expl,
 			],
 		]);
 
@@ -369,6 +375,33 @@ __EOS__;
 説明のテスト<br />
 説明のテスト<br />
 説明のテスト
+__EOS__;
+
+		$this->assertSame(
+			$expected,
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'explain',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function explain_モバイルデバイスの場合スマートフォン用説明を返す() {
+		$this->container['is_mobile'] = function ($c) {
+			return true;
+		};
+		$expected = <<<"__EOS__"
+説明のテスト(スマートフォン)<br />
+説明のテスト(スマートフォン)<br />
+説明のテスト(スマートフォン)
 __EOS__;
 
 		$this->assertSame(
