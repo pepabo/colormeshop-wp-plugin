@@ -24,6 +24,7 @@ class Product_Test extends \WP_UnitTestCase {
 				'sales_price' => 1000,
 				'members_price' => 800,
 				'unit' => '個',
+				'weight' => 2000,
 			],
 		]);
 
@@ -309,6 +310,24 @@ class Product_Test extends \WP_UnitTestCase {
 				[
 					'product_id' => 123,
 					'data' => 'unit',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function weight_重量を返す() {
+		$this->assertSame(
+			2000,
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'weight',
 				],
 				null,
 				null
