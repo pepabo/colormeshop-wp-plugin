@@ -193,4 +193,17 @@ class Product implements Shortcode_Interface {
 
 		return nl2br($p->expl);
 	}
+
+	/**
+	 * 個別送料
+	 *
+	 * @param \Pimple\Container $container
+	 * @param array $filtered_atts
+	 * @param string $content
+	 * @param string $tag
+	 * @return string
+	 */
+	private static function _postage( $container, $filtered_atts, $content, $tag ) {
+		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->delivery_charge;
+	}
 }

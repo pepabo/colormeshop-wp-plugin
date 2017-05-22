@@ -39,6 +39,7 @@ __EOS__;
 				'simple_expl' => '簡易説明のテスト',
 				'expl' => $expl,
 				'smartphone_expl' => $smartphone_expl,
+				'delivery_charge' => 1000,
 			],
 		]);
 
@@ -411,6 +412,24 @@ __EOS__;
 				[
 					'product_id' => 123,
 					'data' => 'explain',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function postage_個別送料を返す() {
+		$this->assertSame(
+			1000,
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'postage',
 				],
 				null,
 				null
