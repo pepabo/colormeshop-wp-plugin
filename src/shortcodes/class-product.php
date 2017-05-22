@@ -174,4 +174,17 @@ class Product implements Shortcode_Interface {
 	private static function _simple_explain( $container, $filtered_atts, $content, $tag ) {
 		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->simple_expl;
 	}
+
+	/**
+	 * 商品詳細説明
+	 *
+	 * @param \Pimple\Container $container
+	 * @param array $filtered_atts
+	 * @param string $content
+	 * @param string $tag
+	 * @return string
+	 */
+	private static function _explain( $container, $filtered_atts, $content, $tag ) {
+		return nl2br($container['model.product_api']->fetch( $filtered_atts['product_id'] )->expl);
+	}
 }

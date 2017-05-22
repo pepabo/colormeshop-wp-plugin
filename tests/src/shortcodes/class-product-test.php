@@ -15,6 +15,12 @@ class Product_Test extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
+		$expl = <<<"__EOS__"
+説明のテスト
+説明のテスト
+説明のテスト
+__EOS__;
+
 		$product = new ProductModel([
 			'product' => [
 				'id' => 123,
@@ -26,6 +32,7 @@ class Product_Test extends \WP_UnitTestCase {
 				'unit' => '個',
 				'weight' => 2000,
 				'simple_expl' => '簡易説明のテスト',
+				'expl' => $expl,
 			],
 		]);
 
@@ -347,6 +354,30 @@ class Product_Test extends \WP_UnitTestCase {
 				[
 					'product_id' => 123,
 					'data' => 'simple_explain',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function explain_商品詳細説明を返す() {
+		$expected = <<<"__EOS__"
+説明のテスト<br />
+説明のテスト<br />
+説明のテスト
+__EOS__;
+
+		$this->assertSame(
+			$expected,
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'explain',
 				],
 				null,
 				null
