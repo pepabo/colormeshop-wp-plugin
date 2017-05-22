@@ -25,6 +25,7 @@ class Product_Test extends \WP_UnitTestCase {
 				'members_price' => 800,
 				'unit' => '個',
 				'weight' => 2000,
+				'simple_expl' => '簡易説明のテスト',
 			],
 		]);
 
@@ -328,6 +329,24 @@ class Product_Test extends \WP_UnitTestCase {
 				[
 					'product_id' => 123,
 					'data' => 'weight',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function simple_explain_簡易説明を返す() {
+		$this->assertSame(
+			'簡易説明のテスト',
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'simple_explain',
 				],
 				null,
 				null
