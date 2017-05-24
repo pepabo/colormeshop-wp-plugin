@@ -25,6 +25,7 @@
                         </div>
                     </div>
                 </div>
+                <a id="colorme_settings"></a>
                 <div class="meta-box-sortables ui-sortable">
                     <div class="postbox">
                         <h2 class="hndle">カラーミーショップ WordPress プラグインをインストールしていただきありがとうございます！</h2>
@@ -154,6 +155,7 @@
                             <ul>
                                 <li><a href="https://shop-pro.jp/" target="_blank">カラーミーショップ</a></li>
                                 <li><a href="#">プラグインについてのご質問・ご要望</a></li>
+                                <li><a href="#colorme_settings">プラグイン設定手順</a></li>
                                 <li><a href="#colorme_shortcode">ご利用可能なショートコード</a></li>
                             </ul>
 						</div>
