@@ -96,18 +96,18 @@ class Product implements Shortcode_Interface {
 		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->name;
 	}
 
-    /**
-     * 型番
-     *
-     * @param \Pimple\Container $container
-     * @param array $filtered_atts
-     * @param string $content
-     * @param string $tag
-     * @return string
-     */
-    private static function _model( $container, $filtered_atts, $content, $tag ) {
-        return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->model_number;
-    }
+	/**
+	 * 型番
+	 *
+	 * @param \Pimple\Container $container
+	 * @param array $filtered_atts
+	 * @param string $content
+	 * @param string $tag
+	 * @return string
+	 */
+	private static function _model( $container, $filtered_atts, $content, $tag ) {
+		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->model_number;
+	}
 
 	/**
 	 * 定価
@@ -199,11 +199,11 @@ class Product implements Shortcode_Interface {
 	private static function _explain( $container, $filtered_atts, $content, $tag ) {
 		$p = $container['model.product_api']->fetch( $filtered_atts['product_id'] );
 		// モバイルデバイスの場合はスマートフォン用の説明を返す(フィーチャーフォン未対応)
-		if ( $p->smartphone_expl !== null && $p->smartphone_expl !== '' && $container['is_mobile'] ) {
-			return nl2br($p->smartphone_expl);
+		if ( null !== $p->smartphone_expl && '' !== $p->smartphone_expl && $container['is_mobile'] ) {
+			return nl2br( $p->smartphone_expl );
 		}
 
-		return nl2br($p->expl);
+		return nl2br( $p->expl );
 	}
 
 	/**

@@ -30,7 +30,7 @@ __EOS__;
 			'product' => [
 				'id' => 123,
 				'name' => 'テスト商品',
-                'model_number' => 'テスト型番',
+				'model_number' => 'テスト型番',
 				'price' => 1200,
 				'sales_price' => 1000,
 				'members_price' => 800,
@@ -237,12 +237,12 @@ __EOS__;
 			],
 		]);
 		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-		                    ->setConstructorArgs( [ 'dummy_token' ] )
-		                    ->setMethods( [ 'fetch' ] )
-		                    ->getMock();
+							->setConstructorArgs( [ 'dummy_token' ] )
+							->setMethods( [ 'fetch' ] )
+							->getMock();
 		$product_api->expects( $this->any() )
-		            ->method( 'fetch' )
-		            ->willReturn( $product );
+					->method( 'fetch' )
+					->willReturn( $product );
 		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
 			return $product_api;
 		};
@@ -333,23 +333,23 @@ __EOS__;
 		);
 	}
 
-    /**
-     * @test
-     */
-    public function model_型番を返す() {
-        $this->assertSame(
-            'テスト型番',
-            Product::show(
-                $this->container,
-                [
-                    'product_id' => 123,
-                    'data' => 'model',
-                ],
-                null,
-                null
-            )
-        );
-    }
+	/**
+	 * @test
+	 */
+	public function model_型番を返す() {
+		$this->assertSame(
+			'テスト型番',
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'model',
+				],
+				null,
+				null
+			)
+		);
+	}
 
 	/**
 	 * @test
@@ -433,7 +433,7 @@ __EOS__;
 	 * @test
 	 */
 	public function explain_モバイルデバイスの場合スマートフォン用説明を返す() {
-		$this->container['is_mobile'] = function ($c) {
+		$this->container['is_mobile'] = function ( $c ) {
 			return true;
 		};
 		$expected = <<<"__EOS__"
