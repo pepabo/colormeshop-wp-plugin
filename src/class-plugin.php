@@ -126,7 +126,7 @@ class Plugin {
 	 */
 	public function page_init() {
 		register_setting( 'colorme_wp_settings', 'colorme_wp_settings', [ $this, 'settings_sanitize' ] );
-		add_settings_section( 'general', '基本設定', '', 'colorme_wp_settings' );
+		add_settings_section( 'general', '', '', 'colorme_wp_settings' );
 		add_settings_field( 'client_id', 'クライアントID', [
 			$this,
 			'client_id_setting_callback',
@@ -148,7 +148,7 @@ class Plugin {
 	public function token_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[token]"
-			   value="<?php echo esc_attr( $this->container['token'] ) ?>"/>
+			   value="<?php echo esc_attr( $this->container['token'] ) ?>" class="regular-text" />
 		<br/>
 		<?php
 
@@ -157,7 +157,7 @@ class Plugin {
 	public function client_id_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_id]"
-			   value="<?php echo esc_attr( $this->container['client_id'] ) ?>"/><br/>
+			   value="<?php echo esc_attr( $this->container['client_id'] ) ?>" class="regular-text" /><br/>
 		<?php
 
 	}
@@ -165,7 +165,7 @@ class Plugin {
 	public function client_secret_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_secret]"
-			   value="<?php echo esc_attr( $this->container['client_secret'] ) ?>"/><br/>
+			   value="<?php echo esc_attr( $this->container['client_secret'] ) ?>" class="regular-text" /><br/>
 		<?php
 
 	}
