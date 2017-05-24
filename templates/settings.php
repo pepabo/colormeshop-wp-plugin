@@ -46,6 +46,7 @@
 						<!-- .inside -->
 					</div>
 					<!-- .postbox -->
+                    <a id="colorme_shortcode"></a>
                     <div class="meta-box-sortables ui-sortable">
                         <div class="postbox">
                             <h2 class="hndle">ショートコード</h2>
@@ -124,6 +125,37 @@
 				<!-- .meta-box-sortables .ui-sortable -->
 			</div>
 			<!-- post-body-content -->
+            <!-- sidebar -->
+			<div id="postbox-container-1" class="postbox-container">
+				<div class="meta-box-sortables">
+					<div class="postbox">
+						<div class="inside">
+                            <ul>
+                                <li><a href="https://shop-pro.jp/" target="_blank">カラーミーショップ</a></li>
+                                <li><a href="#">プラグインについてのご質問・ご要望</a></li>
+                                <li><a href="#colorme_shortcode">ご利用可能なショートコード</a></li>
+                            </ul>
+						</div>
+						<!-- .inside -->
+					</div>
+					<!-- .postbox -->
+                    <div class="postbox">
+                        <h2 class="hndle">プラグインについて</h2>
+                        <div class="inside">
+                            <p>
+                                <a href="#">(プラグインのリポジトリURL)</a><br />
+                                当プラグインについて、お気づきの点やアイデアをお持ちのかたはぜひ開発にご参加ください。<br />
+                                また、「こんな機能あったら良さそうなんだけど、どうでしょう？」といったお話も大歓迎ですので気軽に投稿してみましょう!<br />
+                                <a href="https://pepabo.com/" target="_blank">GMO Pepabo, Inc.</a>
+                            </p>
+                        </div>
+                        <!-- .inside -->
+                    </div>
+                    <!-- .postbox -->
+				</div>
+				<!-- .meta-box-sortables -->
+			</div>
+			<!-- #postbox-container-1 .postbox-container -->
 		</div>
 		<!-- #post-body .metabox-holder .columns-2 -->
 		<br class="clear">
