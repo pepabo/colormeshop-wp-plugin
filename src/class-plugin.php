@@ -127,10 +127,6 @@ class Plugin {
 	public function page_init() {
 		register_setting( 'colorme_wp_settings', 'colorme_wp_settings', [ $this, 'settings_sanitize' ] );
 		add_settings_section( 'general', '基本設定', '', 'colorme_wp_settings' );
-		add_settings_field( 'token', 'トークン', [
-			$this,
-			'token_setting_callback',
-		], 'colorme_wp_settings', 'general' );
 		add_settings_field( 'client_id', 'クライアントID', [
 			$this,
 			'client_id_setting_callback',
@@ -138,6 +134,10 @@ class Plugin {
 		add_settings_field( 'client_secret', 'クライアントシークレット', [
 			$this,
 			'client_secret_setting_callback',
+		], 'colorme_wp_settings', 'general' );
+		add_settings_field( 'token', 'トークン', [
+			$this,
+			'token_setting_callback',
 		], 'colorme_wp_settings', 'general' );
 	}
 
