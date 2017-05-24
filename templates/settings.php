@@ -6,7 +6,7 @@
             <div id="post-body-content">
                 <div class="meta-box-sortables ui-sortable">
                     <div class="postbox">
-                        <h2>カラーミーショップ WordPress プラグインをインストールしていただきありがとうございます！</h2>
+                        <h2 class="hndle">カラーミーショップ WordPress プラグインをインストールしていただきありがとうございます！</h2>
                         <div class="inside">
                             <p>
                                 プラグインをご利用いただくには、いくつか設定が必要になりますので下記手順に沿って設定をお願いします。<br />
@@ -46,7 +46,80 @@
 						<!-- .inside -->
 					</div>
 					<!-- .postbox -->
-
+                    <div class="meta-box-sortables ui-sortable">
+                        <div class="postbox">
+                            <h2 class="hndle">ショートコード</h2>
+                            <div class="inside">
+                                <dl>
+                                    <dt>[colormeshop_product]</dt>
+                                    <dd>
+                                        <dl>
+                                            <dt>説明</dt>
+                                            <dd>商品情報を表示します</dd>
+                                            <dt>使い方</dt>
+                                            <dd><code>[colormeshop_product product_id="123" data="price"]</code></dd>
+                                            <dt>パラメータ</dt>
+                                            <dd>
+                                                <dl>
+                                                    <dt>product_id (商品ID)</dt>
+                                                    <dd>省略した場合は $_GET['colorme_item'] の値が使われます</dd>
+                                                    <dt>data (取得したい属性)</dt>
+                                                    <dd>
+                                                        <dl>
+                                                            <dt>利用可能な属性</dt>
+                                                            <dd>
+                                                                <ul>
+                                                                    <li>id (商品ID)</li>
+                                                                    <li>name (商品名)</li>
+                                                                    <li>model (型番)</li>
+                                                                    <li>price (定価)</li>
+                                                                    <li>regular_price (通常販売価格 (割引前の販売価格))</li>
+                                                                    <li>members_price (会員価格)</li>
+                                                                    <li>unit (単位)</li>
+                                                                    <li>weight (重量)</li>
+                                                                    <li>simple_explain (簡易説明)</li>
+                                                                    <li>explain (商品詳細説明)</li>
+                                                                </ul>
+                                                            </dd>
+                                                        </dl>
+                                                    </dd>
+                                                </dl>
+                                            </dd>
+                                        </dl>
+                                    </dd>
+                                    <dt>[colormeshop_product_page]</dt>
+                                    <dd>
+                                        <dl>
+                                            <dt>説明</dt>
+                                            <dd>テンプレートにレイアウトされている商品ページを表示します</dd>
+                                            <dt>使い方</dt>
+                                            <dd><code>[colormeshop_product_page product_id="123" template="default"]</code></dd>
+                                            <dt>パラメータ</dt>
+                                            <dd>
+                                                <dl>
+                                                    <dt>product_id (商品ID)</dt>
+                                                    <dd>省略した場合は $_GET['colorme_item'] の値が使われます</dd>
+                                                    <dt>template (テンプレート名)</dt>
+                                                    <dd>
+                                                        <dl>
+                                                            <dt>利用可能なテンプレート</dt>
+                                                            <dd>
+                                                                <ul>
+                                                                    <li>default (デフォルト)</li>
+                                                                </ul>
+                                                            </dd>
+                                                        </dl>
+                                                    </dd>
+                                                </dl>
+                                            </dd>
+                                        </dl>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <!-- .inside -->
+                        </div>
+                        <!-- .postbox -->
+                    </div>
 				</div>
 				<!-- .meta-box-sortables .ui-sortable -->
 			</div>
