@@ -227,6 +227,43 @@ __EOS__;
 	/**
 	 * @test
 	 */
+	public function number_format_価格未設定の場合_空文字を返す() {
+		// 定価(data="price")でテストする
+		$product = new ProductModel([
+			'product' => [
+				'id' => 123,
+				// 定価未設定
+				'price' => null,
+			],
+		]);
+		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
+		                    ->setConstructorArgs( [ 'dummy_token' ] )
+		                    ->setMethods( [ 'fetch' ] )
+		                    ->getMock();
+		$product_api->expects( $this->any() )
+		            ->method( 'fetch' )
+		            ->willReturn( $product );
+		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
+			return $product_api;
+		};
+
+		$this->assertSame(
+			'',
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'price',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
 	public function name_商品名を返す() {
 		$this->assertSame(
 			'テスト商品',
