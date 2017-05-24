@@ -247,7 +247,7 @@ __EOS__;
 	 */
 	public function price_定価を返す() {
 		$this->assertSame(
-			1200,
+			'1,200',
 			Product::show(
 				$this->container,
 				[
@@ -265,7 +265,7 @@ __EOS__;
 	 */
 	public function regular_price_通常販売価格を返す() {
 		$this->assertSame(
-			1000,
+			'1,000',
 			Product::show(
 				$this->container,
 				[
@@ -283,7 +283,7 @@ __EOS__;
 	 */
 	public function members_price_会員価格を返す() {
 		$this->assertSame(
-			800,
+			'800',
 			Product::show(
 				$this->container,
 				[

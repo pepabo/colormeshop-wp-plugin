@@ -59,6 +59,18 @@ class Product implements Shortcode_Interface {
 	}
 
 	/**
+	 * @param int|null $n
+	 * @return string
+	 */
+	private static function number_format( $n ) {
+		if ( is_null( $n ) ) {
+			return '';
+		}
+
+		return number_format( $n );
+	}
+
+	/**
 	 * 商品ID
 	 *
 	 * @param \Pimple\Container $container
@@ -107,7 +119,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _price( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->price;
+		return self::number_format( $container['model.product_api']->fetch( $filtered_atts['product_id'] )->price );
 	}
 
 	/**
@@ -120,7 +132,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _regular_price( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->sales_price;
+		return self::number_format( $container['model.product_api']->fetch( $filtered_atts['product_id'] )->sales_price );
 	}
 
 	/**
@@ -133,7 +145,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _members_price( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->members_price;
+		return self::number_format( $container['model.product_api']->fetch( $filtered_atts['product_id'] )->members_price );
 	}
 
 	/**
