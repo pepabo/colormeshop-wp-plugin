@@ -19,6 +19,18 @@ class Image_Test extends \WP_UnitTestCase {
 			'product' => [
 				'id' => 123,
 				'image_url' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123.jpg',
+                'images' => [
+                    [
+                        'src' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123_other1.jpg',
+                        'position' => 1,
+                        'mobile' => false,
+                    ],
+                    [
+                        'src' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123_other2.jpg',
+                        'position' => 2,
+                        'mobile' => false,
+                    ],
+                ],
 			],
 		]);
 
@@ -184,4 +196,35 @@ class Image_Test extends \WP_UnitTestCase {
 			)
 		);
 	}
+
+	/**
+     * @test
+     */
+    public function show_その他画像のタグを返す() {
+        $this->assertSame(
+            '<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123_other1.jpg" />',
+            Image::show(
+                $this->container,
+                [
+                    'product_id' => 123,
+                    'type' => 'other1',
+                ],
+                null,
+                null
+            )
+        );
+
+        $this->assertSame(
+            '<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123_other2.jpg" />',
+            Image::show(
+                $this->container,
+                [
+                    'product_id' => 123,
+                    'type' => 'other2',
+                ],
+                null,
+                null
+            )
+        );
+    }
 }
