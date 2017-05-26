@@ -22,6 +22,7 @@ class Image implements Shortcode_Interface {
 		$filtered_atts = shortcode_atts(
 			[
 				'product_id' => $container['target_id'],
+				'type' => 'main',
 			],
 			$atts
 		);
@@ -35,8 +36,18 @@ class Image implements Shortcode_Interface {
 			return '';
 		}
 
-		// TODO: wp_is_mobile() は #14 をマージしたら DI コンテナに置き換える. モバイルアクセスのテストを書く.
-		$image_url = ( $product->mobile_image_url && wp_is_mobile() ) ? $product->mobile_image_url : $product->image_url;
+		switch ( $filtered_atts['type'] ) {
+			case 'main':
+				// TODO: wp_is_mobile() は #14 をマージしたら DI コンテナに置き換える. モバイルアクセスのテストを書く.
+				$image_url = ( $product->mobile_image_url && wp_is_mobile() ) ? $product->mobile_image_url : $product->image_url;
+				break;
+			case 'thumbnail':
+				$image_url = $product->thumbnail_image_url;
+				break;
+			default:
+				return '';
+				break;
+		}
 
 		if ( ! $image_url ) {
 			return '';
