@@ -35,7 +35,10 @@ class Image implements Shortcode_Interface {
 			return '';
 		}
 
-		if ( ! $product->image_url ) {
+		// TODO: wp_is_mobile() は #14 をマージしたら DI コンテナに置き換える. モバイルアクセスのテストを書く.
+		$image_url = ( $product->mobile_image_url && wp_is_mobile() ) ? $product->mobile_image_url : $product->image_url;
+
+		if ( ! $image_url ) {
 			return '';
 		}
 
@@ -46,7 +49,7 @@ class Image implements Shortcode_Interface {
 
 		return sprintf(
 			'<img src="%s"%s />',
-			$product->image_url,
+			$image_url,
 			$attributes
 		);
 	}
