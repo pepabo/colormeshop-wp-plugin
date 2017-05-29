@@ -39,20 +39,18 @@ class Product implements Shortcode_Interface {
 			return '';
 		}
 
-		try {
-			$container['model.product_api']->fetch( $filtered_atts['product_id'] );
-		} catch ( \RuntimeException $e ) {
-			if ( $container['WP_DEBUG_LOG'] ) {
-				error_log( $e );
-			}
-			return '';
-		}
-
 		if ( method_exists( self::class, '_' . $filtered_atts['data'] ) ) {
-			return call_user_func_array(
-				[ self::class, '_' . $filtered_atts['data'] ],
-				[ $container, $filtered_atts, $content, $tag ]
-			);
+			try {
+				return call_user_func_array(
+					[ self::class, '_' . $filtered_atts['data'] ],
+					[ $container, $filtered_atts, $content, $tag ]
+				);
+			} catch ( \RuntimeException $e ) {
+				if ( $container['WP_DEBUG_LOG'] ) {
+					error_log( $e );
+				}
+				return '';
+			}
 		}
 
 		return '';
