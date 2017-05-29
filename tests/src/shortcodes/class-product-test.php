@@ -40,6 +40,8 @@ __EOS__;
 				'expl' => $expl,
 				'smartphone_expl' => $smartphone_expl,
 				'delivery_charge' => 1000,
+				'stock_managed' => true,
+				'stocks' => 1000,
 			],
 		]);
 
@@ -467,6 +469,60 @@ __EOS__;
 				[
 					'product_id' => 123,
 					'data' => 'postage',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function stocks_単位付きの在庫数を返す() {
+		$this->assertSame(
+			'1,000個',
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'stocks',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function stocks_在庫管理していない場合は空文字を返す() {
+		$product = new ProductModel([
+			'product' => [
+				'id' => 123,
+				'stock_managed' => false,
+				'stocks' => 1000,
+			],
+		]);
+		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
+			->setConstructorArgs( [ 'dummy_token' ] )
+			->setMethods( [ 'fetch' ] )
+			->getMock();
+		$product_api->expects( $this->any() )
+			->method( 'fetch' )
+			->willReturn( $product );
+		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
+			return $product_api;
+		};
+
+		$this->assertSame(
+			'',
+			Product::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'data' => 'stocks',
 				],
 				null,
 				null

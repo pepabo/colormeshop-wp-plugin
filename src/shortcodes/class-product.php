@@ -218,4 +218,22 @@ class Product implements Shortcode_Interface {
 	private static function _postage( $container, $filtered_atts, $content, $tag ) {
 		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->delivery_charge;
 	}
+
+	/**
+	 * 在庫数
+	 *
+	 * @param \Pimple\Container $container
+	 * @param array $filtered_atts
+	 * @param string $content
+	 * @param string $tag
+	 * @return string
+	 */
+	private static function _stocks( $container, $filtered_atts, $content, $tag ) {
+		$p = $container['model.product_api']->fetch( $filtered_atts['product_id'] );
+		if ( ! $p->stock_managed ) {
+			return '';
+		}
+
+		return number_format( $p->stocks ) . self::_unit( $container, $filtered_atts, $content, $tag );
+	}
 }
