@@ -20,6 +20,7 @@ class Image_Test extends \WP_UnitTestCase {
 				'id' => 123,
 				'image_url' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123.jpg',
 				'mobile_image_url' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123_mb.jpg',
+				'thumbnail_image_url' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123_th.jpg',
 				'images' => [
 					[
 						'src' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123_other1.jpg',
@@ -231,6 +232,24 @@ class Image_Test extends \WP_UnitTestCase {
 	/**
 	 * @test
 	 */
+	public function show_サムネイル用商品画像のタグを返す() {
+		$this->assertSame(
+			'<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123_th.jpg" />',
+			Image::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'type' => 'thumbnail',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
 	public function show_その他画像のタグを返す() {
 		$this->assertSame(
 			'<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123_other1.jpg" />',
@@ -286,6 +305,24 @@ class Image_Test extends \WP_UnitTestCase {
 				[
 					'product_id' => 123,
 					'type' => 'other2',
+				],
+				null,
+				null
+			)
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function show_存在しない画像の場合_空文字を返す() {
+		$this->assertSame(
+			'',
+			Image::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'type' => 'XXXXXXXX',
 				],
 				null,
 				null
