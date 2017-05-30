@@ -226,6 +226,10 @@ class Plugin {
 			return isset( $wp_query->query_vars['colorme_item'] ) ? $wp_query->query_vars['colorme_item'] : null;
 		};
 
+		$container['is_mobile'] = function ( $c ) {
+			return wp_is_mobile();
+		};
+
 		$container['model.shop_api'] = function ( $c ) {
 			return new Shop_Api( $c['token'] );
 		};
