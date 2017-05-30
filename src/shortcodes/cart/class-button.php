@@ -22,12 +22,13 @@ class Button implements Shortcode_Interface {
 		$filtered_atts = shortcode_atts(
 			[
 				'product_id' => $container['target_id'],
+				'style' => 'default',
 			],
 			$atts
 		);
 
 		try {
-			return "<script type='text/javascript' src='" . $container['model.shop_api']->fetch()->url . '/?mode=cartjs&pid=' . $filtered_atts['product_id'] . "&style=washi&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
+			return "<script type='text/javascript' src='" . $container['model.shop_api']->fetch()->url . '/?mode=cartjs&pid=' . $filtered_atts['product_id'] . '&style=' . $filtered_atts['style'] . "&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n' charset='euc-jp'></script>";
 		} catch ( \RuntimeException $e ) {
 			if ( $container['WP_DEBUG_LOG'] ) {
 				error_log( $e );
