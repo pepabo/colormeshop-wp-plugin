@@ -27,6 +27,12 @@ class Option_Test extends \WP_UnitTestCase {
 						'option_price' => 2000,
 						'option_members_price' => 1500,
 					],
+					[
+						'title' => '赤　×　M',
+						'stocks' => 500,
+						'option_price' => 1000,
+						'option_members_price' => 800,
+					],
 				],
 			],
 		]);
@@ -175,6 +181,24 @@ class Option_Test extends \WP_UnitTestCase {
 		);
 
 		$this->assertStringMatchesFormat( '%aException%a',  file_get_contents( $this->error_log ) );
+	}
+
+	/**
+	 * @test
+	 */
+	public function show_indexで取得するオプションを指定できる() {
+		$this->assertSame(
+			'赤　×　M',
+			Option::show(
+				$this->container,
+				[
+					'product_id' => 123,
+					'index' => 2,
+				],
+				null,
+				null
+			)
+		);
 	}
 
 	/**
