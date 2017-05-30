@@ -8,7 +8,7 @@ class Button implements Shortcode_Interface {
 	 * @return string
 	 */
 	public static function name() {
-		return 'cart_button';
+		return 'colormeshop_cart_button';
 	}
 
 	/**
