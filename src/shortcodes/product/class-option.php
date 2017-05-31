@@ -9,7 +9,7 @@ class Option implements Shortcode_Interface {
 	 * @return string
 	 */
 	public static function name() {
-		return 'colormeshop_product_option';
+		return 'colormeshop_option';
 	}
 
 	/**

@@ -110,13 +110,13 @@
                                             </dd>
                                         </dl>
                                     </dd>
-                                    <dt>[colormeshop_product_page]</dt>
+                                    <dt>[colormeshop_page]</dt>
                                     <dd>
                                         <dl>
                                             <dt>説明</dt>
                                             <dd>テンプレートにレイアウトされている商品ページを表示します</dd>
                                             <dt>使い方</dt>
-                                            <dd><code>[colormeshop_product_page product_id="123" template="default"]</code></dd>
+                                            <dd><code>[colormeshop_page product_id="123" template="default"]</code></dd>
                                             <dt>パラメータ</dt>
                                             <dd>
                                                 <dl>

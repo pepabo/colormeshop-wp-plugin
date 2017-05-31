@@ -8,7 +8,7 @@ class Image implements Shortcode_Interface {
 	 * @return string
 	 */
 	public static function name() {
-		return 'colormeshop_product_image';
+		return 'colormeshop_image';
 	}
 
 	/**
