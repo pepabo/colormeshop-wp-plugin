@@ -64,7 +64,7 @@ class Option_Test extends \WP_UnitTestCase {
 	 * @test
 	 */
 	public function name_ショートコード名を返す() {
-		$this->assertSame( 'colormeshop_product_option', Option::name() );
+		$this->assertSame( 'colormeshop_option', Option::name() );
 	}
 
 	/**

@@ -6,7 +6,7 @@ class Page_Test extends \WP_UnitTestCase {
 	 * @test
 	 */
 	public function name_ショートコード名を返す() {
-		$this->assertSame( 'colormeshop_product_page', Page::name() );
+		$this->assertSame( 'colormeshop_page', Page::name() );
 	}
 
 	/**

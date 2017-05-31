@@ -8,7 +8,7 @@ class Page implements Shortcode_Interface {
 	 * @return string
 	 */
 	public static function name() {
-		return 'colormeshop_product_page';
+		return 'colormeshop_page';
 	}
 
 	/**
