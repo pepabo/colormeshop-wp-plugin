@@ -38,8 +38,7 @@ class Image implements Shortcode_Interface {
 
 		switch ( $filtered_atts['type'] ) {
 			case 'main':
-				// TODO: wp_is_mobile() は #14 をマージしたら DI コンテナに置き換える. モバイルアクセスのテストを書く.
-				$image_url = ( $product->mobile_image_url && wp_is_mobile() ) ? $product->mobile_image_url : $product->image_url;
+				$image_url = ( $product->mobile_image_url && $container['is_mobile'] ) ? $product->mobile_image_url : $product->image_url;
 				break;
 			case 'thumbnail':
 				$image_url = $product->thumbnail_image_url;
@@ -110,10 +109,9 @@ class Image implements Shortcode_Interface {
 	 */
 	private static function extract_other_image( $container, $filtered_atts ) {
 		$index = self::extract_other_image_index( $filtered_atts['type'] );
-		// TODO: wp_is_mobile() は #14 をマージしたら DI コンテナに置き換える. モバイルアクセスのテストを書く.
 		$other_images = self::extract_other_images(
 			$container['model.product_api']->fetch( $filtered_atts['product_id'] ),
-			wp_is_mobile()
+			$container['is_mobile']
 		);
 
 		return isset( $other_images[ $index - 1 ] ) ? $other_images[ $index - 1 ]['src'] : '';
