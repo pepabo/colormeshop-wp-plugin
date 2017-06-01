@@ -139,6 +139,10 @@ class Plugin {
 			$this,
 			'token_setting_callback',
 		], 'colorme_wp_settings', 'general' );
+		add_settings_field( 'product_page_id', '商品ページID', [
+			$this,
+			'pruduct_page_id_setting_callback',
+		], 'colorme_wp_settings', 'general' );
 	}
 
 	public function create_admin_page() {
@@ -168,6 +172,14 @@ class Plugin {
 			   value="<?php echo esc_attr( $this->container['client_secret'] ) ?>" class="regular-text" /><br/>
 		<?php
 
+	}
+
+	public function pruduct_page_id_setting_callback() {
+		?>
+		<input type="text" id="message" name="colorme_wp_settings[product_page_id]"
+			   value="<?php echo esc_attr( $this->container['product_page_id'] ) ?>" class="small-text" />
+		<br/>
+		<?php
 	}
 
 	public function settings_sanitize( $inputs ) {
@@ -210,6 +222,12 @@ class Plugin {
 			$settings = $c['colorme_wp_settings'];
 
 			return $settings && array_key_exists( 'client_secret', $settings ) ? $settings['client_secret'] : '';
+		};
+
+		$container['product_page_id'] = function ( $c ) {
+			$settings = $c['colorme_wp_settings'];
+
+			return $settings && array_key_exists( 'product_page_id', $settings ) ? $settings['product_page_id'] : '';
 		};
 
 		$container['oauth2_client'] = function ( $c ) {
