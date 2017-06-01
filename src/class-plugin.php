@@ -95,8 +95,15 @@ class Plugin {
 			global $wp_query;
 			$wp_query->is_404 = false;
 			$wp_query->is_feed = true;
+
 			header( 'Content-Type:text/xml' );
-			echo $this->container['model.sitemap']->output();
+			try {
+				echo $this->container['model.sitemap']->output();
+			} catch ( \RuntimeException $e ) {
+				if ( $this->container['WP_DEBUG_LOG'] ) {
+					error_log( 'サイトマップの出力に失敗しました : ' . $e->getMessage() );
+				}
+			}
 			exit;
 		}
 	}
