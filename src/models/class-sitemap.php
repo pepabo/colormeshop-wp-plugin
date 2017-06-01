@@ -39,7 +39,7 @@ class Sitemap {
     public function output()
     {
         foreach ($this->product_api->fetchAll()['products'] as $p) {
-            $this->sitemap->add($this->make_feed_url($p), $p['update_date'], ChangeFrequency::WEEKLY, 1.0);
+            $this->sitemap->add($this->make_feed_url($p), $p['update_date'], ChangeFrequency::WEEKLY, 0.5);
         }
 
         return $this->sitemap->toString();
