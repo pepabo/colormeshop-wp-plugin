@@ -7,7 +7,7 @@
 		<br/>
 		<img src="<?php echo $product->image_url ?>">
 		<br/>
-		<?php echo do_shortcode( '[cart_button product_id=' . $product->id . ']' ); ?>
+		<?php echo do_shortcode( '[colormeshop_cart_button product_id=' . $product->id . ']' ); ?>
 		<br/>
 		<hr>
 		<h3>ちなみにそれ以外も以下のパラメータ抜けてます</h3>
