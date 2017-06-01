@@ -10,7 +10,5 @@
 		<?php echo do_shortcode( '[colormeshop_cart_button product_id=' . $product->id . ']' ); ?>
 		<br/>
 		<hr>
-		<h3>ちなみにそれ以外も以下のパラメータ抜けてます</h3>
-		<?php var_dump( $product ) ?>
 	</main>
 </div>
