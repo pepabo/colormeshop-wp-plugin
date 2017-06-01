@@ -46,6 +46,7 @@ class Plugin {
 
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
 
+		add_filter( 'template_redirect', array( $this, 'output_sitemap' ), 1, 0 );
 		remove_action( 'wp_head', '_wp_render_title_tag', 1 );
 	}
 
@@ -73,7 +74,29 @@ class Plugin {
 	 * @return void
 	 */
 	public function manage_item_routes() {
+		if ( $this->container['product_page_id'] ) {
+			// サイトマップ用のリライトルール
+			$product_page_path = str_replace( site_url(), '', get_permalink( $this->container['product_page_id'] ) );
+			$trimmed = trim( $product_page_path, '/' );
+			add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $this->container['product_page_id'] . '&colorme_sitemap=1', 'top' );
+		}
+
 		add_rewrite_rule( '^item/([^/]+)/?', 'index.php?colorme_item=$matches[1]', 'top' );
+	}
+
+	/**
+	 * サイトマップを出力する
+	 *
+	 * @return void
+	 */
+	public function output_sitemap() {
+		if ( get_query_var( 'colorme_sitemap' ) && $this->container['product_page_id'] && is_page( $this->container['product_page_id'] ) ) {
+			global $wp_query;
+			$wp_query->is_404 = false;
+			$wp_query->is_feed = true;
+			// TODO: サイトマップを出力する
+			exit;
+		}
 	}
 
 	/**
@@ -83,6 +106,7 @@ class Plugin {
 	 */
 	public function custom_rewrite_tag() {
 		add_rewrite_tag( '%colorme_item%', '([^&]+)' );
+		add_rewrite_tag( '%colorme_sitemap%', '([^&]+)' );
 	}
 
 	public function flush_application_rewrite_rules() {
