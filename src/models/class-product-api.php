@@ -62,4 +62,27 @@ class Product_Api {
 
 		return $content;
 	}
+
+	/**
+	 * @return array
+	 * @throws \RuntimeException
+	 */
+	public function fetchAll() {
+		$url      = 'https://api.shop-pro.jp/v1/products.json';
+		$response = wp_remote_get( $url, [
+			'headers' => [
+				'Authorization' => 'Bearer ' . $this->token,
+			],
+		] );
+		if ( is_wp_error( $response ) || 200 !== $response['response']['code'] ) {
+			throw new \RuntimeException( '商品情報取得に失敗しました.' );
+		}
+
+		$content  = json_decode( $response['body'], true );
+		if ( ! $content ) {
+			throw new \RuntimeException( '商品情報のデコードに失敗しました.' );
+		}
+
+		return $content;
+	}
 }
