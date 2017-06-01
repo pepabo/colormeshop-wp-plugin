@@ -2,6 +2,7 @@
 namespace ColorMeShop;
 
 use ColorMeShop\Models\Shop_Api;
+use ColorMeShop\Models\Sitemap;
 use ColorMeShop\Models\Product_Api;
 use Pepabo\OAuth2\Client\Provider\ColorMeShop as OAuth2Client;
 use Pimple\Container;
@@ -94,7 +95,8 @@ class Plugin {
 			global $wp_query;
 			$wp_query->is_404 = false;
 			$wp_query->is_feed = true;
-			// TODO: サイトマップを出力する
+			header( 'Content-Type:text/xml' );
+			echo $this->container['model.sitemap']->output();
 			exit;
 		}
 	}
@@ -250,6 +252,14 @@ class Plugin {
 			return isset( $wp_query->query_vars['colorme_item'] ) ? $wp_query->query_vars['colorme_item'] : null;
 		};
 
+		$container['product_page_url'] = function ( $c ) {
+			if ( ! $c['product_page_id'] ) {
+				return null;
+			}
+
+			return get_permalink( $c['product_page_id'] );
+		};
+
 		$container['is_mobile'] = function ( $c ) {
 			return wp_is_mobile();
 		};
@@ -260,6 +270,10 @@ class Plugin {
 
 		$container['model.product_api'] = function ( $c ) {
 			return new Product_Api( $c['token'] );
+		};
+
+		$container['model.sitemap'] = function ( $c ) {
+			return new Sitemap( $c['product_page_url'], $c['model.product_api'] );
 		};
 
 		$this->container = $container;
