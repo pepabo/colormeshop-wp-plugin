@@ -72,7 +72,7 @@ class Product_Api {
 			return $this->caches[ __FUNCTION__ ];
 		}
 
-		$url      = 'https://api.shop-pro.jp/v1/products.json?limit=50';
+		$url      = 'https://api.shop-pro.jp/v1/products.json?limit=50&display_state=0';
 		$response = wp_remote_get( $url, [
 			'headers' => [
 				'Authorization' => 'Bearer ' . $this->token,
