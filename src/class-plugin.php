@@ -46,9 +46,18 @@ class Plugin {
 		add_shortcode( 'authentication_link', [ $this, 'show_authentication_link' ] );
 
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
+		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 0 );
 
 		add_filter( 'template_redirect', array( $this, 'output_sitemap' ), 1, 0 );
 		remove_action( 'wp_head', '_wp_render_title_tag', 1 );
+	}
+
+	/**
+	 * プラグイン設定更新のコールバック
+	 */
+	public function on_update_settings() {
+		// 商品ページIDを元にサイトマップへのリライトを定義するため
+		$this->flush_application_rewrite_rules();
 	}
 
 	/**
