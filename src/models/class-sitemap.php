@@ -38,7 +38,7 @@ class Sitemap {
      */
     public function output()
     {
-        foreach ($this->product_api->fetchAll()['products'] as $p) {
+        foreach ($this->product_api->fetch_all()['products'] as $p) {
             $this->sitemap->add($this->make_feed_url($p), $p['update_date'], ChangeFrequency::WEEKLY, 0.5);
         }
 

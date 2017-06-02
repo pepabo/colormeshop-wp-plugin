@@ -67,7 +67,7 @@ class Product_Api {
 	 * @return array
 	 * @throws \RuntimeException
 	 */
-	public function fetchAll() {
+	public function fetch_all() {
 		if ( isset( $this->caches[ __FUNCTION__ ] ) ) {
 			return $this->caches[ __FUNCTION__ ];
 		}
