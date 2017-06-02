@@ -45,6 +45,33 @@ class Plugin {
 		add_shortcode( 'authentication_link', [ $this, 'show_authentication_link' ] );
 
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
+		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
+	}
+
+	/**
+	 * タイトルに商品情報を追加する
+	 *
+	 * @param array $title_parts
+	 * @return array
+	 */
+	public function filter_title( $title_parts ) {
+		if (
+			! $this->container['target_id']
+			|| ! $this->container['product_page_id']
+			|| ! is_page( $this->container['product_page_id'] )
+		) {
+			return $title_parts;
+		}
+
+		try {
+			$title_parts['title'] = $this->container['model.product_api']->fetch( $this->container['target_id'] )->name . ' - ' . $title_parts['title'];
+		} catch ( \RuntimeException $e ) {
+			if ( $this->container['WP_DEBUG_LOG'] ) {
+				error_log( 'タイトルのフィルタに失敗しました : ' . $e->getMessage() );
+			}
+		}
+
+		return $title_parts;
 	}
 
 	/**
