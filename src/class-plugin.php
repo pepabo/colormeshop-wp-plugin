@@ -266,11 +266,12 @@ class Plugin {
 			return $settings && array_key_exists( 'client_secret', $settings ) ? $settings['client_secret'] : '';
 		};
 
-		$container['product_page_id'] = function ( $c ) {
-			$settings = $c['colorme_wp_settings'];
+		$container['product_page_id'] = $container->factory(function ( $c ) {
+			// URLリライトを定義する際に最新の設定を取得するために都度DBからとる
+			$settings = get_option( 'colorme_wp_settings' );
 
 			return $settings && array_key_exists( 'product_page_id', $settings ) ? $settings['product_page_id'] : '';
-		};
+		});
 
 		$container['oauth2_client'] = function ( $c ) {
 			return new OAuth2Client( [
