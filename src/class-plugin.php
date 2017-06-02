@@ -45,8 +45,6 @@ class Plugin {
 		add_shortcode( 'authentication_link', [ $this, 'show_authentication_link' ] );
 
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
-
-		remove_action( 'wp_head', '_wp_render_title_tag', 1 );
 	}
 
 	/**
