@@ -68,6 +68,10 @@ class Product_Api {
 	 * @throws \RuntimeException
 	 */
 	public function fetchAll() {
+		if ( isset( $this->caches[ __FUNCTION__ ] ) ) {
+			return $this->caches[ __FUNCTION__ ];
+		}
+
 		$url      = 'https://api.shop-pro.jp/v1/products.json';
 		$response = wp_remote_get( $url, [
 			'headers' => [
@@ -82,6 +86,8 @@ class Product_Api {
 		if ( ! $content ) {
 			throw new \RuntimeException( '商品情報のデコードに失敗しました.' );
 		}
+
+		$this->caches[ __FUNCTION__ ] = $content;
 
 		return $content;
 	}
