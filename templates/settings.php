@@ -48,7 +48,7 @@
                                 作成したアカウントで<a href="https://api.shop-pro.jp/developers/sign_in" target="_blank">カラーミーショップDevelopers</a>にログイン後、<a href="https://api.shop-pro.jp/oauth/applications/new" target="_blank">アプリケーション追加</a>からプラグイン用のアプリケーションを追加してください。
                             </p>
                             <div>
-                                <img height="250" src="<?php echo $this->container['plugin_dir_url'] ?>/colormeshop-wp-plugin/screenshots/add_application.png" />
+                                <img height="250" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/add_application.png" />
 							</div>
 							<p>
 								リダイレクトURLは<input class="regular-text" type="text" value="http://<?php echo $_SERVER['SERVER_NAME'] . ( 80 === $_SERVER['SERVER_PORT'] ? '' : ':' . $_SERVER['SERVER_PORT']) ?>/wp-admin/admin-ajax.php" />を入力してください。
@@ -58,7 +58,7 @@
 								このページの基本設定に入力してください。
 							</p>
 							<div>
-								<img height="250" src="<?php echo $this->container['plugin_dir_url'] ?>/colormeshop-wp-plugin/screenshots/application_credentials.png" />
+								<img height="250" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/application_credentials.png" />
 							</div>
 							<p>
 								基本設定の「変更を保存」をクリックして保存後、「カラーミーショップアカウントで認証する」をクリックしてください。<br />
