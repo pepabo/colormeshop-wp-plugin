@@ -202,6 +202,10 @@ class Plugin {
 			return __DIR__ . '/../templates';
 		};
 
+		$container['plugin_dir_url'] = function ( $c ) {
+			return plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.php' );
+		};
+
 		$container['WP_DEBUG_LOG'] = function ( $c ) {
 			return defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG;
 		};
