@@ -10,4 +10,5 @@
  */
 require_once( 'vendor/autoload.php' );
 
-( new \ColorMeShop\Plugin )->register();
+$p = new \ColorMeShop\Plugin;
+$p->register();
