@@ -47,9 +47,34 @@ class Plugin {
 
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
 		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 0 );
-
 		add_filter( 'template_redirect', array( $this, 'output_sitemap' ), 1, 0 );
-		remove_action( 'wp_head', '_wp_render_title_tag', 1 );
+		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
+	}
+
+	/**
+	 * タイトルに商品情報を追加する
+	 *
+	 * @param array $title_parts
+	 * @return array
+	 */
+	public function filter_title( $title_parts ) {
+		if (
+			! $this->container['target_id']
+			|| ! $this->container['product_page_id']
+			|| ! is_page( $this->container['product_page_id'] )
+		) {
+			return $title_parts;
+		}
+
+		try {
+			$title_parts['title'] = $this->container['model.product_api']->fetch( $this->container['target_id'] )->name . ' - ' . $title_parts['title'];
+		} catch ( \RuntimeException $e ) {
+			if ( $this->container['WP_DEBUG_LOG'] ) {
+				error_log( 'タイトルのフィルタに失敗しました : ' . $e->getMessage() );
+			}
+		}
+
+		return $title_parts;
 	}
 
 	/**
@@ -242,6 +267,10 @@ class Plugin {
 
 		$container['templates_dir'] = function ( $c ) {
 			return __DIR__ . '/../templates';
+		};
+
+		$container['plugin_dir_url'] = function ( $c ) {
+			return plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.php' );
 		};
 
 		$container['WP_DEBUG_LOG'] = function ( $c ) {
