@@ -2,6 +2,7 @@
 namespace ColorMeShop;
 
 use ColorMeShop\Models\Shop_Api;
+use ColorMeShop\Models\Sitemap;
 use ColorMeShop\Models\Product_Api;
 use Pepabo\OAuth2\Client\Provider\ColorMeShop as OAuth2Client;
 use Pimple\Container;
@@ -45,6 +46,8 @@ class Plugin {
 		add_shortcode( 'authentication_link', [ $this, 'show_authentication_link' ] );
 
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
+		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 0 );
+		add_filter( 'template_redirect', array( $this, 'output_sitemap' ), 1, 0 );
 		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
 	}
 
@@ -75,6 +78,14 @@ class Plugin {
 	}
 
 	/**
+	 * プラグイン設定更新のコールバック
+	 */
+	public function on_update_settings() {
+		// 商品ページIDを元にサイトマップへのリライトを定義するため
+		$this->flush_application_rewrite_rules();
+	}
+
+	/**
 	 * OAuth 認証のコールバック処理
 	 *
 	 * @return void
@@ -98,7 +109,37 @@ class Plugin {
 	 * @return void
 	 */
 	public function manage_item_routes() {
+		if ( $this->container['product_page_id'] ) {
+			// サイトマップ用のリライトルール
+			$product_page_path = str_replace( site_url(), '', get_permalink( $this->container['product_page_id'] ) );
+			$trimmed = trim( $product_page_path, '/' );
+			add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $this->container['product_page_id'] . '&colorme_sitemap=1', 'top' );
+		}
+
 		add_rewrite_rule( '^item/([^/]+)/?', 'index.php?colorme_item=$matches[1]', 'top' );
+	}
+
+	/**
+	 * サイトマップを出力する
+	 *
+	 * @return void
+	 */
+	public function output_sitemap() {
+		if ( get_query_var( 'colorme_sitemap' ) && $this->container['product_page_id'] && is_page( $this->container['product_page_id'] ) ) {
+			global $wp_query;
+			$wp_query->is_404 = false;
+			$wp_query->is_feed = true;
+
+			header( 'Content-Type:text/xml' );
+			try {
+				echo $this->container['model.sitemap']->output();
+			} catch ( \RuntimeException $e ) {
+				if ( $this->container['WP_DEBUG_LOG'] ) {
+					error_log( 'サイトマップの出力に失敗しました : ' . $e->getMessage() );
+				}
+			}
+			exit;
+		}
 	}
 
 	/**
@@ -108,6 +149,7 @@ class Plugin {
 	 */
 	public function custom_rewrite_tag() {
 		add_rewrite_tag( '%colorme_item%', '([^&]+)' );
+		add_rewrite_tag( '%colorme_sitemap%', '([^&]+)' );
 	}
 
 	public function flush_application_rewrite_rules() {
@@ -253,11 +295,12 @@ class Plugin {
 			return $settings && array_key_exists( 'client_secret', $settings ) ? $settings['client_secret'] : '';
 		};
 
-		$container['product_page_id'] = function ( $c ) {
-			$settings = $c['colorme_wp_settings'];
+		$container['product_page_id'] = $container->factory(function ( $c ) {
+			// URLリライトを定義する際に最新の設定を取得するために都度DBからとる
+			$settings = get_option( 'colorme_wp_settings' );
 
 			return $settings && array_key_exists( 'product_page_id', $settings ) ? $settings['product_page_id'] : '';
-		};
+		});
 
 		$container['oauth2_client'] = function ( $c ) {
 			return new OAuth2Client( [
@@ -273,6 +316,14 @@ class Plugin {
 			return isset( $wp_query->query_vars['colorme_item'] ) ? $wp_query->query_vars['colorme_item'] : null;
 		};
 
+		$container['product_page_url'] = function ( $c ) {
+			if ( ! $c['product_page_id'] ) {
+				return null;
+			}
+
+			return get_permalink( $c['product_page_id'] );
+		};
+
 		$container['is_mobile'] = function ( $c ) {
 			return wp_is_mobile();
 		};
@@ -283,6 +334,10 @@ class Plugin {
 
 		$container['model.product_api'] = function ( $c ) {
 			return new Product_Api( $c['token'] );
+		};
+
+		$container['model.sitemap'] = function ( $c ) {
+			return new Sitemap( $c['product_page_url'], $c['model.product_api'] );
 		};
 
 		$this->container = $container;
