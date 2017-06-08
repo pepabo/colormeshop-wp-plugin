@@ -38,6 +38,7 @@ class Sitemap {
 	 * サイトマップを返す
 	 *
 	 * @return string
+	 * @throws \RuntimeException
 	 */
 	public function output() {
 		$request = $this->product_api->create_request();
@@ -49,11 +50,7 @@ class Sitemap {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
 
-		$contents  = json_decode( $response->getBody()->getContents(), true );
-		if ( ! $contents ) {
-			throw new \RuntimeException( '商品情報のデコードに失敗しました.' );
-		}
-
+		$contents = $this->decode_contents( $response->getBody()->getContents() );
 		$total = $contents['meta']['total'];
 
 		$requests = function () use ( $total ) {
@@ -65,10 +62,7 @@ class Sitemap {
 		$pool = new Pool($client, $requests(), [
 			'concurrency' => 5,
 			'fulfilled' => function ( ResponseInterface $r ) {
-				$contents = json_decode( $r->getBody()->getContents(), true );
-				if ( ! $contents ) {
-					throw new \RuntimeException( '商品情報のデコードに失敗しました.' );
-				}
+				$contents = $this->decode_contents( $r->getBody()->getContents() );
 				foreach ( $contents['products'] as $p ) {
 					$this->sitemap->add( $this->make_feed_url( $p ), $p['update_date'], ChangeFrequency::WEEKLY, 0.5 );
 				}
@@ -95,5 +89,19 @@ class Sitemap {
 
 		return $this->product_page_url . '&colorme_item=' . $product['id'];
 
+	}
+
+	/**
+	 * @param string $contents
+	 * @return array
+	 * @throws \RuntimeException
+	 */
+	private function decode_contents( $contents ) {
+		$contents = json_decode( $contents, true );
+		if ( ! $contents ) {
+			throw new \RuntimeException( '商品情報のデコードに失敗しました.' );
+		}
+
+		return $contents;
 	}
 }
