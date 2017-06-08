@@ -1,6 +1,8 @@
 <?php
 namespace ColorMeShop\Models;
 
+use GuzzleHttp\Psr7\Request;
+
 /**
  * 商品データAPI
  *
@@ -90,5 +92,26 @@ class Product_Api {
 		$this->caches[ __FUNCTION__ ] = $content;
 
 		return $content;
+	}
+
+	/**
+	 * @param int $offset
+	 * @return \Psr\Http\Message\RequestInterface
+	 */
+	public function create_request( $offset = 0 ) {
+		$query = http_build_query(
+			[
+				'limit' => 50,
+				'display_state' => 0,
+				'offset' => $offset,
+			]
+		);
+		return new Request(
+			'GET',
+			'https://api.shop-pro.jp/v1/products.json?' . $query,
+			[
+				'Authorization' => 'Bearer ' . $this->token,
+			]
+		);
 	}
 }
