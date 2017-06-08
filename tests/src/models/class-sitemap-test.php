@@ -75,4 +75,24 @@ __EOS__;
 		);
 		$this->assertSame( $expected, $sitemap->output() );
 	}
+
+	/**
+	 * @test
+	 * @group phpvcr
+	 * @vcr models/sitemap/output_more_than_50_items.yml
+	 */
+	public function output_商品数50以上の場合() {
+		$container = _get_container();
+		$container['token'] = function ( $c ) {
+			return 'dummy';
+		};
+		$sitemap = new Sitemap(
+			'https://example.com/shop/',
+			$container['model.product_api']
+		);
+
+		$matches = [];
+		preg_match_all( '#<loc>https://example\.com/shop/\?colorme_item=[0-9]+</loc>#', $sitemap->output(), $matches );
+		$this->assertCount( 101, $matches[0] );
+	}
 }
