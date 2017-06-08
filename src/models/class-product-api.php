@@ -63,7 +63,7 @@ class Product_Api {
 			throw new \RuntimeException( '商品情報取得に失敗しました. product_id: ' . $product_id );
 		}
 
-		$content  = self::decode_contents( $response['body'], true );
+		$content  = self::decode_contents( $response['body'] );
 
 		$this->caches[ $product_id ] = $content;
 
