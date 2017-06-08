@@ -41,37 +41,14 @@ class Sitemap {
 	 * @throws \RuntimeException
 	 */
 	public function output() {
-		$request = $this->product_api->create_request();
-
-		$client = new Client();
-		try {
-			$response = $client->send( $request );
-		} catch ( RequestException $e ) {
-			throw new \RuntimeException( '商品情報取得に失敗しました.' );
-		}
-
-		$contents = $this->decode_contents( $response->getBody()->getContents() );
-		$total = $contents['meta']['total'];
-
-		$requests = function () use ( $total ) {
-			for ( $offset = 0; $offset < $total; $offset += 50 ) {
-				yield $this->product_api->create_request( $offset );
-			}
-		};
-
-		$pool = new Pool($client, $requests(), [
-			'concurrency' => 5,
-			'fulfilled' => function ( ResponseInterface $r ) {
-				$contents = $this->decode_contents( $r->getBody()->getContents() );
+		$this->product_api->fetch_all_with_callback(
+			function ( ResponseInterface $r ) {
+				$contents = Product_Api::decode_contents( $r->getBody()->getContents() );
 				foreach ( $contents['products'] as $p ) {
 					$this->sitemap->add( $this->make_feed_url( $p ), $p['update_date'], ChangeFrequency::WEEKLY, 0.5 );
 				}
-			},
-			'rejected' => function ( $reason ) {
-				throw new \RuntimeException( $reason->getMessage() );
-			},
-		]);
-		$pool->promise()->wait();
+			}
+		);
 
 		return $this->sitemap->toString();
 	}
@@ -89,19 +66,5 @@ class Sitemap {
 
 		return $this->product_page_url . '&colorme_item=' . $product['id'];
 
-	}
-
-	/**
-	 * @param string $contents
-	 * @return array
-	 * @throws \RuntimeException
-	 */
-	private function decode_contents( $contents ) {
-		$contents = json_decode( $contents, true );
-		if ( ! $contents ) {
-			throw new \RuntimeException( '商品情報のデコードに失敗しました.' );
-		}
-
-		return $contents;
 	}
 }

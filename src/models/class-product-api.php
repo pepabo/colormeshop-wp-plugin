@@ -1,6 +1,9 @@
 <?php
 namespace ColorMeShop\Models;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Request;
 
 /**
@@ -95,6 +98,40 @@ class Product_Api {
 	}
 
 	/**
+	 * @param \Closure $fulfilled
+	 * @return void
+	 * @throws \RuntimeException
+	 */
+	public function fetch_all_with_callback( $fulfilled ) {
+		$request = $this->create_request();
+
+		$client = new Client();
+		try {
+			$response = $client->send( $request );
+		} catch ( RequestException $e ) {
+			throw new \RuntimeException( '商品情報取得に失敗しました.' );
+		}
+
+		$contents = self::decode_contents( $response->getBody()->getContents() );
+		$total = $contents['meta']['total'];
+
+		$requests = function () use ( $total ) {
+			for ( $offset = 0; $offset < $total; $offset += 50 ) {
+				yield $this->create_request( $offset );
+			}
+		};
+
+		$pool = new Pool($client, $requests(), [
+			'concurrency' => 5,
+			'fulfilled' => $fulfilled,
+			'rejected' => function ( $reason ) {
+				throw new \RuntimeException( $reason->getMessage() );
+			},
+		]);
+		$pool->promise()->wait();
+	}
+
+	/**
 	 * @param int $offset
 	 * @return \Psr\Http\Message\RequestInterface
 	 */
@@ -113,5 +150,19 @@ class Product_Api {
 				'Authorization' => 'Bearer ' . $this->token,
 			]
 		);
+	}
+
+	/**
+	 * @param string $contents
+	 * @return array
+	 * @throws \RuntimeException
+	 */
+	public static function decode_contents( $contents ) {
+		$contents = json_decode( $contents, true );
+		if ( ! $contents ) {
+			throw new \RuntimeException( '商品情報のデコードに失敗しました.' );
+		}
+
+		return $contents;
 	}
 }
