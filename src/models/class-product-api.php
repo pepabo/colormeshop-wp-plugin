@@ -66,32 +66,6 @@ class Product_Api {
 	}
 
 	/**
-	 * @return array
-	 * @throws \RuntimeException
-	 */
-	public function fetch_all() {
-		if ( isset( $this->caches[ __FUNCTION__ ] ) ) {
-			return $this->caches[ __FUNCTION__ ];
-		}
-
-		$url      = 'https://api.shop-pro.jp/v1/products.json?limit=50&display_state=0';
-		$response = wp_remote_get( $url, [
-			'headers' => [
-				'Authorization' => 'Bearer ' . $this->token,
-			],
-		] );
-		if ( is_wp_error( $response ) || 200 !== $response['response']['code'] ) {
-			throw new \RuntimeException( '商品情報取得に失敗しました.' );
-		}
-
-		$content  = self::decode_contents( $response['body'], true );
-
-		$this->caches[ __FUNCTION__ ] = $content;
-
-		return $content;
-	}
-
-	/**
 	 * @param \Closure $fulfilled
 	 * @return void
 	 * @throws \RuntimeException
