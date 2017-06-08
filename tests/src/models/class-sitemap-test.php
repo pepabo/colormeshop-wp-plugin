@@ -4,7 +4,6 @@ namespace ColorMeShop\Models;
 class Sitemap_Test extends \WP_UnitTestCase {
 	/**
 	 * @test
-	 * @group phpvcr
 	 * @vcr models/sitemap/output_default_permalink.yml
 	 */
 	public function output_商品ページのパーマリンクがデフォルトの場合() {
@@ -41,7 +40,6 @@ __EOS__;
 
 	/**
 	 * @test
-	 * @group phpvcr
 	 * @vcr models/sitemap/output_customized_permalink.yml
 	 */
 	public function output_商品ページのパーマリンクがカスタマイズされている場合() {
@@ -78,7 +76,6 @@ __EOS__;
 
 	/**
 	 * @test
-	 * @group phpvcr
 	 * @vcr models/sitemap/output_more_than_50_items.yml
 	 */
 	public function output_商品数50以上の場合() {

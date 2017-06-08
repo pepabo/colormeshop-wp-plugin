@@ -41,3 +41,6 @@ $configure->setCassettePath( 'tests/vcr_fixtures' );
 // UA の違いでフィクスチャが使われずテストが落ちてしまうのを避けるため 'headers' を除外
 // @see http://php-vcr.github.io/documentation/configuration/#request-matching
 $configure->enableRequestMatchers( array( 'method', 'url', 'query_string', 'host', 'body', 'post_fields' ) );
+// hook から 'soap' を除外する
+// docker イメージに SOAP モジュールがインストールされていないので除外しないと Fatal エラーになってしまう
+$configure->enableLibraryHooks( [ 'stream_wrapper', 'curl' ] );
