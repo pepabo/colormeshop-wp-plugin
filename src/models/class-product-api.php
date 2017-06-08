@@ -58,10 +58,7 @@ class Product_Api {
 			throw new \RuntimeException( '商品情報取得に失敗しました. product_id: ' . $product_id );
 		}
 
-		$content  = json_decode( $response['body'], true );
-		if ( ! $content ) {
-			throw new \RuntimeException( '商品情報のデコードに失敗しました. product_id: ' . $product_id );
-		}
+		$content  = self::decode_contents( $response['body'], true );
 
 		$this->caches[ $product_id ] = $content;
 
@@ -87,10 +84,7 @@ class Product_Api {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
 
-		$content  = json_decode( $response['body'], true );
-		if ( ! $content ) {
-			throw new \RuntimeException( '商品情報のデコードに失敗しました.' );
-		}
+		$content  = self::decode_contents( $response['body'], true );
 
 		$this->caches[ __FUNCTION__ ] = $content;
 
