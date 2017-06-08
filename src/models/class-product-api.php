@@ -71,6 +71,9 @@ class Product_Api {
 	 * @throws \RuntimeException
 	 */
 	public function fetch_all_with_callback( $fulfilled ) {
+		// 初回リクエスト
+		// - トータル件数を取得
+		// - トータル件数が 50 件以下なら, レスポンスに含まれる商品情報を利用して終了
 		$request = $this->create_request();
 
 		$client = new Client();
@@ -80,11 +83,18 @@ class Product_Api {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
 
+		// 初回リクエストで返ってくる商品情報を処理する
+		$fulfilled($response);
+
 		$contents = self::decode_contents( $response->getBody()->getContents() );
 		$total = $contents['meta']['total'];
+		if ( $total <= 50 ) {
+			return;
+		}
 
+		// 51 件目以降は並列リクエストする
 		$requests = function () use ( $total ) {
-			for ( $offset = 0; $offset < $total; $offset += 50 ) {
+			for ( $offset = 50; $offset < $total; $offset += 50 ) {
 				yield $this->create_request( $offset );
 			}
 		};
