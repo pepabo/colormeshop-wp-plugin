@@ -23,6 +23,11 @@ class Product_Api {
 	private $caches = [];
 
 	/**
+	 * @var int 1リクエストあたりの最大件数
+	 */
+	const MAXIMUM_NUMBER_PER_REQUEST = 50;
+
+	/**
 	 * @param string $token OAuth トークン
 	 */
 	public function __construct( $token ) {
@@ -88,13 +93,13 @@ class Product_Api {
 
 		$contents = self::decode_contents( $response->getBody()->getContents() );
 		$total = $contents['meta']['total'];
-		if ( $total <= 50 ) {
+		if ( $total <= self::MAXIMUM_NUMBER_PER_REQUEST ) {
 			return;
 		}
 
 		// 51 件目以降は並列リクエストする
 		$requests = function () use ( $total ) {
-			for ( $offset = 50; $offset < $total; $offset += 50 ) {
+			for ( $offset = self::MAXIMUM_NUMBER_PER_REQUEST; $offset < $total; $offset += self::MAXIMUM_NUMBER_PER_REQUEST ) {
 				yield $this->create_request( $offset );
 			}
 		};
@@ -116,7 +121,7 @@ class Product_Api {
 	public function create_request( $offset = 0 ) {
 		$query = http_build_query(
 			[
-				'limit' => 50,
+				'limit' => self::MAXIMUM_NUMBER_PER_REQUEST,
 				'display_state' => 0,
 				'offset' => $offset,
 			]
