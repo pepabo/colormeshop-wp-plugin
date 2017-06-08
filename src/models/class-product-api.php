@@ -76,10 +76,8 @@ class Product_Api {
 	 * @throws \RuntimeException
 	 */
 	public function fetch_all_with_callback( $fulfilled ) {
-		// 初回リクエスト
-		// - トータル件数を取得
-		// - トータル件数が 50 件以下なら, レスポンスに含まれる商品情報を利用して終了
-		$request = $this->create_request();
+		// トータル件数を取得
+		$request = $this->create_request( 1, 0 );
 
 		$client = new Client();
 		try {
@@ -88,19 +86,13 @@ class Product_Api {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
 
-		// 初回リクエストで返ってくる商品情報を処理する
-		$fulfilled($response);
-
 		$contents = self::decode_contents( $response->getBody()->getContents() );
 		$total = $contents['meta']['total'];
-		if ( $total <= self::MAXIMUM_NUMBER_PER_REQUEST ) {
-			return;
-		}
 
-		// 51 件目以降は並列リクエストする
+		// 商品情報を取得
 		$requests = function () use ( $total ) {
-			for ( $offset = self::MAXIMUM_NUMBER_PER_REQUEST; $offset < $total; $offset += self::MAXIMUM_NUMBER_PER_REQUEST ) {
-				yield $this->create_request( $offset );
+			for ( $offset = 0; $offset < $total; $offset += self::MAXIMUM_NUMBER_PER_REQUEST ) {
+				yield $this->create_request( self::MAXIMUM_NUMBER_PER_REQUEST, $offset );
 			}
 		};
 
@@ -115,13 +107,14 @@ class Product_Api {
 	}
 
 	/**
+	 * @param int $limit
 	 * @param int $offset
 	 * @return \Psr\Http\Message\RequestInterface
 	 */
-	public function create_request( $offset = 0 ) {
+	public function create_request( $limit, $offset ) {
 		$query = http_build_query(
 			[
-				'limit' => self::MAXIMUM_NUMBER_PER_REQUEST,
+				'limit' => $limit,
 				'display_state' => 0,
 				'offset' => $offset,
 			]
