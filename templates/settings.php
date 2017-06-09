@@ -67,6 +67,29 @@
 						</div>
 						<!-- .inside -->
 					</div>
+                    <div class="postbox">
+                        <h2 class="hndle">商品ページを作成できます！</h2>
+                        <div class="inside">
+                            <p>
+                                商品用の固定ページを作成し、<a href="#colorme_shortcode">ショートコード</a>を使って商品情報をレイアウトしてください。
+                            </p>
+                            <div>
+                                <a target="_blank" href="<?php echo $this->container['plugin_dir_url'] ?>screenshots/create_page.png"><img height="400" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/create_page.png" /></a>
+                            </div>
+                            <p>
+                                <code><商品ページのURL>?colorme_item=<商品ID></code> にアクセスすると...！
+                            </p>
+                            <div>
+                                <a target="_blank" href="<?php echo $this->container['plugin_dir_url'] ?>screenshots/shop_page.png"><img height="400" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/shop_page.png" /></a>
+                            </div>
+                        </div>
+                        <h2>ショートコードとかレイアウトとか難しい...おまかせで！というかたは</h2>
+                        <div class="inside">
+                            <p>
+                                本文に <input type="text" value="[colormeshop_page]" /> を貼り付けて保存してください！
+                            </p>
+                        </div>
+                    </div>
 					<!-- .postbox -->
                     <a id="colorme_shortcode"></a>
                     <div class="meta-box-sortables ui-sortable">
