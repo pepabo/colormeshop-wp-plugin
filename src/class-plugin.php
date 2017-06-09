@@ -170,10 +170,6 @@ class Plugin {
 		] ) . '">カラーミーショップアカウントで認証する</a>';
 	}
 
-	public function product_title_tag( $title ) {
-		echo '<title>' . $title . ' | ' . get_bloginfo() . '</title>';
-	}
-
 	/**
 	 * 管理画面にプラグイン設定ページを追加する
 	 *
