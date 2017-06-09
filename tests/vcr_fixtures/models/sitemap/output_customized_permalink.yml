@@ -1,0 +1,61 @@
+
+-
+    request:
+        method: GET
+        url: 'https://api.shop-pro.jp/v1/products.json?limit=1&display_state=0&offset=0'
+        headers:
+            Host: api.shop-pro.jp
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.2.1 curl/7.43.0 PHP/7.0.17'
+            Authorization: 'Bearer dummy'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx/1.12.0
+            Date: 'Thu, 08 Jun 2017 08:02:13 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Status: '200 OK'
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            ETag: 'W/"b2726fcfb3daba819b906f01cf1b0893"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: aebf90d0-8c50-4b98-8237-c82cb4858955
+            X-Runtime: '0.042486'
+        body: '{"products":[{"id":118515509,"account_id":"PA01356136","model_number":null,"name":"\u8272\u3005\u306a\u30aa\u30d7\u30b7\u30e7\u30f3\u304c\u3042\u308b\u5546\u54c1","category":{"id_big":2131603,"id_small":1},"group_ids":[],"display_state":"showing","sales_price":1000,"price":null,"members_price":500,"cost":null,"cool_charge":null,"delivery_charge":null,"stock_managed":true,"stocks":351,"min_num":null,"max_num":null,"sale_start_date":null,"sale_end_date":null,"unit":null,"weight":null,"soldout_display":false,"few_num":null,"sort":null,"simple_expl":null,"expl":null,"mobile_expl":null,"smartphone_expl":null,"make_date":1496123131,"update_date":1496123130,"memo":"","image_url":"http://img21.shop-pro.jp/PA01356/136/product/118515509.jpg?cmsp_timestamp=20170530144529","mobile_image_url":"http://img21.shop-pro.jp/PA01356/136/product/118515509_mb.jpg?cmsp_timestamp=20170530144529","thumbnail_image_url":"http://img21.shop-pro.jp/PA01356/136/product/118515509_th.jpg?cmsp_timestamp=20170530144529","images":[],"options":[{"id":64776608,"product_id":118515509,"account_id":"PA01356136","name":"\u30ab\u30e9\u30fc","values":["\u8d64","\u9752","&#40643;"],"make_date":1496123131,"update_date":1496123130},{"id":64776609,"product_id":118515509,"account_id":"PA01356136","name":"\u30b5\u30a4\u30ba","values":["S","M","L"],"make_date":1496123131,"update_date":1496123130}],"variants":[{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u8d64","option2_value":"S","title":"\u8d64\u3000\u00d7\u3000S","stocks":12,"model_number":"red_s","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u8d64","option2_value":"M","title":"\u8d64\u3000\u00d7\u3000M","stocks":23,"model_number":"red_m","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u8d64","option2_value":"L","title":"\u8d64\u3000\u00d7\u3000L","stocks":34,"model_number":"red_l","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u9752","option2_value":"S","title":"\u9752\u3000\u00d7\u3000S","stocks":56,"model_number":"blue_s","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u9752","option2_value":"M","title":"\u9752\u3000\u00d7\u3000M","stocks":21,"model_number":"blue_m","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u9752","option2_value":"L","title":"\u9752\u3000\u00d7\u3000L","stocks":32,"model_number":"blue_l","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"&#40643;","option2_value":"S","title":"&#40643;\u3000\u00d7\u3000S","stocks":43,"model_number":"yellow_s","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"&#40643;","option2_value":"M","title":"&#40643;\u3000\u00d7\u3000M","stocks":54,"model_number":"yellow_m","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"&#40643;","option2_value":"L","title":"&#40643;\u3000\u00d7\u3000L","stocks":76,"model_number":"yellow_l","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131}]}],"meta":{"total":2,"limit":1,"offset":0}}'
+-
+    request:
+        method: GET
+        url: 'https://api.shop-pro.jp/v1/products.json?limit=50&display_state=0&offset=0'
+        headers:
+            Host: api.shop-pro.jp
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.2.1 curl/7.43.0 PHP/7.0.17'
+            Authorization: 'Bearer dummy'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx/1.12.0
+            Date: 'Thu, 08 Jun 2017 08:02:13 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Status: '200 OK'
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            ETag: 'W/"37bb768fd3ddec2626ca528477504c21"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 3c362710-6136-4b8c-af84-c0f883fe50ac
+            X-Runtime: '0.052958'
+        body: '{"products":[{"id":118515509,"account_id":"PA01356136","model_number":null,"name":"\u8272\u3005\u306a\u30aa\u30d7\u30b7\u30e7\u30f3\u304c\u3042\u308b\u5546\u54c1","category":{"id_big":2131603,"id_small":1},"group_ids":[],"display_state":"showing","sales_price":1000,"price":null,"members_price":500,"cost":null,"cool_charge":null,"delivery_charge":null,"stock_managed":true,"stocks":351,"min_num":null,"max_num":null,"sale_start_date":null,"sale_end_date":null,"unit":null,"weight":null,"soldout_display":false,"few_num":null,"sort":null,"simple_expl":null,"expl":null,"mobile_expl":null,"smartphone_expl":null,"make_date":1496123131,"update_date":1496123130,"memo":"","image_url":"http://img21.shop-pro.jp/PA01356/136/product/118515509.jpg?cmsp_timestamp=20170530144529","mobile_image_url":"http://img21.shop-pro.jp/PA01356/136/product/118515509_mb.jpg?cmsp_timestamp=20170530144529","thumbnail_image_url":"http://img21.shop-pro.jp/PA01356/136/product/118515509_th.jpg?cmsp_timestamp=20170530144529","images":[],"options":[{"id":64776608,"product_id":118515509,"account_id":"PA01356136","name":"\u30ab\u30e9\u30fc","values":["\u8d64","\u9752","&#40643;"],"make_date":1496123131,"update_date":1496123130},{"id":64776609,"product_id":118515509,"account_id":"PA01356136","name":"\u30b5\u30a4\u30ba","values":["S","M","L"],"make_date":1496123131,"update_date":1496123130}],"variants":[{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u8d64","option2_value":"S","title":"\u8d64\u3000\u00d7\u3000S","stocks":12,"model_number":"red_s","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u8d64","option2_value":"M","title":"\u8d64\u3000\u00d7\u3000M","stocks":23,"model_number":"red_m","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u8d64","option2_value":"L","title":"\u8d64\u3000\u00d7\u3000L","stocks":34,"model_number":"red_l","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u9752","option2_value":"S","title":"\u9752\u3000\u00d7\u3000S","stocks":56,"model_number":"blue_s","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u9752","option2_value":"M","title":"\u9752\u3000\u00d7\u3000M","stocks":21,"model_number":"blue_m","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"\u9752","option2_value":"L","title":"\u9752\u3000\u00d7\u3000L","stocks":32,"model_number":"blue_l","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"&#40643;","option2_value":"S","title":"&#40643;\u3000\u00d7\u3000S","stocks":43,"model_number":"yellow_s","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"&#40643;","option2_value":"M","title":"&#40643;\u3000\u00d7\u3000M","stocks":54,"model_number":"yellow_m","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131},{"product_id":118515509,"account_id":"PA01356136","option1_value":"&#40643;","option2_value":"L","title":"&#40643;\u3000\u00d7\u3000L","stocks":76,"model_number":"yellow_l","few_num":null,"option_price":null,"option_members_price":null,"make_date":1496123131,"update_date":1496123131}]},{"id":117182895,"account_id":"PA01356136","model_number":"KATABAN","name":"\u8c61\u306e\u982d\u3092\u3082\u3063\u305f\u795e\u69d8","category":{"id_big":2131603,"id_small":1},"group_ids":[],"display_state":"showing","sales_price":999,"price":1200,"members_price":800,"cost":500,"cool_charge":null,"delivery_charge":200,"stock_managed":true,"stocks":100,"min_num":null,"max_num":null,"sale_start_date":null,"sale_end_date":null,"unit":"\u500b","weight":2000,"soldout_display":false,"few_num":null,"sort":null,"simple_expl":"\u8c61\u306e\u982d\u3092\u3082\u3063\u305f\u795e\u69d8\u306e\u7c21\u6613\u8aac\u660e","expl":"\u8c61\u306e\u982d\u3092\u3082\u3063\u305f\u795e\u69d8\u306e\u8aac\u660e\r\n\u8c61\u306e\u982d\u3092\u3082\u3063\u305f\u795e\u69d8\u306e\u8aac\u660e\r\n\u8c61\u306e\u982d\u3092\u3082\u3063\u305f\u795e\u69d8\u306e\u8aac\u660e","mobile_expl":"\u8c61\u306e\u982d\u3092\u3082\u3063\u305f\u795e\u69d8\u306e\u30d5\u30a3\u30fc\u30c1\u30e3\u30fc\u30d5\u30a9\u30f3\u7528\u8aac\u660e\r\n\u8c61\u306e\u982d\u3092\u3082\u3063\u305f\u795e\u69d8\u306e\u30d5\u30a3\u30fc\u30c1\u30e3\u30fc\u30d5\u30a9\u30f3\u7528\u8aac\u660e\r\n\u8c61\u306e\u982d\u3092\u3082\u3063\u305f\u795e\u69d8\u306e\u30d5\u30a3\u30fc\u30c1\u30e3\u30fc\u30d5\u30a9\u30f3\u7528\u8aac\u660e","smartphone_expl":"0","make_date":1493341796,"update_date":1496625834,"memo":"","image_url":"http://img21.shop-pro.jp/PA01356/136/product/117182895.png?cmsp_timestamp=20170525221232","mobile_image_url":null,"thumbnail_image_url":"http://img21.shop-pro.jp/PA01356/136/product/117182895_th.png?cmsp_timestamp=20170525221232","images":[{"src":"http://img21.shop-pro.jp/PA01356/136/product/117182895_o1.png?cmsp_timestamp=20170525221853","position":1,"mobile":false},{"src":"http://img21.shop-pro.jp/PA01356/136/product/117182895_o2.png?cmsp_timestamp=20170525221853","position":2,"mobile":false},{"src":"http://img21.shop-pro.jp/PA01356/136/product/117182895_o2_mb.jpg","position":2,"mobile":true}],"options":[],"variants":[]}],"meta":{"total":2,"limit":50,"offset":0}}'
