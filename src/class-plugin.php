@@ -43,8 +43,6 @@ class Plugin {
 			'flush_application_rewrite_rules',
 		] );
 		add_action( 'colormeshop_category', [ $this, 'show_category' ] );
-		add_shortcode( 'authentication_link', [ $this, 'show_authentication_link' ] );
-
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
 		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 0 );
 		add_filter( 'template_redirect', array( $this, 'output_sitemap' ), 1, 0 );
@@ -155,19 +153,6 @@ class Plugin {
 	public function flush_application_rewrite_rules() {
 		$this->manage_item_routes();
 		flush_rewrite_rules();
-	}
-
-	/**
-	 * Oauth 認証のリンクタグを返す
-	 *
-	 * @param array $attr
-	 * @param string $content
-	 * @return string
-	 */
-	public function show_authentication_link( $attr, $content = null ) {
-		return '<a href="' . $this->container['oauth2_client']->getAuthorizationUrl( [
-			'scope' => [ 'read_products write_products' ],
-		] ) . '">カラーミーショップアカウントで認証する</a>';
 	}
 
 	/**

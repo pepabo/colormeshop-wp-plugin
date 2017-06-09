@@ -21,7 +21,9 @@
 								submit_button();
 								?>
 							</form>
-							<?php echo do_shortcode( '[authentication_link]' ); ?>
+							<a href="<?php echo $this->container['oauth2_client']->getAuthorizationUrl( [
+								'scope' => [ 'read_products write_products' ],
+							] ) ?>">カラーミーショップアカウントで認証する</a>
 						</div>
 					</div>
 				</div>
