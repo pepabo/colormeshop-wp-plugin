@@ -90,6 +90,27 @@
                             </p>
                         </div>
                     </div>
+                    <div class="postbox">
+                        <h2 class="hndle">商品ページのサイトマップが自動生成されます！</h2>
+                        <h2>設定</h2>
+                        <div class="inside">
+                            <p>
+                                商品ページの ID を<a href="#colorme_settings">カラーミーショップ連携設定</a>に保存してください。
+                            </p>
+                            <div>
+                                <a target="_blank" href="<?php echo $this->container['plugin_dir_url'] ?>screenshots/page_id.png"><img height="400" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/page_id.png" /></a>
+                            </div>
+                            <div>
+                                <a target="_blank" href="<?php echo $this->container['plugin_dir_url'] ?>screenshots/save_page_id.png"><img height="400" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/save_page_id.png" /></a>
+                            </div>
+                        </div>
+                        <h2><code><商品ページのURL>/sitemap.xml</code> にアクセスすると...！</h2>
+                        <div class="inside">
+                            <div>
+                                <a target="_blank" href="<?php echo $this->container['plugin_dir_url'] ?>screenshots/sitemap.png"><img height="400" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/sitemap.png" /></a>
+                            </div>
+                        </div>
+                    </div>
 					<!-- .postbox -->
                     <a id="colorme_shortcode"></a>
                     <div class="meta-box-sortables ui-sortable">
