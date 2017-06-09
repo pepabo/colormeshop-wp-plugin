@@ -142,6 +142,45 @@
                                             </dd>
                                         </dl>
                                     </dd>
+                                    <dt>[colormeshop_option]</dt>
+                                    <dd>
+                                        <dl>
+                                            <dt>説明</dt>
+                                            <dd>商品オプションを表示します</dd>
+                                            <dt>使い方</dt>
+                                            <dd><code>[colormeshop_option product_id="123" index=1 data="title"]</code></dd>
+                                            <dt>パラメータ</dt>
+                                            <dd>
+                                                <dl>
+                                                    <dt>product_id (商品ID)</dt>
+                                                    <dd>省略した場合は $_GET['colorme_item'] の値が使われます</dd>
+                                                    <dt>index (表示するオプション番号)</dt>
+                                                    <dd>
+                                                        <ul>
+                                                            <li>オプションの組み合わせが 6つ ある場合は 1 〜 6 の数字が入ります</li>
+                                                            <li>省略した場合は 1 になります</li>
+                                                        </ul>
+                                                    </dd>
+                                                    <dt>data (表示するオプションの属性)</dt>
+                                                    <dd>
+                                                        <dl>
+                                                            <dt>利用可能な属性</dt>
+                                                            <dd>
+                                                                省略した場合は title になります
+                                                                <ul>
+                                                                    <li>title (オプション名)</li>
+                                                                    <li>stocks (在庫数)</li>
+                                                                    <li>models_number (型番)</li>
+                                                                    <li>option_price (販売価格)</li>
+                                                                    <li>option_members_price (会員価格)</li>
+                                                                </ul>
+                                                            </dd>
+                                                        </dl>
+                                                    </dd>
+                                                </dl>
+                                            </dd>
+                                        </dl>
+                                    </dd>
                                     <dt>[colormeshop_cart_button]</dt>
                                     <dd>
                                         <dl>
