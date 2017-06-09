@@ -1,9 +1,6 @@
 <?php
 namespace ColorMeShop\Models;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Pool;
 use Psr\Http\Message\ResponseInterface;
 use Tackk\Cartographer\Sitemap as S;
 use Tackk\Cartographer\ChangeFrequency;
