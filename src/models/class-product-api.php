@@ -111,7 +111,7 @@ class Product_Api {
 	 * @param int $offset
 	 * @return \Psr\Http\Message\RequestInterface
 	 */
-	public function create_request( $limit, $offset ) {
+	private function create_request( $limit, $offset ) {
 		$query = http_build_query(
 			[
 				'limit' => $limit,
