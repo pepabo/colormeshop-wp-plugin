@@ -110,6 +110,40 @@
                                             </dd>
                                         </dl>
                                     </dd>
+                                    <dt>[colormeshop_cart_button]</dt>
+                                    <dd>
+                                        <dl>
+                                            <dt>説明</dt>
+                                            <dd>カートボタンを表示します</dd>
+                                            <dt>使い方</dt>
+                                            <dd><code>[colormeshop_cart_button product_id="123" style="washi"]</code></dd>
+                                            <dt>パラメータ</dt>
+                                            <dd>
+                                                <dl>
+                                                    <dt>product_id (商品ID)</dt>
+                                                    <dd>省略した場合は $_GET['colorme_item'] の値が使われます</dd>
+                                                    <dt>style (ボタンのデザイン)</dt>
+                                                    <dd>
+                                                        省略した場合は basic になります
+                                                        <dl>
+                                                            <dt>利用可能な属性</dt>
+                                                            <dd>
+                                                                <ul>
+                                                                    <li>basic</li>
+                                                                    <li>cloth_blue</li>
+                                                                    <li>cloth_yellow</li>
+                                                                    <li>cloth_green</li>
+                                                                    <li>washi</li>
+                                                                    <li>check_blue</li>
+                                                                    <li>check_red</li>
+                                                                </ul>
+                                                            </dd>
+                                                        </dl>
+                                                    </dd>
+                                                </dl>
+                                            </dd>
+                                        </dl>
+                                    </dd>
                                     <dt>[colormeshop_page]</dt>
                                     <dd>
                                         <dl>
