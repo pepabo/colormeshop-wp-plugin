@@ -67,6 +67,7 @@
 						</div>
 						<!-- .inside -->
 					</div>
+                    <a id="colorme_page"></a>
                     <div class="postbox">
                         <h2 class="hndle">商品ページを作成できます！</h2>
                         <div class="inside">
@@ -90,6 +91,7 @@
                             </p>
                         </div>
                     </div>
+                    <a id="colorme_sitemap"></a>
                     <div class="postbox">
                         <h2 class="hndle">商品ページのサイトマップが自動生成されます！</h2>
                         <h2>設定</h2>
@@ -115,7 +117,7 @@
                     <a id="colorme_shortcode"></a>
                     <div class="meta-box-sortables ui-sortable">
                         <div class="postbox">
-                            <h2 class="hndle">ショートコード</h2>
+                            <h2 class="hndle">ご利用可能なショートコード</h2>
                             <div class="inside">
                                 <dl>
                                     <dt>[colormeshop_product]</dt>
@@ -305,6 +307,8 @@
                                 <li><a href="https://shop-pro.jp/" target="_blank">カラーミーショップ</a></li>
                                 <li><a href="#">プラグインについてのご質問・ご要望</a></li>
                                 <li><a href="#colorme_settings">プラグイン設定手順</a></li>
+                                <li><a href="#colorme_page">商品ページを作成できます！</a></li>
+                                <li><a href="#colorme_sitemap">商品のサイトマップが自動生成されます！</a></li>
                                 <li><a href="#colorme_shortcode">ご利用可能なショートコード</a></li>
                             </ul>
 						</div>
