@@ -110,6 +110,38 @@
                                             </dd>
                                         </dl>
                                     </dd>
+                                    <dt>[colormeshop_image]</dt>
+                                    <dd>
+                                        <dl>
+                                            <dt>説明</dt>
+                                            <dd>商品画像を表示します</dd>
+                                            <dt>使い方</dt>
+                                            <dd><code>[colormeshop_image product_id="123" type="main"]</code></dd>
+                                            <dt>パラメータ</dt>
+                                            <dd>
+                                                <dl>
+                                                    <dt>product_id (商品ID)</dt>
+                                                    <dd>省略した場合は $_GET['colorme_item'] の値が使われます</dd>
+                                                    <dt>type (取得したい画像の種類)</dt>
+                                                    <dd>
+                                                        <dl>
+                                                            <dt>利用可能な属性</dt>
+                                                            <dd>
+                                                                省略した場合は main になります
+                                                                <ul>
+                                                                    <li>main (メイン画像)</li>
+                                                                    <li>thumbnail (サムネイル画像)</li>
+                                                                    <li>other1 (その他画像)</li>
+                                                                    <li>※ 以降、 otherXXX で XXX 番目に登録されている画像を指定してください</li>
+                                                                    <li>※ モバイルアクセス時はモバイル用画像を表示します</li>
+                                                                </ul>
+                                                            </dd>
+                                                        </dl>
+                                                    </dd>
+                                                </dl>
+                                            </dd>
+                                        </dl>
+                                    </dd>
                                     <dt>[colormeshop_cart_button]</dt>
                                     <dd>
                                         <dl>
