@@ -34,7 +34,7 @@ class Button_Test extends \WP_UnitTestCase {
 	 */
 	public function show_カートボタン用のscriptタグを返す() {
 		$this->assertSame(
-			'<script type="text/javascript" src="https://test.shop-pro.jp/?mode=cartjs&pid=123&style=default&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n" charset="euc-jp"></script>',
+			'<script type="text/javascript" src="https://test.shop-pro.jp/?mode=cartjs&pid=123&style=basic&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n" charset="euc-jp"></script>',
 			Button::show(
 				$this->container,
 				[

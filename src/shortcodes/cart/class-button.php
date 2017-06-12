@@ -22,7 +22,7 @@ class Button implements Shortcode_Interface {
 		$filtered_atts = shortcode_atts(
 			[
 				'product_id' => $container['target_id'],
-				'style' => 'default',
+				'style' => 'basic',
 			],
 			$atts
 		);
