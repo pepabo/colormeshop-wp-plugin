@@ -48,6 +48,7 @@ class Plugin {
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
 		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 0 );
 		add_filter( 'template_redirect', array( $this, 'output_sitemap' ), 1, 0 );
+		add_filter( 'template_redirect', array( $this, 'show_404' ), 1, 0 );
 		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
 	}
 
@@ -117,6 +118,20 @@ class Plugin {
 		}
 
 		add_rewrite_rule( '^item/([^/]+)/?', 'index.php?colorme_item=$matches[1]', 'top' );
+	}
+
+	/**
+	 * 404 ページを表示する
+	 *
+	 * @return void
+	 */
+	public function show_404() {
+		if ( ! get_query_var( 'colorme_item' ) && $this->container['product_page_id'] && is_page( $this->container['product_page_id'] ) ) {
+			// @see https://wpdocs.osdn.jp/404%E3%82%A8%E3%83%A9%E3%83%BC%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AE%E4%BD%9C%E6%88%90#.E9.81.A9.E5.88.87.E3.81.AA.E3.83.98.E3.83.83.E3.83.80.E3.83.BC.E3.82.92.E9.80.81.E4.BF.A1.E3.81.99.E3.82.8B
+			header( 'HTTP/1.1 404 Not Found' );
+			global $wp_query;
+			$wp_query->is_404 = true;
+		}
 	}
 
 	/**
