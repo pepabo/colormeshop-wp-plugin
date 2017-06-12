@@ -3,3 +3,5 @@ wp.env
 composer.phar
 .idea
 wpcs
+colormeshop-wp-plugin.zip
+*.pyc
