@@ -47,8 +47,7 @@ class Plugin {
 
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
 		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 0 );
-		add_filter( 'template_redirect', array( $this, 'output_sitemap' ), 1, 0 );
-		add_filter( 'template_redirect', array( $this, 'show_404' ), 1, 0 );
+		add_filter( 'template_redirect', array( $this, 'handle_template_redirect' ), 1, 0 );
 		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
 	}
 
@@ -121,17 +120,34 @@ class Plugin {
 	}
 
 	/**
+	 * 商品ページに必要な前処理を行う
+	 *
+	 * @return void
+	 */
+	public function handle_template_redirect() {
+		if ( ! $this->container['product_page_id'] || ! is_page( $this->container['product_page_id'] ) ) {
+			return;
+		}
+
+		if ( get_query_var( 'colorme_sitemap' ) ) {
+			$this->output_sitemap();
+		}
+
+		if ( ! get_query_var( 'colorme_item' ) ) {
+			$this->show_404();
+		}
+	}
+
+	/**
 	 * 404 ページを表示する
 	 *
 	 * @return void
 	 */
-	public function show_404() {
-		if ( ! get_query_var( 'colorme_item' ) && $this->container['product_page_id'] && is_page( $this->container['product_page_id'] ) ) {
-			// @see https://wpdocs.osdn.jp/404%E3%82%A8%E3%83%A9%E3%83%BC%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AE%E4%BD%9C%E6%88%90#.E9.81.A9.E5.88.87.E3.81.AA.E3.83.98.E3.83.83.E3.83.80.E3.83.BC.E3.82.92.E9.80.81.E4.BF.A1.E3.81.99.E3.82.8B
-			header( 'HTTP/1.1 404 Not Found' );
-			global $wp_query;
-			$wp_query->is_404 = true;
-		}
+	private function show_404() {
+		// @see https://wpdocs.osdn.jp/404%E3%82%A8%E3%83%A9%E3%83%BC%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AE%E4%BD%9C%E6%88%90#.E9.81.A9.E5.88.87.E3.81.AA.E3.83.98.E3.83.83.E3.83.80.E3.83.BC.E3.82.92.E9.80.81.E4.BF.A1.E3.81.99.E3.82.8B
+		header( 'HTTP/1.1 404 Not Found' );
+		global $wp_query;
+		$wp_query->is_404 = true;
 	}
 
 	/**
@@ -139,22 +155,20 @@ class Plugin {
 	 *
 	 * @return void
 	 */
-	public function output_sitemap() {
-		if ( get_query_var( 'colorme_sitemap' ) && $this->container['product_page_id'] && is_page( $this->container['product_page_id'] ) ) {
-			global $wp_query;
-			$wp_query->is_404 = false;
-			$wp_query->is_feed = true;
+	private function output_sitemap() {
+		global $wp_query;
+		$wp_query->is_404 = false;
+		$wp_query->is_feed = true;
 
-			header( 'Content-Type:text/xml' );
-			try {
-				echo $this->container['model.sitemap']->output();
-			} catch ( \RuntimeException $e ) {
-				if ( $this->container['WP_DEBUG_LOG'] ) {
-					error_log( 'サイトマップの出力に失敗しました : ' . $e->getMessage() );
-				}
+		header( 'Content-Type:text/xml' );
+		try {
+			echo $this->container['model.sitemap']->output();
+		} catch ( \RuntimeException $e ) {
+			if ( $this->container['WP_DEBUG_LOG'] ) {
+				error_log( 'サイトマップの出力に失敗しました : ' . $e->getMessage() );
 			}
-			exit;
 		}
+		exit;
 	}
 
 	/**
