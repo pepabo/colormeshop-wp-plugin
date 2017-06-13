@@ -56,8 +56,11 @@ class Image implements Shortcode_Interface {
 		}
 
 		$attributes = '';
-		foreach ( array_diff( $atts, $filtered_atts ) as $k => $v ) {
-			$attributes .= sprintf( ' %s="%s"', $k, $v );
+		// 引数なしでショートコードを使った場合 $atts は空文字になる
+		if ( is_array( $atts ) ) {
+			foreach ( array_diff( $atts, $filtered_atts ) as $k => $v ) {
+				$attributes .= sprintf( ' %s="%s"', $k, $v );
+			}
 		}
 
 		return sprintf(
