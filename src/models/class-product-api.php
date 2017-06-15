@@ -51,7 +51,7 @@ class Product_Api {
 	 */
 	public function total() {
 		try {
-			$response = (new Client())->send( $this->create_request( 1, 0 ) );
+			$response = (new Client)->send( $this->create_request( 1, 0 ) );
 		} catch ( RequestException $e ) {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
@@ -92,18 +92,8 @@ class Product_Api {
 	 * @throws \RuntimeException
 	 */
 	public function fetch_all_with_callback( $fulfilled ) {
-		// トータル件数を取得
-		$request = $this->create_request( 1, 0 );
-
-		$client = new Client();
-		try {
-			$response = $client->send( $request );
-		} catch ( RequestException $e ) {
-			throw new \RuntimeException( '商品情報取得に失敗しました.' );
-		}
-
-		$contents = self::decode_contents( $response->getBody()->getContents() );
-		$total = $contents['meta']['total'];
+		$client = new Client;
+		$total = $this->total();
 
 		// 商品情報を取得
 		$requests = function () use ( $total ) {
