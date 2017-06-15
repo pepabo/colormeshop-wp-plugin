@@ -3,6 +3,7 @@ namespace ColorMeShop\Models;
 
 use Psr\Http\Message\ResponseInterface;
 use Tackk\Cartographer\Sitemap as S;
+use Tackk\Cartographer\SitemapIndex;
 use Tackk\Cartographer\ChangeFrequency;
 
 class Sitemap {
@@ -29,6 +30,23 @@ class Sitemap {
 		$this->product_page_url = $product_page_url;
 		$this->product_api = $product_api;
 		$this->sitemap = new S();
+	}
+
+	/**
+	 * サイトマップインデックスを返す
+	 *
+	 * @return string
+	 * @throws \RuntimeException
+	 */
+	public function output_index() {
+		$sitemap_index = new SitemapIndex;
+		$total = $this->product_api->total();
+
+		for ( $i = 0; $i <= $total; $i += 1000 ) {
+			$sitemap_index->add( $this->product_page_url . 'sitemap.xml?offset=' . $i, null );
+		}
+
+		return $sitemap_index->toString();
 	}
 
 	/**

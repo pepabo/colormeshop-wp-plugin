@@ -127,6 +127,9 @@ class Plugin {
 		}
 
 		if ( get_query_var( 'colorme_sitemap' ) ) {
+			if ( get_query_var( 'offset' ) === '' || get_query_var( 'offset' ) === null ) {
+				$this->output_sitemap_index();
+			}
 			$this->output_sitemap();
 		}
 
@@ -145,6 +148,27 @@ class Plugin {
 		header( 'HTTP/1.1 404 Not Found' );
 		global $wp_query;
 		$wp_query->is_404 = true;
+	}
+
+	/**
+	 * サイトマップインデックスを出力する
+	 *
+	 * @return void
+	 */
+	private function output_sitemap_index() {
+		global $wp_query;
+		$wp_query->is_404 = false;
+		$wp_query->is_feed = true;
+
+		header( 'Content-Type:text/xml' );
+		try {
+			echo $this->container['model.sitemap']->output_index();
+		} catch ( \RuntimeException $e ) {
+			if ( $this->container['WP_DEBUG_LOG'] ) {
+				error_log( 'サイトマップインデックスの出力に失敗しました : ' . $e->getMessage() );
+			}
+		}
+		exit;
 	}
 
 	/**
@@ -176,6 +200,7 @@ class Plugin {
 	public function custom_rewrite_tag() {
 		add_rewrite_tag( '%colorme_item%', '([^&]+)' );
 		add_rewrite_tag( '%colorme_sitemap%', '([^&]+)' );
+		add_rewrite_tag( '%offset%', '([^&]+)' );
 	}
 
 	public function flush_application_rewrite_rules() {
