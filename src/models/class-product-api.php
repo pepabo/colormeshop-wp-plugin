@@ -44,6 +44,22 @@ class Product_Api {
 	}
 
 	/**
+	 * 商品数
+	 *
+	 * @return int
+	 * @throws \RuntimeException
+	 */
+	public function total() {
+		try {
+			$response = (new Client())->send( $this->create_request( 1, 0 ) );
+		} catch ( RequestException $e ) {
+			throw new \RuntimeException( '商品情報取得に失敗しました.' );
+		}
+
+		return self::decode_contents( $response->getBody()->getContents() )['meta']['total'];
+	}
+
+	/**
 	 * @param int $product_id
 	 * @return array
 	 * @throws \RuntimeException
