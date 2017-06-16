@@ -33,12 +33,12 @@ class Sitemap {
 	}
 
 	/**
-	 * サイトマップインデックスを返す
+	 * サイトマップインデックスを生成する
 	 *
 	 * @return string
 	 * @throws \RuntimeException
 	 */
-	public function output_index() {
+	public function generate_index() {
 		$sitemap_index = new SitemapIndex;
 		$total = $this->product_api->total();
 
@@ -50,13 +50,13 @@ class Sitemap {
 	}
 
 	/**
-	 * サイトマップを返す
+	 * サイトマップを生成する
 	 *
 	 * @param int $offset
 	 * @return string
 	 * @throws \RuntimeException
 	 */
-	public function output( $offset ) {
+	public function generate($offset ) {
 		$this->product_api->fetch_with_callback(
 			function ( ResponseInterface $r ) {
 				$contents = Product_Api::decode_contents( $r->getBody()->getContents() );

@@ -162,7 +162,7 @@ class Plugin {
 
 		header( 'Content-Type:text/xml' );
 		try {
-			echo $this->container['model.sitemap']->output_index();
+			echo $this->container['model.sitemap']->generate_index();
 		} catch ( \RuntimeException $e ) {
 			if ( $this->container['WP_DEBUG_LOG'] ) {
 				error_log( 'サイトマップインデックスの出力に失敗しました : ' . $e->getMessage() );
@@ -184,7 +184,7 @@ class Plugin {
 
 		header( 'Content-Type:text/xml' );
 		try {
-			echo $this->container['model.sitemap']->output( $offset );
+			echo $this->container['model.sitemap']->generate( $offset );
 		} catch ( \RuntimeException $e ) {
 			if ( $this->container['WP_DEBUG_LOG'] ) {
 				error_log( 'サイトマップの出力に失敗しました : ' . $e->getMessage() );
