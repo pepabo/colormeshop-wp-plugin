@@ -117,7 +117,7 @@ __EOS__;
 			'https://example.com/?p=123',// デフォルト
 			$container['model.product_api']
 		);
-		$this->assertSame( $expected, $sitemap->output() );
+		$this->assertSame( $expected, $sitemap->output(0) );
 	}
 
 	/**
@@ -153,7 +153,7 @@ __EOS__;
 			'https://example.com/shop/',
 			$container['model.product_api']
 		);
-		$this->assertSame( $expected, $sitemap->output() );
+		$this->assertSame( $expected, $sitemap->output(0) );
 	}
 
 	/**
@@ -171,7 +171,7 @@ __EOS__;
 		);
 
 		$matches = [];
-		preg_match_all( '#<loc>https://example\.com/shop/\?colorme_item=[0-9]+</loc>#', $sitemap->output(), $matches );
+		preg_match_all( '#<loc>https://example\.com/shop/\?colorme_item=[0-9]+</loc>#', $sitemap->output(0), $matches );
 		$this->assertCount( 101, $matches[0] );
 	}
 }
