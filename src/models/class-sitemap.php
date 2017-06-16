@@ -52,17 +52,20 @@ class Sitemap {
 	/**
 	 * サイトマップを返す
 	 *
+	 * @param int $offset
 	 * @return string
 	 * @throws \RuntimeException
 	 */
-	public function output() {
+	public function output( $offset ) {
 		$this->product_api->fetch_all_with_callback(
 			function ( ResponseInterface $r ) {
 				$contents = Product_Api::decode_contents( $r->getBody()->getContents() );
 				foreach ( $contents['products'] as $p ) {
 					$this->sitemap->add( $this->make_item_url( $p ), $p['update_date'], ChangeFrequency::WEEKLY, 0.5 );
 				}
-			}
+			},
+			$offset,
+			1000
 		);
 
 		return $this->sitemap->toString();
@@ -70,9 +73,9 @@ class Sitemap {
 
 	/**
 	 * サイトマップ URL
-     *
-     * @param int $offset
-     * @return string
+	 *
+	 * @param int $offset
+	 * @return string
 	 */
 	private function make_sitemap_url( $offset ) {
 		if ( strpos( $this->product_page_url, '?' ) === false ) {

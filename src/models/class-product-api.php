@@ -88,16 +88,23 @@ class Product_Api {
 
 	/**
 	 * @param \Closure $fulfilled
+	 * @param int $initial_offset
+	 * @param int $limit
 	 * @return void
 	 * @throws \RuntimeException
 	 */
-	public function fetch_all_with_callback( $fulfilled ) {
+	public function fetch_all_with_callback( $fulfilled, $initial_offset, $limit ) {
 		$client = new Client;
 		$total = $this->total();
 
+		$should_continue = function ( $current_offset ) use ( $total, $initial_offset, $limit ) {
+			return $current_offset < $total
+				&& $current_offset < ($initial_offset + $limit);
+		};
+
 		// 商品情報を取得
-		$requests = function () use ( $total ) {
-			for ( $offset = 0; $offset < $total; $offset += self::MAXIMUM_NUMBER_PER_REQUEST ) {
+		$requests = function () use ( $initial_offset, $should_continue ) {
+			for ( $offset = $initial_offset; $should_continue($offset); $offset += self::MAXIMUM_NUMBER_PER_REQUEST ) {
 				yield $this->create_request( self::MAXIMUM_NUMBER_PER_REQUEST, $offset );
 			}
 		};
