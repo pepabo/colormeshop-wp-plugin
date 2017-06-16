@@ -60,7 +60,7 @@ class Sitemap {
 			function ( ResponseInterface $r ) {
 				$contents = Product_Api::decode_contents( $r->getBody()->getContents() );
 				foreach ( $contents['products'] as $p ) {
-					$this->sitemap->add( $this->make_feed_url( $p ), $p['update_date'], ChangeFrequency::WEEKLY, 0.5 );
+					$this->sitemap->add( $this->make_item_url( $p ), $p['update_date'], ChangeFrequency::WEEKLY, 0.5 );
 				}
 			}
 		);
@@ -88,7 +88,7 @@ class Sitemap {
 	 * @param array $product
 	 * @return string
 	 */
-	private function make_feed_url( $product ) {
+	private function make_item_url( $product ) {
 		if ( strpos( $this->product_page_url, '?' ) === false ) {
 			return trim( $this->product_page_url, '/' ) . '/?colorme_item=' . $product['id'];
 		}
