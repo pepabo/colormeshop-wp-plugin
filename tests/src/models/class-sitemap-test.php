@@ -4,6 +4,47 @@ namespace ColorMeShop\Models;
 class Sitemap_Test extends \WP_UnitTestCase {
 	/**
 	 * @test
+	 * @vcr models/sitemap/output_index_customized_permalink.yml
+	 */
+	public function output_index_商品ページのパーマリンクがカスタマイズされている場合() {
+		$expected = <<<__EOS__
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://example.com/shop/sitemap.xml?offset=0</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://example.com/shop/sitemap.xml?offset=1000</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://example.com/shop/sitemap.xml?offset=2000</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://example.com/shop/sitemap.xml?offset=3000</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://example.com/shop/sitemap.xml?offset=4000</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://example.com/shop/sitemap.xml?offset=5000</loc>
+  </sitemap>
+</sitemapindex>
+
+__EOS__;
+
+		$container = _get_container();
+		$container['token'] = function ( $c ) {
+			return 'dummy';
+		};
+		$sitemap = new Sitemap(
+			'https://example.com/shop/',
+			$container['model.product_api']
+		);
+		$this->assertSame( $expected, $sitemap->output_index() );
+	}
+
+	/**
+	 * @test
 	 * @vcr models/sitemap/output_default_permalink.yml
 	 */
 	public function output_商品ページのパーマリンクがデフォルトの場合() {
