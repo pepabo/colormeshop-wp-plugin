@@ -23,6 +23,11 @@ class Sitemap {
 	private $sitemap;
 
 	/**
+	 * @var int サイトマップの商品 URL 数
+	 */
+	const NUMBER_OF_ITEM_URLS_PER_PAGE = 1000;
+
+	/**
 	 * @param string
 	 * @param \ColorMeShop\Models\Product_Api $product_api
 	 */
@@ -42,7 +47,7 @@ class Sitemap {
 		$sitemap_index = new SitemapIndex;
 		$total = $this->product_api->total();
 
-		for ( $i = 0; $i <= $total; $i += 1000 ) {
+		for ( $i = 0; $i <= $total; $i += self::NUMBER_OF_ITEM_URLS_PER_PAGE ) {
 			$sitemap_index->add( $this->make_sitemap_url( $i ), null );
 		}
 
@@ -56,7 +61,7 @@ class Sitemap {
 	 * @return string
 	 * @throws \RuntimeException
 	 */
-	public function generate($offset ) {
+	public function generate( $offset ) {
 		$this->product_api->fetch_with_callback(
 			function ( ResponseInterface $r ) {
 				$contents = Product_Api::decode_contents( $r->getBody()->getContents() );
@@ -65,7 +70,7 @@ class Sitemap {
 				}
 			},
 			$offset,
-			1000
+			self::NUMBER_OF_ITEM_URLS_PER_PAGE
 		);
 
 		return $this->sitemap->toString();
