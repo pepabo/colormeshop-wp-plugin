@@ -93,7 +93,7 @@ class Product_Api {
 	 * @return void
 	 * @throws \RuntimeException
 	 */
-	public function fetch_all_with_callback( $fulfilled, $initial_offset, $limit ) {
+	public function fetch_with_callback($fulfilled, $initial_offset, $limit ) {
 		$client = new Client;
 		$total = $this->total();
 

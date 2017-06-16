@@ -57,7 +57,7 @@ class Sitemap {
 	 * @throws \RuntimeException
 	 */
 	public function output( $offset ) {
-		$this->product_api->fetch_all_with_callback(
+		$this->product_api->fetch_with_callback(
 			function ( ResponseInterface $r ) {
 				$contents = Product_Api::decode_contents( $r->getBody()->getContents() );
 				foreach ( $contents['products'] as $p ) {
