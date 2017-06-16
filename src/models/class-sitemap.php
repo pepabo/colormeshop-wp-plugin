@@ -2,9 +2,9 @@
 namespace ColorMeShop\Models;
 
 use Psr\Http\Message\ResponseInterface;
+use Tackk\Cartographer\ChangeFrequency;
 use Tackk\Cartographer\Sitemap as S;
 use Tackk\Cartographer\SitemapIndex;
-use Tackk\Cartographer\ChangeFrequency;
 
 class Sitemap {
 	/**
