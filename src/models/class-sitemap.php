@@ -8,7 +8,7 @@ use Tackk\Cartographer\SitemapIndex;
 
 class Sitemap {
 	/**
-	 * @var stringg
+	 * @var string
 	 */
 	private $product_page_url;
 
