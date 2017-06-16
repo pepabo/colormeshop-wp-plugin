@@ -43,7 +43,7 @@ class Sitemap {
 		$total = $this->product_api->total();
 
 		for ( $i = 0; $i <= $total; $i += 1000 ) {
-			$sitemap_index->add( $this->product_page_url . 'sitemap.xml?offset=' . $i, null );
+			$sitemap_index->add( $this->make_sitemap_url( $i ), null );
 		}
 
 		return $sitemap_index->toString();
@@ -66,6 +66,20 @@ class Sitemap {
 		);
 
 		return $this->sitemap->toString();
+	}
+
+	/**
+	 * サイトマップ URL
+     *
+     * @param int $offset
+     * @return string
+	 */
+	private function make_sitemap_url( $offset ) {
+		if ( strpos( $this->product_page_url, '?' ) === false ) {
+			return $this->product_page_url . 'sitemap.xml?offset=' . $offset;
+		}
+
+		return $this->product_page_url . '&colorme_sitemap=1&offset=' . $offset;
 	}
 
 	/**
