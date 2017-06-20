@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "17560ebbb75d4a1f1c25ae6c1280e778",
+    "content-hash": "f62f4891c0d4898027753e5153dc3923",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -384,16 +384,16 @@
         },
         {
             "name": "pepabo/oauth2-colormeshop",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pepabo/oauth2-colormeshop.git",
-                "reference": "30c555cba829cec4bba452ca5f09963c53be9768"
+                "reference": "3d35e6793f9e8d7291e4ee4848285436d3ad7dd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pepabo/oauth2-colormeshop/zipball/30c555cba829cec4bba452ca5f09963c53be9768",
-                "reference": "30c555cba829cec4bba452ca5f09963c53be9768",
+                "url": "https://api.github.com/repos/pepabo/oauth2-colormeshop/zipball/3d35e6793f9e8d7291e4ee4848285436d3ad7dd5",
+                "reference": "3d35e6793f9e8d7291e4ee4848285436d3ad7dd5",
                 "shasum": ""
             },
             "require": {
@@ -429,7 +429,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2017-04-10 08:33:37"
+            "time": "2017-06-15T05:59:57+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -2092,9 +2092,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "pepabo/oauth2-colormeshop": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

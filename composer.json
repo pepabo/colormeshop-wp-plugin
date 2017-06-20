@@ -8,7 +8,7 @@
   ],
   "require": {
     "guzzlehttp/guzzle": "^6.0",
-    "pepabo/oauth2-colormeshop": "dev-master",
+    "pepabo/oauth2-colormeshop": "^1.0",
     "pimple/pimple": "~3.0",
     "tackk/cartographer": "1.1.*"
   },
