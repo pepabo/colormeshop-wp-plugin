@@ -1,0 +1,31 @@
+
+-
+    request:
+        method: GET
+        url: 'https://api.shop-pro.jp/v1/categories.json'
+        headers:
+            Host: api.shop-pro.jp
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.2.1 curl/7.38.0 PHP/7.0.18'
+            Authorization: 'Bearer dummy'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx/1.12.0
+            Date: 'Tue, 20 Jun 2017 05:03:45 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Status: '200 OK'
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            ETag: 'W/"2ec85e0616cd3092fb7ff7ee5d7730e8"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: d6de7dce-0f27-4689-8393-7a6f2715a59b
+            X-Runtime: '0.021485'
+        body: '{"categories":[{"id_big":2131603,"id_small":0,"account_id":"PA01000001","name":"\u521d\u671f\u30ab\u30c6\u30b4\u30ea","image_url":null,"expl":"\u304a\u7533\u3057\u8fbc\u307f\u6642\u306b\u81ea\u52d5\u3067\u4f5c\u6210\u3055\u308c\u305f\u521d\u671f\u30ab\u30c6\u30b4\u30ea","sort":null,"display_state":"showing","make_date":1463471016,"update_date":1463471016,"children":[{"id_big":2131603,"id_small":1,"account_id":"PA01000001","name":"\u521d\u671f\u30ab\u30c6\u30b4\u30ea\u306e\u5c0f\u30ab\u30c6\u30b4\u30ea","image_url":null,"expl":"","sort":null,"display_state":"showing","make_date":1475564600,"update_date":1475564600}]},{"id_big":2143688,"id_small":0,"account_id":"PA01000001","name":"\u30c6\u30b9\u30c8\u30ab\u30c6\u30b4\u30ea1","image_url":null,"expl":null,"sort":null,"display_state":"showing","make_date":1465537960,"update_date":1465537960,"children":[]}]}'

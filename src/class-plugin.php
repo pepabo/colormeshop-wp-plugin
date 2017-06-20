@@ -1,6 +1,7 @@
 <?php
 namespace ColorMeShop;
 
+use ColorMeShop\Models\Category_Api;
 use ColorMeShop\Models\Shop_Api;
 use ColorMeShop\Models\Sitemap;
 use ColorMeShop\Models\Product_Api;
@@ -367,6 +368,10 @@ class Plugin {
 
 		$container['model.product_api'] = function ( $c ) {
 			return new Product_Api( $c['token'] );
+		};
+
+		$container['model.category_api'] = function ( $c ) {
+			return new Category_Api( $c['token'] );
 		};
 
 		$container['model.sitemap'] = function ( $c ) {
