@@ -132,6 +132,14 @@ class Plugin {
 		}
 
 		if ( get_query_var( 'colorme_page' ) === 'categories' ) {
+			// テーマディレクトリに colorme-categories.php があれば優先する
+			$template = get_template_directory() . '/colorme-categories.php';
+			if ( file_exists( $template ) ) {
+				include $template;
+				exit;
+			}
+
+			// ヘッダやサイドバー等を残して、本文のみを差し替えるために the_content をフィルタする
 			add_filter( 'the_content', [ $this, 'show_categories' ] );
 			return;
 		}
