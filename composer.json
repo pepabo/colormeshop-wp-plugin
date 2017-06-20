@@ -6,6 +6,11 @@
       "email": "kenichi.taka@gmail.com"
     }
   ],
+  "config": {
+    "platform": {
+      "php": "5.6"
+    }
+  },
   "require": {
     "guzzlehttp/guzzle": "^6.0",
     "pepabo/oauth2-colormeshop": "^1.0",
