@@ -1,9 +1,11 @@
 from fabric.api import *
 
+import os
 import shutil
 import tempfile
 
-def build():
+def build(mode='release'):
+    currentdir = os.path.dirname(__file__)
     wkdir = tempfile.mkdtemp()
     print('working directory: ' + wkdir)
 
@@ -24,7 +26,12 @@ def build():
                 'composer.phar',
                 'fabfile.py',
                 ]
-        local('git clone git@github.com:pepabo/colormeshop-wp-plugin.git .')
+        if mode == 'dev':
+            local('cp -r ' + currentdir + '/* ./')
+        elif mode == 'release':
+            local('git clone git@github.com:pepabo/colormeshop-wp-plugin.git .')
+        else:
+            abort('invalid argument : ' + mode)
         local('curl -sS https://getcomposer.org/installer | php')
         local('php composer.phar install --no-dev')
         local('zip -r ' + zipfile + ' . -x ' + (' -x '.join(excludes)))
