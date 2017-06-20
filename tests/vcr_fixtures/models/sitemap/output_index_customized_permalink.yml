@@ -1,0 +1,31 @@
+
+-
+    request:
+        method: GET
+        url: 'https://api.shop-pro.jp/v1/products.json?limit=1&display_state=0&offset=0'
+        headers:
+            Host: api.shop-pro.jp
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.2.1 curl/7.38.0 PHP/7.0.18'
+            Authorization: 'Bearer dummy'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx/1.12.0
+            Date: 'Fri, 16 Jun 2017 06:22:07 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Status: '200 OK'
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            ETag: 'W/"f79fd54febe30761ab7bba4c42d8d3b1"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: c7f409e7-a247-4001-96f3-8ba7b9c6c315
+            X-Runtime: '0.032726'
+        body: '{"products":[{"id":118849164,"account_id":"PA01356136","model_number":"","name":"\u30c6\u30b9\u30c8\u5546\u54c1","category":{"id_big":2131603,"id_small":0},"group_ids":[],"display_state":"showing","sales_price":1000,"price":null,"members_price":1011,"cost":null,"cool_charge":null,"delivery_charge":null,"stock_managed":true,"stocks":184,"min_num":null,"max_num":null,"sale_start_date":null,"sale_end_date":null,"unit":"","weight":null,"soldout_display":false,"few_num":null,"sort":null,"simple_expl":"","expl":"","mobile_expl":"","smartphone_expl":"","make_date":1496911524,"update_date":1496911524,"memo":"","image_url":null,"mobile_image_url":null,"thumbnail_image_url":null,"images":[],"options":[],"variants":[]}],"meta":{"total":5000,"limit":1,"offset":0}}'
