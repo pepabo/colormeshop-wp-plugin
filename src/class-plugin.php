@@ -130,9 +130,32 @@ class Plugin {
 			$this->output_sitemap();
 		}
 
+		if ( get_query_var( 'colorme_page' ) === 'categories' ) {
+			add_filter( 'the_content', [ $this, 'show_categories' ] );
+			return;
+		}
+
 		if ( ! get_query_var( 'colorme_item' ) ) {
 			$this->show_404();
 		}
+	}
+
+	/**
+	 * 商品カテゴリー 一覧を表示する
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	public function show_categories( $content ) {
+		if ( ! ob_start() ) {
+			if ( $this->container['WP_DEBUG_LOG'] ) {
+				error_log( '商品カテゴリー 一覧の表示に失敗しました' );
+			}
+			return '';
+		}
+
+		include __DIR__ . '/../templates/categories.php';
+		return ob_get_clean();
 	}
 
 	/**
@@ -176,6 +199,7 @@ class Plugin {
 	public function custom_rewrite_tag() {
 		add_rewrite_tag( '%colorme_item%', '([^&]+)' );
 		add_rewrite_tag( '%colorme_sitemap%', '([^&]+)' );
+		add_rewrite_tag( '%colorme_page%', '([^&]+)' );
 	}
 
 	public function flush_application_rewrite_rules() {
