@@ -80,4 +80,7 @@ $ tests/run.sh
 
 ```
 $ fab build
+
+# 開発中のプラグインを動作確認する場合
+$ fab build:dev
 ```

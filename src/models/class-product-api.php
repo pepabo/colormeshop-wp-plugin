@@ -44,6 +44,22 @@ class Product_Api {
 	}
 
 	/**
+	 * 商品数
+	 *
+	 * @return int
+	 * @throws \RuntimeException
+	 */
+	public function total() {
+		try {
+			$response = (new Client)->send( $this->create_request( 1, 0 ) );
+		} catch ( RequestException $e ) {
+			throw new \RuntimeException( '商品情報取得に失敗しました.' );
+		}
+
+		return self::decode_contents( $response->getBody()->getContents() )['meta']['total'];
+	}
+
+	/**
 	 * @param int $product_id
 	 * @return array
 	 * @throws \RuntimeException
@@ -72,26 +88,23 @@ class Product_Api {
 
 	/**
 	 * @param \Closure $fulfilled
+	 * @param int $initial_offset
+	 * @param int $limit
 	 * @return void
 	 * @throws \RuntimeException
 	 */
-	public function fetch_all_with_callback( $fulfilled ) {
-		// トータル件数を取得
-		$request = $this->create_request( 1, 0 );
+	public function fetch_with_callback($fulfilled, $initial_offset, $limit ) {
+		$client = new Client;
+		$total = $this->total();
 
-		$client = new Client();
-		try {
-			$response = $client->send( $request );
-		} catch ( RequestException $e ) {
-			throw new \RuntimeException( '商品情報取得に失敗しました.' );
-		}
-
-		$contents = self::decode_contents( $response->getBody()->getContents() );
-		$total = $contents['meta']['total'];
+		$should_continue = function ( $current_offset ) use ( $total, $initial_offset, $limit ) {
+			return $current_offset < $total
+				&& $current_offset < ($initial_offset + $limit);
+		};
 
 		// 商品情報を取得
-		$requests = function () use ( $total ) {
-			for ( $offset = 0; $offset < $total; $offset += self::MAXIMUM_NUMBER_PER_REQUEST ) {
+		$requests = function () use ( $initial_offset, $should_continue ) {
+			for ( $offset = $initial_offset; $should_continue($offset); $offset += self::MAXIMUM_NUMBER_PER_REQUEST ) {
 				yield $this->create_request( self::MAXIMUM_NUMBER_PER_REQUEST, $offset );
 			}
 		};
