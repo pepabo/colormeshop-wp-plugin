@@ -93,7 +93,7 @@ class Product_Api {
 	 * @return void
 	 * @throws \RuntimeException
 	 */
-	public function fetch_with_callback($fulfilled, $initial_offset, $limit ) {
+	public function fetch_with_callback( $fulfilled, $initial_offset, $limit ) {
 		$client = new Client;
 		$total = $this->total();
 
@@ -117,6 +117,20 @@ class Product_Api {
 			},
 		]);
 		$pool->promise()->wait();
+	}
+
+	/**
+	 * @param array $params
+	 * @return array
+	 */
+	public function search( $params ) {
+		try {
+			$response = (new Client)->send( $this->create_request( $params['limit'], $params['offset'] ) );
+		} catch ( RequestException $e ) {
+			throw new \RuntimeException( '商品情報取得に失敗しました.' );
+		}
+
+		return self::decode_contents( $response->getBody()->getContents() );
 	}
 
 	/**
