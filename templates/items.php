@@ -1,11 +1,17 @@
 <?php
 // @see https://shop-pro.jp/?mode=api_interface#get-v1productsjson
-$response = $this->container['model.product_api']->search(
-	[
-		'offset' => (int) get_query_var( 'offset' ),
-		'limit' => 50,
-	]
-);
+$params = [
+	'offset' => (int) get_query_var( 'offset' ),
+	'limit' => 50,
+];
+
+foreach ( [ 'category_id_big', 'category_id_small' ] as $k ) {
+	if ( $v = get_query_var( $k ) ) {
+		$params[ $k ] = $v;
+	}
+}
+
+$response = $this->container['model.product_api']->search( $params );
 ?>
 <h2>商品 一覧</h2>
 

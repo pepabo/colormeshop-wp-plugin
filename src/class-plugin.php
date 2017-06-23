@@ -225,6 +225,8 @@ class Plugin {
 		add_rewrite_tag( '%colorme_item%', '([^&]+)' );
 		add_rewrite_tag( '%colorme_sitemap%', '([^&]+)' );
 		add_rewrite_tag( '%colorme_page%', '([^&]+)' );
+		add_rewrite_tag( '%category_id_big%', '([^&]+)' );
+		add_rewrite_tag( '%category_id_small%', '([^&]+)' );
 		add_rewrite_tag( '%offset%', '([^&]+)' );
 	}
 
