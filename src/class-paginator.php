@@ -15,8 +15,12 @@ class Paginator {
 	 * @param array $response
 	 */
 	public function __construct( $search_params, $response ) {
-		$pager_params = $search_params;
-		$pager_params['colorme_page'] = 'items';
+		$pager_params = array_merge(
+			[
+				'colorme_page' => 'items',
+			],
+			$search_params
+		);
 		unset( $pager_params['offset'] );
 
 		$this->paginator = new LengthAwarePaginator(
