@@ -51,7 +51,10 @@ class Product_Api {
 	 */
 	public function total() {
 		try {
-			$response = (new Client)->send( $this->create_request( 1, 0 ) );
+			$response = (new Client)->send( $this->create_request( [
+				'limit' => 1,
+				'offset' => 0,
+			] ) );
 		} catch ( RequestException $e ) {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
@@ -105,7 +108,10 @@ class Product_Api {
 		// 商品情報を取得
 		$requests = function () use ( $initial_offset, $should_continue ) {
 			for ( $offset = $initial_offset; $should_continue($offset); $offset += self::MAXIMUM_NUMBER_PER_REQUEST ) {
-				yield $this->create_request( self::MAXIMUM_NUMBER_PER_REQUEST, $offset );
+				yield $this->create_request( [
+					'limit' => self::MAXIMUM_NUMBER_PER_REQUEST,
+					'offset' => $offset,
+				] );
 			}
 		};
 
@@ -125,7 +131,7 @@ class Product_Api {
 	 */
 	public function search( $params ) {
 		try {
-			$response = (new Client)->send( $this->create_request( $params['limit'], $params['offset'] ) );
+			$response = (new Client)->send( $this->create_request( $params ) );
 		} catch ( RequestException $e ) {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
@@ -134,21 +140,14 @@ class Product_Api {
 	}
 
 	/**
-	 * @param int $limit
-	 * @param int $offset
+	 * @param array $params
 	 * @return \Psr\Http\Message\RequestInterface
 	 */
-	private function create_request( $limit, $offset ) {
-		$query = http_build_query(
-			[
-				'limit' => $limit,
-				'display_state' => 0,
-				'offset' => $offset,
-			]
-		);
+	private function create_request( $params ) {
+		$params['display_state'] = 0;
 		return new Request(
 			'GET',
-			'https://api.shop-pro.jp/v1/products.json?' . $query,
+			'https://api.shop-pro.jp/v1/products.json?' . http_build_query( $params ),
 			[
 				'Authorization' => 'Bearer ' . $this->token,
 			]
