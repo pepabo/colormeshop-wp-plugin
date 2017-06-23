@@ -134,6 +134,13 @@ class Plugin {
 		}
 
 		if ( get_query_var( 'colorme_page' ) === 'items' ) {
+			// テーマディレクトリに colorme-items.php があれば優先する
+			$template = get_template_directory() . '/colorme-items.php';
+			if ( file_exists( $template ) ) {
+				include $template;
+				exit;
+			}
+
 			add_filter( 'the_content', [ $this, 'show_items' ] );
 			return;
 		}
