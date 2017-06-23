@@ -402,11 +402,15 @@ class Plugin {
 		};
 
 		$container['model.product_api'] = function ( $c ) {
-			return new Product_Api( $c['token'] );
+			return new Product_Api( $c['token'], $c['paginator_factory'] );
 		};
 
 		$container['model.sitemap'] = function ( $c ) {
 			return new Sitemap( $c['product_page_url'], $c['model.product_api'] );
+		};
+
+		$container['paginator_factory'] = function ( $c ) {
+			return new Paginator_Factory( $c['product_page_url'], get_query_var( 'page_no' ) );
 		};
 
 		$this->container = $container;

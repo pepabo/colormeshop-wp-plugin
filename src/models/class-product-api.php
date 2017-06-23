@@ -2,6 +2,7 @@
 namespace ColorMeShop\Models;
 
 use ColorMeShop\Paginator;
+use ColorMeShop\Paginator_Factory;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Pool;
@@ -19,6 +20,11 @@ class Product_Api {
 	private $token;
 
 	/**
+	 * @var Paginator_Factory
+	 */
+	private $paginator_factory;
+
+	/**
 	 * @var array
 	 */
 	private $caches = [];
@@ -30,9 +36,11 @@ class Product_Api {
 
 	/**
 	 * @param string $token OAuth トークン
+	 * @param Paginator_Factory $paginator_factory
 	 */
-	public function __construct( $token ) {
+	public function __construct( $token, $paginator_factory ) {
 		$this->token = $token;
+		$this->paginator_factory = $paginator_factory;
 	}
 
 	/**
@@ -137,7 +145,7 @@ class Product_Api {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
 
-		return new Paginator(
+		return $this->paginator_factory->make(
 			$params,
 			self::decode_contents( $response->getBody()->getContents() )
 		);
