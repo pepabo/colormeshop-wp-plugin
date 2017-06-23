@@ -18,6 +18,7 @@ $paginator = $this->container['model.product_api']->paginate( $params );
 <h2>商品 一覧</h2>
 
 <?php if ( $paginator->data() ) : ?>
+	全 <?php echo number_format( $paginator->total() ) ?> 件
 	<dl>
 	<?php foreach ( $paginator->data() as $p ) : ?>
 		<!-- 商品名 -->

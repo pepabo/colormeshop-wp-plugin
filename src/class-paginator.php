@@ -11,6 +11,11 @@ class Paginator {
 	private $paginator;
 
 	/**
+	 * @var array
+	 */
+	private $response;
+
+	/**
 	 * @param array $search_params
 	 * @param array $response
 	 */
@@ -35,6 +40,7 @@ class Paginator {
 				'pageName' => 'page_no',
 			]
 		);
+		$this->response = $response;
 	}
 
 	/**
@@ -49,5 +55,12 @@ class Paginator {
 	 */
 	public function data() {
 		return $this->paginator->toArray()['data'];
+	}
+
+	/**
+	 * @return int
+	 */
+	public function total() {
+		return $this->response['meta']['total'];
 	}
 }
