@@ -21,6 +21,7 @@ class Paginator {
 			],
 			$search_params
 		);
+		unset( $pager_params['limit'] );
 		unset( $pager_params['offset'] );
 
 		$this->paginator = new LengthAwarePaginator(
