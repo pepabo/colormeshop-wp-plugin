@@ -21,15 +21,54 @@ $paginator = $this->container['model.product_api']->paginate( $params );
 	<dl>
 	<?php foreach ( $paginator->data() as $p ) : ?>
 		<!-- 商品名 -->
-		<dt><?php echo $p['id'] ?>: <?php echo $p['name'] ?></dt>
+		<dt>
+			<a href="<?php echo $this->container['product_page_url'] ?>?colorme_item=<?php echo $p['id'] ?>">
+				<?php echo $p['id'] ?>: <?php echo $p['name'] ?>
+			</a>
+		</dt>
 
-		 <!-- 画像 -->
-		<?php if ( $p['image_url'] ) : ?>
+		<dd>販売価格: <?php echo number_format( $p['sales_price'] ) ?>円</dd>
+		<dd>定価: <?php echo number_format( $p['price'] ) ?>円</dd>
+		<dd>会員向け価格: <?php echo number_format( $p['members_price'] ) ?>円</dd>
+		<dd>原価: <?php echo number_format( $p['cost'] ) ?>円</dd>
+
+		 <!-- PC画像 -->
+		<?php if ( $p['image_url'] && ! $this->container['is_mobile'] ) : ?>
 			 <dd><img src="<?php echo $p['image_url'] ?>" /></dd>
 		<?php endif; ?>
 
-		<!-- 説明 -->
-		<?php if ( $p['expl'] ) : ?>
+		<!-- モバイル画像 -->
+		<?php if ( $p['mobile_image_url'] && $this->container['is_mobile'] ) : ?>
+			<dd><img src="<?php echo $p['mobile_image_url'] ?>" /></dd>
+		<?php endif; ?>
+
+		<!-- サムネイル画像 -->
+		<?php if ( $p['thumbnail_image_url'] ) : ?>
+			<dd><img src="<?php echo $p['thumbnail_image_url'] ?>" /></dd>
+		<?php endif; ?>
+
+		<!-- その他の画像 -->
+		<?php if ( $p['images'] ) : ?>
+			<?php foreach ( $p['images'] as $i ) : ?>
+				<?php if ( $this->container['is_mobile'] ) : ?>
+					<!-- モバイル用 -->
+					<?php if ( $i['mobile'] ) : ?><img src="<?php echo $i['src'] ?>" /><?php endif; ?>
+				<?php else : ?>
+					<!-- PC用 -->
+					<?php if ( ! $i['mobile'] ) : ?><img src="<?php echo $i['src'] ?>" /><?php endif; ?>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		<?php endif; ?>
+
+		<!-- 簡易説明 -->
+		<?php if ( $p['simple_expl'] ) : ?>
+			<dd><?php echo nl2br( $p['simple_expl'] ) ?></dd>
+		<?php endif; ?>
+		<?php if ( $this->container['is_mobile'] && $p['smartphone_expl'] ) : ?>
+			<!-- モバイル用 説明 -->
+			<dd><?php echo nl2br( $p['smartphone_expl'] ) ?></dd>
+		<?php elseif ( $p['expl'] ) : ?>
+			<!-- PC用 説明 -->
 			<dd><?php echo nl2br( $p['expl'] ) ?></dd>
 		<?php endif; ?>
 	<?php endforeach; ?>
