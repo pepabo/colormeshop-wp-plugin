@@ -18,11 +18,14 @@ class Paginator {
 	/**
 	 * @param array $search_params
 	 * @param array $response
+	 * @param string $product_page_url
+	 * @param string $page_name
+	 * @param int $current_page_no
 	 */
-	public function __construct( $search_params, $response ) {
+	public function __construct( $search_params, $response, $product_page_url, $page_name, $current_page_no ) {
 		$pager_params = array_merge(
 			[
-				'colorme_page' => 'items',
+				'colorme_page' => $page_name,
 			],
 			$search_params
 		);
@@ -33,9 +36,9 @@ class Paginator {
 			$response['products'],
 			$response['meta']['total'],
 			$response['meta']['limit'],
-			get_query_var( 'page_no' ),
+			$current_page_no,
 			[
-				'path' => get_permalink(),
+				'path' => $product_page_url,
 				'query' => $pager_params,
 				'pageName' => 'page_no',
 			]
