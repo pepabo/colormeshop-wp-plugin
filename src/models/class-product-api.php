@@ -1,6 +1,7 @@
 <?php
 namespace ColorMeShop\Models;
 
+use ColorMeShop\Paginator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Pool;
@@ -127,16 +128,19 @@ class Product_Api {
 
 	/**
 	 * @param array $params
-	 * @return array
+	 * @return Paginator
 	 */
-	public function search( $params ) {
+	public function paginate( $params ) {
 		try {
 			$response = (new Client)->send( $this->create_request( $params ) );
 		} catch ( RequestException $e ) {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
 
-		return self::decode_contents( $response->getBody()->getContents() );
+		return new Paginator(
+			$params,
+			self::decode_contents( $response->getBody()->getContents() )
+		);
 	}
 
 	/**

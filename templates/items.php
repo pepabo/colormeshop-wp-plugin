@@ -1,23 +1,25 @@
 <?php
 // @see https://shop-pro.jp/?mode=api_interface#get-v1productsjson
+// 表示件数
 $params = [
-	'offset' => (int) get_query_var( 'offset' ),
-	'limit' => 50,
+	'limit' => 10,
 ];
-
+$params['offset'] = $params['limit'] * ( (int) get_query_var( 'page_no' ) - 1);
 foreach ( [ 'category_id_big', 'category_id_small' ] as $k ) {
-	if ( $v = get_query_var( $k ) ) {
+	$v = get_query_var( $k );
+	if ( $v ) {
 		$params[ $k ] = $v;
 	}
 }
 
-$response = $this->container['model.product_api']->search( $params );
+$paginator = $this->container['model.product_api']->paginate( $params );
+
 ?>
 <h2>商品 一覧</h2>
 
-<?php if ( $response['products'] ) : ?>
+<?php if ( $paginator->data() ) : ?>
 	<dl>
-	<?php foreach ( $response['products'] as $p ) : ?>
+	<?php foreach ( $paginator->data() as $p ) : ?>
 		<!-- 商品名 -->
 		<dt><?php echo $p['id'] ?>: <?php echo $p['name'] ?></dt>
 
@@ -32,6 +34,9 @@ $response = $this->container['model.product_api']->search( $params );
 		<?php endif; ?>
 	<?php endforeach; ?>
 	</dl>
+
+	<!-- ページャ -->
+	<?php echo $paginator->links() ?>
 <?php else : ?>
 	該当する商品がありません。
 <?php endif; ?>

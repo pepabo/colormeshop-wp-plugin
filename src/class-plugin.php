@@ -228,6 +228,7 @@ class Plugin {
 		add_rewrite_tag( '%category_id_big%', '([^&]+)' );
 		add_rewrite_tag( '%category_id_small%', '([^&]+)' );
 		add_rewrite_tag( '%offset%', '([^&]+)' );
+		add_rewrite_tag( '%page_no%', '([^&]+)' );
 	}
 
 	public function flush_application_rewrite_rules() {
