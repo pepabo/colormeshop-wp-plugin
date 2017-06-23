@@ -37,15 +37,16 @@ class Option_Test extends \WP_UnitTestCase {
 			],
 		]);
 
+		$this->container = _get_container();
+
 		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-			->setConstructorArgs( [ 'dummy_token' ] )
+			->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
 			->setMethods( [ 'fetch' ] )
 			->getMock();
 		$product_api->expects( $this->any() )
 			->method( 'fetch' )
 			->willReturn( $product );
 
-		$this->container = _get_container();
 		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
 			return $product_api;
 		};
@@ -126,7 +127,7 @@ class Option_Test extends \WP_UnitTestCase {
 	 */
 	public function show_商品情報の取得に失敗した場合_空文字を返す() {
 		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-			->setConstructorArgs( [ 'dummy_token' ] )
+			->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
 			->setMethods( [ 'fetch' ] )
 			->getMock();
 		$product_api->expects( $this->any() )
@@ -159,7 +160,7 @@ class Option_Test extends \WP_UnitTestCase {
 		};
 
 		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-			->setConstructorArgs( [ 'dummy_token' ] )
+			->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
 			->setMethods( [ 'fetch' ] )
 			->getMock();
 		$product_api->expects( $this->any() )
