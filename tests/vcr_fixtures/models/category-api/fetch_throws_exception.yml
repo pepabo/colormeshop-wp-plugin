@@ -1,0 +1,32 @@
+
+-
+    request:
+        method: GET
+        url: 'https://api.shop-pro.jp/v1/categories.json'
+        headers:
+            Host: api.shop-pro.jp
+            Accept-Encoding: null
+            User-Agent: 'GuzzleHttp/6.2.1 curl/7.38.0 PHP/7.0.18'
+            Authorization: 'Bearer dummy'
+            Accept: null
+    response:
+        status:
+            http_version: '1.1'
+            code: '401'
+            message: Unauthorized
+        headers:
+            Server: nginx/1.12.0
+            Date: 'Tue, 20 Jun 2017 05:12:20 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Status: '401 Unauthorized'
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            Cache-Control: no-store
+            Pragma: no-cache
+            WWW-Authenticate: 'Bearer realm="Doorkeeper", error="invalid_token", error_description="translation missing: ja.doorkeeper.errors.messages.invalid_token.unknown"'
+            X-Request-Id: b4bf2970-457b-4d57-9b28-c4c93c5f3f5f
+            X-Runtime: '0.012010'
+        body: '{"errors":[{"code":401010,"message":"\u3053\u306e\u30ea\u30bd\u30fc\u30b9\u306b\u30a2\u30af\u30bb\u30b9\u3067\u304d\u307e\u305b\u3093\u3002\u6709\u52b9\u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3\u304c\u307f\u3064\u304b\u3089\u306a\u3044\u304b\u3001\u5fc5\u8981\u306a\u30b9\u30b3\u30fc\u30d7\u304c\u4ed8\u4e0e\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002","status":401}]}'

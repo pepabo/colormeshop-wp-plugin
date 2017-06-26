@@ -1,6 +1,7 @@
 <?php
 namespace ColorMeShop;
 
+use ColorMeShop\Models\Category_Api;
 use ColorMeShop\Models\Shop_Api;
 use ColorMeShop\Models\Sitemap;
 use ColorMeShop\Models\Product_Api;
@@ -133,6 +134,18 @@ class Plugin {
 			$this->output_sitemap( get_query_var( 'offset' ) );
 		}
 
+		if ( get_query_var( 'colorme_page' ) === 'categories' ) {
+			// テーマディレクトリに colorme-categories.php があれば優先する
+			$template = get_template_directory() . '/colorme-categories.php';
+			if ( file_exists( $template ) ) {
+				include $template;
+				exit;
+			}
+			// ヘッダやサイドバー等を残して、本文のみを差し替えるために the_content をフィルタする
+			add_filter( 'the_content', [ $this, 'show_categories' ] );
+			return;
+		}
+
 		if ( get_query_var( 'colorme_page' ) === 'items' ) {
 			// テーマディレクトリに colorme-items.php があれば優先する
 			$template = get_template_directory() . '/colorme-items.php';
@@ -140,7 +153,6 @@ class Plugin {
 				include $template;
 				exit;
 			}
-
 			add_filter( 'the_content', [ $this, 'show_items' ] );
 			return;
 		}
@@ -151,12 +163,30 @@ class Plugin {
 	}
 
 	/**
+	 * 商品カテゴリー 一覧を表示する
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	public function show_categories( $content ) {
+		if ( ! ob_start() ) {
+			if ( $this->container['WP_DEBUG_LOG'] ) {
+				error_log( '商品カテゴリー 一覧の表示に失敗しました' );
+			}
+			return '';
+		}
+
+		include __DIR__ . '/../templates/categories.php';
+		return ob_get_clean();
+	}
+
+	/**
 	 * 商品一覧を表示する
 	 *
 	 * @param string $content
 	 * @return string
 	 */
-	public function show_items( $contents ) {
+	public function show_items( $content ) {
 		if ( ! ob_start() ) {
 			if ( $this->container['WP_DEBUG_LOG'] ) {
 				error_log( '商品一覧の表示に失敗しました' );
@@ -403,6 +433,10 @@ class Plugin {
 
 		$container['model.product_api'] = function ( $c ) {
 			return new Product_Api( $c['token'], $c['paginator_factory'] );
+		};
+
+		$container['model.category_api'] = function ( $c ) {
+			return new Category_Api( $c['token'] );
 		};
 
 		$container['model.sitemap'] = function ( $c ) {
