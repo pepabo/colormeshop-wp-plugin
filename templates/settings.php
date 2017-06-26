@@ -53,7 +53,7 @@
 								<img height="250" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/add_application.png" />
 							</div>
 							<p>
-								リダイレクトURLは<input class="regular-text" type="text" value="http://<?php echo $_SERVER['SERVER_NAME'] . ( 80 === $_SERVER['SERVER_PORT'] ? '' : ':' . $_SERVER['SERVER_PORT']) ?>/wp-admin/admin-ajax.php" />を入力してください。
+								リダイレクトURLは<input class="regular-text" type="text" value="<?php echo site_url() ?>/wp-admin/admin-ajax.php" />を入力してください。
 							</p>
 							<p>
 								保存後、表示される「クライアントID」「クライアントシークレット」を<br />
