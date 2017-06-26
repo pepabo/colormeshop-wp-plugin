@@ -5,14 +5,7 @@
             <!-- main content -->
             <div id="post-body-content">
                 <?php
-				if (
-					$this->container['product_page_id']
-					&& ! get_posts( [
-						'p' => $this->container['product_page_id'],
-						'post_type' => 'page',
-					] )
-				) :
-				?>
+				if ( $this->container['product_page_id'] && ! $this->is_valid_product_page_id( $this->container['product_page_id'] ) ) : ?>
 					<div class="error"><p>商品ページIDには、固定ページの ID を設定してください。</p></div>
 				<?php endif; ?>
 				<div class="meta-box-sortables ui-sortable">

@@ -322,6 +322,27 @@ class Plugin {
 	}
 
 	/**
+	 * 商品ページ ID を検証する
+	 *
+	 * @param int $producct_page_id
+	 * @return bool
+	 */
+	public function is_valid_product_page_id( $producct_page_id ) {
+		if ( ! is_numeric( $producct_page_id ) ) {
+			return false;
+		}
+
+		if ( ! get_posts([
+			'p' => $this->container['product_page_id'],
+			'post_type' => 'page',
+		]) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * DI コンテナの依存関係を定義する
 	 *
 	 * @return void
