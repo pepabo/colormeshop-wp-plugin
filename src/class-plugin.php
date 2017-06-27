@@ -39,7 +39,7 @@ class Plugin {
 		add_action( 'colormeshop_category', [ $this, 'show_category' ] );
 		add_action( 'init', [ $this, 'custom_rewrite_tag' ], 10, 0 );
 		add_action( 'init', [ $this, 'manage_item_routes' ] );
-		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 0 );
+		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 2 );
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
 		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
 		add_filter( 'template_redirect', array( $this, 'handle_template_redirect' ), 1, 0 );
@@ -77,10 +77,14 @@ class Plugin {
 
 	/**
 	 * プラグイン設定更新のコールバック
+	 *
+	 * @param array $old 古い設定値
+	 * @param array $new 新しい設定値
+	 * @return void
 	 */
-	public function on_update_settings() {
+	public function on_update_settings( $old, $new ) {
 		// 商品ページIDを元にサイトマップへのリライトを定義するため
-		$this->flush_application_rewrite_rules();
+		$this->flush_application_rewrite_rules( $new );
 	}
 
 	/**
@@ -104,14 +108,16 @@ class Plugin {
 	/**
 	 * 商品ページ用のリライトルールを追加する
 	 *
+	 * @param array $settings プラグインの設定. 管理画面で設定を更新した場合, 更新後の設定値が渡される.
 	 * @return void
 	 */
-	public function manage_item_routes() {
-		if ( $this->container['product_page_id'] ) {
+	public function manage_item_routes( $settings = null ) {
+		$product_page_id = ($settings && isset( $settings['product_page_id'] )) ? $settings['product_page_id'] : $this->container['product_page_id'];
+		if ( $product_page_id ) {
 			// サイトマップ用のリライトルール
-			$product_page_path = str_replace( site_url(), '', get_permalink( $this->container['product_page_id'] ) );
+			$product_page_path = str_replace( site_url(), '', get_permalink( $product_page_id ) );
 			$trimmed = trim( $product_page_path, '/' );
-			add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $this->container['product_page_id'] . '&colorme_sitemap=1', 'top' );
+			add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $product_page_id . '&colorme_sitemap=1', 'top' );
 		}
 
 		add_rewrite_rule( '^item/([^/]+)/?', 'index.php?colorme_item=$matches[1]', 'top' );
@@ -237,8 +243,11 @@ class Plugin {
 		add_rewrite_tag( '%offset%', '([^&]+)' );
 	}
 
-	public function flush_application_rewrite_rules() {
-		$this->manage_item_routes();
+	/**
+	 * @param array $settings プラグインの設定. 管理画面で設定を更新した場合, 更新後の設定値が渡される.
+	 */
+	public function flush_application_rewrite_rules( $settings = null ) {
+		$this->manage_item_routes( $settings );
 		flush_rewrite_rules();
 	}
 
