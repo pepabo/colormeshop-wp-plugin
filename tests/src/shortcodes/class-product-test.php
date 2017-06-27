@@ -46,7 +46,7 @@ __EOS__;
 		]);
 
 		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-			->setConstructorArgs( [ 'dummy_token' ] )
+			->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
 			->setMethods( [ 'fetch' ] )
 			->getMock();
 		$product_api->expects( $this->any() )
@@ -168,7 +168,7 @@ __EOS__;
 	 */
 	public function show_商品情報の取得に失敗した場合_空文字を返す() {
 		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-							->setConstructorArgs( [ 'dummy_token' ] )
+							->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
 							->setMethods( [ 'fetch' ] )
 							->getMock();
 		$product_api->expects( $this->any() )
@@ -202,7 +202,7 @@ __EOS__;
 		};
 
 		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-							->setConstructorArgs( [ 'dummy_token' ] )
+							->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
 							->setMethods( [ 'fetch' ] )
 							->getMock();
 		$product_api->expects( $this->any() )
@@ -239,7 +239,7 @@ __EOS__;
 			],
 		]);
 		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-							->setConstructorArgs( [ 'dummy_token' ] )
+							->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
 							->setMethods( [ 'fetch' ] )
 							->getMock();
 		$product_api->expects( $this->any() )
@@ -506,7 +506,7 @@ __EOS__;
 			],
 		]);
 		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-			->setConstructorArgs( [ 'dummy_token' ] )
+			->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
 			->setMethods( [ 'fetch' ] )
 			->getMock();
 		$product_api->expects( $this->any() )

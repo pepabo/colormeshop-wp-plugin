@@ -147,9 +147,19 @@ class Plugin {
 				include $template;
 				exit;
 			}
-
 			// ヘッダやサイドバー等を残して、本文のみを差し替えるために the_content をフィルタする
 			add_filter( 'the_content', [ $this, 'show_categories' ] );
+			return;
+		}
+
+		if ( get_query_var( 'colorme_page' ) === 'items' ) {
+			// テーマディレクトリに colorme-items.php があれば優先する
+			$template = get_template_directory() . '/colorme-items.php';
+			if ( file_exists( $template ) ) {
+				include $template;
+				exit;
+			}
+			add_filter( 'the_content', [ $this, 'show_items' ] );
 			return;
 		}
 
@@ -173,6 +183,24 @@ class Plugin {
 		}
 
 		include __DIR__ . '/../templates/categories.php';
+		return ob_get_clean();
+	}
+
+	/**
+	 * 商品一覧を表示する
+	 *
+	 * @param string $content
+	 * @return string
+	 */
+	public function show_items( $content ) {
+		if ( ! ob_start() ) {
+			if ( $this->container['WP_DEBUG_LOG'] ) {
+				error_log( '商品一覧の表示に失敗しました' );
+			}
+			return '';
+		}
+
+		include __DIR__ . '/../templates/items.php';
 		return ob_get_clean();
 	}
 
@@ -240,7 +268,10 @@ class Plugin {
 		add_rewrite_tag( '%colorme_item%', '([^&]+)' );
 		add_rewrite_tag( '%colorme_sitemap%', '([^&]+)' );
 		add_rewrite_tag( '%colorme_page%', '([^&]+)' );
+		add_rewrite_tag( '%category_id_big%', '([^&]+)' );
+		add_rewrite_tag( '%category_id_small%', '([^&]+)' );
 		add_rewrite_tag( '%offset%', '([^&]+)' );
+		add_rewrite_tag( '%page_no%', '([^&]+)' );
 	}
 
 	/**
@@ -431,7 +462,7 @@ class Plugin {
 		};
 
 		$container['model.product_api'] = function ( $c ) {
-			return new Product_Api( $c['token'] );
+			return new Product_Api( $c['token'], $c['paginator_factory'] );
 		};
 
 		$container['model.category_api'] = function ( $c ) {
@@ -440,6 +471,10 @@ class Plugin {
 
 		$container['model.sitemap'] = function ( $c ) {
 			return new Sitemap( $c['product_page_url'], $c['model.product_api'] );
+		};
+
+		$container['paginator_factory'] = function ( $c ) {
+			return new Paginator_Factory( $c['product_page_url'], get_query_var( 'page_no' ) );
 		};
 
 		$this->container = $container;
