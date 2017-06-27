@@ -5,6 +5,8 @@ use ColorMeShop\Models\Category_Api;
 use ColorMeShop\Models\Shop_Api;
 use ColorMeShop\Models\Sitemap;
 use ColorMeShop\Models\Product_Api;
+use ColorMeShop\Swagger\Api\CategoryApi;
+use ColorMeShop\Swagger\Configuration;
 use Pepabo\OAuth2\Client\Provider\ColorMeShop as OAuth2Client;
 use Pimple\Container;
 
@@ -440,6 +442,17 @@ class Plugin {
 
 		$container['model.sitemap'] = function ( $c ) {
 			return new Sitemap( $c['product_page_url'], $c['model.product_api'] );
+		};
+
+		$container['swagger.configuration'] = function ( $c ) {
+			$configuration = new Configuration();
+			$configuration->setAccessToken( $c['token'] );
+
+			return $configuration;
+		};
+
+		$container['swagger.api.category'] = function ( $c ) {
+			return new CategoryApi( null, $c['swagger.configuration'] );
 		};
 
 		$this->container = $container;
