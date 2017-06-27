@@ -4,11 +4,15 @@
         <div id="post-body" class="metabox-holder columns-2">
             <!-- main content -->
             <div id="post-body-content">
-                <div class="meta-box-sortables ui-sortable">
-                    <div class="postbox">
-                        <h2 class="hndle">設定</h2>
-                        <div class="inside">
-	                        <?php
+                <?php
+				if ( $this->container['product_page_id'] && ! $this->is_valid_product_page_id( $this->container['product_page_id'] ) ) : ?>
+					<div class="error"><p>商品ページIDには、固定ページの ID を設定してください。</p></div>
+				<?php endif; ?>
+				<div class="meta-box-sortables ui-sortable">
+					<div class="postbox">
+						<h2 class="hndle">設定</h2>
+						<div class="inside">
+							<?php
 							global $parent_file;
 							if ( 'options-general.php' !== $parent_file ) {
 								require( ABSPATH . 'wp-admin/options-head.php' );
