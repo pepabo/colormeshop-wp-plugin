@@ -27,6 +27,13 @@
 						</div>
 					</div>
 				</div>
+				<div class="meta-box-sortables ui-sortable">
+					<div class="postbox">
+						<div class="inside">
+							<iframe id="embed" width="100%" src="<?php echo $this->container['plugin_dir_url'] ?>/docs/embed/getting_started.html" ></iframe>
+						</div>
+					</div>
+				</div>
 				<a id="colorme_settings"></a>
 				<div class="meta-box-sortables ui-sortable">
 					<div class="postbox">
