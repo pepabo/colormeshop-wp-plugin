@@ -30,7 +30,7 @@ class Button implements Shortcode_Interface {
 		try {
 			return sprintf(
 				'<script type="text/javascript" src="%s/?mode=cartjs&pid=%d&style=%s&name=n&img=n&expl=n&stock=n&price=n&inq=n&sk=n" charset="euc-jp"></script>',
-				$container['model.shop_api']->fetch()->url,
+				$container['swagger.api.shop']->getShop()['shop']->getUrl(),
 				$filtered_atts['product_id'],
 				$filtered_atts['style']
 			);
