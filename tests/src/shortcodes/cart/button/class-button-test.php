@@ -6,7 +6,7 @@ class Button_Test extends \WP_UnitTestCase {
 		parent::setUp();
 
 		$this->container = _get_container();
-		$this->container['token'] = function ( $c ) use ( $shop_api ) {
+		$this->container['token'] = function ( $c ) {
 			return 'dummy';
 		};
 	}
