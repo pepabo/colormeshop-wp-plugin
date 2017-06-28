@@ -467,10 +467,6 @@ class Plugin {
 			return new Product_Api( $c['token'], $c['paginator_factory'] );
 		};
 
-		$container['model.category_api'] = function ( $c ) {
-			return new Category_Api( $c['token'] );
-		};
-
 		$container['model.sitemap'] = function ( $c ) {
 			return new Sitemap( $c['product_page_url'], $c['model.product_api'] );
 		};
