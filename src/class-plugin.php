@@ -460,10 +460,6 @@ class Plugin {
 			return wp_is_mobile();
 		};
 
-		$container['model.shop_api'] = function ( $c ) {
-			return new Shop_Api( $c['token'] );
-		};
-
 		$container['model.product_api'] = function ( $c ) {
 			return new Product_Api( $c['token'], $c['paginator_factory'] );
 		};
