@@ -2,6 +2,7 @@
 namespace ColorMeShop\Shortcodes;
 
 use ColorMeShop\Shortcode_Interface;
+use ColorMeShop\Swagger\ApiException;
 
 /**
  * @see https://shop-pro.jp/manual/menu_06_02_01#tag03
@@ -45,7 +46,7 @@ class Product implements Shortcode_Interface {
 					[ self::class, '_' . $filtered_atts['data'] ],
 					[ $container, $filtered_atts, $content, $tag ]
 				);
-			} catch ( \RuntimeException $e ) {
+			} catch ( ApiException $e ) {
 				if ( $container['WP_DEBUG_LOG'] ) {
 					error_log( $e );
 				}
@@ -201,7 +202,7 @@ class Product implements Shortcode_Interface {
 			return nl2br( $p['smartphone_expl'] );
 		}
 
-		return nl2br( $p->expl );
+		return nl2br( $p['expl'] );
 	}
 
 	/**
@@ -232,6 +233,6 @@ class Product implements Shortcode_Interface {
 			return '';
 		}
 
-		return number_format( $p->stocks ) . self::_unit( $container, $filtered_atts, $content, $tag );
+		return number_format( $p['stocks'] ) . self::_unit( $container, $filtered_atts, $content, $tag );
 	}
 }

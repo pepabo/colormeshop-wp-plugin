@@ -1,0 +1,32 @@
+
+-
+    request:
+        method: GET
+        url: 'https://api.shop-pro.jp/v1/products/123.json'
+        headers:
+            Host: api.shop-pro.jp
+            Accept-Encoding: null
+            User-Agent: Swagger-Codegen/1.0.0/php
+            Accept: application/json
+            Content-Type: application/json
+            Authorization: 'Bearer dummy'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx/1.12.0
+            Date: 'Thu, 29 Jun 2017 09:16:16 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Status: '200 OK'
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            ETag: 'W/"3938d4ed4bb72689e9e0079548b8c0f6"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: 67298b59-e320-4c6c-9bb5-120ec4a1747b
+            X-Runtime: '0.038045'
+        body: '{"product":{"id":123,"account_id":"PA01356136","model_number":"KATABAN","name":"\u30c6\u30b9\u30c8\u5546\u54c1","category":{"id_big":2131603,"id_small":0},"group_ids":[],"display_state":"showing","sales_price":1000,"price":null,"members_price":1011,"cost":200,"cool_charge":null,"delivery_charge":1000,"stock_managed":true,"stocks":1000,"min_num":null,"max_num":null,"sale_start_date":null,"sale_end_date":null,"unit":"個","weight":2000,"soldout_display":false,"few_num":null,"sort":null,"simple_expl":"\u5546\u54c1\u306e\u8aac\u660e\u3067\u3059\u3002","expl":"\u5546\u54c1\u306e\u8aac\u660e\u3067\u3059\u3002\n\u5546\u54c1\u306e\u8aac\u660e\u3067\u3059\u3002\n\u5546\u54c1\u306e\u8aac\u660e\u3067\u3059\u3002","mobile_expl":null,"smartphone_expl":"\u30b9\u30de\u30fc\u30c8\u30d5\u30a9\u30f3\u30b7\u30e7\u30c3\u30d7\u7528\u5546\u54c1\u306e\u8aac\u660e\u3067\u3059\u3002\n\u30b9\u30de\u30fc\u30c8\u30d5\u30a9\u30f3\u30b7\u30e7\u30c3\u30d7\u7528\u5546\u54c1\u306e\u8aac\u660e\u3067\u3059\u3002\n\u30b9\u30de\u30fc\u30c8\u30d5\u30a9\u30f3\u30b7\u30e7\u30c3\u30d7\u7528\u5546\u54c1\u306e\u8aac\u660e\u3067\u3059\u3002","make_date":1496911524,"update_date":1498727688,"memo":"","image_url":"http://img21.shop-pro.jp/PA01356/136/product/123.jpg?cmsp_timestamp=20170622190708","mobile_image_url":"http://img21.shop-pro.jp/PA01356/136/product/118849164_mb.jpg?cmsp_timestamp=20170622190708","thumbnail_image_url":"http://img21.shop-pro.jp/PA01356/136/product/118849164_th.jpg?cmsp_timestamp=20170622190708","images":[{"src":"http://img21.shop-pro.jp/PA01356/136/product/118849164_o1.jpg?cmsp_timestamp=20170623170718","position":1,"mobile":false},{"src":"http://img21.shop-pro.jp/PA01356/136/product/118849164_o1_mb.jpg","position":1,"mobile":true},{"src":"http://img21.shop-pro.jp/PA01356/136/product/118849164_o2.jpg?cmsp_timestamp=20170623170718","position":2,"mobile":false},{"src":"http://img21.shop-pro.jp/PA01356/136/product/118849164_o2_mb.jpg","position":2,"mobile":true}],"options":[{"id":65012326,"product_id":123,"account_id":"PA01356136","name":"\u30ab\u30e9\u30fc","values":["\u8d64","\u9752","\u9ec4"],"make_date":1498727690,"update_date":1498727688},{"id":65012327,"product_id":123,"account_id":"PA01356136","name":"\u30b5\u30a4\u30ba","values":["S","M","L"],"make_date":1498727690,"update_date":1498727688}],"variants":[{"product_id":123,"account_id":"PA01356136","option1_value":"\u8d64","option2_value":"S","title":"\u8d64\u3000\u00d7\u3000S","stocks":1000,"model_number":"KATABAN1","few_num":11,"option_price":1111,"option_members_price":1111,"make_date":1498727690,"update_date":1498727688},{"product_id":123,"account_id":"PA01356136","option1_value":"\u8d64","option2_value":"M","title":"\u8d64\u3000\u00d7\u3000M","stocks":2,"model_number":"KATABAN2","few_num":22,"option_price":222,"option_members_price":2222,"make_date":1498727690,"update_date":1498727688},{"product_id":123,"account_id":"PA01356136","option1_value":"\u8d64","option2_value":"L","title":"\u8d64\u3000\u00d7\u3000L","stocks":3,"model_number":"KATABAN3","few_num":33,"option_price":333,"option_members_price":3333,"make_date":1498727690,"update_date":1498727688},{"product_id":123,"account_id":"PA01356136","option1_value":"\u9752","option2_value":"S","title":"\u9752\u3000\u00d7\u3000S","stocks":4,"model_number":"KATABAN4","few_num":44,"option_price":444,"option_members_price":4444,"make_date":1498727690,"update_date":1498727688},{"product_id":123,"account_id":"PA01356136","option1_value":"\u9752","option2_value":"M","title":"\u9752\u3000\u00d7\u3000M","stocks":5,"model_number":"KATABAN5","few_num":55,"option_price":555,"option_members_price":5555,"make_date":1498727690,"update_date":1498727688},{"product_id":123,"account_id":"PA01356136","option1_value":"\u9752","option2_value":"L","title":"\u9752\u3000\u00d7\u3000L","stocks":6,"model_number":"KATABAN6","few_num":66,"option_price":666,"option_members_price":6666,"make_date":1498727690,"update_date":1498727688},{"product_id":123,"account_id":"PA01356136","option1_value":"\u9ec4","option2_value":"S","title":"\u9ec4\u3000\u00d7\u3000S","stocks":7,"model_number":"KATABAN7","few_num":77,"option_price":777,"option_members_price":7777,"make_date":1498727690,"update_date":1498727688},{"product_id":123,"account_id":"PA01356136","option1_value":"\u9ec4","option2_value":"M","title":"\u9ec4\u3000\u00d7\u3000M","stocks":8,"model_number":"KATABAN8","few_num":88,"option_price":888,"option_members_price":8888,"make_date":1498727690,"update_date":1498727688},{"product_id":123,"account_id":"PA01356136","option1_value":"\u9ec4","option2_value":"L","title":"\u9ec4\u3000\u00d7\u3000L","stocks":9,"model_number":"KATABAN9","few_num":99,"option_price":999,"option_members_price":9999,"make_date":1498727690,"update_date":1498727688}]}}'
