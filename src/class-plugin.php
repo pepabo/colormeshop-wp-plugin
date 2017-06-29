@@ -6,6 +6,7 @@ use ColorMeShop\Models\Shop_Api;
 use ColorMeShop\Models\Sitemap;
 use ColorMeShop\Models\Product_Api;
 use ColorMeShop\Swagger\Api\CategoryApi;
+use ColorMeShop\Swagger\Api\ProductApi;
 use ColorMeShop\Swagger\Api\ShopApi;
 use ColorMeShop\Swagger\Configuration;
 use Pepabo\OAuth2\Client\Provider\ColorMeShop as OAuth2Client;
@@ -68,7 +69,7 @@ class Plugin {
 		}
 
 		try {
-			$title_parts['title'] = $this->container['model.product_api']->fetch( $this->container['target_id'] )->name . ' - ' . $title_parts['title'];
+			$title_parts['title'] = $this->container['swagger.api.product']->getProduct( $this->container['target_id'] )['product']['name'] . ' - ' . $title_parts['title'];
 		} catch ( \RuntimeException $e ) {
 			if ( $this->container['WP_DEBUG_LOG'] ) {
 				error_log( 'タイトルのフィルタに失敗しました : ' . $e->getMessage() );
@@ -481,6 +482,10 @@ class Plugin {
 
 		$container['swagger.api.shop'] = function ( $c ) {
 			return new ShopApi( null, $c['swagger.configuration'] );
+		};
+
+		$container['swagger.api.product'] = function ( $c ) {
+			return new ProductApi( null, $c['swagger.configuration'] );
 		};
 
 		$container['swagger.api.category'] = function ( $c ) {
