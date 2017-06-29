@@ -1,8 +1,6 @@
 <?php
 namespace ColorMeShop;
 
-use ColorMeShop\Models\Category_Api;
-use ColorMeShop\Models\Shop_Api;
 use ColorMeShop\Models\Sitemap;
 use ColorMeShop\Models\Product_Api;
 use ColorMeShop\Swagger\Api\CategoryApi;

@@ -1,8 +1,6 @@
 <?php
 namespace ColorMeShop\Shortcodes;
 
-use ColorMeShop\Models\Product as ProductModel;
-
 class Product_Test extends \WP_UnitTestCase {
 	/** @var \Pimple\Container */
 	private $container;
