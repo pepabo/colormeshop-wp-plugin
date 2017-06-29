@@ -1,8 +1,6 @@
 <?php
 namespace ColorMeShop\Shortcodes\Product;
 
-use ColorMeShop\Models\Product;
-
 class Image_Test extends \WP_UnitTestCase {
 	/** @var \Pimple\Container */
 	private $container;
@@ -15,48 +13,10 @@ class Image_Test extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		$product = new Product([
-			'product' => [
-				'id' => 123,
-				'image_url' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123.jpg',
-				'mobile_image_url' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123_mb.jpg',
-				'thumbnail_image_url' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123_th.jpg',
-				'images' => [
-					[
-						'src' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123_other1.jpg',
-						'position' => 1,
-						'mobile' => false,
-					],
-					[
-						'src' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123_other1_mb.jpg',
-						'position' => 1,
-						'mobile' => true,
-					],
-					[
-						'src' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123_other2.jpg',
-						'position' => 2,
-						'mobile' => false,
-					],
-					[
-						'src' => 'http://img01.shop-pro.jp/PAXXX/XXX/product/123_other2_mb.jpg',
-						'position' => 2,
-						'mobile' => true,
-					],
-				],
-			],
-		]);
 
 		$this->container = _get_container();
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-							->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-							->setMethods( [ 'fetch' ] )
-							->getMock();
-		$product_api->expects( $this->any() )
-					->method( 'fetch' )
-					->willReturn( $product );
-
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
+		$this->container['token'] = function ( $c ) {
+			return 'dummy';
 		};
 
 		// ログ出力先
@@ -78,20 +38,9 @@ class Image_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/image/400.yml
 	 */
 	public function show_商品情報の取得に失敗した場合_空文字を返す() {
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-							->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-							->setMethods( [ 'fetch' ] )
-							->getMock();
-		$product_api->expects( $this->any() )
-					->method( 'fetch' )
-					->will( $this->throwException( new \RuntimeException() ) );
-
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
-		};
-
 		$this->assertSame(
 			'',
 			Image::show(
@@ -107,22 +56,11 @@ class Image_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/image/400.yml
 	 */
 	public function show_商品情報の取得に失敗した_デバッグが有効な場合_ログを出力する() {
 		$this->container['WP_DEBUG_LOG'] = function ( $c ) {
 			return true;
-		};
-
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-							->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-							->setMethods( [ 'fetch' ] )
-							->getMock();
-		$product_api->expects( $this->any() )
-					->method( 'fetch' )
-					->will( $this->throwException( new \RuntimeException() ) );
-
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
 		};
 
 		Image::show(
@@ -139,10 +77,11 @@ class Image_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/image/200.yml
 	 */
 	public function show_商品画像のタグを返す() {
 		$this->assertSame(
-			'<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123.jpg" />',
+			'<img src="http://img21.shop-pro.jp/PA01356/136/product/123.jpg?cmsp_timestamp=20170622190708" />',
 			Image::show(
 				$this->container,
 				[
@@ -156,13 +95,14 @@ class Image_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/image/200.yml
 	 */
 	public function show_モバイル用商品画像のタグを返す() {
 		$this->container['is_mobile'] = function ( $c ) {
 			return true;
 		};
 		$this->assertSame(
-			'<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123_mb.jpg" />',
+			'<img src="http://img21.shop-pro.jp/PA01356/136/product/118849164_mb.jpg?cmsp_timestamp=20170622190708" />',
 			Image::show(
 				$this->container,
 				[
@@ -176,27 +116,9 @@ class Image_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/image/noimage.yml
 	 */
 	public function show_画像が登録されていない場合_空文字を返す() {
-		$product = new Product([
-			'product' => [
-				'id' => 123,
-				'image_url' => null,
-			],
-		]);
-
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-							->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-							->setMethods( [ 'fetch' ] )
-							->getMock();
-		$product_api->expects( $this->any() )
-					->method( 'fetch' )
-					->willReturn( $product );
-
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
-		};
-
 		$this->assertSame(
 			'',
 			Image::show(
@@ -212,10 +134,11 @@ class Image_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/image/200.yml
 	 */
 	public function show_画像タグに追加の属性を指定できる() {
 		$this->assertSame(
-			'<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123.jpg" width="100" class="foo bar" />',
+			'<img src="http://img21.shop-pro.jp/PA01356/136/product/123.jpg?cmsp_timestamp=20170622190708" width="100" class="foo bar" />',
 			Image::show(
 				$this->container,
 				[
@@ -231,10 +154,11 @@ class Image_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/image/200.yml
 	 */
 	public function show_サムネイル用商品画像のタグを返す() {
 		$this->assertSame(
-			'<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123_th.jpg" />',
+			'<img src="http://img21.shop-pro.jp/PA01356/136/product/118849164_th.jpg?cmsp_timestamp=20170622190708" />',
 			Image::show(
 				$this->container,
 				[
@@ -249,10 +173,11 @@ class Image_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/image/200.yml
 	 */
 	public function show_その他画像のタグを返す() {
 		$this->assertSame(
-			'<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123_other1.jpg" />',
+			'<img src="http://img21.shop-pro.jp/PA01356/136/product/118849164_o1.jpg?cmsp_timestamp=20170623170718" />',
 			Image::show(
 				$this->container,
 				[
@@ -265,7 +190,7 @@ class Image_Test extends \WP_UnitTestCase {
 		);
 
 		$this->assertSame(
-			'<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123_other2.jpg" />',
+			'<img src="http://img21.shop-pro.jp/PA01356/136/product/118849164_o2.jpg?cmsp_timestamp=20170623170718" />',
 			Image::show(
 				$this->container,
 				[
@@ -280,13 +205,14 @@ class Image_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/image/200.yml
 	 */
 	public function show_モバイル用その他画像のタグを返す() {
 		$this->container['is_mobile'] = function ( $c ) {
 			return true;
 		};
 		$this->assertSame(
-			'<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123_other1_mb.jpg" />',
+			'<img src="http://img21.shop-pro.jp/PA01356/136/product/118849164_o1_mb.jpg" />',
 			Image::show(
 				$this->container,
 				[
@@ -299,7 +225,7 @@ class Image_Test extends \WP_UnitTestCase {
 		);
 
 		$this->assertSame(
-			'<img src="http://img01.shop-pro.jp/PAXXX/XXX/product/123_other2_mb.jpg" />',
+			'<img src="http://img21.shop-pro.jp/PA01356/136/product/118849164_o2_mb.jpg" />',
 			Image::show(
 				$this->container,
 				[
@@ -314,6 +240,7 @@ class Image_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/image/200.yml
 	 */
 	public function show_存在しない画像の場合_空文字を返す() {
 		$this->assertSame(

@@ -2,6 +2,7 @@
 namespace ColorMeShop\Shortcodes\Product;
 
 use ColorMeShop\Shortcode_Interface;
+use ColorMeShop\Swagger\ApiException;
 
 class Image implements Shortcode_Interface {
 	/**
@@ -29,7 +30,7 @@ class Image implements Shortcode_Interface {
 
 		try {
 			$product = $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product'];
-		} catch ( \RuntimeException $e ) {
+		} catch ( ApiException $e ) {
 			if ( $container['WP_DEBUG_LOG'] ) {
 				error_log( $e );
 			}
@@ -38,10 +39,10 @@ class Image implements Shortcode_Interface {
 
 		switch ( $filtered_atts['type'] ) {
 			case 'main':
-				$image_url = ( $product->mobile_image_url && $container['is_mobile'] ) ? $product->mobile_image_url : $product->image_url;
+				$image_url = ( $product['mobile_image_url'] && $container['is_mobile'] ) ? $product['mobile_image_url'] : $product['image_url'];
 				break;
 			case 'thumbnail':
-				$image_url = $product->thumbnail_image_url;
+				$image_url = $product['thumbnail_image_url'];
 				break;
 			default:
 				if ( ! self::is_request_for_other_image( $filtered_atts ) ) {
@@ -92,7 +93,7 @@ class Image implements Shortcode_Interface {
 	 * @return array
 	 */
 	private static function extract_other_images( $product, $is_mobile ) {
-		$filtered_images = array_filter($product->images, function ( $image ) use ( $is_mobile ) {
+		$filtered_images = array_filter($product['images'], function ( $image ) use ( $is_mobile ) {
 			if ( $is_mobile ) {
 				return $image['mobile'];
 			}
