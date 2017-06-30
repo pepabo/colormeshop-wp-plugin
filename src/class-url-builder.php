@@ -43,6 +43,17 @@ class Url_Builder {
 	/**
 	 * @return string
 	 */
+	public function categories() {
+		if ( $this->product_page_has_query() ) {
+			return $this->product_page_url . '&colorme_page=categories';
+		}
+
+		return trim( $this->product_page_url, '/' ) . '/?colorme_page=categories';
+	}
+
+	/**
+	 * @return string
+	 */
 	public function sitemap_index() {
 		return $this->sitemap( null );
 	}
