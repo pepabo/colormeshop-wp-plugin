@@ -18,6 +18,11 @@ class Sitemap {
 	private $product_api;
 
 	/**
+	 * @var \ColorMeShop\Url_Builder
+	 */
+	private $url;
+
+	/**
 	 * @var \Tackk\Cartographer\Sitemap
 	 */
 	private $sitemap;
@@ -30,10 +35,12 @@ class Sitemap {
 	/**
 	 * @param string
 	 * @param \ColorMeShop\Models\Product_Api $product_api
+	 * @param \ColorMeShop\Url_Builder $url
 	 */
-	public function __construct( $product_page_url, $product_api ) {
+	public function __construct( $product_page_url, $product_api, $url ) {
 		$this->product_page_url = $product_page_url;
 		$this->product_api = $product_api;
+		$this->url = $url;
 		$this->sitemap = new S();
 	}
 
@@ -66,7 +73,7 @@ class Sitemap {
 			function ( ResponseInterface $r ) {
 				$contents = Product_Api::decode_contents( $r->getBody()->getContents() );
 				foreach ( $contents['products'] as $p ) {
-					$this->sitemap->add( $this->make_item_url( $p ), $p['update_date'], ChangeFrequency::WEEKLY, 0.5 );
+					$this->sitemap->add( $this->url->item( $p['id'] ), $p['update_date'], ChangeFrequency::WEEKLY, 0.5 );
 				}
 			},
 			$offset,
@@ -88,20 +95,5 @@ class Sitemap {
 		}
 
 		return $this->product_page_url . '&colorme_sitemap=1&offset=' . $offset;
-	}
-
-	/**
-	 * 商品ページ URL
-	 *
-	 * @param array $product
-	 * @return string
-	 */
-	private function make_item_url( $product ) {
-		if ( strpos( $this->product_page_url, '?' ) === false ) {
-			return trim( $this->product_page_url, '/' ) . '/?colorme_item=' . $product['id'];
-		}
-
-		return $this->product_page_url . '&colorme_item=' . $product['id'];
-
 	}
 }
