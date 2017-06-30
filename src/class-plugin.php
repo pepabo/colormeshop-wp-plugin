@@ -119,8 +119,6 @@ class Plugin {
 			$trimmed = trim( $product_page_path, '/' );
 			add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $product_page_id . '&colorme_sitemap=1', 'top' );
 		}
-
-		add_rewrite_rule( '^item/([^/]+)/?', 'index.php?colorme_item=$matches[1]', 'top' );
 	}
 
 	/**
