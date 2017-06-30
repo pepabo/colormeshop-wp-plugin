@@ -64,12 +64,10 @@ class Url_Builder {
 	 */
 	public function sitemap( $offset ) {
 		if ( $this->product_page_has_query() ) {
-			$sitemap_url = $this->product_page_url . '&colorme_sitemap=1';
-		} else {
-			$sitemap_url = trim( $this->product_page_url, '/' ) . '/sitemap.xml';
+			return $this->product_page_url . '&colorme_sitemap=1' . (($offset === null) ? '' : '&offset=' . $offset);
 		}
 
-		return $sitemap_url . ($offset === null) ? '' : '&offset=' . $offset;
+		return trim( $this->product_page_url, '/' ) . '/sitemap.xml' . (($offset === null) ? '' : '?offset=' . $offset);
 	}
 
 	/**
