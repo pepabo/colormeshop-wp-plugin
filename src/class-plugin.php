@@ -113,12 +113,14 @@ class Plugin {
 	 */
 	public function manage_item_routes( $settings = null ) {
 		$product_page_id = ($settings && isset( $settings['product_page_id'] )) ? $settings['product_page_id'] : $this->container['product_page_id'];
-		if ( $product_page_id ) {
-			// サイトマップ用のリライトルール
-			$product_page_path = str_replace( site_url(), '', get_permalink( $product_page_id ) );
-			$trimmed = trim( $product_page_path, '/' );
-			add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $product_page_id . '&colorme_sitemap=1', 'top' );
+		if ( ! $product_page_id || ! $this->is_valid_product_page_id( $product_page_id ) ) {
+			return;
 		}
+
+		// サイトマップ用のリライトルール
+		$product_page_path = str_replace( site_url(), '', get_permalink( $product_page_id ) );
+		$trimmed = trim( $product_page_path, '/' );
+		add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $product_page_id . '&colorme_sitemap=1', 'top' );
 	}
 
 	/**
