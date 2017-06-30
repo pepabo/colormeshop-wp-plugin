@@ -474,7 +474,7 @@ class Plugin {
 		};
 
 		$container['model.sitemap'] = function ( $c ) {
-			return new Sitemap( $c['product_page_url'], $c['model.product_api'], $c['url_builder'] );
+			return new Sitemap( $c['model.product_api'], $c['url_builder'] );
 		};
 
 		$container['paginator_factory'] = function ( $c ) {

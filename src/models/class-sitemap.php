@@ -8,11 +8,6 @@ use Tackk\Cartographer\SitemapIndex;
 
 class Sitemap {
 	/**
-	 * @var string
-	 */
-	private $product_page_url;
-
-	/**
 	 * @var \ColorMeShop\Models\Product_Api
 	 */
 	private $product_api;
@@ -33,12 +28,10 @@ class Sitemap {
 	const NUMBER_OF_ITEM_URLS_PER_PAGE = 1000;
 
 	/**
-	 * @param string
 	 * @param \ColorMeShop\Models\Product_Api $product_api
 	 * @param \ColorMeShop\Url_Builder $url
 	 */
-	public function __construct( $product_page_url, $product_api, $url ) {
-		$this->product_page_url = $product_page_url;
+	public function __construct( $product_api, $url ) {
 		$this->product_api = $product_api;
 		$this->url = $url;
 		$this->sitemap = new S();
