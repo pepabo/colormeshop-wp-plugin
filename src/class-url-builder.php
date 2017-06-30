@@ -27,6 +27,20 @@ class Url_Builder {
 	}
 
 	/**
+	 * @param array $params
+	 * @return string
+	 */
+	public function items( $params ) {
+		if ( $this->product_page_has_query() ) {
+			$items_url = $this->product_page_url . '&colorme_page=items';
+		} else {
+			$items_url = trim( $this->product_page_url, '/' ) . '/?colorme_page=items';
+		}
+
+		return $items_url . ( ($params) ? '&' . http_build_query( $params ) : '');
+	}
+
+	/**
 	 * @return string
 	 */
 	public function sitemap_index() {

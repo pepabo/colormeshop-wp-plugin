@@ -2,6 +2,7 @@
 // 取得できるカテゴリー情報
 // @see https://shop-pro.jp/?mode=api_interface#get-v1categoriesjson
 $response = $this->container['model.category_api']->fetch();
+$url = $this->container['url_builder'];
 ?>
 <h2>商品カテゴリー 一覧</h2>
 
@@ -12,9 +13,10 @@ $response = $this->container['model.category_api']->fetch();
 			continue;
 		endif;
 	?>
-	<!-- TODO: 商品一覧ページの URL を表示する -->
 	<!-- カテゴリー名 -->
-	<dt><?php echo $c['name'] ?></dt>
+	<dt><a href="<?php echo $url->items([
+			'category_id_big' => $c['id_big'],
+	]) ?>"><?php echo $c['name'] ?></a></dt>
 
 	<!-- 大カテゴリー ID -->
 	<dd> <?php echo $c['id_big'] ?></dd>
@@ -38,7 +40,10 @@ $response = $this->container['model.category_api']->fetch();
 				endif;
 			?>
 				<!-- カテゴリー名 -->
-				<dt><?php echo $child['name'] ?></dt>
+				<dt><a href="<?php echo $url->items([
+					'category_id_big' => $child['id_big'],
+					'category_id_small' => $child['id_small'],
+				]) ?>"><?php echo $child['name'] ?></a></dt>
 
 				<!-- 小カテゴリー ID -->
 				<dd> <?php echo $child['id_small'] ?></dd>
