@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>カラーミーショップ WordPress プラグインをインストールしていただきありがとうございます！</title>
+
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
+	<script>
+        $(function () {
+            // 親画面のiframe要素
+            var p = window.parent.document.getElementById("embed_create_page");
+            // 子要素のコンテンツサイズに合わせて調整
+            p.style.height = document.body.scrollHeight  + "px";
+        });
+	</script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<h2>商品ページを作成できます！</h2>
+	</div>
+	<div class="row">
+		<p>
+			商品用の固定ページを作成し、<a href="#colorme_shortcode">ショートコード</a>を使って商品情報をレイアウトしてください。
+		</p>
+	</div>
+	<div class="row">
+		<div>
+			<a target="_blank" href="./images/screenshots/create_page.png"><img height="400" src="./images/screenshots/create_page.png" /></a>
+		</div>
+	</div>
+	<div class="row">
+		<p>
+			<code><商品ページのURL>?colorme_item=<商品ID></code> にアクセスすると...！
+		</p>
+	</div>
+	<div class="row">
+		<div>
+			<a target="_blank" href="./images/screenshots/shop_page.png"><img height="400" src="./images/screenshots/shop_page.png" /></a>
+		</div>
+	</div>
+
+	<div class="row">
+		<h3>ショートコードとかレイアウトとか難しい...おまかせで！というかたは</h3>
+	</div>
+	<div class="row">
+		<p>
+			本文に <input type="text" value="[colormeshop_page]" /> を貼り付けて保存してください！
+		</p>
+	</div>
+</div>
+</body>
+</html>
