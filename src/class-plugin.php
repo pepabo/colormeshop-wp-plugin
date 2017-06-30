@@ -457,6 +457,10 @@ class Plugin {
 			return wp_is_mobile();
 		};
 
+		$container['url_builder'] = function ( $c ) {
+			return new Url_Builder( $c['product_page_url'] );
+		};
+
 		$container['model.shop_api'] = function ( $c ) {
 			return new Shop_Api( $c['token'] );
 		};
