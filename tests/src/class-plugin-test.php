@@ -23,7 +23,10 @@ class Plugin_Test extends \WP_UnitTestCase {
 		$this->assertFalse( $plugin->is_valid_product_page_id( '' ) );
 		$this->assertFalse( $plugin->is_valid_product_page_id( 0 ) );
 		$this->assertFalse( $plugin->is_valid_product_page_id( 'TEST' ) );
+		// 記事 id
 		$this->assertFalse( $plugin->is_valid_product_page_id( $post_id ) );
+		// 存在しない id
+		$this->assertFalse( $plugin->is_valid_product_page_id( 999999 ) );
 		$this->assertTrue( $plugin->is_valid_product_page_id( $page_id ) );
 	}
 }
