@@ -115,7 +115,7 @@ class Plugin {
 	 */
 	public function manage_item_routes( $settings = null ) {
 		$product_page_id = ($settings && isset( $settings['product_page_id'] )) ? $settings['product_page_id'] : $this->container['product_page_id'];
-		if ( ! $product_page_id || ! $this->is_valid_product_page_id( $product_page_id ) ) {
+		if ( ! $this->is_valid_product_page_id( $product_page_id ) ) {
 			return;
 		}
 
@@ -370,7 +370,7 @@ class Plugin {
 	 * @return bool
 	 */
 	public function is_valid_product_page_id( $producct_page_id ) {
-		if ( ! is_numeric( $producct_page_id ) ) {
+		if ( ! $producct_page_id || ! is_numeric( $producct_page_id ) ) {
 			return false;
 		}
 
