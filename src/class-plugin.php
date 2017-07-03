@@ -460,7 +460,7 @@ class Plugin {
 		};
 
 		$container['model.product_api'] = function ( $c ) {
-			return new Product_Api( $c['token'], $c['paginator_factory'] );
+			return new Product_Api( $c['paginator_factory'], null, $c['swagger.configuration'] );
 		};
 
 		$container['model.sitemap'] = function ( $c ) {

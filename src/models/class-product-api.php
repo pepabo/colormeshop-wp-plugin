@@ -3,7 +3,11 @@ namespace ColorMeShop\Models;
 
 use ColorMeShop\Paginator;
 use ColorMeShop\Paginator_Factory;
+use ColorMeShop\Swagger\Api\ProductApi;
+use ColorMeShop\Swagger\Configuration;
+use ColorMeShop\Swagger\HeaderSelector;
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Request;
@@ -13,12 +17,7 @@ use GuzzleHttp\Psr7\Request;
  *
  * @see https://shop-pro.jp/?mode=api_interface#get-v1productsjson
  */
-class Product_Api {
-	/**
-	 * @var string
-	 */
-	private $token;
-
+class Product_Api extends ProductApi {
 	/**
 	 * @var Paginator_Factory
 	 */
@@ -30,11 +29,18 @@ class Product_Api {
 	const MAXIMUM_NUMBER_PER_REQUEST = 50;
 
 	/**
-	 * @param string $token OAuth トークン
 	 * @param Paginator_Factory $paginator_factory
+	 * @param ClientInterface $client
+	 * @param Configuration $config
+	 * @param HeaderSelector $selector
 	 */
-	public function __construct( $token, $paginator_factory ) {
-		$this->token = $token;
+	public function __construct(
+		$paginator_factory,
+		ClientInterface $client = null,
+		Configuration $config = null,
+		HeaderSelector $selector = null
+	) {
+		parent::__construct( $client, $config, $selector );
 		$this->paginator_factory = $paginator_factory;
 	}
 
@@ -120,7 +126,7 @@ class Product_Api {
 			'GET',
 			'https://api.shop-pro.jp/v1/products.json?' . http_build_query( $params ),
 			[
-				'Authorization' => 'Bearer ' . $this->token,
+				'Authorization' => 'Bearer ' . $this->config->getAccessToken(),
 			]
 		);
 	}
