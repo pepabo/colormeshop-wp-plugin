@@ -67,7 +67,7 @@ class Plugin {
 		}
 
 		try {
-			$title_parts['title'] = $this->container['model.product_api']->getProduct( $this->container['target_id'] )['product']['name'] . ' - ' . $title_parts['title'];
+			$title_parts['title'] = $this->container['model.product_api']->fetch( $this->container['target_id'] )['product']['name'] . ' - ' . $title_parts['title'];
 		} catch ( \RuntimeException $e ) {
 			if ( $this->container['WP_DEBUG_LOG'] ) {
 				error_log( 'タイトルのフィルタに失敗しました : ' . $e->getMessage() );

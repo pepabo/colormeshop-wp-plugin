@@ -50,8 +50,6 @@ class Product_Api extends ProductApi {
 	}
 
 	/**
-	 * Operation getProduct
-	 *
 	 * 商品データの取得
 	 *
 	 * @param int $product_id 商品ID (required)
@@ -59,7 +57,7 @@ class Product_Api extends ProductApi {
 	 * @throws \InvalidArgumentException
 	 * @return \ColorMeShop\Swagger\Model\InlineResponse2007
 	 */
-	public function getProduct( $product_id ) {
+	public function fetch( $product_id ) {
 		if ( isset( $this->caches[ $product_id ] ) ) {
 			return $this->caches[ $product_id ];
 		}
