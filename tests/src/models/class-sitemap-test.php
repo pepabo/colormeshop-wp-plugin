@@ -36,10 +36,10 @@ __EOS__;
 		$container['token'] = function ( $c ) {
 			return 'dummy';
 		};
-		$sitemap = new Sitemap(
-			'https://example.com/?p=123',// デフォルト
-			$container['api.product_api']
-		);
+		$container['product_page_url'] = function ( $c ) {
+			return 'https://example.com/?p=123';// デフォルト
+		};
+		$sitemap = $container['model.sitemap'];
 		$this->assertSame( $expected, $sitemap->generate_index() );
 	}
 
@@ -77,10 +77,10 @@ __EOS__;
 		$container['token'] = function ( $c ) {
 			return 'dummy';
 		};
-		$sitemap = new Sitemap(
-			'https://example.com/shop/',
-			$container['api.product_api']
-		);
+		$container['product_page_url'] = function ( $c ) {
+			return 'https://example.com/shop/';
+		};
+		$sitemap = $container['model.sitemap'];
 		$this->assertSame( $expected, $sitemap->generate_index() );
 	}
 
@@ -113,11 +113,11 @@ __EOS__;
 		$container['token'] = function ( $c ) {
 			return 'dummy';
 		};
-		$sitemap = new Sitemap(
-			'https://example.com/?p=123',// デフォルト
-			$container['api.product_api']
-		);
-		$this->assertSame( $expected, $sitemap->generate(0) );
+		$container['product_page_url'] = function ( $c ) {
+			return 'https://example.com/?p=123';// デフォルト
+		};
+		$sitemap = $container['model.sitemap'];
+		$this->assertSame( $expected, $sitemap->generate( 0 ) );
 	}
 
 	/**
@@ -149,11 +149,11 @@ __EOS__;
 		$container['token'] = function ( $c ) {
 			return 'dummy';
 		};
-		$sitemap = new Sitemap(
-			'https://example.com/shop/',
-			$container['api.product_api']
-		);
-		$this->assertSame( $expected, $sitemap->generate(0) );
+		$container['product_page_url'] = function ( $c ) {
+			return 'https://example.com/shop/';
+		};
+		$sitemap = $container['model.sitemap'];
+		$this->assertSame( $expected, $sitemap->generate( 0 ) );
 	}
 
 	/**
@@ -165,13 +165,13 @@ __EOS__;
 		$container['token'] = function ( $c ) {
 			return 'dummy';
 		};
-		$sitemap = new Sitemap(
-			'https://example.com/shop/',
-			$container['api.product_api']
-		);
+		$container['product_page_url'] = function ( $c ) {
+			return 'https://example.com/shop/';
+		};
+		$sitemap = $container['model.sitemap'];
 
 		$matches = [];
-		preg_match_all( '#<loc>https://example\.com/shop/\?colorme_item=[0-9]+</loc>#', $sitemap->generate(0), $matches );
+		preg_match_all( '#<loc>https://example\.com/shop/\?colorme_item=[0-9]+</loc>#', $sitemap->generate( 0 ), $matches );
 		$this->assertCount( 101, $matches[0] );
 	}
 }

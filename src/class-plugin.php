@@ -115,14 +115,14 @@ class Plugin {
 	 */
 	public function manage_item_routes( $settings = null ) {
 		$product_page_id = ($settings && isset( $settings['product_page_id'] )) ? $settings['product_page_id'] : $this->container['product_page_id'];
-		if ( $product_page_id ) {
-			// サイトマップ用のリライトルール
-			$product_page_path = str_replace( site_url(), '', get_permalink( $product_page_id ) );
-			$trimmed = trim( $product_page_path, '/' );
-			add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $product_page_id . '&colorme_sitemap=1', 'top' );
+		if ( ! $this->is_valid_product_page_id( $product_page_id ) ) {
+			return;
 		}
 
-		add_rewrite_rule( '^item/([^/]+)/?', 'index.php?colorme_item=$matches[1]', 'top' );
+		// サイトマップ用のリライトルール
+		$product_page_path = str_replace( site_url(), '', get_permalink( $product_page_id ) );
+		$trimmed = trim( $product_page_path, '/' );
+		add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $product_page_id . '&colorme_sitemap=1', 'top' );
 	}
 
 	/**
@@ -370,14 +370,12 @@ class Plugin {
 	 * @return bool
 	 */
 	public function is_valid_product_page_id( $producct_page_id ) {
-		if ( ! is_numeric( $producct_page_id ) ) {
+		if ( ! $producct_page_id || ! is_numeric( $producct_page_id ) ) {
 			return false;
 		}
 
-		if ( ! get_posts([
-			'p' => $this->container['product_page_id'],
-			'post_type' => 'page',
-		]) ) {
+		$p = get_post( $producct_page_id );
+		if ( ! $p || $p->post_type !== 'page' ) {
 			return false;
 		}
 
@@ -466,8 +464,16 @@ class Plugin {
 			);
 		};
 
+		$container['url_builder'] = function ( $c ) {
+			return new Url_Builder( $c['product_page_url'] );
+		};
+
+		$container['model.product_api'] = function ( $c ) {
+			return new Product_Api( $c['token'], $c['paginator_factory'] );
+		};
+
 		$container['model.sitemap'] = function ( $c ) {
-			return new Sitemap( $c['product_page_url'], $c['api.product_api'] );
+			return new Sitemap( $c['api.product_api'], $c['url_builder'] );
 		};
 
 		$container['paginator_factory'] = function ( $c ) {

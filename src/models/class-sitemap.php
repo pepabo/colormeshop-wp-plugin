@@ -9,14 +9,14 @@ use Tackk\Cartographer\SitemapIndex;
 
 class Sitemap {
 	/**
-	 * @var string
-	 */
-	private $product_page_url;
-
-	/**
 	 * @var \ColorMeShop\Models\Product_Api
 	 */
 	private $product_api;
+
+	/**
+	 * @var \ColorMeShop\Url_Builder
+	 */
+	private $url;
 
 	/**
 	 * @var \Tackk\Cartographer\Sitemap
@@ -29,12 +29,12 @@ class Sitemap {
 	const NUMBER_OF_ITEM_URLS_PER_PAGE = 1000;
 
 	/**
-	 * @param string
 	 * @param \ColorMeShop\Models\Product_Api $product_api
+	 * @param \ColorMeShop\Url_Builder $url
 	 */
-	public function __construct( $product_page_url, $product_api ) {
-		$this->product_page_url = $product_page_url;
+	public function __construct( $product_api, $url ) {
 		$this->product_api = $product_api;
+		$this->url = $url;
 		$this->sitemap = new S();
 	}
 
@@ -49,7 +49,7 @@ class Sitemap {
 		$total = $this->product_api->total();
 
 		for ( $i = 0; $i <= $total; $i += self::NUMBER_OF_ITEM_URLS_PER_PAGE ) {
-			$sitemap_index->add( $this->make_sitemap_url( $i ), null );
+			$sitemap_index->add( $this->url->sitemap( $i ), null );
 		}
 
 		return $sitemap_index->toString();
@@ -67,7 +67,7 @@ class Sitemap {
 			function ( ResponseInterface $r ) {
 				$contents = Product_Api::decode_contents( $r->getBody()->getContents() );
 				foreach ( $contents['products'] as $p ) {
-					$this->sitemap->add( $this->make_item_url( $p ), $p['update_date'], ChangeFrequency::WEEKLY, 0.5 );
+					$this->sitemap->add( $this->url->item( $p['id'] ), $p['update_date'], ChangeFrequency::WEEKLY, 0.5 );
 				}
 			},
 			$offset,
@@ -75,34 +75,5 @@ class Sitemap {
 		);
 
 		return $this->sitemap->toString();
-	}
-
-	/**
-	 * サイトマップ URL
-	 *
-	 * @param int $offset
-	 * @return string
-	 */
-	private function make_sitemap_url( $offset ) {
-		if ( strpos( $this->product_page_url, '?' ) === false ) {
-			return $this->product_page_url . 'sitemap.xml?offset=' . $offset;
-		}
-
-		return $this->product_page_url . '&colorme_sitemap=1&offset=' . $offset;
-	}
-
-	/**
-	 * 商品ページ URL
-	 *
-	 * @param array $product
-	 * @return string
-	 */
-	private function make_item_url( $product ) {
-		if ( strpos( $this->product_page_url, '?' ) === false ) {
-			return trim( $this->product_page_url, '/' ) . '/?colorme_item=' . $product['id'];
-		}
-
-		return $this->product_page_url . '&colorme_item=' . $product['id'];
-
 	}
 }

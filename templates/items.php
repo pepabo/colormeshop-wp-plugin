@@ -13,6 +13,7 @@ foreach ( [ 'category_id_big', 'category_id_small' ] as $k ) {
 }
 
 $paginator = $this->container['api.product_api']->paginate( $params );
+$url = $this->container['url_builder'];
 
 ?>
 <h2>商品 一覧</h2>
@@ -23,7 +24,7 @@ $paginator = $this->container['api.product_api']->paginate( $params );
 	<?php foreach ( $paginator->data() as $p ) : ?>
 		<!-- 商品名 -->
 		<dt>
-			<a href="<?php echo $this->container['product_page_url'] ?>?colorme_item=<?php echo $p['id'] ?>">
+			<a href="<?php echo $url->item( $p['id'] ) ?>">
 				<?php echo $p['id'] ?>: <?php echo $p['name'] ?>
 			</a>
 		</dt>
