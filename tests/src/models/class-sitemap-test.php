@@ -38,7 +38,7 @@ __EOS__;
 		};
 		$sitemap = new Sitemap(
 			'https://example.com/?p=123',// デフォルト
-			$container['model.product_api']
+			$container['api.product_api']
 		);
 		$this->assertSame( $expected, $sitemap->generate_index() );
 	}
@@ -79,7 +79,7 @@ __EOS__;
 		};
 		$sitemap = new Sitemap(
 			'https://example.com/shop/',
-			$container['model.product_api']
+			$container['api.product_api']
 		);
 		$this->assertSame( $expected, $sitemap->generate_index() );
 	}
@@ -115,7 +115,7 @@ __EOS__;
 		};
 		$sitemap = new Sitemap(
 			'https://example.com/?p=123',// デフォルト
-			$container['model.product_api']
+			$container['api.product_api']
 		);
 		$this->assertSame( $expected, $sitemap->generate(0) );
 	}
@@ -151,7 +151,7 @@ __EOS__;
 		};
 		$sitemap = new Sitemap(
 			'https://example.com/shop/',
-			$container['model.product_api']
+			$container['api.product_api']
 		);
 		$this->assertSame( $expected, $sitemap->generate(0) );
 	}
@@ -167,7 +167,7 @@ __EOS__;
 		};
 		$sitemap = new Sitemap(
 			'https://example.com/shop/',
-			$container['model.product_api']
+			$container['api.product_api']
 		);
 
 		$matches = [];

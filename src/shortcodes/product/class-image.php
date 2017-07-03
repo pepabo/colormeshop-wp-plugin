@@ -29,7 +29,7 @@ class Image implements Shortcode_Interface {
 		);
 
 		try {
-			$product = $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product'];
+			$product = $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product'];
 		} catch ( ApiException $e ) {
 			if ( $container['WP_DEBUG_LOG'] ) {
 				error_log( $e );
@@ -114,7 +114,7 @@ class Image implements Shortcode_Interface {
 	private static function extract_other_image( $container, $filtered_atts ) {
 		$index = self::extract_other_image_index( $filtered_atts['type'] );
 		$other_images = self::extract_other_images(
-			$container['model.product_api']->fetch( $filtered_atts['product_id'] )['product'],
+			$container['api.product_api']->fetch( $filtered_atts['product_id'] )['product'],
 			$container['is_mobile']
 		);
 

@@ -12,7 +12,7 @@ foreach ( [ 'category_id_big', 'category_id_small' ] as $k ) {
 	}
 }
 
-$paginator = $this->container['model.product_api']->paginate( $params );
+$paginator = $this->container['api.product_api']->paginate( $params );
 
 ?>
 <h2>商品 一覧</h2>

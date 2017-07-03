@@ -79,7 +79,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _id( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product']['id'];
+		return $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']['id'];
 	}
 
 	/**
@@ -92,7 +92,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _name( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product']['name'];
+		return $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']['name'];
 	}
 
 	/**
@@ -105,7 +105,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _model( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product']['model_number'];
+		return $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']['model_number'];
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _price( $container, $filtered_atts, $content, $tag ) {
-		return self::number_format( $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product']['price'] );
+		return self::number_format( $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']['price'] );
 	}
 
 	/**
@@ -131,7 +131,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _regular_price( $container, $filtered_atts, $content, $tag ) {
-		return self::number_format( $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product']['sales_price'] );
+		return self::number_format( $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']['sales_price'] );
 	}
 
 	/**
@@ -144,7 +144,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _members_price( $container, $filtered_atts, $content, $tag ) {
-		return self::number_format( $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product']['members_price'] );
+		return self::number_format( $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']['members_price'] );
 	}
 
 	/**
@@ -157,7 +157,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _unit( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product']['unit'];
+		return $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']['unit'];
 	}
 
 	/**
@@ -170,7 +170,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _weight( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product']['weight'];
+		return $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']['weight'];
 	}
 
 	/**
@@ -183,7 +183,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _simple_explain( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product']['simple_expl'];
+		return $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']['simple_expl'];
 	}
 
 	/**
@@ -196,7 +196,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _explain( $container, $filtered_atts, $content, $tag ) {
-		$p = $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product'];
+		$p = $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product'];
 		// モバイルデバイスの場合はスマートフォン用の説明を返す(フィーチャーフォン未対応)
 		if ( null !== $p['smartphone_expl'] && '' !== $p['smartphone_expl'] && $container['is_mobile'] ) {
 			return nl2br( $p['smartphone_expl'] );
@@ -215,7 +215,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _postage( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product']['delivery_charge'];
+		return $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']['delivery_charge'];
 	}
 
 	/**
@@ -228,7 +228,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _stocks( $container, $filtered_atts, $content, $tag ) {
-		$p = $container['model.product_api']->fetch( $filtered_atts['product_id'] )['product'];
+		$p = $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product'];
 		if ( ! $p['stock_managed'] ) {
 			return '';
 		}
