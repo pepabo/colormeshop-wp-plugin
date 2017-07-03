@@ -3,11 +3,7 @@ namespace ColorMeShop\Api;
 
 use ColorMeShop\Paginator;
 use ColorMeShop\Paginator_Factory;
-use ColorMeShop\Swagger\Api\ProductApi;
-use ColorMeShop\Swagger\Configuration;
-use ColorMeShop\Swagger\HeaderSelector;
 use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Request;
@@ -17,7 +13,7 @@ use GuzzleHttp\Psr7\Request;
  *
  * @see https://shop-pro.jp/?mode=api_interface#get-v1productsjson
  */
-class Product_Api extends ProductApi {
+class Product_Api {
 	/**
 	 * @var Paginator_Factory
 	 */
@@ -35,18 +31,11 @@ class Product_Api extends ProductApi {
 
 	/**
 	 * @param Paginator_Factory $paginator_factory
-	 * @param ClientInterface $client
-	 * @param Configuration $config
-	 * @param HeaderSelector $selector
+	 * @param \ColorMeShop\Swagger\Api\ProductApi $swagger_api
 	 */
-	public function __construct(
-		$paginator_factory,
-		ClientInterface $client = null,
-		Configuration $config = null,
-		HeaderSelector $selector = null
-	) {
-		parent::__construct( $client, $config, $selector );
+	public function __construct( $paginator_factory, $swagger_api ) {
 		$this->paginator_factory = $paginator_factory;
+		$this->swagger_api = $swagger_api;
 	}
 
 	/**
@@ -62,7 +51,7 @@ class Product_Api extends ProductApi {
 			return $this->caches[ $product_id ];
 		}
 
-		$this->caches[ $product_id ] = parent::getProduct( $product_id );
+		$this->caches[ $product_id ] = $this->swagger_api->getProduct( $product_id );
 
 		return $this->caches[ $product_id ];
 	}
@@ -149,7 +138,7 @@ class Product_Api extends ProductApi {
 			'GET',
 			'https://api.shop-pro.jp/v1/products.json?' . http_build_query( $params ),
 			[
-				'Authorization' => 'Bearer ' . $this->config->getAccessToken(),
+				'Authorization' => 'Bearer ' . $this->swagger_api->getConfig()->getAccessToken(),
 			]
 		);
 	}

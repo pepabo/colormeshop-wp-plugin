@@ -4,6 +4,7 @@ namespace ColorMeShop;
 use ColorMeShop\Models\Sitemap;
 use ColorMeShop\Api\Product_Api;
 use ColorMeShop\Swagger\Api\CategoryApi;
+use ColorMeShop\Swagger\Api\ProductApi;
 use ColorMeShop\Swagger\Api\ShopApi;
 use ColorMeShop\Swagger\Configuration;
 use Pepabo\OAuth2\Client\Provider\ColorMeShop as OAuth2Client;
@@ -459,7 +460,10 @@ class Plugin {
 		};
 
 		$container['api.product_api'] = function ( $c ) {
-			return new Product_Api( $c['paginator_factory'], null, $c['swagger.configuration'] );
+			return new Product_Api(
+				$c['paginator_factory'],
+				new ProductApi( null, $c['swagger.configuration'] )
+			);
 		};
 
 		$container['model.sitemap'] = function ( $c ) {
