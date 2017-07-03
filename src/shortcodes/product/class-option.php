@@ -31,7 +31,7 @@ class Option implements Shortcode_Interface {
 		);
 
 		try {
-			$product = $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product'];
+			$product = $container['model.product_api']->getProduct( $filtered_atts['product_id'] )['product'];
 		} catch ( ApiException $e ) {
 			if ( $container['WP_DEBUG_LOG'] ) {
 				error_log( $e );
