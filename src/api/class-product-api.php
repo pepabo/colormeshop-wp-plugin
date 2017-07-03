@@ -1,5 +1,5 @@
 <?php
-namespace ColorMeShop\Models;
+namespace ColorMeShop\Api;
 
 use ColorMeShop\Paginator;
 use ColorMeShop\Paginator_Factory;
