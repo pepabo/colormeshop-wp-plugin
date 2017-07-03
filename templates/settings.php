@@ -26,7 +26,7 @@
 								?>
 							</form>
 							<a href="<?php echo $this->container['oauth2_client']->getAuthorizationUrl( [
-								'scope' => [ 'read_products write_products' ],
+								'scope' => [ 'read_products' ],
 							] ) ?>">カラーミーショップアカウントで認証する</a>
 						</div>
 					</div>
