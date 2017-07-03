@@ -25,6 +25,21 @@
 								submit_button();
 								?>
 							</form>
+							<?php if ( ! $this->container['product_page_id'] || ! $this->is_valid_product_page_id( $this->container['product_page_id'] ) ) : ?>
+								<div>
+									<p>※ 商品カテゴリーページ、商品一覧ページ、サイトマップを生成するには商品ページ ID を設定してください。</p>
+									<p>商品ページ ID の設定方法は<a href="#colorme_sitemap">こちら</a>をご参照ください。</p>
+								</div>
+							<?php else : ?>
+								<div>
+									<ul>
+										<li>商品 <a href="<?php echo $this->container['product_page_url'] ?>?colorme_item=カラーミーショップの商品ID" target="_blank"><?php echo $this->container['product_page_url'] ?>?colorme_item=カラーミーショップの商品ID</a></li>
+										<li>商品カテゴリー <a href="<?php echo $this->container['product_page_url'] ?>?colorme_page=categories" target="_blank"><?php echo $this->container['product_page_url'] ?>?colorme_page=categories</a></li>
+										<li>商品一覧 <a href="<?php echo $this->container['product_page_url'] ?>?colorme_page=items" target="_blank"><?php echo $this->container['product_page_url'] ?>?colorme_page=items</a></li>
+										<li>サイトマップ <a href="<?php echo $this->container['product_page_url'] ?>sitemap.xml" target="_blank"><?php echo $this->container['product_page_url'] ?>sitemap.xml</a></li>
+									</ul>
+								</div>
+							<?php endif; ?>
 							<a href="<?php echo $this->container['oauth2_client']->getAuthorizationUrl( [
 								'scope' => [ 'read_products write_products' ],
 							] ) ?>">カラーミーショップアカウントで認証する</a>
