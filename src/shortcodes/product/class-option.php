@@ -2,6 +2,7 @@
 namespace ColorMeShop\Shortcodes\Product;
 
 use ColorMeShop\Shortcode_Interface;
+use ColorMeShop\Swagger\ApiException;
 
 class Option implements Shortcode_Interface {
 
@@ -30,26 +31,26 @@ class Option implements Shortcode_Interface {
 		);
 
 		try {
-			$product = $container['model.product_api']->fetch( $filtered_atts['product_id'] );
-		} catch ( \RuntimeException $e ) {
+			$product = $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product'];
+		} catch ( ApiException $e ) {
 			if ( $container['WP_DEBUG_LOG'] ) {
 				error_log( $e );
 			}
 			return '';
 		}
 
-		if ( ! $product->variants || ! isset( $product->variants[ $filtered_atts['index'] - 1 ] ) ) {
+		if ( ! $product['variants'] || ! isset( $product['variants'][ $filtered_atts['index'] - 1 ] ) ) {
 			return '';
 		}
 
-		$v = $product->variants[ $filtered_atts['index'] - 1 ];
+		$v = $product['variants'][ $filtered_atts['index'] - 1 ];
 		if ( ! isset( $v[ $filtered_atts['data'] ] ) ) {
 			return '';
 		}
 
 		switch ( $filtered_atts['data'] ) {
 			case 'stocks':
-				return number_format( $v[ $filtered_atts['data'] ] ) . $product->unit;
+				return number_format( $v[ $filtered_atts['data'] ] ) . $product['unit'];
 				break;
 			case 'option_price':
 			case 'option_members_price':

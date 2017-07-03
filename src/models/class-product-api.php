@@ -25,11 +25,6 @@ class Product_Api {
 	private $paginator_factory;
 
 	/**
-	 * @var array
-	 */
-	private $caches = [];
-
-	/**
 	 * @var int 1リクエストあたりの最大件数
 	 */
 	const MAXIMUM_NUMBER_PER_REQUEST = 50;
@@ -41,15 +36,6 @@ class Product_Api {
 	public function __construct( $token, $paginator_factory ) {
 		$this->token = $token;
 		$this->paginator_factory = $paginator_factory;
-	}
-
-	/**
-	 * @param int $product_id
-	 * @return Product
-	 * @throws \RuntimeException
-	 */
-	public function fetch( $product_id ) {
-		return new Product( $this->call_api( $product_id ) );
 	}
 
 	/**
@@ -69,33 +55,6 @@ class Product_Api {
 		}
 
 		return self::decode_contents( $response->getBody()->getContents() )['meta']['total'];
-	}
-
-	/**
-	 * @param int $product_id
-	 * @return array
-	 * @throws \RuntimeException
-	 */
-	private function call_api( $product_id ) {
-		if ( isset( $this->caches[ $product_id ] ) ) {
-			return $this->caches[ $product_id ];
-		}
-
-		$url      = "https://api.shop-pro.jp/v1/products/{$product_id}.json";
-		$response = wp_remote_get( $url, [
-			'headers' => [
-				'Authorization' => 'Bearer ' . $this->token,
-			],
-		] );
-		if ( is_wp_error( $response ) || 200 !== $response['response']['code'] ) {
-			throw new \RuntimeException( '商品情報取得に失敗しました. product_id: ' . $product_id );
-		}
-
-		$content  = self::decode_contents( $response['body'] );
-
-		$this->caches[ $product_id ] = $content;
-
-		return $content;
 	}
 
 	/**

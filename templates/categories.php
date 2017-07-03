@@ -1,7 +1,7 @@
 <?php
 // 取得できるカテゴリー情報
 // @see https://shop-pro.jp/?mode=api_interface#get-v1categoriesjson
-$response = $this->container['model.category_api']->fetch();
+$response = $this->container['swagger.api.category']->getProductCategories();
 ?>
 <h2>商品カテゴリー 一覧</h2>
 

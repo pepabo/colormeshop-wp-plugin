@@ -1,24 +1,13 @@
 <?php
 namespace ColorMeShop\Shortcodes\Cart;
 
-
 class Button_Test extends \WP_UnitTestCase {
-
 	public function setUp() {
-		$shop = new \stdClass();
-		$shop->url = 'https://test.shop-pro.jp';
-
-		$shop_api = $this->getMockBuilder( '\ColorMeShop\Models\Shop_Api' )
-			->setConstructorArgs( [ 'dummy_token' ] )
-			->setMethods( [ 'fetch' ] )
-			->getMock();
-		$shop_api->expects( $this->any() )
-			->method( 'fetch' )
-			->willReturn( $shop );
+		parent::setUp();
 
 		$this->container = _get_container();
-		$this->container['model.shop_api'] = function ( $c ) use ( $shop_api ) {
-			return $shop_api;
+		$this->container['token'] = function ( $c ) {
+			return 'dummy';
 		};
 	}
 
@@ -31,6 +20,7 @@ class Button_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/cart/button/script_tag.yml
 	 */
 	public function show_カートボタン用のscriptタグを返す() {
 		$this->assertSame(
@@ -48,6 +38,7 @@ class Button_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/cart/button/style.yml
 	 */
 	public function show_styleを指定できる() {
 		$this->assertSame(

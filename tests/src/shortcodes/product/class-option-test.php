@@ -1,8 +1,6 @@
 <?php
 namespace ColorMeShop\Shortcodes\Product;
 
-use ColorMeShop\Models\Product;
-
 class Option_Test extends \WP_UnitTestCase {
 
 	/** @var \Pimple\Container */
@@ -16,39 +14,10 @@ class Option_Test extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		$product = new Product([
-			'product' => [
-				'id' => 123,
-				'unit' => '個',
-				'variants' => [
-					[
-						'title' => '赤　×　L',
-						'stocks' => 1000,
-						'option_price' => 2000,
-						'option_members_price' => 1500,
-					],
-					[
-						'title' => '赤　×　M',
-						'stocks' => 500,
-						'option_price' => 1000,
-						'option_members_price' => 800,
-					],
-				],
-			],
-		]);
 
 		$this->container = _get_container();
-
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-			->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-			->setMethods( [ 'fetch' ] )
-			->getMock();
-		$product_api->expects( $this->any() )
-			->method( 'fetch' )
-			->willReturn( $product );
-
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
+		$this->container['token'] = function ( $c ) {
+			return 'dummy';
 		};
 
 		// ログ出力先
@@ -70,10 +39,11 @@ class Option_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/option/200.yml
 	 */
 	public function show_オプション名を返す() {
 		$this->assertSame(
-			'赤　×　L',
+			'赤　×　S',
 			Option::show(
 				$this->container,
 				[
@@ -88,6 +58,7 @@ class Option_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/option/200.yml
 	 */
 	public function show_単位付きの在庫数を返す() {
 		$this->assertSame(
@@ -106,10 +77,11 @@ class Option_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/option/200.yml
 	 */
 	public function show_オプションの価格を返す() {
 		$this->assertSame(
-			'2,000',
+			'1,111',
 			Option::show(
 				$this->container,
 				[
@@ -124,20 +96,9 @@ class Option_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/option/400.yml
 	 */
 	public function show_商品情報の取得に失敗した場合_空文字を返す() {
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-			->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-			->setMethods( [ 'fetch' ] )
-			->getMock();
-		$product_api->expects( $this->any() )
-			->method( 'fetch' )
-			->will( $this->throwException( new \RuntimeException() ) );
-
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
-		};
-
 		$this->assertSame(
 			'',
 			Option::show(
@@ -153,22 +114,11 @@ class Option_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/option/400.yml
 	 */
 	public function show_商品情報の取得に失敗した_デバッグが有効な場合_ログを出力する() {
 		$this->container['WP_DEBUG_LOG'] = function ( $c ) {
 			return true;
-		};
-
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-			->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-			->setMethods( [ 'fetch' ] )
-			->getMock();
-		$product_api->expects( $this->any() )
-			->method( 'fetch' )
-			->will( $this->throwException( new \RuntimeException() ) );
-
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
 		};
 
 		Option::show(
@@ -186,6 +136,7 @@ class Option_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/option/200.yml
 	 */
 	public function show_indexで取得するオプションを指定できる() {
 		$this->assertSame(
@@ -204,6 +155,7 @@ class Option_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/option/200.yml
 	 */
 	public function show_存在しないindexを指定した場合_空文字を返す() {
 		$this->assertSame(
@@ -222,6 +174,7 @@ class Option_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/option/200.yml
 	 */
 	public function show_存在しないdataを指定した場合_空文字を返す() {
 		$this->assertSame(
