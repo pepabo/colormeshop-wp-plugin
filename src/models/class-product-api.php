@@ -29,6 +29,11 @@ class Product_Api extends ProductApi {
 	const MAXIMUM_NUMBER_PER_REQUEST = 50;
 
 	/**
+	 * @var array
+	 */
+	private $caches = [];
+
+	/**
 	 * @param Paginator_Factory $paginator_factory
 	 * @param ClientInterface $client
 	 * @param Configuration $config
@@ -42,6 +47,26 @@ class Product_Api extends ProductApi {
 	) {
 		parent::__construct( $client, $config, $selector );
 		$this->paginator_factory = $paginator_factory;
+	}
+
+	/**
+	 * Operation getProduct
+	 *
+	 * 商品データの取得
+	 *
+	 * @param int $product_id 商品ID (required)
+	 * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
+	 * @throws \InvalidArgumentException
+	 * @return \ColorMeShop\Swagger\Model\InlineResponse2007
+	 */
+	public function getProduct( $product_id ) {
+		if ( isset( $this->caches[ $product_id ] ) ) {
+			return $this->caches[ $product_id ];
+		}
+
+		$this->caches[ $product_id ] = parent::getProduct( $product_id );
+
+		return $this->caches[ $product_id ];
 	}
 
 	/**
