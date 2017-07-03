@@ -1,8 +1,6 @@
 <?php
 namespace ColorMeShop\Shortcodes;
 
-use ColorMeShop\Models\Product as ProductModel;
-
 class Product_Test extends \WP_UnitTestCase {
 	/** @var \Pimple\Container */
 	private $container;
@@ -15,47 +13,10 @@ class Product_Test extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		$expl = <<<"__EOS__"
-説明のテスト
-説明のテスト
-説明のテスト
-__EOS__;
-		$smartphone_expl = <<<"__EOS__"
-説明のテスト(スマートフォン)
-説明のテスト(スマートフォン)
-説明のテスト(スマートフォン)
-__EOS__;
-
-		$product = new ProductModel([
-			'product' => [
-				'id' => 123,
-				'name' => 'テスト商品',
-				'model_number' => 'テスト型番',
-				'price' => 1200,
-				'sales_price' => 1000,
-				'members_price' => 800,
-				'unit' => '個',
-				'weight' => 2000,
-				'simple_expl' => '簡易説明のテスト',
-				'expl' => $expl,
-				'smartphone_expl' => $smartphone_expl,
-				'delivery_charge' => 1000,
-				'stock_managed' => true,
-				'stocks' => 1000,
-			],
-		]);
-
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-			->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-			->setMethods( [ 'fetch' ] )
-			->getMock();
-		$product_api->expects( $this->any() )
-			->method( 'fetch' )
-			->willReturn( $product );
 
 		$this->container = _get_container();
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
+		$this->container['token'] = function ( $c ) {
+			return 'dummy';
 		};
 
 		// ログ出力先
@@ -147,6 +108,7 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function id_商品IDを返す() {
 		$this->assertSame(
@@ -165,20 +127,9 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/400.yml
 	 */
 	public function show_商品情報の取得に失敗した場合_空文字を返す() {
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-							->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-							->setMethods( [ 'fetch' ] )
-							->getMock();
-		$product_api->expects( $this->any() )
-					->method( 'fetch' )
-					->will( $this->throwException( new \RuntimeException() ) );
-
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
-		};
-
 		$this->assertSame(
 			'',
 			Product::show(
@@ -195,22 +146,11 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/400.yml
 	 */
 	public function show_商品情報の取得に失敗した_デバッグが有効な場合_ログを出力する() {
 		$this->container['WP_DEBUG_LOG'] = function ( $c ) {
 			return true;
-		};
-
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-							->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-							->setMethods( [ 'fetch' ] )
-							->getMock();
-		$product_api->expects( $this->any() )
-					->method( 'fetch' )
-					->will( $this->throwException( new \RuntimeException() ) );
-
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
 		};
 
 		Product::show(
@@ -228,27 +168,9 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/unset_price.yml
 	 */
 	public function number_format_価格未設定の場合_空文字を返す() {
-		// 定価(data="price")でテストする
-		$product = new ProductModel([
-			'product' => [
-				'id' => 123,
-				// 定価未設定
-				'price' => null,
-			],
-		]);
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-							->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-							->setMethods( [ 'fetch' ] )
-							->getMock();
-		$product_api->expects( $this->any() )
-					->method( 'fetch' )
-					->willReturn( $product );
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
-		};
-
 		$this->assertSame(
 			'',
 			Product::show(
@@ -265,6 +187,7 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function name_商品名を返す() {
 		$this->assertSame(
@@ -283,10 +206,11 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function price_定価を返す() {
 		$this->assertSame(
-			'1,200',
+			'1,500',
 			Product::show(
 				$this->container,
 				[
@@ -301,6 +225,7 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function regular_price_通常販売価格を返す() {
 		$this->assertSame(
@@ -319,10 +244,11 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function members_price_会員価格を返す() {
 		$this->assertSame(
-			'800',
+			'1,011',
 			Product::show(
 				$this->container,
 				[
@@ -337,10 +263,11 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function model_型番を返す() {
 		$this->assertSame(
-			'テスト型番',
+			'KATABAN',
 			Product::show(
 				$this->container,
 				[
@@ -355,6 +282,7 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function unit_単位を返す() {
 		$this->assertSame(
@@ -373,6 +301,7 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function weight_重量を返す() {
 		$this->assertSame(
@@ -391,10 +320,11 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function simple_explain_簡易説明を返す() {
 		$this->assertSame(
-			'簡易説明のテスト',
+			'商品の説明です。',
 			Product::show(
 				$this->container,
 				[
@@ -409,12 +339,13 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function explain_商品詳細説明を返す() {
 		$expected = <<<"__EOS__"
-説明のテスト<br />
-説明のテスト<br />
-説明のテスト
+商品の説明です。<br />
+商品の説明です。<br />
+商品の説明です。
 __EOS__;
 
 		$this->assertSame(
@@ -433,15 +364,16 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function explain_モバイルデバイスの場合スマートフォン用説明を返す() {
 		$this->container['is_mobile'] = function ( $c ) {
 			return true;
 		};
 		$expected = <<<"__EOS__"
-説明のテスト(スマートフォン)<br />
-説明のテスト(スマートフォン)<br />
-説明のテスト(スマートフォン)
+スマートフォンショップ用商品の説明です。<br />
+スマートフォンショップ用商品の説明です。<br />
+スマートフォンショップ用商品の説明です。
 __EOS__;
 
 		$this->assertSame(
@@ -460,6 +392,7 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function postage_個別送料を返す() {
 		$this->assertSame(
@@ -478,6 +411,7 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/200.yml
 	 */
 	public function stocks_単位付きの在庫数を返す() {
 		$this->assertSame(
@@ -496,26 +430,9 @@ __EOS__;
 
 	/**
 	 * @test
+	 * @vcr shortcodes/product/unlimited.yml
 	 */
 	public function stocks_在庫管理していない場合は空文字を返す() {
-		$product = new ProductModel([
-			'product' => [
-				'id' => 123,
-				'stock_managed' => false,
-				'stocks' => 1000,
-			],
-		]);
-		$product_api = $this->getMockBuilder( '\ColorMeShop\Models\Product_Api' )
-			->setConstructorArgs( [ 'dummy_token', $this->container['paginator_factory'] ] )
-			->setMethods( [ 'fetch' ] )
-			->getMock();
-		$product_api->expects( $this->any() )
-			->method( 'fetch' )
-			->willReturn( $product );
-		$this->container['model.product_api'] = function ( $c ) use ( $product_api ) {
-			return $product_api;
-		};
-
 		$this->assertSame(
 			'',
 			Product::show(

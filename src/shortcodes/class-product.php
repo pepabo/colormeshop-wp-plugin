@@ -2,6 +2,7 @@
 namespace ColorMeShop\Shortcodes;
 
 use ColorMeShop\Shortcode_Interface;
+use ColorMeShop\Swagger\ApiException;
 
 /**
  * @see https://shop-pro.jp/manual/menu_06_02_01#tag03
@@ -45,7 +46,7 @@ class Product implements Shortcode_Interface {
 					[ self::class, '_' . $filtered_atts['data'] ],
 					[ $container, $filtered_atts, $content, $tag ]
 				);
-			} catch ( \RuntimeException $e ) {
+			} catch ( ApiException $e ) {
 				if ( $container['WP_DEBUG_LOG'] ) {
 					error_log( $e );
 				}
@@ -78,7 +79,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _id( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->id;
+		return $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product']['id'];
 	}
 
 	/**
@@ -91,7 +92,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _name( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->name;
+		return $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product']['name'];
 	}
 
 	/**
@@ -104,7 +105,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _model( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->model_number;
+		return $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product']['model_number'];
 	}
 
 	/**
@@ -117,7 +118,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _price( $container, $filtered_atts, $content, $tag ) {
-		return self::number_format( $container['model.product_api']->fetch( $filtered_atts['product_id'] )->price );
+		return self::number_format( $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product']['price'] );
 	}
 
 	/**
@@ -130,7 +131,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _regular_price( $container, $filtered_atts, $content, $tag ) {
-		return self::number_format( $container['model.product_api']->fetch( $filtered_atts['product_id'] )->sales_price );
+		return self::number_format( $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product']['sales_price'] );
 	}
 
 	/**
@@ -143,7 +144,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _members_price( $container, $filtered_atts, $content, $tag ) {
-		return self::number_format( $container['model.product_api']->fetch( $filtered_atts['product_id'] )->members_price );
+		return self::number_format( $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product']['members_price'] );
 	}
 
 	/**
@@ -156,7 +157,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _unit( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->unit;
+		return $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product']['unit'];
 	}
 
 	/**
@@ -169,7 +170,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _weight( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->weight;
+		return $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product']['weight'];
 	}
 
 	/**
@@ -182,7 +183,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _simple_explain( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->simple_expl;
+		return $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product']['simple_expl'];
 	}
 
 	/**
@@ -195,13 +196,13 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _explain( $container, $filtered_atts, $content, $tag ) {
-		$p = $container['model.product_api']->fetch( $filtered_atts['product_id'] );
+		$p = $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product'];
 		// モバイルデバイスの場合はスマートフォン用の説明を返す(フィーチャーフォン未対応)
-		if ( null !== $p->smartphone_expl && '' !== $p->smartphone_expl && $container['is_mobile'] ) {
-			return nl2br( $p->smartphone_expl );
+		if ( null !== $p['smartphone_expl'] && '' !== $p['smartphone_expl'] && $container['is_mobile'] ) {
+			return nl2br( $p['smartphone_expl'] );
 		}
 
-		return nl2br( $p->expl );
+		return nl2br( $p['expl'] );
 	}
 
 	/**
@@ -214,7 +215,7 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _postage( $container, $filtered_atts, $content, $tag ) {
-		return $container['model.product_api']->fetch( $filtered_atts['product_id'] )->delivery_charge;
+		return $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product']['delivery_charge'];
 	}
 
 	/**
@@ -227,11 +228,11 @@ class Product implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function _stocks( $container, $filtered_atts, $content, $tag ) {
-		$p = $container['model.product_api']->fetch( $filtered_atts['product_id'] );
-		if ( ! $p->stock_managed ) {
+		$p = $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product'];
+		if ( ! $p['stock_managed'] ) {
 			return '';
 		}
 
-		return number_format( $p->stocks ) . self::_unit( $container, $filtered_atts, $content, $tag );
+		return number_format( $p['stocks'] ) . self::_unit( $container, $filtered_atts, $content, $tag );
 	}
 }

@@ -1,0 +1,32 @@
+
+-
+    request:
+        method: GET
+        url: 'https://api.shop-pro.jp/v1/shop.json'
+        headers:
+            Host: api.shop-pro.jp
+            Accept-Encoding: null
+            User-Agent: Swagger-Codegen/1.0.0/php
+            Accept: application/json
+            Content-Type: application/json
+            Authorization: 'Bearer dummy'
+    response:
+        status:
+            http_version: '1.1'
+            code: '200'
+            message: OK
+        headers:
+            Server: nginx/1.12.0
+            Date: 'Wed, 28 Jun 2017 11:02:15 GMT'
+            Content-Type: 'application/json; charset=utf-8'
+            Transfer-Encoding: chunked
+            Connection: keep-alive
+            Status: '200 OK'
+            X-Frame-Options: SAMEORIGIN
+            X-XSS-Protection: '1; mode=block'
+            X-Content-Type-Options: nosniff
+            ETag: 'W/"c058c38720cf67bf9a1fd970cd22756f"'
+            Cache-Control: 'max-age=0, private, must-revalidate'
+            X-Request-Id: a51b3cbe-6434-41cb-a3de-e2005db89b0e
+            X-Runtime: '0.036391'
+        body: '{"shop":{"id":"PA01356136","state":"enabled","domain_plan":"cmsp_sub_domain","contract_plan":"regular","last_login_date":1498640910,"setup_date":1463471015,"make_date":1463471015,"url":"https://test.shop-pro.jp","open_state":"opened","mobile_open_state":"prepare","login_id":"test","name1":"\u30da\u30d1\u30dca","name2":"\u4e2d\u91ce","name1_kana":"\u30da\u30d1\u30dc","name2_kana":"\u30ca\u30ab\u30ce","hojin":null,"hojin_kana":null,"user_mail":"nakano@pepabo.com","tel":"--03-1234-5678","fax":null,"postal":"1000001","pref_id":13,"pref_name":"\u6771\u4eac\u90fd","address1":"\u5343\u4ee3\u7530\u533a\u5343\u4ee3\u7530","address2":null,"title":"test","title_short":"test","shop_mail_1":"nakano@pepabo.com","shop_mail_2":null}}'
