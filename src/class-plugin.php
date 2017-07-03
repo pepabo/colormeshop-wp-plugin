@@ -374,10 +374,8 @@ class Plugin {
 			return false;
 		}
 
-		if ( ! get_posts([
-			'p' => $this->container['product_page_id'],
-			'post_type' => 'page',
-		]) ) {
+		$p = get_post( $producct_page_id );
+		if ( ! $p || $p->post_type !== 'page' ) {
 			return false;
 		}
 
