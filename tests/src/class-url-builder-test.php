@@ -40,7 +40,7 @@ class Url_Builder_Test extends \WP_UnitTestCase {
 	 */
 	public function sitemap_index() {
 		$this->assertSame( 'https://example.com/shop/sitemap.xml', $this->url_builder()->sitemap_index() );
-		$this->assertSame( 'https://example.com/?p=123&colorme_sitemap=1', $this->url_builder_with_query()->sitemap_index() );
+		$this->assertSame( 'https://example.com/?p=123&colorme_page=sitemap', $this->url_builder_with_query()->sitemap_index() );
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Url_Builder_Test extends \WP_UnitTestCase {
 	 */
 	public function sitemap() {
 		$this->assertSame( 'https://example.com/shop/sitemap.xml?offset=1', $this->url_builder()->sitemap( 1 ) );
-		$this->assertSame( 'https://example.com/?p=123&colorme_sitemap=1&offset=1', $this->url_builder_with_query()->sitemap( 1 ) );
+		$this->assertSame( 'https://example.com/?p=123&colorme_page=sitemap&offset=1', $this->url_builder_with_query()->sitemap( 1 ) );
 	}
 
 	private function url_builder() {
