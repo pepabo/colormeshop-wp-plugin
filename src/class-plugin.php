@@ -374,7 +374,7 @@ class Plugin {
 		}
 
 		$p = get_post( $producct_page_id );
-		if ( ! $p || $p->post_type !== 'page' ) {
+		if ( ! $p || 'page' !== $p->post_type ) {
 			return false;
 		}
 
