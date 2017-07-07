@@ -39,11 +39,11 @@ class Plugin {
 		add_action( 'admin_init', [ $this, 'page_init' ] );
 		add_action( 'admin_menu', [ $this, 'add_plugin_page' ] );
 		add_action( 'colormeshop_category', [ $this, 'show_category' ] );
-		add_action( 'init', [ $this, 'custom_rewrite_tag' ], 10, 0 );
 		add_action( 'init', [ $this, 'manage_item_routes' ] );
 		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 2 );
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
 		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
+		add_filter( 'query_vars', [ $this, 'add_query_vars' ] );
 		add_filter( 'template_redirect', array( $this, 'handle_template_redirect' ), 1, 0 );
 		register_activation_hook( dirname( __DIR__ ) . '/colormeshop-wp-plugin.php', [
 			$this,
@@ -262,18 +262,21 @@ class Plugin {
 	}
 
 	/**
-	 * 商品ページ用のクエリ文字列を追加する
+	 * クエリ文字列を追加する
 	 *
-	 * @return void
+	 * @param array $query_vars
+	 * @return array
 	 */
-	public function custom_rewrite_tag() {
-		add_rewrite_tag( '%colorme_item%', '([^&]+)' );
-		add_rewrite_tag( '%colorme_sitemap%', '([^&]+)' );
-		add_rewrite_tag( '%colorme_page%', '([^&]+)' );
-		add_rewrite_tag( '%category_id_big%', '([^&]+)' );
-		add_rewrite_tag( '%category_id_small%', '([^&]+)' );
-		add_rewrite_tag( '%offset%', '([^&]+)' );
-		add_rewrite_tag( '%page_no%', '([^&]+)' );
+	public function add_query_vars( $query_vars ) {
+		$query_vars[] = 'colorme_item';
+		$query_vars[] = 'colorme_sitemap';
+		$query_vars[] = 'colorme_page';
+		$query_vars[] = 'category_id_big';
+		$query_vars[] = 'category_id_small';
+		$query_vars[] = 'offset';
+		$query_vars[] = 'page_no';
+
+		return $query_vars;
 	}
 
 	/**
