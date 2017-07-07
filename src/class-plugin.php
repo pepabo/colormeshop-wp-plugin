@@ -49,6 +49,45 @@ class Plugin {
 	}
 
 	/**
+	 * 商品ページ用のリライトルールを追加する
+	 *
+	 * @param array $settings プラグインの設定. 管理画面で設定を更新した場合, 更新後の設定値が渡される.
+	 * @return void
+	 */
+	public function add_rewrite_rules( $settings = null ) {
+		$product_page_id = ($settings && isset( $settings['product_page_id'] )) ? $settings['product_page_id'] : $this->container['product_page_id'];
+		if ( ! $this->is_valid_product_page_id( $product_page_id ) ) {
+			return;
+		}
+
+		// サイトマップ用のリライトルール
+		$product_page_path = str_replace( site_url(), '', get_permalink( $product_page_id ) );
+		$trimmed = trim( $product_page_path, '/' );
+		add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $product_page_id . '&colorme_sitemap=1', 'top' );
+	}
+
+	/**
+	 * @param array $settings プラグインの設定. 管理画面で設定を更新した場合, 更新後の設定値が渡される.
+	 */
+	public function flush_rewrite_rules( $settings = null ) {
+		$this->add_rewrite_rules( $settings );
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * プラグイン設定更新のコールバック
+	 *
+	 * @param array $old 古い設定値
+	 * @param array $new 新しい設定値
+	 * @return void
+	 */
+	public function on_update_settings( $old, $new ) {
+		// 商品ページIDを元にサイトマップへのリライトを定義するため
+		$this->flush_rewrite_rules( $new );
+	}
+
+
+	/**
 	 * タイトルに商品情報を追加する
 	 *
 	 * @param array $title_parts
@@ -75,33 +114,21 @@ class Plugin {
 	}
 
 	/**
-	 * プラグイン設定更新のコールバック
+	 * クエリ文字列を追加する
 	 *
-	 * @param array $old 古い設定値
-	 * @param array $new 新しい設定値
-	 * @return void
+	 * @param array $query_vars
+	 * @return array
 	 */
-	public function on_update_settings( $old, $new ) {
-		// 商品ページIDを元にサイトマップへのリライトを定義するため
-		$this->flush_rewrite_rules( $new );
-	}
+	public function add_query_vars( $query_vars ) {
+		$query_vars[] = 'colorme_item';
+		$query_vars[] = 'colorme_sitemap';
+		$query_vars[] = 'colorme_page';
+		$query_vars[] = 'category_id_big';
+		$query_vars[] = 'category_id_small';
+		$query_vars[] = 'offset';
+		$query_vars[] = 'page_no';
 
-	/**
-	 * 商品ページ用のリライトルールを追加する
-	 *
-	 * @param array $settings プラグインの設定. 管理画面で設定を更新した場合, 更新後の設定値が渡される.
-	 * @return void
-	 */
-	public function add_rewrite_rules( $settings = null ) {
-		$product_page_id = ($settings && isset( $settings['product_page_id'] )) ? $settings['product_page_id'] : $this->container['product_page_id'];
-		if ( ! $this->is_valid_product_page_id( $product_page_id ) ) {
-			return;
-		}
-
-		// サイトマップ用のリライトルール
-		$product_page_path = str_replace( site_url(), '', get_permalink( $product_page_id ) );
-		$trimmed = trim( $product_page_path, '/' );
-		add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $product_page_id . '&colorme_sitemap=1', 'top' );
+		return $query_vars;
 	}
 
 	/**
@@ -241,32 +268,6 @@ class Plugin {
 	}
 
 	/**
-	 * クエリ文字列を追加する
-	 *
-	 * @param array $query_vars
-	 * @return array
-	 */
-	public function add_query_vars( $query_vars ) {
-		$query_vars[] = 'colorme_item';
-		$query_vars[] = 'colorme_sitemap';
-		$query_vars[] = 'colorme_page';
-		$query_vars[] = 'category_id_big';
-		$query_vars[] = 'category_id_small';
-		$query_vars[] = 'offset';
-		$query_vars[] = 'page_no';
-
-		return $query_vars;
-	}
-
-	/**
-	 * @param array $settings プラグインの設定. 管理画面で設定を更新した場合, 更新後の設定値が渡される.
-	 */
-	public function flush_rewrite_rules( $settings = null ) {
-		$this->add_rewrite_rules( $settings );
-		flush_rewrite_rules();
-	}
-
-	/**
 	 * 商品ページ ID を検証する
 	 *
 	 * @param int $producct_page_id
@@ -278,7 +279,7 @@ class Plugin {
 		}
 
 		$p = get_post( $producct_page_id );
-		if ( ! $p || $p->post_type !== 'page' ) {
+		if ( ! $p || 'page' !== $p->post_type ) {
 			return false;
 		}
 
@@ -364,7 +365,7 @@ class Plugin {
 			return new Admin(
 				$c['oauth2_client'],
 				$c['colorme_wp_settings'],
-                $c['templates_dir'],
+				$c['templates_dir'],
 				$c['client_id'],
 				$c['client_secret'],
 				$c['token'],
