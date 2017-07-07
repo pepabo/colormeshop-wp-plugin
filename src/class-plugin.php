@@ -37,7 +37,6 @@ class Plugin {
 		$this->register_shortcode();
 		$this->container['admin']->register();
 
-		add_action( 'colormeshop_category', [ $this, 'show_category' ] );
 		add_action( 'init', [ $this, 'add_rewrite_rules' ] );
 		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 2 );
 		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
