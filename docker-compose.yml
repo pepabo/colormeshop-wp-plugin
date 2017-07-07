@@ -13,3 +13,12 @@ services:
   mysql:
     image: mariadb
     env_file: wp.env
+
+  document:
+    build:
+      context: .
+      dockerfile: Dockerfile.document
+    ports:
+      - 8081:8000
+    volumes:
+      - .:/home/colormeshop-wp-plugin
