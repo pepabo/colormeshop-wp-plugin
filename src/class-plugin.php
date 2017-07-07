@@ -35,13 +35,11 @@ class Plugin {
 	 */
 	public function register() {
 		$this->register_shortcode();
+		$this->container['admin']->register();
 
-		add_action( 'admin_init', [ $this, 'page_init' ] );
-		add_action( 'admin_menu', [ $this, 'add_plugin_page' ] );
 		add_action( 'colormeshop_category', [ $this, 'show_category' ] );
 		add_action( 'init', [ $this, 'add_rewrite_rules' ] );
 		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 2 );
-		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
 		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
 		add_filter( 'query_vars', [ $this, 'add_query_vars' ] );
 		add_filter( 'template_redirect', array( $this, 'handle_template_redirect' ), 1, 0 );
@@ -87,24 +85,6 @@ class Plugin {
 	public function on_update_settings( $old, $new ) {
 		// 商品ページIDを元にサイトマップへのリライトを定義するため
 		$this->flush_rewrite_rules( $new );
-	}
-
-	/**
-	 * OAuth 認証のコールバック処理
-	 *
-	 * @return void
-	 */
-	public function colormeshop_callback() {
-		$access_token     = $this->container['oauth2_client']->getAccessToken( 'authorization_code', [
-			'code' => $_GET['code'],
-		] );
-		$options          = $this->container['colorme_wp_settings'];
-		$options['token'] = $access_token->getToken();
-		update_option( 'colorme_wp_settings', $options, true );
-
-		header( 'Location: ' . admin_url( '?page=colorme_wp_settings' ), true );
-
-		return;
 	}
 
 	/**
@@ -288,85 +268,6 @@ class Plugin {
 	}
 
 	/**
-	 * 管理画面にプラグイン設定ページを追加する
-	 *
-	 * @return void
-	 */
-	public function add_plugin_page() {
-		add_menu_page( 'カラーミーショップ', 'カラーミーショップ', 'manage_options', 'colorme_wp_settings', [
-			$this,
-			'create_admin_page',
-		] );
-	}
-
-	/**
-	 * プラグイン設定ページを定義する
-	 *
-	 * @return void
-	 */
-	public function page_init() {
-		register_setting( 'colorme_wp_settings', 'colorme_wp_settings', [ $this, 'settings_sanitize' ] );
-		add_settings_section( 'general', '', '', 'colorme_wp_settings' );
-		add_settings_field( 'client_id', 'クライアントID', [
-			$this,
-			'client_id_setting_callback',
-		], 'colorme_wp_settings', 'general' );
-		add_settings_field( 'client_secret', 'クライアントシークレット', [
-			$this,
-			'client_secret_setting_callback',
-		], 'colorme_wp_settings', 'general' );
-		add_settings_field( 'token', 'トークン', [
-			$this,
-			'token_setting_callback',
-		], 'colorme_wp_settings', 'general' );
-		add_settings_field( 'product_page_id', '商品ページID', [
-			$this,
-			'pruduct_page_id_setting_callback',
-		], 'colorme_wp_settings', 'general' );
-	}
-
-	public function create_admin_page() {
-		include dirname( __DIR__ ) . '/templates/settings.php';
-	}
-
-	public function token_setting_callback() {
-		?>
-		<input type="text" id="message" name="colorme_wp_settings[token]"
-			   value="<?php echo esc_attr( $this->container['token'] ) ?>" class="regular-text" />
-		<br/>
-		<?php
-
-	}
-
-	public function client_id_setting_callback() {
-		?>
-		<input type="text" id="message" name="colorme_wp_settings[client_id]"
-			   value="<?php echo esc_attr( $this->container['client_id'] ) ?>" class="regular-text" /><br/>
-		<?php
-
-	}
-
-	public function client_secret_setting_callback() {
-		?>
-		<input type="text" id="message" name="colorme_wp_settings[client_secret]"
-			   value="<?php echo esc_attr( $this->container['client_secret'] ) ?>" class="regular-text" /><br/>
-		<?php
-
-	}
-
-	public function pruduct_page_id_setting_callback() {
-		?>
-		<input type="text" id="message" name="colorme_wp_settings[product_page_id]"
-			   value="<?php echo esc_attr( $this->container['product_page_id'] ) ?>" class="small-text" />
-		<br/>
-		<?php
-	}
-
-	public function settings_sanitize( $inputs ) {
-		return $inputs;
-	}
-
-	/**
 	 * 商品ページ ID を検証する
 	 *
 	 * @param int $producct_page_id
@@ -458,6 +359,18 @@ class Plugin {
 
 		$container['is_mobile'] = function ( $c ) {
 			return wp_is_mobile();
+		};
+
+		$container['admin'] = function ( $c ) {
+			return new Admin(
+				$c['oauth2_client'],
+				$c['colorme_wp_settings'],
+                $c['templates_dir'],
+				$c['client_id'],
+				$c['client_secret'],
+				$c['token'],
+				$c['product_page_id']
+			);
 		};
 
 		$container['url_builder'] = function ( $c ) {

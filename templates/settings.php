@@ -5,7 +5,7 @@
             <!-- main content -->
             <div id="post-body-content">
                 <?php
-				if ( $this->container['product_page_id'] && ! $this->is_valid_product_page_id( $this->container['product_page_id'] ) ) : ?>
+				if ( $this->product_page_id && ! $this->is_valid_product_page_id( $this->product_page_id ) ) : ?>
 					<div class="error"><p>商品ページIDには、固定ページの ID を設定してください。</p></div>
 				<?php endif; ?>
 				<div class="meta-box-sortables ui-sortable">
@@ -25,7 +25,7 @@
 								submit_button();
 								?>
 							</form>
-							<?php if ( ! $this->container['product_page_id'] || ! $this->is_valid_product_page_id( $this->container['product_page_id'] ) ) : ?>
+							<?php if ( ! $this->product_page_id || ! $this->is_valid_product_page_id( $this->product_page_id ) ) : ?>
 								<div>
 									<p>※ 商品カテゴリーページ、商品一覧ページ、サイトマップを生成するには商品ページ ID を設定してください。</p>
 									<p>商品ページ ID の設定方法は<a href="#colorme_sitemap">こちら</a>をご参照ください。</p>
