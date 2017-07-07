@@ -35,7 +35,9 @@ class Plugin {
 	 */
 	public function register() {
 		$this->register_shortcode();
-		$this->container['admin']->register();
+		if ( is_admin() ) {
+			$this->container['admin']->register();
+		}
 
 		add_action( 'init', [ $this, 'add_rewrite_rules' ] );
 		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 2 );
