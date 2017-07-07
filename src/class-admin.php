@@ -54,7 +54,7 @@ class Admin {
 	 */
 	public function __construct(
 		OAuth2Client $oauth2_client,
-		array $colorme_wp_settings,
+		$colorme_wp_settings,
 		$templates_dir,
 		$client_id,
 		$client_secret,
