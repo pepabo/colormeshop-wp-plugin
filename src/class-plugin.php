@@ -39,7 +39,7 @@ class Plugin {
 		add_action( 'admin_init', [ $this, 'page_init' ] );
 		add_action( 'admin_menu', [ $this, 'add_plugin_page' ] );
 		add_action( 'colormeshop_category', [ $this, 'show_category' ] );
-		add_action( 'init', [ $this, 'manage_item_routes' ] );
+		add_action( 'init', [ $this, 'add_rewrite_rules' ] );
 		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 2 );
 		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'colormeshop_callback' ] );
 		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
@@ -47,7 +47,7 @@ class Plugin {
 		add_filter( 'template_redirect', array( $this, 'handle_template_redirect' ), 1, 0 );
 		register_activation_hook( dirname( __DIR__ ) . '/colormeshop-wp-plugin.php', [
 			$this,
-			'flush_application_rewrite_rules',
+			'flush_rewrite_rules',
 		] );
 	}
 
@@ -86,7 +86,7 @@ class Plugin {
 	 */
 	public function on_update_settings( $old, $new ) {
 		// 商品ページIDを元にサイトマップへのリライトを定義するため
-		$this->flush_application_rewrite_rules( $new );
+		$this->flush_rewrite_rules( $new );
 	}
 
 	/**
@@ -113,7 +113,7 @@ class Plugin {
 	 * @param array $settings プラグインの設定. 管理画面で設定を更新した場合, 更新後の設定値が渡される.
 	 * @return void
 	 */
-	public function manage_item_routes( $settings = null ) {
+	public function add_rewrite_rules( $settings = null ) {
 		$product_page_id = ($settings && isset( $settings['product_page_id'] )) ? $settings['product_page_id'] : $this->container['product_page_id'];
 		if ( ! $this->is_valid_product_page_id( $product_page_id ) ) {
 			return;
@@ -282,8 +282,8 @@ class Plugin {
 	/**
 	 * @param array $settings プラグインの設定. 管理画面で設定を更新した場合, 更新後の設定値が渡される.
 	 */
-	public function flush_application_rewrite_rules( $settings = null ) {
-		$this->manage_item_routes( $settings );
+	public function flush_rewrite_rules( $settings = null ) {
+		$this->add_rewrite_rules( $settings );
 		flush_rewrite_rules();
 	}
 
