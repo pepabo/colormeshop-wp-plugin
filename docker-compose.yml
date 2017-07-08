@@ -19,6 +19,6 @@ services:
       context: .
       dockerfile: Dockerfile.document
     ports:
-      - 8081:8000
+      - 8081:80
     volumes:
       - .:/home/colormeshop-wp-plugin
