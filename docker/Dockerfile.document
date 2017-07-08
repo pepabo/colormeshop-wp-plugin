@@ -14,7 +14,7 @@ RUN apt-get -qq update \
  && php composer.phar require kentaro/soushi \
  && /var/www/colorme/vendor/bin/soushi init
 
-COPY docker/apache/000-default.conf /etc/apache2/sites-enabled/
-COPY docker/soushi/config.php /var/www/colorme/
+COPY apache/000-default.conf /etc/apache2/sites-enabled/
+COPY soushi/config.php /var/www/colorme/
 EXPOSE 80
 CMD ["apache2-foreground"]

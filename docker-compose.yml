@@ -2,7 +2,9 @@ version: '2'
 
 services:
   wordpress:
-    build: .
+    build:
+      context: docker
+      dockerfile: Dockerfile.wordpress
     container_name: "colormeshop_wp_plugin_wordpress"
     ports:
       - 8080:80
@@ -16,7 +18,7 @@ services:
 
   document:
     build:
-      context: .
+      context: docker
       dockerfile: Dockerfile.document
     ports:
       - 8081:80
