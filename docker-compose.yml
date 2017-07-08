@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile.wordpress
     container_name: "colormeshop_wp_plugin_wordpress"
     ports:
-      - 8080:80
+      - 8081:80
     env_file: wp.env
     volumes:
       - .:/var/www/html/wp-content/plugins/colormeshop-wp-plugin
@@ -21,6 +21,6 @@ services:
       context: docker
       dockerfile: Dockerfile.document
     ports:
-      - 8081:80
+      - 8082:80
     volumes:
       - .:/home/colormeshop-wp-plugin
