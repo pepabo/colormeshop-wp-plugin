@@ -2,7 +2,7 @@
 namespace ColorMeShop;
 
 use ColorMeShop\Models\Sitemap;
-use ColorMeShop\Models\Product_Api;
+use ColorMeShop\Api\Product_Api;
 use ColorMeShop\Swagger\Api\CategoryApi;
 use ColorMeShop\Swagger\Api\ProductApi;
 use ColorMeShop\Swagger\Api\ShopApi;
@@ -67,7 +67,7 @@ class Plugin {
 		}
 
 		try {
-			$title_parts['title'] = $this->container['swagger.api.product']->getProduct( $this->container['target_id'] )['product']['name'] . ' - ' . $title_parts['title'];
+			$title_parts['title'] = $this->container['api.product_api']->fetch( $this->container['target_id'] )['product']['name'] . ' - ' . $title_parts['title'];
 		} catch ( \RuntimeException $e ) {
 			if ( $this->container['WP_DEBUG_LOG'] ) {
 				error_log( 'タイトルのフィルタに失敗しました : ' . $e->getMessage() );
@@ -456,6 +456,13 @@ class Plugin {
 			return wp_is_mobile();
 		};
 
+		$container['api.product_api'] = function ( $c ) {
+			return new Product_Api(
+				$c['paginator_factory'],
+				new ProductApi( null, $c['swagger.configuration'] )
+			);
+		};
+
 		$container['url_builder'] = function ( $c ) {
 			return new Url_Builder( $c['product_page_url'] );
 		};
@@ -465,7 +472,7 @@ class Plugin {
 		};
 
 		$container['model.sitemap'] = function ( $c ) {
-			return new Sitemap( $c['model.product_api'], $c['url_builder'] );
+			return new Sitemap( $c['api.product_api'], $c['url_builder'] );
 		};
 
 		$container['paginator_factory'] = function ( $c ) {
@@ -481,10 +488,6 @@ class Plugin {
 
 		$container['swagger.api.shop'] = function ( $c ) {
 			return new ShopApi( null, $c['swagger.configuration'] );
-		};
-
-		$container['swagger.api.product'] = function ( $c ) {
-			return new ProductApi( null, $c['swagger.configuration'] );
 		};
 
 		$container['swagger.api.category'] = function ( $c ) {

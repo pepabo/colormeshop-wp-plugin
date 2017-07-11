@@ -1,6 +1,7 @@
 <?php
 namespace ColorMeShop\Models;
 
+use ColorMeShop\Api\Product_Api;
 use Psr\Http\Message\ResponseInterface;
 use Tackk\Cartographer\ChangeFrequency;
 use Tackk\Cartographer\Sitemap as S;

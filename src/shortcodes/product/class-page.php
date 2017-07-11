@@ -36,7 +36,7 @@ class Page implements Shortcode_Interface {
 		}
 
 		try {
-			$product = $container['swagger.api.product']->getProduct( $filtered_atts['product_id'] )['product'];
+			$product = $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product'];
 		} catch ( \RuntimeException $e ) {
 			if ( $container['WP_DEBUG_LOG'] ) {
 				error_log( $e );
