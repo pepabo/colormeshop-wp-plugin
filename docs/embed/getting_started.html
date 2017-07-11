@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>カラーミーショップ WordPress プラグインをインストールしていただきありがとうございます！</title>
+
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/bootstrap.min.js"></script>
+	<script>
+        $(function () {
+            // 親画面のiframe要素
+            var p = window.parent.document.getElementById("embed_getting_started");
+            // 子要素のコンテンツサイズに合わせて調整
+            p.style.height = document.body.scrollHeight  + "px";
+        });
+	</script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<h2>カラーミーショップ公式 WordPress プラグインをインストールしていただきありがとうございます！</h2>
+	</div>
+	<div class="row">
+		<p>
+			プラグインをご利用いただくには、いくつか設定が必要になりますので下記手順に沿って設定をお願いします。<br />
+			カラーミーショップのご登録がお済みでない方は<a href="https://shop-pro.jp/?mode=signup" target="_blank">こちら</a>からお願いいたします！
+		</p>
+	</div>
+	<div class="row">
+		<h3>カラーミーデベロッパーアカウント作成</h3>
+	</div>
+	<div class="row">
+		カラーミーデベロッパーアカウントをお持ちでない方は<a href="https://api.shop-pro.jp/developers/sign_up" target="_blank">こちら</a>から登録してください。
+	</div>
+	<div class="row">
+		<h3>アプリケーション追加</h3>
+	</div>
+	<div class="row">
+		<p>
+			作成したアカウントで<a href="https://api.shop-pro.jp/developers/sign_in" target="_blank">カラーミーショップDevelopers</a>にログイン後、<a href="https://api.shop-pro.jp/oauth/applications/new" target="_blank">アプリケーション追加</a>からプラグイン用のアプリケーションを追加してください。
+		</p>
+		<div >
+			<img height="250" src="./images/screenshots/add_application.png" />
+		</div>
+		<p>
+			リダイレクトURLは 「 (管理画面URL) /wp-admin/admin-ajax.php」 を入力してください。
+		</p>
+		<p>
+			保存後、表示される「クライアントID」「クライアントシークレット」を<br />
+			このページの基本設定に入力してください。
+		</p>
+		<div>
+			<img height="250" src="./images/screenshots/application_credentials.png" />
+		</div>
+		<p>
+			基本設定の「変更を保存」をクリックして保存後、「カラーミーショップアカウントで認証する」をクリックしてください。<br />
+			「トークン」が自動的に入力されれば設定は完了です！
+		</p>
+	</div>
+</div>
+</body>
+</html>
