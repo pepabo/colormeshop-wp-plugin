@@ -371,7 +371,8 @@ class Plugin {
 				$c['client_id'],
 				$c['client_secret'],
 				$c['token'],
-				$c['product_page_id']
+				$c['product_page_id'],
+				$c['url_builder']
 			);
 		};
 

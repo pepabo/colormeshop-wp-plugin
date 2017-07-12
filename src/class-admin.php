@@ -43,6 +43,11 @@ class Admin {
 	private $product_page_id;
 
 	/**
+	 * @var Url_Builder
+	 */
+	private $url_builder;
+
+	/**
 	 * @param OAuth2Client $oauth2_client
 	 * @param array $colorme_wp_settings
 	 * @param string $templates_dir
@@ -59,7 +64,8 @@ class Admin {
 		$client_id,
 		$client_secret,
 		$token,
-		$product_page_id
+		$product_page_id,
+		Url_Builder $url_builder
 	) {
 		$this->oauth2_client = $oauth2_client;
 		$this->colorme_wp_settings = $colorme_wp_settings;
@@ -68,6 +74,7 @@ class Admin {
 		$this->client_secret = $client_secret;
 		$this->token = $token;
 		$this->product_page_id = $product_page_id;
+		$this->url_builder = $url_builder;
 	}
 
 	public function register() {
