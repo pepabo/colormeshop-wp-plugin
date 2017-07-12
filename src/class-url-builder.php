@@ -30,7 +30,7 @@ class Url_Builder {
 	 * @param array $params
 	 * @return string
 	 */
-	public function items( $params ) {
+	public function items( $params = [] ) {
 		if ( $this->product_page_has_query() ) {
 			$items_url = $this->product_page_url . '&colorme_page=items';
 		} else {
@@ -62,12 +62,12 @@ class Url_Builder {
 	 * @param int $offset
 	 * @return string
 	 */
-	public function sitemap( $offset ) {
+	public function sitemap( $offset = null ) {
 		if ( $this->product_page_has_query() ) {
-			return $this->product_page_url . '&colorme_sitemap=1' . (($offset === null) ? '' : '&offset=' . $offset);
+			return $this->product_page_url . '&colorme_page=sitemap' . ((null === $offset) ? '' : '&offset=' . $offset);
 		}
 
-		return trim( $this->product_page_url, '/' ) . '/sitemap.xml' . (($offset === null) ? '' : '?offset=' . $offset);
+		return trim( $this->product_page_url, '/' ) . '/sitemap.xml' . ((null === $offset) ? '' : '?offset=' . $offset);
 	}
 
 	/**

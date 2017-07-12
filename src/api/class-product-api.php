@@ -1,5 +1,5 @@
 <?php
-namespace ColorMeShop\Models;
+namespace ColorMeShop\Api;
 
 use ColorMeShop\Paginator;
 use ColorMeShop\Paginator_Factory;
@@ -15,11 +15,6 @@ use GuzzleHttp\Psr7\Request;
  */
 class Product_Api {
 	/**
-	 * @var string
-	 */
-	private $token;
-
-	/**
 	 * @var Paginator_Factory
 	 */
 	private $paginator_factory;
@@ -30,12 +25,35 @@ class Product_Api {
 	const MAXIMUM_NUMBER_PER_REQUEST = 50;
 
 	/**
-	 * @param string $token OAuth トークン
-	 * @param Paginator_Factory $paginator_factory
+	 * @var array
 	 */
-	public function __construct( $token, $paginator_factory ) {
-		$this->token = $token;
+	private $caches = [];
+
+	/**
+	 * @param Paginator_Factory $paginator_factory
+	 * @param \ColorMeShop\Swagger\Api\ProductApi $swagger_api
+	 */
+	public function __construct( $paginator_factory, $swagger_api ) {
 		$this->paginator_factory = $paginator_factory;
+		$this->swagger_api = $swagger_api;
+	}
+
+	/**
+	 * 商品データの取得
+	 *
+	 * @param int $product_id 商品ID (required)
+	 * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
+	 * @throws \InvalidArgumentException
+	 * @return \ColorMeShop\Swagger\Model\InlineResponse2007
+	 */
+	public function fetch( $product_id ) {
+		if ( isset( $this->caches[ $product_id ] ) ) {
+			return $this->caches[ $product_id ];
+		}
+
+		$this->caches[ $product_id ] = $this->swagger_api->getProduct( $product_id );
+
+		return $this->caches[ $product_id ];
 	}
 
 	/**
@@ -120,7 +138,7 @@ class Product_Api {
 			'GET',
 			'https://api.shop-pro.jp/v1/products.json?' . http_build_query( $params ),
 			[
-				'Authorization' => 'Bearer ' . $this->token,
+				'Authorization' => 'Bearer ' . $this->swagger_api->getConfig()->getAccessToken(),
 			]
 		);
 	}

@@ -2,7 +2,7 @@
 namespace ColorMeShop;
 
 use ColorMeShop\Models\Sitemap;
-use ColorMeShop\Models\Product_Api;
+use ColorMeShop\Api\Product_Api;
 use ColorMeShop\Swagger\Api\CategoryApi;
 use ColorMeShop\Swagger\Api\ProductApi;
 use ColorMeShop\Swagger\Api\ShopApi;
@@ -143,7 +143,7 @@ class Plugin {
 			return;
 		}
 
-		if ( get_query_var( 'colorme_sitemap' ) ) {
+		if ( get_query_var( 'colorme_page' ) === 'sitemap' ) {
 			if ( get_query_var( 'offset' ) === '' || get_query_var( 'offset' ) === null ) {
 				$this->output_sitemap_index();
 			}
@@ -375,6 +375,13 @@ class Plugin {
 			);
 		};
 
+		$container['api.product_api'] = function ( $c ) {
+			return new Product_Api(
+				$c['paginator_factory'],
+				new ProductApi( null, $c['swagger.configuration'] )
+			);
+		};
+
 		$container['url_builder'] = function ( $c ) {
 			return new Url_Builder( $c['product_page_url'] );
 		};
@@ -384,7 +391,7 @@ class Plugin {
 		};
 
 		$container['model.sitemap'] = function ( $c ) {
-			return new Sitemap( $c['model.product_api'], $c['url_builder'] );
+			return new Sitemap( $c['api.product_api'], $c['url_builder'] );
 		};
 
 		$container['paginator_factory'] = function ( $c ) {
@@ -400,10 +407,6 @@ class Plugin {
 
 		$container['swagger.api.shop'] = function ( $c ) {
 			return new ShopApi( null, $c['swagger.configuration'] );
-		};
-
-		$container['swagger.api.product'] = function ( $c ) {
-			return new ProductApi( null, $c['swagger.configuration'] );
 		};
 
 		$container['swagger.api.category'] = function ( $c ) {

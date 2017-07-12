@@ -11,22 +11,22 @@ class Sitemap_Test extends \WP_UnitTestCase {
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_sitemap=1&amp;offset=0</loc>
+    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=0</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_sitemap=1&amp;offset=1000</loc>
+    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=1000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_sitemap=1&amp;offset=2000</loc>
+    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=2000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_sitemap=1&amp;offset=3000</loc>
+    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=3000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_sitemap=1&amp;offset=4000</loc>
+    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=4000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_sitemap=1&amp;offset=5000</loc>
+    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=5000</loc>
   </sitemap>
 </sitemapindex>
 

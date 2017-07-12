@@ -34,9 +34,9 @@
 								<div>
 									<ul>
 										<li>商品 <a href="<?php echo $this->container['product_page_url'] ?>?colorme_item=カラーミーショップの商品ID" target="_blank"><?php echo $this->container['product_page_url'] ?>?colorme_item=カラーミーショップの商品ID</a></li>
-										<li>商品カテゴリー <a href="<?php echo $this->container['product_page_url'] ?>?colorme_page=categories" target="_blank"><?php echo $this->container['product_page_url'] ?>?colorme_page=categories</a></li>
-										<li>商品一覧 <a href="<?php echo $this->container['product_page_url'] ?>?colorme_page=items" target="_blank"><?php echo $this->container['product_page_url'] ?>?colorme_page=items</a></li>
-										<li>サイトマップ <a href="<?php echo $this->container['product_page_url'] ?>sitemap.xml" target="_blank"><?php echo $this->container['product_page_url'] ?>sitemap.xml</a></li>
+										<li>商品カテゴリー <a href="<?php echo $this->container['url_builder']->categories() ?>" target="_blank"><?php echo $this->container['url_builder']->categories() ?></a></li>
+										<li>商品一覧 <a href="<?php echo $this->container['url_builder']->items() ?>" target="_blank"><?php echo $this->container['url_builder']->items() ?></a></li>
+										<li>サイトマップ <a href="<?php echo $this->container['url_builder']->sitemap() ?>" target="_blank"><?php echo $this->container['url_builder']->sitemap() ?></a></li>
 									</ul>
 								</div>
 							<?php endif; ?>
