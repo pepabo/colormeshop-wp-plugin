@@ -105,7 +105,7 @@ class Admin {
 	 * @return void
 	 */
 	public function page_init() {
-		register_setting( 'colorme_wp_settings', 'colorme_wp_settings', [ $this, 'settings_sanitize' ] );
+		register_setting( 'colorme_wp_settings', 'colorme_wp_settings' );
 		add_settings_section( 'general', '', '', 'colorme_wp_settings' );
 		add_settings_field( 'client_id', 'クライアントID', [
 			$this,
@@ -156,10 +156,6 @@ class Admin {
 			   value="<?php echo esc_attr( $this->product_page_id ) ?>" class="small-text" />
 		<br/>
 		<?php
-	}
-
-	public function settings_sanitize( $inputs ) {
-		return $inputs;
 	}
 
 	/**
