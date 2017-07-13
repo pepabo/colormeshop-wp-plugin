@@ -58,7 +58,7 @@ class Plugin {
 	 * @return void
 	 */
 	public function add_rewrite_rules( $settings = null ) {
-		$product_page_id = ($settings && isset( $settings['product_page_id'] )) ? $settings['product_page_id'] : $this->container['product_page_id'];
+		$product_page_id = ($settings && isset( $settings['product_page_id'] )) ? $settings['product_page_id'] : $this->container['model.setting']->product_page_id();
 		if ( ! self::is_valid_product_page_id( $product_page_id ) ) {
 			return;
 		}
@@ -97,10 +97,11 @@ class Plugin {
 	 * @return array
 	 */
 	public function filter_title( $title_parts ) {
+		$product_page_id = $this->container['model.setting']->product_page_id();
 		if (
 			! $this->container['target_id']
-			|| ! $this->container['product_page_id']
-			|| ! is_page( $this->container['product_page_id'] )
+			|| ! $product_page_id
+			|| ! is_page( $product_page_id )
 		) {
 			return $title_parts;
 		}
@@ -140,7 +141,8 @@ class Plugin {
 	 * @return void
 	 */
 	public function handle_template_redirect() {
-		if ( ! $this->container['product_page_id'] || ! is_page( $this->container['product_page_id'] ) ) {
+		$product_page_id = $this->container['model.setting']->product_page_id();
+		if ( ! $product_page_id || ! is_page( $product_page_id ) ) {
 			return;
 		}
 
@@ -340,8 +342,8 @@ class Plugin {
 
 		$container['oauth2_client'] = function ( $c ) {
 			return new OAuth2Client( [
-				'clientId'     => $c['client_id'],
-				'clientSecret' => $c['client_secret'],
+				'clientId'     => $c['model.setting']->client_id(),
+				'clientSecret' => $c['model.setting']->client_secret(),
 				'redirectUri'  => admin_url( 'admin-ajax.php?action=colormeshop_callback' ),
 			] );
 		};
@@ -381,7 +383,7 @@ class Plugin {
 		};
 
 		$container['url_builder'] = function ( $c ) {
-			return new Url_Builder( $c['product_page_id'] );
+			return new Url_Builder( $c['model.setting'] );
 		};
 
 		$container['model.product_api'] = function ( $c ) {
@@ -402,7 +404,7 @@ class Plugin {
 
 		$container['swagger.configuration'] = function ( $c ) {
 			$configuration = new Configuration();
-			$configuration->setAccessToken( $c['token'] );
+			$configuration->setAccessToken( $c['model.setting']->token() );
 
 			return $configuration;
 		};

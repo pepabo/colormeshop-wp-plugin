@@ -1,17 +1,19 @@
 <?php
 namespace ColorMeShop;
 
+use ColorMeShop\Models\Setting;
+
 class Url_Builder {
 	/**
-	 * @var id
+	 * @var Setting
 	 */
-	private $product_page_id;
+	private $setting;
 
 	/**
-	 * @param string $product_page_url
+	 * @param Setting $setting
 	 */
-	public function __construct( $product_page_id ) {
-		$this->product_page_id = $product_page_id;
+	public function __construct( Setting $setting ) {
+		$this->setting = $setting;
 	}
 
 	/**
@@ -81,6 +83,6 @@ class Url_Builder {
 	 * @return string
 	 */
 	public function product_page_permalink() {
-		return get_permalink( $this->product_page_id );
+		return get_permalink( $this->setting->product_page_id() );
 	}
 }
