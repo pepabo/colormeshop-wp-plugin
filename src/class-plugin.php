@@ -386,10 +386,6 @@ class Plugin {
 			return new Url_Builder( $c['model.setting'] );
 		};
 
-		$container['model.product_api'] = function ( $c ) {
-			return new Product_Api( $c['token'], $c['paginator_factory'] );
-		};
-
 		$container['model.setting'] = function ( $c ) {
 			return new Setting;
 		};
