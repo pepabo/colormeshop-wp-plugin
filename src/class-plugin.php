@@ -299,10 +299,6 @@ class Plugin {
 	private function initialize_container() {
 		$container          = new Container();
 
-		$container['colorme_wp_settings'] = function ( $c ) {
-			return get_option( 'colorme_wp_settings' );
-		};
-
 		$container['templates_dir'] = function ( $c ) {
 			return __DIR__ . '/../templates';
 		};
@@ -314,31 +310,6 @@ class Plugin {
 		$container['WP_DEBUG_LOG'] = function ( $c ) {
 			return defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG;
 		};
-
-		$container['token'] = function ( $c ) {
-			$settings = $c['colorme_wp_settings'];
-
-			return $settings && array_key_exists( 'token', $settings ) ? $settings['token'] : '';
-		};
-
-		$container['client_id'] = function ( $c ) {
-			$settings = $c['colorme_wp_settings'];
-
-			return $settings && array_key_exists( 'client_id', $settings ) ? $settings['client_id'] : '';
-		};
-
-		$container['client_secret'] = function ( $c ) {
-			$settings = $c['colorme_wp_settings'];
-
-			return $settings && array_key_exists( 'client_secret', $settings ) ? $settings['client_secret'] : '';
-		};
-
-		$container['product_page_id'] = $container->factory(function ( $c ) {
-			// URLリライトを定義する際に最新の設定を取得するために都度DBからとる
-			$settings = get_option( 'colorme_wp_settings' );
-
-			return $settings && array_key_exists( 'product_page_id', $settings ) ? $settings['product_page_id'] : '';
-		});
 
 		$container['oauth2_client'] = function ( $c ) {
 			return new OAuth2Client( [
@@ -352,14 +323,6 @@ class Plugin {
 			global $wp_query;
 
 			return isset( $wp_query->query_vars['colorme_item'] ) ? $wp_query->query_vars['colorme_item'] : null;
-		};
-
-		$container['product_page_url'] = function ( $c ) {
-			if ( ! $c['product_page_id'] ) {
-				return null;
-			}
-
-			return get_permalink( $c['product_page_id'] );
 		};
 
 		$container['is_mobile'] = function ( $c ) {
