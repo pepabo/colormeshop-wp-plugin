@@ -395,7 +395,7 @@ class Plugin {
 		};
 
 		$container['paginator_factory'] = function ( $c ) {
-			return new Paginator_Factory( $c['product_page_url'], get_query_var( 'page_no' ) );
+			return new Paginator_Factory( $c['url_builder'], get_query_var( 'page_no' ) );
 		};
 
 		$container['swagger.configuration'] = function ( $c ) {

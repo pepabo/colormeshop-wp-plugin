@@ -2,32 +2,32 @@
 namespace ColorMeShop;
 
 class Paginator_Factory {
-    /**
-     * @var string
-     */
-	private $product_page_url;
+	/**
+	 * @var Url_Builder
+	 */
+	private $url_builder;
 
-    /**
-     * @var int
-     */
+	/**
+	 * @var int
+	 */
 	private $current_page_no;
 
-    /**
-     * @param string $product_page_url
-     * @param int $current_page_no
-     */
-	public function __construct( $product_page_url, $current_page_no ) {
-		$this->product_page_url = $product_page_url;
+	/**
+	 * @param Url_Builder $url_builder
+	 * @param int $current_page_no
+	 */
+	public function __construct( Url_Builder $url_builder, $current_page_no ) {
+		$this->url_builder = $url_builder;
 		$this->current_page_no = $current_page_no;
 	}
 
-    /**
-     * @param array $params
-     * @param array $response
-     * @return Paginator
-     */
+	/**
+	 * @param array $params
+	 * @param array $response
+	 * @return Paginator
+	 */
 	public function make( $params, $response ) {
-		return new Paginator( $params, $response, $this->product_page_url, 'items', $this->current_page_no );
+		return new Paginator( $params, $response, $this->url_builder->product_page_permalink(), 'items', $this->current_page_no );
 	}
 }
 
