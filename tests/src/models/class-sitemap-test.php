@@ -3,6 +3,27 @@ namespace ColorMeShop\Models;
 
 class Sitemap_Test extends \WP_UnitTestCase {
 	/**
+	 * ネットショップ用 固定ページID
+	 *
+	 * @var int
+	 */
+	private $product_page_id;
+
+	/**
+	 * ネットショップ用 固定ページID
+	 * (パーマリンクを http://xxx.xxx/xxx/ の形式に変更している)
+	 *
+	 * @var int
+	 */
+	private $permalink_customized_product_page_id;
+
+	public function setUp() {
+		parent::setUp();
+		$this->product_page_id = _create_product_page();
+		$this->permalink_customized_product_page_id = _create_product_page_with_customized_permalink();
+	}
+
+	/**
 	 * @test
 	 * @vcr models/sitemap/output_index_default_permalink.yml
 	 */
@@ -11,22 +32,22 @@ class Sitemap_Test extends \WP_UnitTestCase {
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=0</loc>
+    <loc>http://example.org/?page_id={$this->product_page_id}&amp;colorme_page=sitemap&amp;offset=0</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=1000</loc>
+    <loc>http://example.org/?page_id={$this->product_page_id}&amp;colorme_page=sitemap&amp;offset=1000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=2000</loc>
+    <loc>http://example.org/?page_id={$this->product_page_id}&amp;colorme_page=sitemap&amp;offset=2000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=3000</loc>
+    <loc>http://example.org/?page_id={$this->product_page_id}&amp;colorme_page=sitemap&amp;offset=3000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=4000</loc>
+    <loc>http://example.org/?page_id={$this->product_page_id}&amp;colorme_page=sitemap&amp;offset=4000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/?p=123&amp;colorme_page=sitemap&amp;offset=5000</loc>
+    <loc>http://example.org/?page_id={$this->product_page_id}&amp;colorme_page=sitemap&amp;offset=5000</loc>
   </sitemap>
 </sitemapindex>
 
@@ -38,6 +59,9 @@ __EOS__;
 		};
 		$container['product_page_url'] = function ( $c ) {
 			return 'https://example.com/?p=123';// デフォルト
+		};
+		$container['product_page_id'] = function ( $c ) {
+			return $this->product_page_id;
 		};
 		$sitemap = $container['model.sitemap'];
 		$this->assertSame( $expected, $sitemap->generate_index() );
@@ -52,22 +76,22 @@ __EOS__;
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://example.com/shop/sitemap.xml?offset=0</loc>
+    <loc>http://example.org/shop/sitemap.xml?offset=0</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/shop/sitemap.xml?offset=1000</loc>
+    <loc>http://example.org/shop/sitemap.xml?offset=1000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/shop/sitemap.xml?offset=2000</loc>
+    <loc>http://example.org/shop/sitemap.xml?offset=2000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/shop/sitemap.xml?offset=3000</loc>
+    <loc>http://example.org/shop/sitemap.xml?offset=3000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/shop/sitemap.xml?offset=4000</loc>
+    <loc>http://example.org/shop/sitemap.xml?offset=4000</loc>
   </sitemap>
   <sitemap>
-    <loc>https://example.com/shop/sitemap.xml?offset=5000</loc>
+    <loc>http://example.org/shop/sitemap.xml?offset=5000</loc>
   </sitemap>
 </sitemapindex>
 
@@ -79,6 +103,9 @@ __EOS__;
 		};
 		$container['product_page_url'] = function ( $c ) {
 			return 'https://example.com/shop/';
+		};
+		$container['product_page_id'] = function ( $c ) {
+			return $this->permalink_customized_product_page_id;
 		};
 		$sitemap = $container['model.sitemap'];
 		$this->assertSame( $expected, $sitemap->generate_index() );
@@ -94,13 +121,13 @@ __EOS__;
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://example.com/?p=123&amp;colorme_item=118515509</loc>
+    <loc>http://example.org/?page_id={$this->product_page_id}&amp;colorme_item=118515509</loc>
     <lastmod>2017-05-30T05:45:30+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://example.com/?p=123&amp;colorme_item=117182895</loc>
+    <loc>http://example.org/?page_id={$this->product_page_id}&amp;colorme_item=117182895</loc>
     <lastmod>2017-06-05T01:23:54+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -116,6 +143,9 @@ __EOS__;
 		$container['product_page_url'] = function ( $c ) {
 			return 'https://example.com/?p=123';// デフォルト
 		};
+		$container['product_page_id'] = function ( $c ) {
+			return $this->product_page_id;
+		};
 		$sitemap = $container['model.sitemap'];
 		$this->assertSame( $expected, $sitemap->generate( 0 ) );
 	}
@@ -130,13 +160,13 @@ __EOS__;
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://example.com/shop/?colorme_item=118515509</loc>
+    <loc>http://example.org/shop/?colorme_item=118515509</loc>
     <lastmod>2017-05-30T05:45:30+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://example.com/shop/?colorme_item=117182895</loc>
+    <loc>http://example.org/shop/?colorme_item=117182895</loc>
     <lastmod>2017-06-05T01:23:54+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -151,6 +181,9 @@ __EOS__;
 		};
 		$container['product_page_url'] = function ( $c ) {
 			return 'https://example.com/shop/';
+		};
+		$container['product_page_id'] = function ( $c ) {
+			return $this->permalink_customized_product_page_id;
 		};
 		$sitemap = $container['model.sitemap'];
 		$this->assertSame( $expected, $sitemap->generate( 0 ) );
@@ -168,10 +201,13 @@ __EOS__;
 		$container['product_page_url'] = function ( $c ) {
 			return 'https://example.com/shop/';
 		};
+		$container['product_page_id'] = function ( $c ) {
+			return $this->permalink_customized_product_page_id;
+		};
 		$sitemap = $container['model.sitemap'];
 
 		$matches = [];
-		preg_match_all( '#<loc>https://example\.com/shop/\?colorme_item=[0-9]+</loc>#', $sitemap->generate( 0 ), $matches );
+		preg_match_all( '#<loc>http://example\.org/shop/\?colorme_item=[0-9]+</loc>#', $sitemap->generate( 0 ), $matches );
 		$this->assertCount( 101, $matches[0] );
 	}
 }
