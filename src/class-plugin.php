@@ -66,7 +66,7 @@ class Plugin {
 		// サイトマップ用のリライトルール
 		$product_page_path = str_replace( site_url(), '', get_permalink( $product_page_id ) );
 		$trimmed = trim( $product_page_path, '/' );
-		add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $product_page_id . '&colorme_sitemap=1', 'top' );
+		add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $product_page_id . '&colorme_page=sitemap', 'top' );
 	}
 
 	/**
@@ -125,7 +125,6 @@ class Plugin {
 	 */
 	public function add_query_vars( $query_vars ) {
 		$query_vars[] = 'colorme_item';
-		$query_vars[] = 'colorme_sitemap';
 		$query_vars[] = 'colorme_page';
 		$query_vars[] = 'category_id_big';
 		$query_vars[] = 'category_id_small';
