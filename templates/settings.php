@@ -9,7 +9,7 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 			<!-- main content -->
 			<div id="post-body-content">
 				<?php
-				if ( $this->setting->product_page_id() && ! \ColorMeShop\Plugin::is_valid_product_page_id( $this->setting->product_page_id() ) ) : ?>
+				if ( $this->setting->product_page_id() && ! $this->setting->is_valid_product_page_id() ) : ?>
 					<div class="error"><p>商品ページIDには、固定ページの ID を設定してください。</p></div>
 				<?php endif; ?>
 				<div class="meta-box-sortables ui-sortable">
@@ -29,7 +29,7 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 								submit_button();
 								?>
 							</form>
-							<?php if ( ! $this->setting->product_page_id() || ! \ColorMeShop\Plugin::is_valid_product_page_id( $this->setting->product_page_id() ) ) : ?>
+							<?php if ( ! $this->setting->product_page_id() || ! $this->setting->is_valid_product_page_id() ) : ?>
 								<div>
 									<p>※ 商品カテゴリーページ、商品一覧ページ、サイトマップを生成するには商品ページ ID を設定してください。</p>
 									<p>商品ページ ID の設定方法は<a href="#colorme_sitemap">こちら</a>をご参照ください。</p>

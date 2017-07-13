@@ -59,7 +59,7 @@ class Plugin {
 	 */
 	public function add_rewrite_rules( $settings = null ) {
 		$product_page_id = ($settings && isset( $settings['product_page_id'] )) ? $settings['product_page_id'] : $this->container['model.setting']->product_page_id();
-		if ( ! self::is_valid_product_page_id( $product_page_id ) ) {
+		if ( ! $this->container['model.setting']->is_valid_product_page_id( $product_page_id ) ) {
 			return;
 		}
 
@@ -270,25 +270,6 @@ class Plugin {
 			}
 		}
 		exit;
-	}
-
-	/**
-	 * 商品ページ ID を検証する
-	 *
-	 * @param int $producct_page_id
-	 * @return bool
-	 */
-	public static function is_valid_product_page_id( $producct_page_id ) {
-		if ( ! $producct_page_id || ! is_numeric( $producct_page_id ) ) {
-			return false;
-		}
-
-		$p = get_post( $producct_page_id );
-		if ( ! $p || 'page' !== $p->post_type ) {
-			return false;
-		}
-
-		return true;
 	}
 
 	/**

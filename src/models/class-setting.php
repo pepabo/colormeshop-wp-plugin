@@ -30,6 +30,29 @@ class Setting {
 		return $this->get( 'product_page_id' );
 	}
 
+	/**
+	 * 商品ページ ID を検証する
+	 *
+	 * @param int $product_page_id
+	 * @return bool
+	 */
+	public function is_valid_product_page_id( $product_page_id = null ) {
+		if ( null === $product_page_id ) {
+			$product_page_id = $this->product_page_id();
+		}
+
+		if ( ! $product_page_id || ! is_numeric( $product_page_id ) ) {
+			return false;
+		}
+
+		$p = get_post( $product_page_id );
+		if ( ! $p || 'page' !== $p->post_type ) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public function update( $values ) {
 		$settings = array_merge( $this->get(), $values );
 		return update_option( self::KEY, $settings, true );
