@@ -73,18 +73,18 @@ class Url_Builder_Test extends \WP_UnitTestCase {
 
 	private function url_builder() {
 		$container = _get_container();
-		$container['product_page_id'] = function ( $c ) {
-			return $this->permalink_customized_product_page_id;
-		};
+		$container['model.setting']->update( [
+			'product_page_id' => $this->permalink_customized_product_page_id,
+		] );
 
 		return $container['url_builder'];
 	}
 
 	private function url_builder_with_query() {
 		$container = _get_container();
-		$container['product_page_id'] = function ( $c ) {
-			return $this->product_page_id;
-		};
+		$container['model.setting']->update( [
+			'product_page_id' => $this->product_page_id,
+		] );
 
 		return $container['url_builder'];
 	}

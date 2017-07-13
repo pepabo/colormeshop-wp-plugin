@@ -54,12 +54,9 @@ class Sitemap_Test extends \WP_UnitTestCase {
 __EOS__;
 
 		$container = _get_container();
-		$container['token'] = function ( $c ) {
-			return 'dummy';
-		};
-		$container['product_page_id'] = function ( $c ) {
-			return $this->product_page_id;
-		};
+		$container['model.setting']->update( [
+			'product_page_id' => $this->product_page_id,
+		] );
 		$sitemap = $container['model.sitemap'];
 		$this->assertSame( $expected, $sitemap->generate_index() );
 	}
@@ -95,12 +92,9 @@ __EOS__;
 __EOS__;
 
 		$container = _get_container();
-		$container['token'] = function ( $c ) {
-			return 'dummy';
-		};
-		$container['product_page_id'] = function ( $c ) {
-			return $this->permalink_customized_product_page_id;
-		};
+		$container['model.setting']->update( [
+			'product_page_id' => $this->permalink_customized_product_page_id,
+		] );
 		$sitemap = $container['model.sitemap'];
 		$this->assertSame( $expected, $sitemap->generate_index() );
 	}
@@ -131,12 +125,9 @@ __EOS__;
 __EOS__;
 
 		$container = _get_container();
-		$container['token'] = function ( $c ) {
-			return 'dummy';
-		};
-		$container['product_page_id'] = function ( $c ) {
-			return $this->product_page_id;
-		};
+		$container['model.setting']->update( [
+			'product_page_id' => $this->product_page_id,
+		] );
 		$sitemap = $container['model.sitemap'];
 		$this->assertSame( $expected, $sitemap->generate( 0 ) );
 	}
@@ -167,12 +158,9 @@ __EOS__;
 __EOS__;
 
 		$container = _get_container();
-		$container['token'] = function ( $c ) {
-			return 'dummy';
-		};
-		$container['product_page_id'] = function ( $c ) {
-			return $this->permalink_customized_product_page_id;
-		};
+		$container['model.setting']->update( [
+			'product_page_id' => $this->permalink_customized_product_page_id,
+		] );
 		$sitemap = $container['model.sitemap'];
 		$this->assertSame( $expected, $sitemap->generate( 0 ) );
 	}
@@ -183,12 +171,9 @@ __EOS__;
 	 */
 	public function output_商品数50以上の場合() {
 		$container = _get_container();
-		$container['token'] = function ( $c ) {
-			return 'dummy';
-		};
-		$container['product_page_id'] = function ( $c ) {
-			return $this->permalink_customized_product_page_id;
-		};
+		$container['model.setting']->update( [
+			'product_page_id' => $this->permalink_customized_product_page_id,
+		] );
 		$sitemap = $container['model.sitemap'];
 
 		$matches = [];
