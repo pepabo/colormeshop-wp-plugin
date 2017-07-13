@@ -41,7 +41,7 @@ class Plugin {
 		}
 
 		add_action( 'init', [ $this, 'add_rewrite_rules' ] );
-		add_action( 'update_option_colorme_wp_settings', [ $this, 'on_update_settings' ] , 10, 2 );
+		add_action( 'update_option_' . Setting::KEY, [ $this, 'on_update_settings' ] , 10, 2 );
 		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
 		add_filter( 'query_vars', [ $this, 'add_query_vars' ] );
 		add_filter( 'template_redirect', array( $this, 'handle_template_redirect' ), 1, 0 );

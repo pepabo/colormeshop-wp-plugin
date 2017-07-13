@@ -8,6 +8,9 @@ use Pepabo\OAuth2\Client\Provider\ColorMeShop as OAuth2Client;
  * @package ColorMeShop
  */
 class Admin {
+	/** @var string */
+	const MENU_SLUG = 'colorme_wp_settings';
+
 	/**
 	 * @var OAuth2Client
 	 */
@@ -58,7 +61,7 @@ class Admin {
 	 * @return void
 	 */
 	public function add_plugin_page() {
-		add_menu_page( 'カラーミーショップ', 'カラーミーショップ', 'manage_options', 'colorme_wp_settings', [
+		add_menu_page( 'カラーミーショップ', 'カラーミーショップ', 'manage_options', self::MENU_SLUG, [
 			$this,
 			'create_admin_page',
 		] );
@@ -74,24 +77,24 @@ class Admin {
 	 * @return void
 	 */
 	public function page_init() {
-		register_setting( 'colorme_wp_settings', 'colorme_wp_settings' );
-		add_settings_section( 'general', '', '', 'colorme_wp_settings' );
+		register_setting( Setting::KEY, Setting::KEY );
+		add_settings_section( 'general', '', '', self::MENU_SLUG );
 		add_settings_field( 'client_id', 'クライアントID', [
 			$this,
 			'client_id_setting_callback',
-		], 'colorme_wp_settings', 'general' );
+		], self::MENU_SLUG, 'general' );
 		add_settings_field( 'client_secret', 'クライアントシークレット', [
 			$this,
 			'client_secret_setting_callback',
-		], 'colorme_wp_settings', 'general' );
+		], self::MENU_SLUG, 'general' );
 		add_settings_field( 'token', 'トークン', [
 			$this,
 			'token_setting_callback',
-		], 'colorme_wp_settings', 'general' );
+		], self::MENU_SLUG, 'general' );
 		add_settings_field( 'product_page_id', '商品ページID', [
 			$this,
 			'pruduct_page_id_setting_callback',
-		], 'colorme_wp_settings', 'general' );
+		], self::MENU_SLUG, 'general' );
 	}
 
 	public function token_setting_callback() {
@@ -142,7 +145,7 @@ class Admin {
 			throw new \RuntimeException( 'トークンの保存に失敗しました' );
 		}
 
-		header( 'Location: ' . admin_url( '?page=colorme_wp_settings' ), true );
+		header( 'Location: ' . admin_url( '?page=' . self::MENU_SLUG ), true );
 
 		return;
 	}

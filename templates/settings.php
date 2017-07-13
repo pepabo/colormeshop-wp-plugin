@@ -24,8 +24,8 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 							?>
 							<form method="post" action="options.php">
 								<?php
-								settings_fields( 'colorme_wp_settings' );
-								do_settings_sections( 'colorme_wp_settings' );
+								settings_fields( \ColorMeShop\Models\Setting::KEY );
+								do_settings_sections( \ColorMeShop\Admin::MENU_SLUG );
 								submit_button();
 								?>
 							</form>
