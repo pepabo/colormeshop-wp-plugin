@@ -384,7 +384,7 @@ class Plugin {
 		};
 
 		$container['url_builder'] = function ( $c ) {
-			return new Url_Builder( $c['product_page_url'], $c['product_page_id'] );
+			return new Url_Builder( $c['product_page_id'] );
 		};
 
 		$container['model.product_api'] = function ( $c ) {

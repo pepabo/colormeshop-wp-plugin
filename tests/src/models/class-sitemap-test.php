@@ -57,9 +57,6 @@ __EOS__;
 		$container['token'] = function ( $c ) {
 			return 'dummy';
 		};
-		$container['product_page_url'] = function ( $c ) {
-			return 'https://example.com/?p=123';// デフォルト
-		};
 		$container['product_page_id'] = function ( $c ) {
 			return $this->product_page_id;
 		};
@@ -101,9 +98,6 @@ __EOS__;
 		$container['token'] = function ( $c ) {
 			return 'dummy';
 		};
-		$container['product_page_url'] = function ( $c ) {
-			return 'https://example.com/shop/';
-		};
 		$container['product_page_id'] = function ( $c ) {
 			return $this->permalink_customized_product_page_id;
 		};
@@ -139,9 +133,6 @@ __EOS__;
 		$container = _get_container();
 		$container['token'] = function ( $c ) {
 			return 'dummy';
-		};
-		$container['product_page_url'] = function ( $c ) {
-			return 'https://example.com/?p=123';// デフォルト
 		};
 		$container['product_page_id'] = function ( $c ) {
 			return $this->product_page_id;
@@ -179,9 +170,6 @@ __EOS__;
 		$container['token'] = function ( $c ) {
 			return 'dummy';
 		};
-		$container['product_page_url'] = function ( $c ) {
-			return 'https://example.com/shop/';
-		};
 		$container['product_page_id'] = function ( $c ) {
 			return $this->permalink_customized_product_page_id;
 		};
@@ -197,9 +185,6 @@ __EOS__;
 		$container = _get_container();
 		$container['token'] = function ( $c ) {
 			return 'dummy';
-		};
-		$container['product_page_url'] = function ( $c ) {
-			return 'https://example.com/shop/';
 		};
 		$container['product_page_id'] = function ( $c ) {
 			return $this->permalink_customized_product_page_id;

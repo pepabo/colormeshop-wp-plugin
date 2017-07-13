@@ -3,11 +3,6 @@ namespace ColorMeShop;
 
 class Url_Builder {
 	/**
-	 * @var string
-	 */
-	private $product_page_url;
-
-	/**
 	 * @var id
 	 */
 	private $product_page_id;
@@ -15,8 +10,7 @@ class Url_Builder {
 	/**
 	 * @param string $product_page_url
 	 */
-	public function __construct( $product_page_url, $product_page_id ) {
-		$this->product_page_url = $product_page_url;
+	public function __construct( $product_page_id ) {
 		$this->product_page_id = $product_page_id;
 	}
 
