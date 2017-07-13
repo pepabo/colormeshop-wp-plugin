@@ -277,7 +277,7 @@ class Plugin {
 	 * @return void
 	 */
 	private function initialize_container() {
-		$container          = new Container();
+		$container = new Container();
 
 		$container['templates_dir'] = function ( $c ) {
 			return __DIR__ . '/../templates';

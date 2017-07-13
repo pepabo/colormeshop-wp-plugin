@@ -2,9 +2,13 @@
 namespace ColorMeShop\Models;
 
 class Setting {
-
+	/** @var string */
 	const KEY = 'colorme_wp_settings';
 
+	/**
+	 * @param null|string $name
+	 * @return array|string
+	 */
 	public function get( $name = null ) {
 		$setting = get_option( self::KEY );
 		if ( $name === null ) {
@@ -14,18 +18,30 @@ class Setting {
 		return $setting && array_key_exists( $name, $setting ) ? $setting[ $name ] : '';
 	}
 
+	/**
+	 * @return string
+	 */
 	public function token() {
 		return $this->get( 'token' );
 	}
 
+	/**
+	 * @return string
+	 */
 	public function client_id() {
 		return $this->get( 'client_id' );
 	}
 
+	/**
+	 * @return string
+	 */
 	public function client_secret() {
 		return $this->get( 'client_secret' );
 	}
 
+	/**
+	 * @return string
+	 */
 	public function product_page_id() {
 		return $this->get( 'product_page_id' );
 	}
@@ -53,6 +69,10 @@ class Setting {
 		return true;
 	}
 
+	/**
+	 * @param array $values
+	 * @return bool
+	 */
 	public function update( $values ) {
 		$settings = array_merge( $this->get(), $values );
 		return update_option( self::KEY, $settings, true );
