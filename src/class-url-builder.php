@@ -80,7 +80,7 @@ class Url_Builder {
 	/**
 	 * @return string
 	 */
-	private function product_page_permalink() {
+	public function product_page_permalink() {
 		return get_permalink( $this->product_page_id );
 	}
 }
