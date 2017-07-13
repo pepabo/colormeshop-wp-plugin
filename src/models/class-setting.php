@@ -29,4 +29,9 @@ class Setting {
 	public function product_page_id() {
 		return $this->get( 'product_page_id' );
 	}
+
+	public function update( $values ) {
+		$settings = array_merge( $this->get(), $values );
+		return update_option( self::KEY, $settings, true );
+	}
 }

@@ -20,7 +20,7 @@ class Admin_Test extends \WP_UnitTestCase {
 			return 'dummy_client_secret';
 		};
 
-		update_option(Setting::KEY, [
+		$this->container['model.setting']->update([
 			'token' => 'dummy',
 			'client_id' => 'dummy_client_id',
 			'client_secret' => 'dummy_client_secret',

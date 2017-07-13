@@ -136,9 +136,11 @@ class Admin {
 		$access_token     = $this->oauth2_client->getAccessToken( 'authorization_code', [
 			'code' => $_GET['code'],
 		] );
-		$settings = $this->setting->get();
-		$settings['token'] = $access_token->getToken();
-		update_option( Setting::KEY, $settings, true );
+		if ( ! $this->setting->update( [
+			'token' => $access_token->getToken(),
+		] ) ) {
+			throw new \RuntimeException( 'トークンの保存に失敗しました' );
+		}
 
 		header( 'Location: ' . admin_url( '?page=colorme_wp_settings' ), true );
 
