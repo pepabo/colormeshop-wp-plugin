@@ -1,6 +1,7 @@
 <?php
 namespace ColorMeShop;
 
+use ColorMeShop\Models\Setting;
 use Pepabo\OAuth2\Client\Provider\ColorMeShop as OAuth2Client;
 
 /**
@@ -13,34 +14,14 @@ class Admin {
 	private $oauth2_client;
 
 	/**
-	 * @var array
+	 * @var Setting
 	 */
-	private $colorme_wp_settings;
+	private $setting;
 
 	/**
 	 * @var string
 	 */
 	private $templates_dir;
-
-	/**
-	 * @var string
-	 */
-	private $client_id;
-
-	/**
-	 * @var string
-	 */
-	private $client_secret;
-
-	/**
-	 * @var string
-	 */
-	private $token;
-
-	/**
-	 * @var int
-	 */
-	private $product_page_id;
 
 	/**
 	 * @var Url_Builder
@@ -49,31 +30,19 @@ class Admin {
 
 	/**
 	 * @param OAuth2Client $oauth2_client
-	 * @param array $colorme_wp_settings
+	 * @param Setting $setting
 	 * @param string $templates_dir
-	 * @param string $client_id
-	 * @param string $client_secret
-	 * @param string $client_secret
-	 * @param string $token
-	 * @param int $product_page_id
+	 * @param Url_Builder $url_builder
 	 */
 	public function __construct(
 		OAuth2Client $oauth2_client,
-		$colorme_wp_settings,
+		Setting $setting,
 		$templates_dir,
-		$client_id,
-		$client_secret,
-		$token,
-		$product_page_id,
 		Url_Builder $url_builder
 	) {
 		$this->oauth2_client = $oauth2_client;
-		$this->colorme_wp_settings = $colorme_wp_settings;
+		$this->setting = $setting;
 		$this->templates_dir = $templates_dir;
-		$this->client_id = $client_id;
-		$this->client_secret = $client_secret;
-		$this->token = $token;
-		$this->product_page_id = $product_page_id;
 		$this->url_builder = $url_builder;
 	}
 
@@ -128,7 +97,7 @@ class Admin {
 	public function token_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[token]"
-			   value="<?php echo esc_attr( $this->token ) ?>" class="regular-text" />
+			   value="<?php echo esc_attr( $this->setting->token() ) ?>" class="regular-text" />
 		<br/>
 		<?php
 
@@ -137,7 +106,7 @@ class Admin {
 	public function client_id_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_id]"
-			   value="<?php echo esc_attr( $this->client_id ) ?>" class="regular-text" /><br/>
+			   value="<?php echo esc_attr( $this->setting->client_id() ) ?>" class="regular-text" /><br/>
 		<?php
 
 	}
@@ -145,7 +114,7 @@ class Admin {
 	public function client_secret_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_secret]"
-			   value="<?php echo esc_attr( $this->client_secret ) ?>" class="regular-text" /><br/>
+			   value="<?php echo esc_attr( $this->setting->client_secret() ) ?>" class="regular-text" /><br/>
 		<?php
 
 	}
@@ -153,7 +122,7 @@ class Admin {
 	public function pruduct_page_id_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[product_page_id]"
-			   value="<?php echo esc_attr( $this->product_page_id ) ?>" class="small-text" />
+			   value="<?php echo esc_attr( $this->setting->product_page_id() ) ?>" class="small-text" />
 		<br/>
 		<?php
 	}
@@ -167,8 +136,9 @@ class Admin {
 		$access_token     = $this->oauth2_client->getAccessToken( 'authorization_code', [
 			'code' => $_GET['code'],
 		] );
-		$this->colorme_wp_settings['token'] = $access_token->getToken();
-		update_option( 'colorme_wp_settings', $this->colorme_wp_settings, true );
+		$settings = $this->setting->get();
+		$settings['token'] = $access_token->getToken();
+		update_option( Setting::KEY, $settings, true );
 
 		header( 'Location: ' . admin_url( '?page=colorme_wp_settings' ), true );
 

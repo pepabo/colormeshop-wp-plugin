@@ -1,6 +1,8 @@
 <?php
 namespace ColorMeShop;
 
+use ColorMeShop\Models\Setting;
+
 class Admin_Test extends \WP_UnitTestCase {
 	/** @var \Pimple\Container */
 	private $container;
@@ -17,6 +19,12 @@ class Admin_Test extends \WP_UnitTestCase {
 		$this->container['client_secret'] = function ( $c ) {
 			return 'dummy_client_secret';
 		};
+
+		update_option(Setting::KEY, [
+			'token' => 'dummy',
+			'client_id' => 'dummy_client_id',
+			'client_secret' => 'dummy_client_secret',
+		]);
 
 		$this->container['oauth2_client'] = function ( $c ) {
 			$access_token = $this->getMockBuilder( '\League\OAuth2\Client\Token\AccessToken' )

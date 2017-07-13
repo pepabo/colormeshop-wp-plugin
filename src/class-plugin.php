@@ -1,6 +1,7 @@
 <?php
 namespace ColorMeShop;
 
+use ColorMeShop\Models\Setting;
 use ColorMeShop\Models\Sitemap;
 use ColorMeShop\Api\Product_Api;
 use ColorMeShop\Swagger\Api\CategoryApi;
@@ -366,12 +367,8 @@ class Plugin {
 		$container['admin'] = function ( $c ) {
 			return new Admin(
 				$c['oauth2_client'],
-				$c['colorme_wp_settings'],
+				$c['model.setting'],
 				$c['templates_dir'],
-				$c['client_id'],
-				$c['client_secret'],
-				$c['token'],
-				$c['product_page_id'],
 				$c['url_builder']
 			);
 		};
@@ -389,6 +386,10 @@ class Plugin {
 
 		$container['model.product_api'] = function ( $c ) {
 			return new Product_Api( $c['token'], $c['paginator_factory'] );
+		};
+
+		$container['model.setting'] = function ( $c ) {
+			return new Setting;
 		};
 
 		$container['model.sitemap'] = function ( $c ) {
