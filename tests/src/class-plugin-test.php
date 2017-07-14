@@ -10,7 +10,6 @@ class Plugin_Test extends \WP_UnitTestCase {
 		$query_vars = $plugin->add_query_vars( [] );
 
 		$this->assertContains( 'colorme_item', $query_vars );
-		$this->assertContains( 'colorme_sitemap', $query_vars );
 		$this->assertContains( 'colorme_page', $query_vars );
 		$this->assertContains( 'category_id_big', $query_vars );
 		$this->assertContains( 'category_id_small', $query_vars );
