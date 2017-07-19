@@ -21,19 +21,31 @@ class Plugin_Test extends \WP_UnitTestCase {
 	 * @test
 	 * @vcr plugin/show_items.yml
 	 */
-	public function show_items() {
-		$page_id = _create_product_page_with_customized_permalink();
-		_get_container()['model.setting']->update( [
-			'product_page_id' => $page_id,
+	public function handle_template_redirect_商品一覧を表示する() {
+		$page = $this->factory->post->create_and_get( [
+			'post_title' => 'テストページ',
+			'post_type'  => 'page',
 		] );
+		$this->go_to( '/?page_id=' . $page->ID );
+
+		_get_container()['model.setting']->update( [
+			'product_page_id' => $page->ID,
+		] );
+		$this->go_to( '/?page_id=' . $page->ID . '&colorme_page=items' );
 
 		$plugin = new Plugin;
-		$content = $plugin->show_items( '' );
+		$plugin->handle_template_redirect();
 
 		// - API のレスポンスで返ってくる商品の詳細ページへのリンクが含まれていること
 		// - 最初と最後の商品だけチェック
-		$this->assertContains( '<a href="http://example.org/shop/?colorme_item=118849164">', $content );
-		$this->assertContains( '<a href="http://example.org/shop/?colorme_item=118849098">', $content );
+		$regex = <<<__EOS__
+#
+.*<a href="http://example\.org/\?page_id={$page->ID}&colorme_item=118849164">
+[\s\S]*<a href="http://example\.org/\?page_id={$page->ID}&colorme_item=118849098">.*
+#
+__EOS__;
+		$this->expectOutputRegex( $regex );
+		the_content();
 	}
 
 	/**
