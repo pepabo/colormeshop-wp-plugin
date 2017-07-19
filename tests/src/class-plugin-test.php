@@ -19,6 +19,25 @@ class Plugin_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr plugin/show_items.yml
+	 */
+	public function show_items() {
+		$page_id = _create_product_page_with_customized_permalink();
+		_get_container()['model.setting']->update( [
+			'product_page_id' => $page_id,
+		] );
+
+		$plugin = new Plugin;
+		$content = $plugin->show_items( '' );
+
+		// - API のレスポンスで返ってくる商品の詳細ページへのリンクが含まれていること
+		// - 最初と最後の商品だけチェック
+		$this->assertContains( '<a href="http://example.org/shop/?colorme_item=118849164">', $content );
+		$this->assertContains( '<a href="http://example.org/shop/?colorme_item=118849098">', $content );
+	}
+
+	/**
+	 * @test
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
