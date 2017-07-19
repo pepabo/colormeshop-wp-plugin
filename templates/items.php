@@ -4,7 +4,11 @@
 $params = [
 	'limit' => 10,
 ];
-$params['offset'] = $params['limit'] * ( (int) get_query_var( 'page_no' ) - 1);
+if ( 0 === (int) get_query_var( 'page_no' ) ) {
+	$params['offset'] = 0;
+} else {
+	$params['offset'] = $params['limit'] * ( (int) get_query_var( 'page_no' ) - 1);
+}
 foreach ( [ 'category_id_big', 'category_id_small' ] as $k ) {
 	$v = get_query_var( $k );
 	if ( $v ) {
