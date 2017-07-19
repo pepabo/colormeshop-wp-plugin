@@ -19,6 +19,37 @@ class Plugin_Test extends \WP_UnitTestCase {
 
 	/**
 	 * @test
+	 * @vcr plugin/show_categories.yml
+	 */
+	public function handle_template_redirect_カテゴリ一覧を表示する() {
+		$page = $this->factory->post->create_and_get( [
+			'post_title' => 'テストページ',
+			'post_type'  => 'page',
+		] );
+		$this->go_to( '/?page_id=' . $page->ID );
+
+		_get_container()['model.setting']->update( [
+			'product_page_id' => $page->ID,
+		] );
+		$this->go_to( '/?page_id=' . $page->ID . '&colorme_page=categories' );
+
+		$plugin = new Plugin;
+		$plugin->handle_template_redirect();
+
+		// - API のレスポンスで返ってくるカテゴリへのリンクが含まれていること
+		$regex = <<<__EOS__
+#
+.*<a href="http://example.org/\?page_id={$page->ID}&colorme_page=items&category_id_big=2131603">.*
+[\s\S]*<a href="http://example.org/\?page_id={$page->ID}&colorme_page=items&category_id_big=2131603&category_id_small=1">.*
+[\s\S]*<a href="http://example.org/\?page_id={$page->ID}&colorme_page=items&category_id_big=2143688">.*
+#
+__EOS__;
+		$this->expectOutputRegex( $regex );
+		the_content();
+	}
+
+	/**
+	 * @test
 	 * @vcr plugin/show_items.yml
 	 */
 	public function handle_template_redirect_商品一覧を表示する() {
