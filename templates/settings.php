@@ -1,11 +1,15 @@
+<?php
+// 別 PR で iframe 読み込みにするので、それまでの暫定対応
+$plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.php' );
+?>
 <div class="wrap">
-    <h1>カラーミーショップ連携設定</h1>
-    <div id="poststuff">
-        <div id="post-body" class="metabox-holder columns-2">
-            <!-- main content -->
-            <div id="post-body-content">
-                <?php
-				if ( $this->container['product_page_id'] && ! $this->is_valid_product_page_id( $this->container['product_page_id'] ) ) : ?>
+	<h1>カラーミーショップ連携設定</h1>
+	<div id="poststuff">
+		<div id="post-body" class="metabox-holder columns-2">
+			<!-- main content -->
+			<div id="post-body-content">
+				<?php
+				if ( $this->setting->product_page_id() && ! $this->setting->is_valid_product_page_id() ) : ?>
 					<div class="error"><p>商品ページIDには、固定ページの ID を設定してください。</p></div>
 				<?php endif; ?>
 				<div class="meta-box-sortables ui-sortable">
@@ -20,12 +24,12 @@
 							?>
 							<form method="post" action="options.php">
 								<?php
-								settings_fields( 'colorme_wp_settings' );
-								do_settings_sections( 'colorme_wp_settings' );
+								settings_fields( \ColorMeShop\Models\Setting::KEY );
+								do_settings_sections( \ColorMeShop\Admin::MENU_SLUG );
 								submit_button();
 								?>
 							</form>
-							<?php if ( ! $this->container['product_page_id'] || ! $this->is_valid_product_page_id( $this->container['product_page_id'] ) ) : ?>
+							<?php if ( ! $this->setting->product_page_id() || ! $this->setting->is_valid_product_page_id() ) : ?>
 								<div>
 									<p>※ 商品カテゴリーページ、商品一覧ページ、サイトマップを生成するには商品ページ ID を設定してください。</p>
 									<p>商品ページ ID の設定方法は<a href="#colorme_sitemap">こちら</a>をご参照ください。</p>
@@ -33,14 +37,14 @@
 							<?php else : ?>
 								<div>
 									<ul>
-										<li>商品 <a href="<?php echo $this->container['product_page_url'] ?>?colorme_item=カラーミーショップの商品ID" target="_blank"><?php echo $this->container['product_page_url'] ?>?colorme_item=カラーミーショップの商品ID</a></li>
-										<li>商品カテゴリー <a href="<?php echo $this->container['url_builder']->categories() ?>" target="_blank"><?php echo $this->container['url_builder']->categories() ?></a></li>
-										<li>商品一覧 <a href="<?php echo $this->container['url_builder']->items() ?>" target="_blank"><?php echo $this->container['url_builder']->items() ?></a></li>
-										<li>サイトマップ <a href="<?php echo $this->container['url_builder']->sitemap() ?>" target="_blank"><?php echo $this->container['url_builder']->sitemap() ?></a></li>
+										<li>商品 <a href="<?php echo $this->url_builder->product_page_permalink() ?>?colorme_item=カラーミーショップの商品ID" target="_blank"><?php echo $this->url_builder->product_page_permalink() ?>?colorme_item=カラーミーショップの商品ID</a></li>
+										<li>商品カテゴリー <a href="<?php echo $this->url_builder->categories() ?>" target="_blank"><?php echo $this->url_builder->categories() ?></a></li>
+										<li>商品一覧 <a href="<?php echo $this->url_builder->items() ?>" target="_blank"><?php echo $this->url_builder->items() ?></a></li>
+										<li>サイトマップ <a href="<?php echo $this->url_builder->sitemap() ?>" target="_blank"><?php echo $this->url_builder->sitemap() ?></a></li>
 									</ul>
 								</div>
 							<?php endif; ?>
-							<a href="<?php echo $this->container['oauth2_client']->getAuthorizationUrl( [
+							<a href="<?php echo $this->oauth2_client->getAuthorizationUrl( [
 								'scope' => [ 'read_products' ],
 							] ) ?>">カラーミーショップアカウントで認証する</a>
 						</div>
@@ -69,7 +73,7 @@
 								作成したアカウントで<a href="https://api.shop-pro.jp/developers/sign_in" target="_blank">カラーミーショップDevelopers</a>にログイン後、<a href="https://api.shop-pro.jp/oauth/applications/new" target="_blank">アプリケーション追加</a>からプラグイン用のアプリケーションを追加してください。
 							</p>
 							<div>
-								<img height="250" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/add_application.png" />
+								<img height="250" src="<?php echo $plugin_dir_url ?>screenshots/add_application.png" />
 							</div>
 							<p>
 								リダイレクトURLは<input class="regular-text" type="text" value="<?php echo site_url() ?>/wp-admin/admin-ajax.php" />を入力してください。
@@ -79,7 +83,7 @@
 								このページの基本設定に入力してください。
 							</p>
 							<div>
-								<img height="250" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/application_credentials.png" />
+								<img height="250" src="<?php echo $plugin_dir_url ?>screenshots/application_credentials.png" />
 							</div>
 							<p>
 								基本設定の「変更を保存」をクリックして保存後、「カラーミーショップアカウントで認証する」をクリックしてください。<br />
@@ -96,13 +100,13 @@
 								商品用の固定ページを作成し、<a href="#colorme_shortcode">ショートコード</a>を使って商品情報をレイアウトしてください。
 							</p>
 							<div>
-								<a target="_blank" href="<?php echo $this->container['plugin_dir_url'] ?>screenshots/create_page.png"><img height="400" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/create_page.png" /></a>
+								<a target="_blank" href="<?php echo $plugin_dir_url ?>screenshots/create_page.png"><img height="400" src="<?php echo $plugin_dir_url ?>screenshots/create_page.png" /></a>
 							</div>
 							<p>
 								<code><商品ページのURL>?colorme_item=<商品ID></code> にアクセスすると...！
 							</p>
 							<div>
-								<a target="_blank" href="<?php echo $this->container['plugin_dir_url'] ?>screenshots/shop_page.png"><img height="400" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/shop_page.png" /></a>
+								<a target="_blank" href="<?php echo $plugin_dir_url ?>screenshots/shop_page.png"><img height="400" src="<?php echo $plugin_dir_url ?>screenshots/shop_page.png" /></a>
 							</div>
 						</div>
 						<h2>ショートコードとかレイアウトとか難しい...おまかせで！というかたは</h2>
@@ -121,16 +125,16 @@
 								商品ページの ID を<a href="#colorme_settings">カラーミーショップ連携設定</a>に保存してください。
 							</p>
 							<div>
-								<a target="_blank" href="<?php echo $this->container['plugin_dir_url'] ?>screenshots/page_id.png"><img height="400" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/page_id.png" /></a>
+								<a target="_blank" href="<?php echo $plugin_dir_url ?>screenshots/page_id.png"><img height="400" src="<?php echo $plugin_dir_url ?>screenshots/page_id.png" /></a>
 							</div>
 							<div>
-								<a target="_blank" href="<?php echo $this->container['plugin_dir_url'] ?>screenshots/save_page_id.png"><img height="400" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/save_page_id.png" /></a>
+								<a target="_blank" href="<?php echo $plugin_dir_url ?>screenshots/save_page_id.png"><img height="400" src="<?php echo $plugin_dir_url ?>screenshots/save_page_id.png" /></a>
 							</div>
 						</div>
 						<h2><code><商品ページのURL>/sitemap.xml</code> にアクセスすると...！</h2>
 						<div class="inside">
 							<div>
-								<a target="_blank" href="<?php echo $this->container['plugin_dir_url'] ?>screenshots/sitemap.png"><img height="400" src="<?php echo $this->container['plugin_dir_url'] ?>screenshots/sitemap.png" /></a>
+								<a target="_blank" href="<?php echo $plugin_dir_url ?>screenshots/sitemap.png"><img height="400" src="<?php echo $plugin_dir_url ?>screenshots/sitemap.png" /></a>
 							</div>
 						</div>
 					</div>

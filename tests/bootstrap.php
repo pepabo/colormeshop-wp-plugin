@@ -44,3 +44,53 @@ $configure->enableRequestMatchers( array( 'method', 'url', 'query_string', 'host
 // hook から 'soap' を除外する
 // docker イメージに SOAP モジュールがインストールされていないので除外しないと Fatal エラーになってしまう
 $configure->enableLibraryHooks( [ 'stream_wrapper', 'curl' ] );
+
+/**
+ * ネットショップ用 固定ページを作る
+ * パーマリンクはデフォルト (http://xxx.xxx/?page_id=x)
+ *
+ * @return int
+ */
+function _create_product_page() {
+	return wp_insert_post( [
+		'post_title' => 'ネットショップ用 固定ページ',
+		'post_content' => 'ネットショップ用 固定ページです',
+		'post_type' => 'page',
+	] );
+}
+
+/**
+ * @var int[]
+ */
+$permalink_customized_product_page_ids = [];
+
+/**
+ * ネットショップ用 固定ページを作る
+ * (パーマリンクは http://xxx.xxx/xxx/ の形式)
+ *
+ * @return int
+ */
+function _create_product_page_with_customized_permalink() {
+	$page_id = wp_insert_post( [
+		'post_title' => 'ネットショップ用 固定ページ',
+		'post_content' => 'ネットショップ用 固定ページです. パーマリンクは' . site_url() . '/shop/ です.',
+		'post_type' => 'page',
+	] );
+
+	global $permalink_customized_product_page_ids;
+	$permalink_customized_product_page_ids[] = $page_id;
+
+	return $page_id;
+}
+
+function _customize_permalink( $permalink, $post_id ) {
+	global $permalink_customized_product_page_ids;
+
+	if ( in_array( (int) $post_id, $permalink_customized_product_page_ids, true ) ) {
+		return site_url() . '/shop/';
+	}
+
+	return $permalink;
+}
+
+add_filter( 'page_link', '_customize_permalink', 10, 2 );
