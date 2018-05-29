@@ -53,24 +53,23 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 				<a id="colorme_settings"></a>
 				<div class="meta-box-sortables ui-sortable">
 					<div class="postbox">
-						<h2 class="hndle">カラーミーショップ WordPress プラグインをインストールしていただきありがとうございます！</h2>
+						<h2 class="hndle">カラーミーショップ WordPressプラグイン 利用方法</h2>
 						<div class="inside">
 							<p>
-								プラグインをご利用いただくには、いくつか設定が必要になりますので下記手順に沿って設定をお願いします。<br />
-								カラーミーショップのご登録がお済みでない方は<a href="https://shop-pro.jp/?mode=signup" target="_blank">こちら</a>からお願いいたします！
-							</p>
+                                ご利用を開始する前に、以下の手順に沿ってアプリケーションの追加を完了してください。
+                            </p>
 						</div>
-						<h2>カラーミーデベロッパーアカウント作成</h2>
+						<h2>1. デベロッパーアカウントの作成</h2>
 						<div class="inside">
 							<p>
-								カラーミーデベロッパーアカウントをお持ちでない方は<a href="https://api.shop-pro.jp/developers/sign_up" target="_blank">こちら</a>から登録してください。
+								カラーミー デベロッパーアカウントを <a href="https://api.shop-pro.jp/developers/sign_up" target="_blank">こちら</a> から作成してください。
 							</p>
 						</div>
 						<!-- .inside -->
-						<h2>アプリケーション追加</h2>
+						<h2>2. アプリケーションの追加</h2>
 						<div class="inside">
 							<p>
-								作成したアカウントで<a href="https://api.shop-pro.jp/developers/sign_in" target="_blank">カラーミーショップDevelopers</a>にログイン後、<a href="https://api.shop-pro.jp/oauth/applications/new" target="_blank">アプリケーション追加</a>からプラグイン用のアプリケーションを追加してください。
+								作成したデベロッパーアカウントで「<a href="https://api.shop-pro.jp/developers/sign_in" target="_blank">カラーミーショップDevelopers</a>」にログインしてください。「<a href="https://api.shop-pro.jp/oauth/applications/new" target="_blank">アプリケーション追加</a>」からプラグイン用のアプリケーションを追加します。
 							</p>
 							<div>
 								<img height="250" src="<?php echo $plugin_dir_url ?>screenshots/add_application.png" />
@@ -94,7 +93,7 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 					</div>
 					<a id="colorme_page"></a>
 					<div class="postbox">
-						<h2 class="hndle">商品ページを作成できます！</h2>
+						<h2 class="hndle">商品ページ 作成方法</h2>
 						<div class="inside">
 							<p>
 								商品用の固定ページを作成し、<a href="#colorme_shortcode">ショートコード</a>を使って商品情報をレイアウトしてください。
@@ -109,7 +108,7 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 								<a target="_blank" href="<?php echo $plugin_dir_url ?>screenshots/shop_page.png"><img height="400" src="<?php echo $plugin_dir_url ?>screenshots/shop_page.png" /></a>
 							</div>
 						</div>
-						<h2>ショートコードとかレイアウトとか難しい...おまかせで！というかたは</h2>
+						<h2>ショートコードやレイアウトなど詳しく分からない場合</h2>
 						<div class="inside">
 							<p>
 								本文に <input type="text" value="[colormeshop_page]" /> を貼り付けて保存してください！
@@ -118,7 +117,7 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 					</div>
 					<a id="colorme_sitemap"></a>
 					<div class="postbox">
-						<h2 class="hndle">商品ページのサイトマップが自動生成されます！</h2>
+						<h2 class="hndle">商品ページのサイトマップ 設定方法</h2>
 						<h2>設定</h2>
 						<div class="inside">
 							<p>
@@ -142,7 +141,7 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 					<a id="colorme_shortcode"></a>
 					<div class="meta-box-sortables ui-sortable">
 						<div class="postbox">
-							<h2 class="hndle">ご利用可能なショートコード</h2>
+							<h2 class="hndle">ショートコード一覧</h2>
 							<div class="inside">
 								<dl>
 									<dt>[colormeshop_product]</dt>
@@ -331,10 +330,10 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 							<ul>
 								<li><a href="https://shop-pro.jp/" target="_blank">カラーミーショップ</a></li>
 								<li><a href="#">プラグインについてのご質問・ご要望</a></li>
-								<li><a href="#colorme_settings">プラグイン設定手順</a></li>
-								<li><a href="#colorme_page">商品ページを作成できます！</a></li>
-								<li><a href="#colorme_sitemap">商品のサイトマップが自動生成されます！</a></li>
-								<li><a href="#colorme_shortcode">ご利用可能なショートコード</a></li>
+								<li><a href="#colorme_settings">カラーミーショップ WordPressプラグイン 利用方法</a></li>
+								<li><a href="#colorme_page">商品ページ 作成方法</a></li>
+								<li><a href="#colorme_sitemap">商品ページのサイトマップ 設定方法</a></li>
+								<li><a href="#colorme_shortcode">ショートコード一覧</a></li>
 							</ul>
 						</div>
 						<!-- .inside -->
@@ -344,10 +343,10 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 						<h2 class="hndle">プラグインについて</h2>
 						<div class="inside">
 							<p>
-								<a href="#">(プラグインのリポジトリURL)</a><br />
-								当プラグインについて、お気づきの点やアイデアをお持ちのかたはぜひ開発にご参加ください。<br />
-								また、「こんな機能あったら良さそうなんだけど、どうでしょう？」といったお話も大歓迎ですので気軽に投稿してみましょう!<br />
-								<a href="https://pepabo.com/" target="_blank">GMO Pepabo, Inc.</a>
+                                当プラグインについてお気付きの点やご要望等お持ちの方は、ぜひお気軽に <a href="https://goo.gl/forms/s6zzeS3Q7jKDTbFO2" target="_blank">https://goo.gl/forms/s6zzeS3Q7jKDTbFO2</a> までお寄せください。
+                            </p>
+                            <p>
+                                また当プラグインをはじめ、カラーミーショップやECサービスの開発にご興味のある方は、<a href="https://pepabo.com/recruit/" target="_blank">GMOペパボ 株式会社の採用ページ</a> もご覧ください。
 							</p>
 						</div>
 						<!-- .inside -->
