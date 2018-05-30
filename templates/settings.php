@@ -102,7 +102,7 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 								<a target="_blank" href="<?php echo $plugin_dir_url ?>screenshots/create_page.png"><img height="400" src="<?php echo $plugin_dir_url ?>screenshots/create_page.png" /></a>
 							</div>
 							<p>
-								<code><商品ページのURL>?colorme_item=<商品ID></code> にアクセスすると...！
+								<code>https://<商品ページ>/?colorme_item=<商品ID></code> にアクセスすると...！
 							</p>
 							<div>
 								<a target="_blank" href="<?php echo $plugin_dir_url ?>screenshots/shop_page.png"><img height="400" src="<?php echo $plugin_dir_url ?>screenshots/shop_page.png" /></a>
