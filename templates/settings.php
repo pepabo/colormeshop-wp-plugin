@@ -329,7 +329,7 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 						<div class="inside">
 							<ul>
 								<li><a href="https://shop-pro.jp/" target="_blank">カラーミーショップ</a></li>
-								<li><a href="#">プラグインについてのご質問・ご要望</a></li>
+								<li><a href="https://goo.gl/forms/s6zzeS3Q7jKDTbFO2" target="_blank">プラグインについてのご質問・ご要望</a></li>
 								<li><a href="#colorme_settings">カラーミーショップ WordPressプラグイン 利用方法</a></li>
 								<li><a href="#colorme_page">商品ページ 作成方法</a></li>
 								<li><a href="#colorme_sitemap">商品ページのサイトマップ 設定方法</a></li>
