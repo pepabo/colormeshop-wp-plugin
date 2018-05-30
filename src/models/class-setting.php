@@ -75,6 +75,9 @@ class Setting {
 	 */
 	public function update( $values ) {
 		$settings = array_merge( $this->get(), $values );
+
+		// update_option() は値に変更が無い場合にも false を返す
+		// @see https://codex.wordpress.org/Function_Reference/update_option
 		return update_option( self::KEY, $settings, true );
 	}
 }

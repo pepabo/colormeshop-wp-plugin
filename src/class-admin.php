@@ -139,11 +139,11 @@ class Admin {
 		$access_token     = $this->oauth2_client->getAccessToken( 'authorization_code', [
 			'code' => $_GET['code'],
 		] );
-		if ( ! $this->setting->update( [
-			'token' => $access_token->getToken(),
-		] ) ) {
-			throw new \RuntimeException( 'トークンの保存に失敗しました' );
-		}
+		$this->setting->update(
+			[
+		        'token' => $access_token->getToken(),
+		    ]
+		);
 
 		header( 'Location: ' . admin_url( '?page=' . self::MENU_SLUG ), true );
 
