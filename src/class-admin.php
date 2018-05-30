@@ -44,9 +44,9 @@ class Admin {
 		Url_Builder $url_builder
 	) {
 		$this->oauth2_client = $oauth2_client;
-		$this->setting = $setting;
+		$this->setting       = $setting;
 		$this->templates_dir = $templates_dir;
-		$this->url_builder = $url_builder;
+		$this->url_builder   = $url_builder;
 	}
 
 	public function register() {
@@ -61,10 +61,12 @@ class Admin {
 	 * @return void
 	 */
 	public function add_plugin_page() {
-		add_menu_page( 'カラーミーショップ', 'カラーミーショップ', 'manage_options', self::MENU_SLUG, [
-			$this,
-			'create_admin_page',
-		] );
+		add_menu_page(
+			'カラーミーショップ', 'カラーミーショップ', 'manage_options', self::MENU_SLUG, [
+				$this,
+				'create_admin_page',
+			]
+		);
 	}
 
 	public function create_admin_page() {
@@ -79,28 +81,36 @@ class Admin {
 	public function page_init() {
 		register_setting( Setting::KEY, Setting::KEY );
 		add_settings_section( 'general', '', '', self::MENU_SLUG );
-		add_settings_field( 'client_id', 'クライアントID', [
-			$this,
-			'client_id_setting_callback',
-		], self::MENU_SLUG, 'general' );
-		add_settings_field( 'client_secret', 'クライアントシークレット', [
-			$this,
-			'client_secret_setting_callback',
-		], self::MENU_SLUG, 'general' );
-		add_settings_field( 'token', 'トークン', [
-			$this,
-			'token_setting_callback',
-		], self::MENU_SLUG, 'general' );
-		add_settings_field( 'product_page_id', '商品ページID', [
-			$this,
-			'pruduct_page_id_setting_callback',
-		], self::MENU_SLUG, 'general' );
+		add_settings_field(
+			'client_id', 'クライアントID', [
+				$this,
+				'client_id_setting_callback',
+			], self::MENU_SLUG, 'general'
+		);
+		add_settings_field(
+			'client_secret', 'クライアントシークレット', [
+				$this,
+				'client_secret_setting_callback',
+			], self::MENU_SLUG, 'general'
+		);
+		add_settings_field(
+			'token', 'トークン', [
+				$this,
+				'token_setting_callback',
+			], self::MENU_SLUG, 'general'
+		);
+		add_settings_field(
+			'product_page_id', '商品ページID', [
+				$this,
+				'pruduct_page_id_setting_callback',
+			], self::MENU_SLUG, 'general'
+		);
 	}
 
 	public function token_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[token]"
-			   value="<?php echo esc_attr( $this->setting->token() ) ?>" class="regular-text" />
+			value="<?php echo esc_attr( $this->setting->token() ); ?>" class="regular-text" />
 		<br/>
 		<?php
 
@@ -109,7 +119,7 @@ class Admin {
 	public function client_id_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_id]"
-			   value="<?php echo esc_attr( $this->setting->client_id() ) ?>" class="regular-text" /><br/>
+			value="<?php echo esc_attr( $this->setting->client_id() ); ?>" class="regular-text" /><br/>
 		<?php
 
 	}
@@ -117,7 +127,7 @@ class Admin {
 	public function client_secret_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[client_secret]"
-			   value="<?php echo esc_attr( $this->setting->client_secret() ) ?>" class="regular-text" /><br/>
+			value="<?php echo esc_attr( $this->setting->client_secret() ); ?>" class="regular-text" /><br/>
 		<?php
 
 	}
@@ -125,7 +135,7 @@ class Admin {
 	public function pruduct_page_id_setting_callback() {
 		?>
 		<input type="text" id="message" name="colorme_wp_settings[product_page_id]"
-			   value="<?php echo esc_attr( $this->setting->product_page_id() ) ?>" class="small-text" />
+			value="<?php echo esc_attr( $this->setting->product_page_id() ); ?>" class="small-text" />
 		<br/>
 		<?php
 	}
@@ -136,13 +146,15 @@ class Admin {
 	 * @return void
 	 */
 	public function on_authorized() {
-		$access_token     = $this->oauth2_client->getAccessToken( 'authorization_code', [
-			'code' => $_GET['code'],
-		] );
+		$access_token = $this->oauth2_client->getAccessToken(
+			'authorization_code', [
+				'code' => $_GET['code'],
+			]
+		);
 		$this->setting->update(
 			[
-		        'token' => $access_token->getToken(),
-		    ]
+				'token' => $access_token->getToken(),
+			]
 		);
 
 		header( 'Location: ' . admin_url( '?page=' . self::MENU_SLUG ), true );
