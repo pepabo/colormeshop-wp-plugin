@@ -108,9 +108,6 @@ __EOS__
 
 	/**
 	 * @test
-	 *
-	 * HTTP ヘッダを出力するので `headers already sent` の警告を避けるためにプロセスを分ける
-	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
 	public function on_authorized() {
