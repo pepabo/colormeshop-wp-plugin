@@ -72,7 +72,7 @@ __EOS__;
 	public function token_setting_callback() {
 		$this->expectOutputString(<<<__EOS__
 		<input type="text" id="message" name="colorme_wp_settings[token]"
-			   value="dummy" class="regular-text" />
+			value="dummy" class="regular-text" />
 		<br/>
 		
 __EOS__
@@ -86,7 +86,7 @@ __EOS__
 	public function client_id_setting_callback() {
 		$this->expectOutputString(<<<__EOS__
 		<input type="text" id="message" name="colorme_wp_settings[client_id]"
-			   value="dummy_client_id" class="regular-text" /><br/>
+			value="dummy_client_id" class="regular-text" /><br/>
 		
 __EOS__
 		);
@@ -99,7 +99,7 @@ __EOS__
 	public function client_secret_setting_callback() {
 		$this->expectOutputString(<<<__EOS__
 		<input type="text" id="message" name="colorme_wp_settings[client_secret]"
-			   value="dummy_client_secret" class="regular-text" /><br/>
+			value="dummy_client_secret" class="regular-text" /><br/>
 		
 __EOS__
 		);
