@@ -149,6 +149,8 @@ class Admin {
     {
         $this->on_authorized();
 
+        header( 'Location: ' . admin_url( '?page=' . self::MENU_SLUG ), true );
+
         // return するとレスポンスボディとして '0' を返してしまうためリダイレクトできないので
         // exit している
         exit;
@@ -170,7 +172,5 @@ class Admin {
 				'token' => $access_token->getToken(),
 			]
 		);
-
-		header( 'Location: ' . admin_url( '?page=' . self::MENU_SLUG ), true );
 	}
 }
