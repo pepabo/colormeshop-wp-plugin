@@ -140,21 +140,20 @@ class Admin {
 		<?php
 	}
 
-    /**
-     * wp_ajax アクションフック処理
-     *
-     * @return void
-     */
-    public function wp_ajax_colormeshop_callback()
-    {
-        $this->on_authorized();
+	/**
+	 * wp_ajax アクションフック処理
+	 *
+	 * @return void
+	 */
+	public function wp_ajax_colormeshop_callback() {
+		$this->on_authorized();
 
-        header( 'Location: ' . admin_url( '?page=' . self::MENU_SLUG ), true );
+		header( 'Location: ' . admin_url( '?page=' . self::MENU_SLUG ), true );
 
-        // return するとレスポンスボディとして '0' を返してしまうためリダイレクトできないので
-        // exit している
-        exit;
-    }
+		// return するとレスポンスボディとして '0' を返してしまうためリダイレクトできないので
+		// exit している
+		exit;
+	}
 
 	/**
 	 * OAuth 認証のコールバック処理
