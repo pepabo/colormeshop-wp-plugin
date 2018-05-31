@@ -9,22 +9,24 @@ class Admin_Test extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
-		$this->container = _get_container();
-		$this->container['token'] = function ( $c ) {
+		$this->container                  = _get_container();
+		$this->container['token']         = function ( $c ) {
 			return 'dummy';
 		};
-		$this->container['client_id'] = function ( $c ) {
+		$this->container['client_id']     = function ( $c ) {
 			return 'dummy_client_id';
 		};
 		$this->container['client_secret'] = function ( $c ) {
 			return 'dummy_client_secret';
 		};
 
-		$this->container['model.setting']->update([
-			'token' => 'dummy',
-			'client_id' => 'dummy_client_id',
-			'client_secret' => 'dummy_client_secret',
-		]);
+		$this->container['model.setting']->update(
+			[
+				'token'         => 'dummy',
+				'client_id'     => 'dummy_client_id',
+				'client_secret' => 'dummy_client_secret',
+			]
+		);
 
 		$this->container['oauth2_client'] = function ( $c ) {
 			$access_token = $this->getMockBuilder( '\League\OAuth2\Client\Token\AccessToken' )
@@ -70,7 +72,8 @@ __EOS__;
 	 * @test
 	 */
 	public function token_setting_callback() {
-		$this->expectOutputString(<<<__EOS__
+		$this->expectOutputString(
+			<<<__EOS__
 		<input type="text" id="message" name="colorme_wp_settings[token]"
 			value="dummy" class="regular-text" />
 		<br/>
@@ -84,7 +87,8 @@ __EOS__
 	 * @test
 	 */
 	public function client_id_setting_callback() {
-		$this->expectOutputString(<<<__EOS__
+		$this->expectOutputString(
+			<<<__EOS__
 		<input type="text" id="message" name="colorme_wp_settings[client_id]"
 			value="dummy_client_id" class="regular-text" /><br/>
 		
@@ -97,7 +101,8 @@ __EOS__
 	 * @test
 	 */
 	public function client_secret_setting_callback() {
-		$this->expectOutputString(<<<__EOS__
+		$this->expectOutputString(
+			<<<__EOS__
 		<input type="text" id="message" name="colorme_wp_settings[client_secret]"
 			value="dummy_client_secret" class="regular-text" /><br/>
 		
@@ -108,9 +113,6 @@ __EOS__
 
 	/**
 	 * @test
-	 *
-	 * HTTP ヘッダを出力するので `headers already sent` の警告を避けるためにプロセスを分ける
-	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
 	public function on_authorized() {
