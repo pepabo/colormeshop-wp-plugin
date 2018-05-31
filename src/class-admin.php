@@ -52,7 +52,7 @@ class Admin {
 	public function register() {
 		add_action( 'admin_init', [ $this, 'page_init' ] );
 		add_action( 'admin_menu', [ $this, 'add_plugin_page' ] );
-		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'on_authorized' ] );
+		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'wp_ajax_colormeshop_callback' ] );
 	}
 
 	/**
@@ -140,6 +140,20 @@ class Admin {
 		<?php
 	}
 
+    /**
+     * wp_ajax アクションフック処理
+     *
+     * @return void
+     */
+    public function wp_ajax_colormeshop_callback()
+    {
+        $this->on_authorized();
+
+        // return するとレスポンスボディとして '0' を返してしまうためリダイレクトできないので
+        // exit している
+        exit;
+    }
+
 	/**
 	 * OAuth 認証のコールバック処理
 	 *
@@ -158,9 +172,5 @@ class Admin {
 		);
 
 		header( 'Location: ' . admin_url( '?page=' . self::MENU_SLUG ), true );
-
-		// return するとレスポンスボディとして '0' を返してしまうためリダイレクトできないので
-		// exit している
-		exit;
 	}
 }
