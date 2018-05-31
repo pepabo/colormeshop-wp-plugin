@@ -159,6 +159,8 @@ class Admin {
 
 		header( 'Location: ' . admin_url( '?page=' . self::MENU_SLUG ), true );
 
-		return;
+		// return するとレスポンスボディとして '0' を返してしまうためリダイレクトできないので
+		// exit している
+		exit;
 	}
 }
