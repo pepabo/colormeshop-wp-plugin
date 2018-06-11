@@ -26,6 +26,8 @@ def build(mode='release'):
                 'composer.phar',
                 'fabfile.py',
                 'README.md',
+                'Pipfile',
+                'Pipfile.lock',
                 ]
         if mode == 'dev':
             local('cp -r ' + currentdir + '/* ./')
