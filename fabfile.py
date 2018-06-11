@@ -25,6 +25,7 @@ def build(mode='release'):
                 'wp.env.sample',
                 'composer.phar',
                 'fabfile.py',
+                'README.md',
                 ]
         if mode == 'dev':
             local('cp -r ' + currentdir + '/* ./')
