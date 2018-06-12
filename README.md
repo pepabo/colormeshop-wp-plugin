@@ -79,8 +79,13 @@ $ tests/run.sh
 ### ビルド
 
 ```
-$ fab build
+# 準備
+$ brew install pipenv
+$ pipenv install
 
-# 開発中のプラグインを動作確認する場合
-$ fab build:dev
+# zipファイルを作成する
+$ pipenv run fab build
+
+# 開発中のプラグイン(ワーキングディレクトリのファイル)でzipファイルを作成する場合
+$ pipenv run fab build:dev
 ```
