@@ -52,4 +52,6 @@ If you have any questions, please let me know via https://goo.gl/forms/s6zzeS3Q7
 
 == Changelog ==
 = 1.0.0 =
-* First release
+* 初回リリース
+= 1.0.1 =
+* プラグインの説明文を更新
