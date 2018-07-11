@@ -1,4 +1,10 @@
-# カラーミーショップ WordPress プラグイン
+<h1 align="center">カラーミーショップ WordPress プラグイン</h1>
+
+<div align="center">
+
+![icon](https://user-images.githubusercontent.com/1885716/42558421-255927dc-852c-11e8-98ad-2ff181592abe.png)
+
+</div>
 
 WordPress で [カラーミーショップ](https://shop-pro.jp/) に登録している商品情報を扱ったり、商品ページを自動生成することができるプラグインです :muscle: 
 
