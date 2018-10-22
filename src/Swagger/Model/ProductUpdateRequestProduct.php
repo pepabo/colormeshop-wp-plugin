@@ -6,19 +6,19 @@
  *
  * @category Class
  * @package  ColorMeShop\Swagger
- * @author   Swaagger Codegen team
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_url`|アプリケーション登録時に入力したリダイレクトURL|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URL&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURLへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURL|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
  *
- * OpenAPI spec version: v1
+ * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- *
+ * Swagger Codegen version: 2.3.0
  */
 
 /**
@@ -30,27 +30,30 @@
 namespace ColorMeShop\Swagger\Model;
 
 use \ArrayAccess;
+use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
  * ProductUpdateRequestProduct Class Doc Comment
  *
- * @category    Class
- * @package     ColorMeShop\Swagger
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  ColorMeShop\Swagger
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
-class ProductUpdateRequestProduct implements ArrayAccess
+class ProductUpdateRequestProduct implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'ProductUpdateRequest_product';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -71,13 +74,53 @@ class ProductUpdateRequestProduct implements ArrayAccess
         'variants' => '\ColorMeShop\Swagger\Model\ProductUpdateRequestProductVariants[]'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'name' => null,
+        'price' => null,
+        'category_id_big' => null,
+        'category_id_small' => null,
+        'cost' => null,
+        'sales_price' => null,
+        'members_price' => null,
+        'model_number' => null,
+        'expl' => null,
+        'simple_expl' => null,
+        'smartphone_expl' => null,
+        'display_state' => null,
+        'stock_managed' => null,
+        'group_ids' => null,
+        'variants' => null
+    ];
+
+    /**
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @return array
+     */
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
     }
 
     /**
-     * Array of attributes where the key is the local name, and the value is the original name
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @return array
+     */
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
+    }
+
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -98,9 +141,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
         'variants' => 'variants'
     ];
 
-
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -121,9 +164,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
         'variants' => 'setVariants'
     ];
 
-
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -144,19 +187,45 @@ class ProductUpdateRequestProduct implements ArrayAccess
         'variants' => 'getVariants'
     ];
 
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @return array
+     */
     public static function attributeMap()
     {
         return self::$attributeMap;
     }
 
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @return array
+     */
     public static function setters()
     {
         return self::$setters;
     }
 
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @return array
+     */
     public static function getters()
     {
         return self::$getters;
+    }
+
+    /**
+     * The original name of the model.
+     *
+     * @return string
+     */
+    public function getModelName()
+    {
+        return self::$swaggerModelName;
     }
 
     const DISPLAY_STATE_SHOWING = 'showing';
@@ -168,6 +237,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getDisplayStateAllowableValues()
@@ -183,13 +253,16 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
     public function __construct(array $data = null)
     {
@@ -211,51 +284,51 @@ class ProductUpdateRequestProduct implements ArrayAccess
     }
 
     /**
-     * show all the invalid properties with reasons.
+     * Show all the invalid properties with reasons.
      *
      * @return array invalid properties with reasons
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
         if (!is_null($this->container['name']) && (strlen($this->container['name']) > 50)) {
-            $invalid_properties[] = "invalid value for 'name', the character length must be smaller than or equal to 50.";
+            $invalidProperties[] = "invalid value for 'name', the character length must be smaller than or equal to 50.";
         }
 
         if (!is_null($this->container['cost']) && ($this->container['cost'] < 0)) {
-            $invalid_properties[] = "invalid value for 'cost', must be bigger than or equal to 0.";
+            $invalidProperties[] = "invalid value for 'cost', must be bigger than or equal to 0.";
         }
 
         if (!is_null($this->container['sales_price']) && ($this->container['sales_price'] < 0)) {
-            $invalid_properties[] = "invalid value for 'sales_price', must be bigger than or equal to 0.";
+            $invalidProperties[] = "invalid value for 'sales_price', must be bigger than or equal to 0.";
         }
 
         if (!is_null($this->container['members_price']) && ($this->container['members_price'] < 0)) {
-            $invalid_properties[] = "invalid value for 'members_price', must be bigger than or equal to 0.";
+            $invalidProperties[] = "invalid value for 'members_price', must be bigger than or equal to 0.";
         }
 
         if (!is_null($this->container['model_number']) && (strlen($this->container['model_number']) > 50)) {
-            $invalid_properties[] = "invalid value for 'model_number', the character length must be smaller than or equal to 50.";
+            $invalidProperties[] = "invalid value for 'model_number', the character length must be smaller than or equal to 50.";
         }
 
         if (!is_null($this->container['simple_expl']) && (strlen($this->container['simple_expl']) > 255)) {
-            $invalid_properties[] = "invalid value for 'simple_expl', the character length must be smaller than or equal to 255.";
+            $invalidProperties[] = "invalid value for 'simple_expl', the character length must be smaller than or equal to 255.";
         }
 
-        $allowed_values = $this->getDisplayStateAllowableValues();
-        if (!in_array($this->container['display_state'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!in_array($this->container['display_state'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'display_state', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
-     * validate all the properties in the model
+     * Validate all the properties in the model
      * return true if all passed
      *
      * @return bool True if all properties are valid
@@ -281,8 +354,8 @@ class ProductUpdateRequestProduct implements ArrayAccess
         if (strlen($this->container['simple_expl']) > 255) {
             return false;
         }
-        $allowed_values = $this->getDisplayStateAllowableValues();
-        if (!in_array($this->container['display_state'], $allowed_values)) {
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!in_array($this->container['display_state'], $allowedValues)) {
             return false;
         }
         return true;
@@ -291,6 +364,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets name
+     *
      * @return string
      */
     public function getName()
@@ -300,7 +374,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets name
+     *
      * @param string $name 商品名
+     *
      * @return $this
      */
     public function setName($name)
@@ -316,6 +392,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets price
+     *
      * @return int
      */
     public function getPrice()
@@ -325,7 +402,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets price
+     *
      * @param int $price 定価
+     *
      * @return $this
      */
     public function setPrice($price)
@@ -337,6 +416,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets category_id_big
+     *
      * @return int
      */
     public function getCategoryIdBig()
@@ -346,7 +426,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets category_id_big
+     *
      * @param int $category_id_big 大カテゴリーID
+     *
      * @return $this
      */
     public function setCategoryIdBig($category_id_big)
@@ -358,6 +440,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets category_id_small
+     *
      * @return int
      */
     public function getCategoryIdSmall()
@@ -367,7 +450,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets category_id_small
+     *
      * @param int $category_id_small 小カテゴリーID
+     *
      * @return $this
      */
     public function setCategoryIdSmall($category_id_small)
@@ -379,6 +464,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets cost
+     *
      * @return int
      */
     public function getCost()
@@ -388,7 +474,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets cost
+     *
      * @param int $cost 原価
+     *
      * @return $this
      */
     public function setCost($cost)
@@ -405,6 +493,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets sales_price
+     *
      * @return int
      */
     public function getSalesPrice()
@@ -414,7 +503,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets sales_price
+     *
      * @param int $sales_price 販売価格
+     *
      * @return $this
      */
     public function setSalesPrice($sales_price)
@@ -431,6 +522,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets members_price
+     *
      * @return int
      */
     public function getMembersPrice()
@@ -440,7 +532,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets members_price
+     *
      * @param int $members_price 会員価格
+     *
      * @return $this
      */
     public function setMembersPrice($members_price)
@@ -457,6 +551,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets model_number
+     *
      * @return string
      */
     public function getModelNumber()
@@ -466,7 +561,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets model_number
+     *
      * @param string $model_number 型番
+     *
      * @return $this
      */
     public function setModelNumber($model_number)
@@ -482,6 +579,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets expl
+     *
      * @return string
      */
     public function getExpl()
@@ -491,7 +589,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets expl
+     *
      * @param string $expl 商品説明
+     *
      * @return $this
      */
     public function setExpl($expl)
@@ -503,6 +603,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets simple_expl
+     *
      * @return string
      */
     public function getSimpleExpl()
@@ -512,7 +613,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets simple_expl
+     *
      * @param string $simple_expl 簡易説明
+     *
      * @return $this
      */
     public function setSimpleExpl($simple_expl)
@@ -528,6 +631,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets smartphone_expl
+     *
      * @return string
      */
     public function getSmartphoneExpl()
@@ -537,7 +641,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets smartphone_expl
+     *
      * @param string $smartphone_expl スマホ向けショップの商品説明
+     *
      * @return $this
      */
     public function setSmartphoneExpl($smartphone_expl)
@@ -549,6 +655,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets display_state
+     *
      * @return string
      */
     public function getDisplayState()
@@ -558,17 +665,19 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets display_state
+     *
      * @param string $display_state 掲載設定
+     *
      * @return $this
      */
     public function setDisplayState($display_state)
     {
-        $allowed_values = $this->getDisplayStateAllowableValues();
-        if (!is_null($display_state) && !in_array($display_state, $allowed_values)) {
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!is_null($display_state) && !in_array($display_state, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'display_state', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }
@@ -579,6 +688,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets stock_managed
+     *
      * @return bool
      */
     public function getStockManaged()
@@ -588,7 +698,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets stock_managed
+     *
      * @param bool $stock_managed 在庫管理するか否か
+     *
      * @return $this
      */
     public function setStockManaged($stock_managed)
@@ -600,6 +712,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets group_ids
+     *
      * @return int[]
      */
     public function getGroupIds()
@@ -609,7 +722,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets group_ids
+     *
      * @param int[] $group_ids グループIDの配列
+     *
      * @return $this
      */
     public function setGroupIds($group_ids)
@@ -621,6 +736,7 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets variants
+     *
      * @return \ColorMeShop\Swagger\Model\ProductUpdateRequestProductVariants[]
      */
     public function getVariants()
@@ -630,7 +746,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets variants
+     *
      * @param \ColorMeShop\Swagger\Model\ProductUpdateRequestProductVariants[] $variants 商品オプションによるバリエーションごとに更新
+     *
      * @return $this
      */
     public function setVariants($variants)
@@ -641,7 +759,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -651,7 +771,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -661,8 +783,10 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     *
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -676,7 +800,9 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Unsets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)
@@ -686,15 +812,19 @@ class ProductUpdateRequestProduct implements ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(
+                ObjectSerializer::sanitizeForSerialization($this),
+                JSON_PRETTY_PRINT
+            );
         }
 
-        return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 

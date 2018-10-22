@@ -6,19 +6,19 @@
  *
  * @category Class
  * @package  ColorMeShop\Swagger
- * @author   Swaagger Codegen team
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_url`|アプリケーション登録時に入力したリダイレクトURL|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URL&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURLへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURL|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
  *
- * OpenAPI spec version: v1
+ * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- *
+ * Swagger Codegen version: 2.3.0
  */
 
 /**
@@ -30,28 +30,31 @@
 namespace ColorMeShop\Swagger\Model;
 
 use \ArrayAccess;
+use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
  * DeliveryCharge Class Doc Comment
  *
- * @category    Class
+ * @category Class
  * @description 配送料設定の詳細。上記の&#x60;charge_free_type&#x60;や&#x60;charge_type&#x60;に基づいて、この中から配送料が決定される
- * @package     ColorMeShop\Swagger
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @package  ColorMeShop\Swagger
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
-class DeliveryCharge implements ArrayAccess
+class DeliveryCharge implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'Delivery_charge';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -65,13 +68,46 @@ class DeliveryCharge implements ArrayAccess
         'charge_ranges_max_weight' => '\ColorMeShop\Swagger\Model\DeliveryChargeByPrefecture[]'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'delivery_id' => null,
+        'account_id' => null,
+        'charge_fixed' => null,
+        'charge_ranges_by_price' => null,
+        'charge_max_price' => null,
+        'charge_ranges_by_area' => null,
+        'charge_ranges_by_weight' => null,
+        'charge_ranges_max_weight' => null
+    ];
+
+    /**
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @return array
+     */
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
     }
 
     /**
-     * Array of attributes where the key is the local name, and the value is the original name
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @return array
+     */
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
+    }
+
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -85,9 +121,9 @@ class DeliveryCharge implements ArrayAccess
         'charge_ranges_max_weight' => 'charge_ranges_max_weight'
     ];
 
-
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -101,9 +137,9 @@ class DeliveryCharge implements ArrayAccess
         'charge_ranges_max_weight' => 'setChargeRangesMaxWeight'
     ];
 
-
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -117,19 +153,45 @@ class DeliveryCharge implements ArrayAccess
         'charge_ranges_max_weight' => 'getChargeRangesMaxWeight'
     ];
 
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @return array
+     */
     public static function attributeMap()
     {
         return self::$attributeMap;
     }
 
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @return array
+     */
     public static function setters()
     {
         return self::$setters;
     }
 
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @return array
+     */
     public static function getters()
     {
         return self::$getters;
+    }
+
+    /**
+     * The original name of the model.
+     *
+     * @return string
+     */
+    public function getModelName()
+    {
+        return self::$swaggerModelName;
     }
 
     
@@ -138,13 +200,16 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
     public function __construct(array $data = null)
     {
@@ -159,19 +224,19 @@ class DeliveryCharge implements ArrayAccess
     }
 
     /**
-     * show all the invalid properties with reasons.
+     * Show all the invalid properties with reasons.
      *
      * @return array invalid properties with reasons
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
-     * validate all the properties in the model
+     * Validate all the properties in the model
      * return true if all passed
      *
      * @return bool True if all properties are valid
@@ -185,6 +250,7 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Gets delivery_id
+     *
      * @return int
      */
     public function getDeliveryId()
@@ -194,7 +260,9 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Sets delivery_id
+     *
      * @param int $delivery_id 配送方法ID
+     *
      * @return $this
      */
     public function setDeliveryId($delivery_id)
@@ -206,6 +274,7 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Gets account_id
+     *
      * @return string
      */
     public function getAccountId()
@@ -215,7 +284,9 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Sets account_id
+     *
      * @param string $account_id ショップアカウントID
+     *
      * @return $this
      */
     public function setAccountId($account_id)
@@ -227,6 +298,7 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Gets charge_fixed
+     *
      * @return int
      */
     public function getChargeFixed()
@@ -236,7 +308,9 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Sets charge_fixed
+     *
      * @param int $charge_fixed 配送料が固定の場合の金額
+     *
      * @return $this
      */
     public function setChargeFixed($charge_fixed)
@@ -248,6 +322,7 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Gets charge_ranges_by_price
+     *
      * @return int[][]
      */
     public function getChargeRangesByPrice()
@@ -257,7 +332,9 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Sets charge_ranges_by_price
+     *
      * @param int[][] $charge_ranges_by_price 配送料が変わる決済金額の区分  `[3000, 100]`であれば、3000円以下の場合、手数料は100円であることを表す
+     *
      * @return $this
      */
     public function setChargeRangesByPrice($charge_ranges_by_price)
@@ -269,6 +346,7 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Gets charge_max_price
+     *
      * @return int
      */
     public function getChargeMaxPrice()
@@ -278,7 +356,9 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Sets charge_max_price
+     *
      * @param int $charge_max_price `charge_ranges_by_price`に設定されている区分以上の金額の場合の手数料
+     *
      * @return $this
      */
     public function setChargeMaxPrice($charge_max_price)
@@ -290,6 +370,7 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Gets charge_ranges_by_area
+     *
      * @return \ColorMeShop\Swagger\Model\DeliveryChargeByPrefecture[]
      */
     public function getChargeRangesByArea()
@@ -299,7 +380,9 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Sets charge_ranges_by_area
+     *
      * @param \ColorMeShop\Swagger\Model\DeliveryChargeByPrefecture[] $charge_ranges_by_area 都道府県ごとの配送料
+     *
      * @return $this
      */
     public function setChargeRangesByArea($charge_ranges_by_area)
@@ -311,6 +394,7 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Gets charge_ranges_by_weight
+     *
      * @return null[][]
      */
     public function getChargeRangesByWeight()
@@ -320,7 +404,9 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Sets charge_ranges_by_weight
+     *
      * @param null[][] $charge_ranges_by_weight 配送料が変わる重量の区分  以下の値の場合、  - 1000g未満の商品を青森県に届ける際の配送料は300円 - 3000g未満の商品を青森県に届ける際の配送料は500円  であることを表す。  ```json [   [     1000,     [       {         \"pref_id\": 2,         \"pref_name\": \"青森県\",         \"charge\": 300       }     ]   ],   [     3000,     [       {         \"pref_id\": 2,         \"pref_name\": \"青森県\",         \"charge\": 500       }     ]   ] ] ```
+     *
      * @return $this
      */
     public function setChargeRangesByWeight($charge_ranges_by_weight)
@@ -332,6 +418,7 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Gets charge_ranges_max_weight
+     *
      * @return \ColorMeShop\Swagger\Model\DeliveryChargeByPrefecture[]
      */
     public function getChargeRangesMaxWeight()
@@ -341,7 +428,9 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Sets charge_ranges_max_weight
+     *
      * @param \ColorMeShop\Swagger\Model\DeliveryChargeByPrefecture[] $charge_ranges_max_weight `charge_ranges_by_weight`に設定されている区分以上の重量の場合の手数料
+     *
      * @return $this
      */
     public function setChargeRangesMaxWeight($charge_ranges_max_weight)
@@ -352,7 +441,9 @@ class DeliveryCharge implements ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -362,7 +453,9 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Gets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -372,8 +465,10 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     *
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -387,7 +482,9 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Unsets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)
@@ -397,15 +494,19 @@ class DeliveryCharge implements ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(
+                ObjectSerializer::sanitizeForSerialization($this),
+                JSON_PRETTY_PRINT
+            );
         }
 
-        return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 

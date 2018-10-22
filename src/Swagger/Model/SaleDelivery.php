@@ -6,19 +6,19 @@
  *
  * @category Class
  * @package  ColorMeShop\Swagger
- * @author   Swaagger Codegen team
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_url`|アプリケーション登録時に入力したリダイレクトURL|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URL&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURLへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURL|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
  *
- * OpenAPI spec version: v1
+ * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- *
+ * Swagger Codegen version: 2.3.0
  */
 
 /**
@@ -30,27 +30,30 @@
 namespace ColorMeShop\Swagger\Model;
 
 use \ArrayAccess;
+use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
  * SaleDelivery Class Doc Comment
  *
- * @category    Class
- * @package     ColorMeShop\Swagger
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  ColorMeShop\Swagger
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
-class SaleDelivery implements ArrayAccess
+class SaleDelivery implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'SaleDelivery';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -83,13 +86,65 @@ class SaleDelivery implements ArrayAccess
         'delivered' => 'bool'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'id' => null,
+        'account_id' => null,
+        'sale_id' => null,
+        'delivery_id' => null,
+        'detail_ids' => null,
+        'name' => null,
+        'furigana' => null,
+        'postal' => null,
+        'pref_id' => null,
+        'pref_name' => null,
+        'address1' => null,
+        'address2' => null,
+        'tel' => null,
+        'preferred_date' => null,
+        'preferred_period' => null,
+        'slip_number' => null,
+        'noshi_text' => null,
+        'noshi_charge' => null,
+        'card_name' => null,
+        'card_text' => null,
+        'card_charge' => null,
+        'wrapping_name' => null,
+        'wrapping_charge' => null,
+        'delivery_charge' => null,
+        'total_charge' => null,
+        'memo' => null,
+        'delivered' => null
+    ];
+
+    /**
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @return array
+     */
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
     }
 
     /**
-     * Array of attributes where the key is the local name, and the value is the original name
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @return array
+     */
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
+    }
+
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -122,9 +177,9 @@ class SaleDelivery implements ArrayAccess
         'delivered' => 'delivered'
     ];
 
-
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -157,9 +212,9 @@ class SaleDelivery implements ArrayAccess
         'delivered' => 'setDelivered'
     ];
 
-
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -192,19 +247,45 @@ class SaleDelivery implements ArrayAccess
         'delivered' => 'getDelivered'
     ];
 
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @return array
+     */
     public static function attributeMap()
     {
         return self::$attributeMap;
     }
 
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @return array
+     */
     public static function setters()
     {
         return self::$setters;
     }
 
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @return array
+     */
     public static function getters()
     {
         return self::$getters;
+    }
+
+    /**
+     * The original name of the model.
+     *
+     * @return string
+     */
+    public function getModelName()
+    {
+        return self::$swaggerModelName;
     }
 
     
@@ -213,13 +294,16 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
     public function __construct(array $data = null)
     {
@@ -253,19 +337,19 @@ class SaleDelivery implements ArrayAccess
     }
 
     /**
-     * show all the invalid properties with reasons.
+     * Show all the invalid properties with reasons.
      *
      * @return array invalid properties with reasons
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
-     * validate all the properties in the model
+     * Validate all the properties in the model
      * return true if all passed
      *
      * @return bool True if all properties are valid
@@ -279,6 +363,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets id
+     *
      * @return int
      */
     public function getId()
@@ -288,7 +373,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets id
+     *
      * @param int $id 配送ID
+     *
      * @return $this
      */
     public function setId($id)
@@ -300,6 +387,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets account_id
+     *
      * @return string
      */
     public function getAccountId()
@@ -309,7 +397,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets account_id
+     *
      * @param string $account_id ショップアカウントID
+     *
      * @return $this
      */
     public function setAccountId($account_id)
@@ -321,6 +411,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets sale_id
+     *
      * @return int
      */
     public function getSaleId()
@@ -330,7 +421,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets sale_id
+     *
      * @param int $sale_id 売上ID
+     *
      * @return $this
      */
     public function setSaleId($sale_id)
@@ -342,6 +435,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets delivery_id
+     *
      * @return int
      */
     public function getDeliveryId()
@@ -351,7 +445,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets delivery_id
+     *
      * @param int $delivery_id 使用された配送方法ID
+     *
      * @return $this
      */
     public function setDeliveryId($delivery_id)
@@ -363,6 +459,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets detail_ids
+     *
      * @return int[]
      */
     public function getDetailIds()
@@ -372,7 +469,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets detail_ids
+     *
      * @param int[] $detail_ids この配送に含まれる受注明細IDの配列
+     *
      * @return $this
      */
     public function setDetailIds($detail_ids)
@@ -384,6 +483,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets name
+     *
      * @return string
      */
     public function getName()
@@ -393,7 +493,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets name
+     *
      * @param string $name 宛名
+     *
      * @return $this
      */
     public function setName($name)
@@ -405,6 +507,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets furigana
+     *
      * @return string
      */
     public function getFurigana()
@@ -414,7 +517,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets furigana
+     *
      * @param string $furigana 宛名のフリガナ
+     *
      * @return $this
      */
     public function setFurigana($furigana)
@@ -426,6 +531,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets postal
+     *
      * @return string
      */
     public function getPostal()
@@ -435,7 +541,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets postal
+     *
      * @param string $postal 郵便番号
+     *
      * @return $this
      */
     public function setPostal($postal)
@@ -447,6 +555,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets pref_id
+     *
      * @return int
      */
     public function getPrefId()
@@ -456,7 +565,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets pref_id
+     *
      * @param int $pref_id 都道府県の通し番号。北海道が1、沖縄が47
+     *
      * @return $this
      */
     public function setPrefId($pref_id)
@@ -468,6 +579,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets pref_name
+     *
      * @return string
      */
     public function getPrefName()
@@ -477,7 +589,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets pref_name
+     *
      * @param string $pref_name 都道府県名
+     *
      * @return $this
      */
     public function setPrefName($pref_name)
@@ -489,6 +603,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets address1
+     *
      * @return string
      */
     public function getAddress1()
@@ -498,7 +613,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets address1
+     *
      * @param string $address1 住所1
+     *
      * @return $this
      */
     public function setAddress1($address1)
@@ -510,6 +627,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets address2
+     *
      * @return string
      */
     public function getAddress2()
@@ -519,7 +637,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets address2
+     *
      * @param string $address2 住所2
+     *
      * @return $this
      */
     public function setAddress2($address2)
@@ -531,6 +651,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets tel
+     *
      * @return string
      */
     public function getTel()
@@ -540,7 +661,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets tel
+     *
      * @param string $tel 電話番号
+     *
      * @return $this
      */
     public function setTel($tel)
@@ -552,6 +675,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets preferred_date
+     *
      * @return string
      */
     public function getPreferredDate()
@@ -561,7 +685,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets preferred_date
+     *
      * @param string $preferred_date 配送希望日
+     *
      * @return $this
      */
     public function setPreferredDate($preferred_date)
@@ -573,6 +699,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets preferred_period
+     *
      * @return string
      */
     public function getPreferredPeriod()
@@ -582,7 +709,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets preferred_period
+     *
      * @param string $preferred_period 配送希望時間帯
+     *
      * @return $this
      */
     public function setPreferredPeriod($preferred_period)
@@ -594,6 +723,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets slip_number
+     *
      * @return string
      */
     public function getSlipNumber()
@@ -603,7 +733,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets slip_number
+     *
      * @param string $slip_number 配送伝票番号
+     *
      * @return $this
      */
     public function setSlipNumber($slip_number)
@@ -615,6 +747,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets noshi_text
+     *
      * @return string
      */
     public function getNoshiText()
@@ -624,7 +757,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets noshi_text
+     *
      * @param string $noshi_text 熨斗の文言
+     *
      * @return $this
      */
     public function setNoshiText($noshi_text)
@@ -636,6 +771,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets noshi_charge
+     *
      * @return int
      */
     public function getNoshiCharge()
@@ -645,7 +781,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets noshi_charge
+     *
      * @param int $noshi_charge 熨斗の料金
+     *
      * @return $this
      */
     public function setNoshiCharge($noshi_charge)
@@ -657,6 +795,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets card_name
+     *
      * @return string
      */
     public function getCardName()
@@ -666,7 +805,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets card_name
+     *
      * @param string $card_name メッセージカードの表示名
+     *
      * @return $this
      */
     public function setCardName($card_name)
@@ -678,6 +819,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets card_text
+     *
      * @return string
      */
     public function getCardText()
@@ -687,7 +829,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets card_text
+     *
      * @param string $card_text メッセージカードのテキスト
+     *
      * @return $this
      */
     public function setCardText($card_text)
@@ -699,6 +843,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets card_charge
+     *
      * @return int
      */
     public function getCardCharge()
@@ -708,7 +853,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets card_charge
+     *
      * @param int $card_charge メッセージカードの料金
+     *
      * @return $this
      */
     public function setCardCharge($card_charge)
@@ -720,6 +867,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets wrapping_name
+     *
      * @return string
      */
     public function getWrappingName()
@@ -729,7 +877,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets wrapping_name
+     *
      * @param string $wrapping_name ラッピングの表示名
+     *
      * @return $this
      */
     public function setWrappingName($wrapping_name)
@@ -741,6 +891,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets wrapping_charge
+     *
      * @return int
      */
     public function getWrappingCharge()
@@ -750,7 +901,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets wrapping_charge
+     *
      * @param int $wrapping_charge ラッピングの料金
+     *
      * @return $this
      */
     public function setWrappingCharge($wrapping_charge)
@@ -762,6 +915,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets delivery_charge
+     *
      * @return int
      */
     public function getDeliveryCharge()
@@ -771,7 +925,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets delivery_charge
+     *
      * @param int $delivery_charge 配送料
+     *
      * @return $this
      */
     public function setDeliveryCharge($delivery_charge)
@@ -783,6 +939,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets total_charge
+     *
      * @return int
      */
     public function getTotalCharge()
@@ -792,7 +949,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets total_charge
+     *
      * @param int $total_charge 配送料・手数料の小計
+     *
      * @return $this
      */
     public function setTotalCharge($total_charge)
@@ -804,6 +963,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets memo
+     *
      * @return string
      */
     public function getMemo()
@@ -813,7 +973,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets memo
+     *
      * @param string $memo 備考
+     *
      * @return $this
      */
     public function setMemo($memo)
@@ -825,6 +987,7 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets delivered
+     *
      * @return bool
      */
     public function getDelivered()
@@ -834,7 +997,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets delivered
+     *
      * @param bool $delivered 発送済みであるか否か
+     *
      * @return $this
      */
     public function setDelivered($delivered)
@@ -845,7 +1010,9 @@ class SaleDelivery implements ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -855,7 +1022,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -865,8 +1034,10 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     *
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -880,7 +1051,9 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Unsets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)
@@ -890,15 +1063,19 @@ class SaleDelivery implements ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(
+                ObjectSerializer::sanitizeForSerialization($this),
+                JSON_PRETTY_PRINT
+            );
         }
 
-        return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 

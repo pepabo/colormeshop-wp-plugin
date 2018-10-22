@@ -6,19 +6,19 @@
  *
  * @category Class
  * @package  ColorMeShop\Swagger
- * @author   Swaagger Codegen team
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_url`|アプリケーション登録時に入力したリダイレクトURL|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URL&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURLへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURL|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
  *
- * OpenAPI spec version: v1
+ * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- *
+ * Swagger Codegen version: 2.3.0
  */
 
 /**
@@ -30,27 +30,30 @@
 namespace ColorMeShop\Swagger\Model;
 
 use \ArrayAccess;
+use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
  * Delivery Class Doc Comment
  *
- * @category    Class
- * @package     ColorMeShop\Swagger
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  ColorMeShop\Swagger
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Delivery implements ArrayAccess
+class Delivery implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'Delivery';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -75,13 +78,57 @@ class Delivery implements ArrayAccess
         'update_date' => 'int'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'id' => null,
+        'account_id' => null,
+        'name' => null,
+        'image_url' => null,
+        'charge_free_type' => null,
+        'charge_free_limit' => null,
+        'charge_type' => null,
+        'charge' => null,
+        'tax_included' => null,
+        'slip_number_use' => null,
+        'slip_number_url' => null,
+        'memo' => null,
+        'memo2' => null,
+        'sort' => null,
+        'display_state' => null,
+        'preferred_date_use' => null,
+        'preferred_period_use' => null,
+        'make_date' => null,
+        'update_date' => null
+    ];
+
+    /**
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @return array
+     */
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
     }
 
     /**
-     * Array of attributes where the key is the local name, and the value is the original name
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @return array
+     */
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
+    }
+
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -106,9 +153,9 @@ class Delivery implements ArrayAccess
         'update_date' => 'update_date'
     ];
 
-
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -133,9 +180,9 @@ class Delivery implements ArrayAccess
         'update_date' => 'setUpdateDate'
     ];
 
-
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -160,19 +207,45 @@ class Delivery implements ArrayAccess
         'update_date' => 'getUpdateDate'
     ];
 
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @return array
+     */
     public static function attributeMap()
     {
         return self::$attributeMap;
     }
 
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @return array
+     */
     public static function setters()
     {
         return self::$setters;
     }
 
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @return array
+     */
     public static function getters()
     {
         return self::$getters;
+    }
+
+    /**
+     * The original name of the model.
+     *
+     * @return string
+     */
+    public function getModelName()
+    {
+        return self::$swaggerModelName;
     }
 
     const CHARGE_FREE_TYPE_NOT_FREE = 'not_free';
@@ -189,6 +262,7 @@ class Delivery implements ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getChargeFreeTypeAllowableValues()
@@ -202,6 +276,7 @@ class Delivery implements ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getChargeTypeAllowableValues()
@@ -216,6 +291,7 @@ class Delivery implements ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getDisplayStateAllowableValues()
@@ -229,13 +305,16 @@ class Delivery implements ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
     public function __construct(array $data = null)
     {
@@ -261,43 +340,43 @@ class Delivery implements ArrayAccess
     }
 
     /**
-     * show all the invalid properties with reasons.
+     * Show all the invalid properties with reasons.
      *
      * @return array invalid properties with reasons
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
-        $allowed_values = $this->getChargeFreeTypeAllowableValues();
-        if (!in_array($this->container['charge_free_type'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getChargeFreeTypeAllowableValues();
+        if (!in_array($this->container['charge_free_type'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'charge_free_type', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        $allowed_values = $this->getChargeTypeAllowableValues();
-        if (!in_array($this->container['charge_type'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getChargeTypeAllowableValues();
+        if (!in_array($this->container['charge_type'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'charge_type', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        $allowed_values = $this->getDisplayStateAllowableValues();
-        if (!in_array($this->container['display_state'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!in_array($this->container['display_state'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'display_state', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
-     * validate all the properties in the model
+     * Validate all the properties in the model
      * return true if all passed
      *
      * @return bool True if all properties are valid
@@ -305,16 +384,16 @@ class Delivery implements ArrayAccess
     public function valid()
     {
 
-        $allowed_values = $this->getChargeFreeTypeAllowableValues();
-        if (!in_array($this->container['charge_free_type'], $allowed_values)) {
+        $allowedValues = $this->getChargeFreeTypeAllowableValues();
+        if (!in_array($this->container['charge_free_type'], $allowedValues)) {
             return false;
         }
-        $allowed_values = $this->getChargeTypeAllowableValues();
-        if (!in_array($this->container['charge_type'], $allowed_values)) {
+        $allowedValues = $this->getChargeTypeAllowableValues();
+        if (!in_array($this->container['charge_type'], $allowedValues)) {
             return false;
         }
-        $allowed_values = $this->getDisplayStateAllowableValues();
-        if (!in_array($this->container['display_state'], $allowed_values)) {
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!in_array($this->container['display_state'], $allowedValues)) {
             return false;
         }
         return true;
@@ -323,6 +402,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets id
+     *
      * @return int
      */
     public function getId()
@@ -332,7 +412,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets id
+     *
      * @param int $id 配送方法ID
+     *
      * @return $this
      */
     public function setId($id)
@@ -344,6 +426,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets account_id
+     *
      * @return string
      */
     public function getAccountId()
@@ -353,7 +436,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets account_id
+     *
      * @param string $account_id ショップアカウントID
+     *
      * @return $this
      */
     public function setAccountId($account_id)
@@ -365,6 +450,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets name
+     *
      * @return string
      */
     public function getName()
@@ -374,7 +460,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets name
+     *
      * @param string $name 配送方法名
+     *
      * @return $this
      */
     public function setName($name)
@@ -386,6 +474,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets image_url
+     *
      * @return string
      */
     public function getImageUrl()
@@ -395,7 +484,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets image_url
+     *
      * @param string $image_url 配送方法画像URL
+     *
      * @return $this
      */
     public function setImageUrl($image_url)
@@ -407,6 +498,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets charge_free_type
+     *
      * @return string
      */
     public function getChargeFreeType()
@@ -416,17 +508,19 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets charge_free_type
+     *
      * @param string $charge_free_type 配送料が無料になる基準  - `not_free`: 有料 - `free`: 無料 - `free_to_limit`: 注文金額が一定以上の場合は無料
+     *
      * @return $this
      */
     public function setChargeFreeType($charge_free_type)
     {
-        $allowed_values = $this->getChargeFreeTypeAllowableValues();
-        if (!is_null($charge_free_type) && !in_array($charge_free_type, $allowed_values)) {
+        $allowedValues = $this->getChargeFreeTypeAllowableValues();
+        if (!is_null($charge_free_type) && !in_array($charge_free_type, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'charge_free_type', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }
@@ -437,6 +531,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets charge_free_limit
+     *
      * @return int
      */
     public function getChargeFreeLimit()
@@ -446,7 +541,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets charge_free_limit
+     *
      * @param int $charge_free_limit 配送料が無料になる金額。`charge_free_type`が`free_to_limit`の場合のみ意味を持つ
+     *
      * @return $this
      */
     public function setChargeFreeLimit($charge_free_limit)
@@ -458,6 +555,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets charge_type
+     *
      * @return string
      */
     public function getChargeType()
@@ -467,17 +565,19 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets charge_type
+     *
      * @param string $charge_type 配送料の計算方法  - `fixed`: 固定額 - `by_price`: 注文金額によって決定 - `by_area`: 配送先都道府県によって決定 - `by_weight`: 商品重量によって決定
+     *
      * @return $this
      */
     public function setChargeType($charge_type)
     {
-        $allowed_values = $this->getChargeTypeAllowableValues();
-        if (!is_null($charge_type) && !in_array($charge_type, $allowed_values)) {
+        $allowedValues = $this->getChargeTypeAllowableValues();
+        if (!is_null($charge_type) && !in_array($charge_type, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'charge_type', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }
@@ -488,6 +588,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets charge
+     *
      * @return \ColorMeShop\Swagger\Model\DeliveryCharge
      */
     public function getCharge()
@@ -497,7 +598,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets charge
-     * @param \ColorMeShop\Swagger\Model\DeliveryCharge $charge
+     *
+     * @param \ColorMeShop\Swagger\Model\DeliveryCharge $charge charge
+     *
      * @return $this
      */
     public function setCharge($charge)
@@ -509,6 +612,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets tax_included
+     *
      * @return bool
      */
     public function getTaxIncluded()
@@ -518,7 +622,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets tax_included
+     *
      * @param bool $tax_included 送料が税込み料金であるか否か
+     *
      * @return $this
      */
     public function setTaxIncluded($tax_included)
@@ -530,6 +636,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets slip_number_use
+     *
      * @return bool
      */
     public function getSlipNumberUse()
@@ -539,7 +646,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets slip_number_use
+     *
      * @param bool $slip_number_use 配送伝票番号設定を使用するか否か
+     *
      * @return $this
      */
     public function setSlipNumberUse($slip_number_use)
@@ -551,6 +660,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets slip_number_url
+     *
      * @return string
      */
     public function getSlipNumberUrl()
@@ -560,7 +670,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets slip_number_url
+     *
      * @param string $slip_number_url 配送伝票番号確認URL
+     *
      * @return $this
      */
     public function setSlipNumberUrl($slip_number_url)
@@ -572,6 +684,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets memo
+     *
      * @return string
      */
     public function getMemo()
@@ -581,7 +694,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets memo
+     *
      * @param string $memo 配送方法の説明
+     *
      * @return $this
      */
     public function setMemo($memo)
@@ -593,6 +708,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets memo2
+     *
      * @return string
      */
     public function getMemo2()
@@ -602,7 +718,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets memo2
+     *
      * @param string $memo2 フィーチャーフォン向けショップ用の配送方法説明
+     *
      * @return $this
      */
     public function setMemo2($memo2)
@@ -614,6 +732,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets sort
+     *
      * @return int
      */
     public function getSort()
@@ -623,7 +742,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets sort
+     *
      * @param int $sort 表示順
+     *
      * @return $this
      */
     public function setSort($sort)
@@ -635,6 +756,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets display_state
+     *
      * @return string
      */
     public function getDisplayState()
@@ -644,17 +766,19 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets display_state
+     *
      * @param string $display_state 表示状態
+     *
      * @return $this
      */
     public function setDisplayState($display_state)
     {
-        $allowed_values = $this->getDisplayStateAllowableValues();
-        if (!is_null($display_state) && !in_array($display_state, $allowed_values)) {
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!is_null($display_state) && !in_array($display_state, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'display_state', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }
@@ -665,6 +789,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets preferred_date_use
+     *
      * @return bool
      */
     public function getPreferredDateUse()
@@ -674,7 +799,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets preferred_date_use
+     *
      * @param bool $preferred_date_use 配送希望日を指定可能か
+     *
      * @return $this
      */
     public function setPreferredDateUse($preferred_date_use)
@@ -686,6 +813,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets preferred_period_use
+     *
      * @return bool
      */
     public function getPreferredPeriodUse()
@@ -695,7 +823,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets preferred_period_use
+     *
      * @param bool $preferred_period_use 配送時間帯を指定可能か
+     *
      * @return $this
      */
     public function setPreferredPeriodUse($preferred_period_use)
@@ -707,6 +837,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets make_date
+     *
      * @return int
      */
     public function getMakeDate()
@@ -716,7 +847,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets make_date
+     *
      * @param int $make_date 配送方法作成日時
+     *
      * @return $this
      */
     public function setMakeDate($make_date)
@@ -728,6 +861,7 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets update_date
+     *
      * @return int
      */
     public function getUpdateDate()
@@ -737,7 +871,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets update_date
+     *
      * @param int $update_date 配送方法更新日時
+     *
      * @return $this
      */
     public function setUpdateDate($update_date)
@@ -748,7 +884,9 @@ class Delivery implements ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -758,7 +896,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -768,8 +908,10 @@ class Delivery implements ArrayAccess
 
     /**
      * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     *
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -783,7 +925,9 @@ class Delivery implements ArrayAccess
 
     /**
      * Unsets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)
@@ -793,15 +937,19 @@ class Delivery implements ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(
+                ObjectSerializer::sanitizeForSerialization($this),
+                JSON_PRETTY_PRINT
+            );
         }
 
-        return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 

@@ -6,19 +6,19 @@
  *
  * @category Class
  * @package  ColorMeShop\Swagger
- * @author   Swaagger Codegen team
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_url`|アプリケーション登録時に入力したリダイレクトURL|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URL&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURLへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURL|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
  *
- * OpenAPI spec version: v1
+ * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- *
+ * Swagger Codegen version: 2.3.0
  */
 
 /**
@@ -30,27 +30,30 @@
 namespace ColorMeShop\Swagger\Model;
 
 use \ArrayAccess;
+use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
  * Stock Class Doc Comment
  *
- * @category    Class
- * @package     ColorMeShop\Swagger
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  ColorMeShop\Swagger
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Stock implements ArrayAccess
+class Stock implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'Stock';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -90,13 +93,72 @@ class Stock implements ArrayAccess
         'images' => '\ColorMeShop\Swagger\Model\StockImages[]'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'account_id' => null,
+        'product_id' => null,
+        'name' => null,
+        'option1_value' => null,
+        'option2_value' => null,
+        'stocks' => null,
+        'few_num' => null,
+        'model_number' => null,
+        'category' => null,
+        'display_state' => null,
+        'sales_price' => null,
+        'price' => null,
+        'members_price' => null,
+        'cost' => null,
+        'delivery_charge' => null,
+        'min_num' => null,
+        'max_num' => null,
+        'sale_start_date' => null,
+        'sale_end_date' => null,
+        'unit' => null,
+        'weight' => null,
+        'soldout_display' => null,
+        'sort' => null,
+        'simple_expl' => null,
+        'expl' => null,
+        'mobile_expl' => null,
+        'smartphone_expl' => null,
+        'make_date' => null,
+        'update_date' => null,
+        'memo' => null,
+        'image_url' => null,
+        'mobile_image_url' => null,
+        'thumbnail_image_url' => null,
+        'images' => null
+    ];
+
+    /**
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @return array
+     */
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
     }
 
     /**
-     * Array of attributes where the key is the local name, and the value is the original name
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @return array
+     */
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
+    }
+
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -136,9 +198,9 @@ class Stock implements ArrayAccess
         'images' => 'images'
     ];
 
-
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -178,9 +240,9 @@ class Stock implements ArrayAccess
         'images' => 'setImages'
     ];
 
-
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -220,19 +282,45 @@ class Stock implements ArrayAccess
         'images' => 'getImages'
     ];
 
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @return array
+     */
     public static function attributeMap()
     {
         return self::$attributeMap;
     }
 
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @return array
+     */
     public static function setters()
     {
         return self::$setters;
     }
 
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @return array
+     */
     public static function getters()
     {
         return self::$getters;
+    }
+
+    /**
+     * The original name of the model.
+     *
+     * @return string
+     */
+    public function getModelName()
+    {
+        return self::$swaggerModelName;
     }
 
     const DISPLAY_STATE_SHOWING = 'showing';
@@ -244,6 +332,7 @@ class Stock implements ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getDisplayStateAllowableValues()
@@ -259,13 +348,16 @@ class Stock implements ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
     public function __construct(array $data = null)
     {
@@ -306,27 +398,27 @@ class Stock implements ArrayAccess
     }
 
     /**
-     * show all the invalid properties with reasons.
+     * Show all the invalid properties with reasons.
      *
      * @return array invalid properties with reasons
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
-        $allowed_values = $this->getDisplayStateAllowableValues();
-        if (!in_array($this->container['display_state'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!in_array($this->container['display_state'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'display_state', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
-     * validate all the properties in the model
+     * Validate all the properties in the model
      * return true if all passed
      *
      * @return bool True if all properties are valid
@@ -334,8 +426,8 @@ class Stock implements ArrayAccess
     public function valid()
     {
 
-        $allowed_values = $this->getDisplayStateAllowableValues();
-        if (!in_array($this->container['display_state'], $allowed_values)) {
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!in_array($this->container['display_state'], $allowedValues)) {
             return false;
         }
         return true;
@@ -344,6 +436,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets account_id
+     *
      * @return string
      */
     public function getAccountId()
@@ -353,7 +446,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets account_id
+     *
      * @param string $account_id ショップアカウントID
+     *
      * @return $this
      */
     public function setAccountId($account_id)
@@ -365,6 +460,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets product_id
+     *
      * @return int
      */
     public function getProductId()
@@ -374,7 +470,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets product_id
+     *
      * @param int $product_id 商品ID
+     *
      * @return $this
      */
     public function setProductId($product_id)
@@ -386,6 +484,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets name
+     *
      * @return string
      */
     public function getName()
@@ -395,7 +494,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets name
+     *
      * @param string $name 商品名
+     *
      * @return $this
      */
     public function setName($name)
@@ -407,6 +508,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets option1_value
+     *
      * @return string
      */
     public function getOption1Value()
@@ -416,7 +518,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets option1_value
+     *
      * @param string $option1_value オプション1の値
+     *
      * @return $this
      */
     public function setOption1Value($option1_value)
@@ -428,6 +532,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets option2_value
+     *
      * @return string
      */
     public function getOption2Value()
@@ -437,7 +542,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets option2_value
+     *
      * @param string $option2_value オプション2の値
+     *
      * @return $this
      */
     public function setOption2Value($option2_value)
@@ -449,6 +556,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets stocks
+     *
      * @return int
      */
     public function getStocks()
@@ -458,7 +566,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets stocks
+     *
      * @param int $stocks 在庫数
+     *
      * @return $this
      */
     public function setStocks($stocks)
@@ -470,6 +580,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets few_num
+     *
      * @return int
      */
     public function getFewNum()
@@ -479,7 +590,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets few_num
+     *
      * @param int $few_num 残りわずかとなる在庫数
+     *
      * @return $this
      */
     public function setFewNum($few_num)
@@ -491,6 +604,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets model_number
+     *
      * @return string
      */
     public function getModelNumber()
@@ -500,7 +614,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets model_number
+     *
      * @param string $model_number 型番
+     *
      * @return $this
      */
     public function setModelNumber($model_number)
@@ -512,6 +628,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets category
+     *
      * @return \ColorMeShop\Swagger\Model\StockCategory
      */
     public function getCategory()
@@ -521,7 +638,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets category
-     * @param \ColorMeShop\Swagger\Model\StockCategory $category
+     *
+     * @param \ColorMeShop\Swagger\Model\StockCategory $category category
+     *
      * @return $this
      */
     public function setCategory($category)
@@ -533,6 +652,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets display_state
+     *
      * @return string
      */
     public function getDisplayState()
@@ -542,17 +662,19 @@ class Stock implements ArrayAccess
 
     /**
      * Sets display_state
+     *
      * @param string $display_state 掲載設定
+     *
      * @return $this
      */
     public function setDisplayState($display_state)
     {
-        $allowed_values = $this->getDisplayStateAllowableValues();
-        if (!is_null($display_state) && !in_array($display_state, $allowed_values)) {
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!is_null($display_state) && !in_array($display_state, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'display_state', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }
@@ -563,6 +685,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets sales_price
+     *
      * @return int
      */
     public function getSalesPrice()
@@ -572,7 +695,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets sales_price
+     *
      * @param int $sales_price 販売価格
+     *
      * @return $this
      */
     public function setSalesPrice($sales_price)
@@ -584,6 +709,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets price
+     *
      * @return int
      */
     public function getPrice()
@@ -593,7 +719,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets price
+     *
      * @param int $price 定価
+     *
      * @return $this
      */
     public function setPrice($price)
@@ -605,6 +733,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets members_price
+     *
      * @return int
      */
     public function getMembersPrice()
@@ -614,7 +743,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets members_price
+     *
      * @param int $members_price 会員価格
+     *
      * @return $this
      */
     public function setMembersPrice($members_price)
@@ -626,6 +757,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets cost
+     *
      * @return int
      */
     public function getCost()
@@ -635,7 +767,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets cost
+     *
      * @param int $cost 原価
+     *
      * @return $this
      */
     public function setCost($cost)
@@ -647,6 +781,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets delivery_charge
+     *
      * @return int
      */
     public function getDeliveryCharge()
@@ -656,7 +791,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets delivery_charge
+     *
      * @param int $delivery_charge 個別送料
+     *
      * @return $this
      */
     public function setDeliveryCharge($delivery_charge)
@@ -668,6 +805,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets min_num
+     *
      * @return int
      */
     public function getMinNum()
@@ -677,7 +815,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets min_num
+     *
      * @param int $min_num 最小購入数量
+     *
      * @return $this
      */
     public function setMinNum($min_num)
@@ -689,6 +829,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets max_num
+     *
      * @return int
      */
     public function getMaxNum()
@@ -698,7 +839,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets max_num
+     *
      * @param int $max_num 最大購入数量
+     *
      * @return $this
      */
     public function setMaxNum($max_num)
@@ -710,6 +853,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets sale_start_date
+     *
      * @return int
      */
     public function getSaleStartDate()
@@ -719,7 +863,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets sale_start_date
+     *
      * @param int $sale_start_date 掲載開始時刻
+     *
      * @return $this
      */
     public function setSaleStartDate($sale_start_date)
@@ -731,6 +877,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets sale_end_date
+     *
      * @return int
      */
     public function getSaleEndDate()
@@ -740,7 +887,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets sale_end_date
+     *
      * @param int $sale_end_date 掲載終了時刻
+     *
      * @return $this
      */
     public function setSaleEndDate($sale_end_date)
@@ -752,6 +901,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets unit
+     *
      * @return string
      */
     public function getUnit()
@@ -761,7 +911,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets unit
+     *
      * @param string $unit 単位
+     *
      * @return $this
      */
     public function setUnit($unit)
@@ -773,6 +925,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets weight
+     *
      * @return int
      */
     public function getWeight()
@@ -782,7 +935,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets weight
+     *
      * @param int $weight 重量(グラム単位)
+     *
      * @return $this
      */
     public function setWeight($weight)
@@ -794,6 +949,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets soldout_display
+     *
      * @return bool
      */
     public function getSoldoutDisplay()
@@ -803,7 +959,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets soldout_display
+     *
      * @param bool $soldout_display 売り切れているときもショップに表示するか
+     *
      * @return $this
      */
     public function setSoldoutDisplay($soldout_display)
@@ -815,6 +973,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets sort
+     *
      * @return int
      */
     public function getSort()
@@ -824,7 +983,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets sort
+     *
      * @param int $sort 表示順
+     *
      * @return $this
      */
     public function setSort($sort)
@@ -836,6 +997,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets simple_expl
+     *
      * @return string
      */
     public function getSimpleExpl()
@@ -845,7 +1007,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets simple_expl
+     *
      * @param string $simple_expl 簡易説明
+     *
      * @return $this
      */
     public function setSimpleExpl($simple_expl)
@@ -857,6 +1021,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets expl
+     *
      * @return string
      */
     public function getExpl()
@@ -866,7 +1031,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets expl
+     *
      * @param string $expl 商品説明
+     *
      * @return $this
      */
     public function setExpl($expl)
@@ -878,6 +1045,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets mobile_expl
+     *
      * @return string
      */
     public function getMobileExpl()
@@ -887,7 +1055,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets mobile_expl
+     *
      * @param string $mobile_expl フィーチャーフォン向けショップの商品説明
+     *
      * @return $this
      */
     public function setMobileExpl($mobile_expl)
@@ -899,6 +1069,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets smartphone_expl
+     *
      * @return string
      */
     public function getSmartphoneExpl()
@@ -908,7 +1079,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets smartphone_expl
+     *
      * @param string $smartphone_expl スマホ向けショップの商品説明
+     *
      * @return $this
      */
     public function setSmartphoneExpl($smartphone_expl)
@@ -920,6 +1093,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets make_date
+     *
      * @return int
      */
     public function getMakeDate()
@@ -929,7 +1103,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets make_date
+     *
      * @param int $make_date 商品作成日時
+     *
      * @return $this
      */
     public function setMakeDate($make_date)
@@ -941,6 +1117,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets update_date
+     *
      * @return int
      */
     public function getUpdateDate()
@@ -950,7 +1127,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets update_date
+     *
      * @param int $update_date 商品更新日時
+     *
      * @return $this
      */
     public function setUpdateDate($update_date)
@@ -962,6 +1141,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets memo
+     *
      * @return string
      */
     public function getMemo()
@@ -971,7 +1151,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets memo
+     *
      * @param string $memo 備考
+     *
      * @return $this
      */
     public function setMemo($memo)
@@ -983,6 +1165,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets image_url
+     *
      * @return string
      */
     public function getImageUrl()
@@ -992,7 +1175,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets image_url
+     *
      * @param string $image_url メインの商品画像URL
+     *
      * @return $this
      */
     public function setImageUrl($image_url)
@@ -1004,6 +1189,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets mobile_image_url
+     *
      * @return string
      */
     public function getMobileImageUrl()
@@ -1013,7 +1199,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets mobile_image_url
+     *
      * @param string $mobile_image_url メインの商品画像のモバイル用URL
+     *
      * @return $this
      */
     public function setMobileImageUrl($mobile_image_url)
@@ -1025,6 +1213,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets thumbnail_image_url
+     *
      * @return string
      */
     public function getThumbnailImageUrl()
@@ -1034,7 +1223,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets thumbnail_image_url
+     *
      * @param string $thumbnail_image_url メインの商品画像のサムネイルURL
+     *
      * @return $this
      */
     public function setThumbnailImageUrl($thumbnail_image_url)
@@ -1046,6 +1237,7 @@ class Stock implements ArrayAccess
 
     /**
      * Gets images
+     *
      * @return \ColorMeShop\Swagger\Model\StockImages[]
      */
     public function getImages()
@@ -1055,7 +1247,9 @@ class Stock implements ArrayAccess
 
     /**
      * Sets images
+     *
      * @param \ColorMeShop\Swagger\Model\StockImages[] $images メインの商品画像以外の3つの画像に関する、PC用とモバイル用の画像URL
+     *
      * @return $this
      */
     public function setImages($images)
@@ -1066,7 +1260,9 @@ class Stock implements ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -1076,7 +1272,9 @@ class Stock implements ArrayAccess
 
     /**
      * Gets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -1086,8 +1284,10 @@ class Stock implements ArrayAccess
 
     /**
      * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     *
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -1101,7 +1301,9 @@ class Stock implements ArrayAccess
 
     /**
      * Unsets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)
@@ -1111,15 +1313,19 @@ class Stock implements ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(
+                ObjectSerializer::sanitizeForSerialization($this),
+                JSON_PRETTY_PRINT
+            );
         }
 
-        return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 
