@@ -62,6 +62,21 @@ $ wpcs/vendor/bin/phpcs --standard=WordPress-Core hoge.php
 $ wpcs/vendor/bin/phpcbf --standard=WordPress-Core hoge.php
 ```
 
+### APIクライアント
+
+[Swagger Codegen](https://github.com/swagger-api/swagger-codegen) で生成したAPIクライアントを利用していて、[`src/Swagger`](https://github.com/pepabo/colormeshop-wp-plugin/tree/master/src/Swagger) に配置しています。
+
+APIクライアントを更新する場合は下記のコマンドを実行してください。
+
+```bash
+# 準備
+$ brew install pipenv
+$ pipenv install
+
+# APIクライアントを生成する
+$ pipenv run fab generate_api_client
+```
+
 ### モデルやショートコードを追加したけどオートロードされない場合は
 
 [dump-autoload](https://getcomposer.org/doc/03-cli.md#dump-autoload) を実行してクラスマップを再生成してください。  
