@@ -3,7 +3,7 @@
  * Plugin Name: ColorMeShop Wordpress Plugin
  * Plugin URI: https://github.com/pepabo/colormeshop-wp-plugin
  * Description: カラーミーショップ Wordpress プラグインはWordpressでオンラインショップを構築することができるプラグインです。商品管理やショッピングカートの機能はカラーミーショップを利用することで、本格的なオンラインショップ構築をWordpressで行うことができます。
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: GMO Pepabo, Inc.
  * Author URI: https://pepabo.com/
  * License: GPL2
