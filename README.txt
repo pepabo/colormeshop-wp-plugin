@@ -55,3 +55,5 @@ If you have any questions, please let me know via https://goo.gl/forms/s6zzeS3Q7
 * 初回リリース
 = 1.0.1 =
 * プラグインの説明文を更新
+= 1.0.2 =
+* 商品カテゴリー一覧ページの不具合を修正
