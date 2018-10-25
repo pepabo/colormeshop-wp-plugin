@@ -12,12 +12,12 @@
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_url`|アプリケーション登録時に入力したリダイレクトURL|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URL&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURLへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURL|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
  *
- * OpenAPI spec version: v1
+ * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- *
+ * Swagger Codegen version: 2.3.0
  */
 
 /**
@@ -33,6 +33,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use ColorMeShop\Swagger\ApiException;
 use ColorMeShop\Swagger\Configuration;
 use ColorMeShop\Swagger\HeaderSelector;
@@ -60,8 +61,8 @@ class SaleApi
 
     /**
      * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
+     * @param Configuration   $config
+     * @param HeaderSelector  $selector
      */
     public function __construct(
         ClientInterface $client = null,
@@ -86,8 +87,9 @@ class SaleApi
      *
      * 受注のキャンセル
      *
-     * @param int $sale_id  (required)
-     * @param \ColorMeShop\Swagger\Model\Restock $restock  (optional)
+     * @param  int $sale_id sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Restock $restock restock (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \ColorMeShop\Swagger\Model\InlineResponse2003
@@ -103,105 +105,28 @@ class SaleApi
      *
      * 受注のキャンセル
      *
-     * @param int $sale_id  (required)
-     * @param \ColorMeShop\Swagger\Model\Restock $restock  (optional)
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Restock $restock (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \ColorMeShop\Swagger\Model\InlineResponse2003, HTTP status code, HTTP response headers (array of strings)
      */
     public function cancelSaleWithHttpInfo($sale_id, $restock = null)
     {
-        // verify the required parameter 'sale_id' is set
-        if ($sale_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $sale_id when calling cancelSale');
-        }
-
-        $resourcePath = '/v1/sales/{saleId}/cancel.json';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
         $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2003';
-
-
-        // path params
-        if ($sale_id !== null) {
-            $resourcePath = str_replace('{' . 'saleId' . '}', ObjectSerializer::toPathValue($sale_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($restock)) {
-            $_tempBody = $restock;
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $request = new Request(
-            'PUT',
-            $url,
-            $headers,
-            $httpBody
-        );
+        $request = $this->cancelSaleRequest($sale_id, $restock);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $response = $this->client->send($request);
+                $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
                 );
             }
 
@@ -209,7 +134,11 @@ class SaleApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -235,19 +164,205 @@ class SaleApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\ColorMeShop\Swagger\Model\InlineResponse2003', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse2003',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             }
             throw $e;
         }
     }
+
+    /**
+     * Operation cancelSaleAsync
+     *
+     * 受注のキャンセル
+     *
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Restock $restock (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cancelSaleAsync($sale_id, $restock = null)
+    {
+        return $this->cancelSaleAsyncWithHttpInfo($sale_id, $restock)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation cancelSaleAsyncWithHttpInfo
+     *
+     * 受注のキャンセル
+     *
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Restock $restock (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function cancelSaleAsyncWithHttpInfo($sale_id, $restock = null)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2003';
+        $request = $this->cancelSaleRequest($sale_id, $restock);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'cancelSale'
+     *
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Restock $restock (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function cancelSaleRequest($sale_id, $restock = null)
+    {
+        // verify the required parameter 'sale_id' is set
+        if ($sale_id === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $sale_id when calling cancelSale'
+            );
+        }
+
+        $resourcePath = '/v1/sales/{saleId}/cancel.json';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($sale_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'saleId' . '}',
+                ObjectSerializer::toPathValue($sale_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($restock)) {
+            $_tempBody = $restock;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'PUT',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
     /**
      * Operation getSale
      *
      * 受注データの取得
      *
-     * @param int $sale_id  (required)
+     * @param  int $sale_id sale_id (required)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \ColorMeShop\Swagger\Model\InlineResponse2003
@@ -263,99 +378,27 @@ class SaleApi
      *
      * 受注データの取得
      *
-     * @param int $sale_id  (required)
+     * @param  int $sale_id (required)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \ColorMeShop\Swagger\Model\InlineResponse2003, HTTP status code, HTTP response headers (array of strings)
      */
     public function getSaleWithHttpInfo($sale_id)
     {
-        // verify the required parameter 'sale_id' is set
-        if ($sale_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $sale_id when calling getSale');
-        }
-
-        $resourcePath = '/v1/sales/{saleId}.json';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
         $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2003';
-
-
-        // path params
-        if ($sale_id !== null) {
-            $resourcePath = str_replace('{' . 'saleId' . '}', ObjectSerializer::toPathValue($sale_id), $resourcePath);
-        }
-
-        
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $request = new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
+        $request = $this->getSaleRequest($sale_id);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $response = $this->client->send($request);
+                $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
                 );
             }
 
@@ -363,7 +406,11 @@ class SaleApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -389,39 +436,219 @@ class SaleApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\ColorMeShop\Swagger\Model\InlineResponse2003', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse2003',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             }
             throw $e;
         }
     }
+
+    /**
+     * Operation getSaleAsync
+     *
+     * 受注データの取得
+     *
+     * @param  int $sale_id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getSaleAsync($sale_id)
+    {
+        return $this->getSaleAsyncWithHttpInfo($sale_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getSaleAsyncWithHttpInfo
+     *
+     * 受注データの取得
+     *
+     * @param  int $sale_id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getSaleAsyncWithHttpInfo($sale_id)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2003';
+        $request = $this->getSaleRequest($sale_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getSale'
+     *
+     * @param  int $sale_id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function getSaleRequest($sale_id)
+    {
+        // verify the required parameter 'sale_id' is set
+        if ($sale_id === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $sale_id when calling getSale'
+            );
+        }
+
+        $resourcePath = '/v1/sales/{saleId}.json';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($sale_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'saleId' . '}',
+                ObjectSerializer::toPathValue($sale_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
     /**
      * Operation getSales
      *
      * 受注データのリストを取得
      *
-     * @param string $ids 受注IDで検索。カンマ区切りで複数指定可能 (optional)
-     * @param string $after 指定日時以降の受注から検索 (optional)
-     * @param string $before 指定日時以前の受注から検索 (optional)
-     * @param string $make_date_min &#x60;after&#x60;と同義 (optional)
-     * @param string $make_date_max &#x60;before&#x60;と同義 (optional)
-     * @param string $update_date_min 指定日時以降に更新された受注から検索 (optional)
-     * @param string $update_date_max 指定日時以降に更新された受注から検索 (optional)
-     * @param string $customer_ids 購入した顧客IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
-     * @param string $customer_name 購入した顧客名で部分一致検索 (optional)
-     * @param string $customer_furigana 購入した顧客フリガナがで部分一致検索 (optional)
-     * @param string $customer_mail 購入した顧客メールアドレスで部分一致検索 (optional)
-     * @param int $accepted_mail_state 受注メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
-     * @param int $paid_mail_state 入金メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
-     * @param int $delivered_mail_state 配送メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
-     * @param bool $mobile &#x60;true&#x60;なら携帯からの受注のみ取得 (optional)
-     * @param bool $paid &#x60;true&#x60;なら入金済みの受注のみ取得 (optional)
-     * @param bool $delivered &#x60;true&#x60;なら配送済みの受注のみ取得 (optional)
-     * @param string $payment_ids 使用された決済のIDで検索。カンマ区切りで複数指定可能 (optional)
-     * @param string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
-     * @param int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
-     * @param int $offset 指定した数値+1件目以降のデータを返す (optional)
+     * @param  string $ids 受注IDで検索。カンマ区切りで複数指定可能 (optional)
+     * @param  string $after 指定日時以降の受注から検索 (optional)
+     * @param  string $before 指定日時以前の受注から検索 (optional)
+     * @param  string $make_date_min &#x60;after&#x60;と同義 (optional)
+     * @param  string $make_date_max &#x60;before&#x60;と同義 (optional)
+     * @param  string $update_date_min 指定日時以降に更新された受注から検索 (optional)
+     * @param  string $update_date_max 指定日時以降に更新された受注から検索 (optional)
+     * @param  string $customer_ids 購入した顧客IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
+     * @param  string $customer_name 購入した顧客名で部分一致検索 (optional)
+     * @param  string $customer_furigana 購入した顧客フリガナがで部分一致検索 (optional)
+     * @param  string $customer_mail 購入した顧客メールアドレスで部分一致検索 (optional)
+     * @param  int $accepted_mail_state 受注メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  int $paid_mail_state 入金メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  int $delivered_mail_state 配送メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  bool $mobile &#x60;true&#x60;なら携帯からの受注のみ取得 (optional)
+     * @param  bool $paid &#x60;true&#x60;なら入金済みの受注のみ取得 (optional)
+     * @param  bool $delivered &#x60;true&#x60;なら配送済みの受注のみ取得 (optional)
+     * @param  string $payment_ids 使用された決済のIDで検索。カンマ区切りで複数指定可能 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \ColorMeShop\Swagger\Model\InlineResponse2001
@@ -437,32 +664,237 @@ class SaleApi
      *
      * 受注データのリストを取得
      *
-     * @param string $ids 受注IDで検索。カンマ区切りで複数指定可能 (optional)
-     * @param string $after 指定日時以降の受注から検索 (optional)
-     * @param string $before 指定日時以前の受注から検索 (optional)
-     * @param string $make_date_min &#x60;after&#x60;と同義 (optional)
-     * @param string $make_date_max &#x60;before&#x60;と同義 (optional)
-     * @param string $update_date_min 指定日時以降に更新された受注から検索 (optional)
-     * @param string $update_date_max 指定日時以降に更新された受注から検索 (optional)
-     * @param string $customer_ids 購入した顧客IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
-     * @param string $customer_name 購入した顧客名で部分一致検索 (optional)
-     * @param string $customer_furigana 購入した顧客フリガナがで部分一致検索 (optional)
-     * @param string $customer_mail 購入した顧客メールアドレスで部分一致検索 (optional)
-     * @param int $accepted_mail_state 受注メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
-     * @param int $paid_mail_state 入金メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
-     * @param int $delivered_mail_state 配送メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
-     * @param bool $mobile &#x60;true&#x60;なら携帯からの受注のみ取得 (optional)
-     * @param bool $paid &#x60;true&#x60;なら入金済みの受注のみ取得 (optional)
-     * @param bool $delivered &#x60;true&#x60;なら配送済みの受注のみ取得 (optional)
-     * @param string $payment_ids 使用された決済のIDで検索。カンマ区切りで複数指定可能 (optional)
-     * @param string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
-     * @param int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
-     * @param int $offset 指定した数値+1件目以降のデータを返す (optional)
+     * @param  string $ids 受注IDで検索。カンマ区切りで複数指定可能 (optional)
+     * @param  string $after 指定日時以降の受注から検索 (optional)
+     * @param  string $before 指定日時以前の受注から検索 (optional)
+     * @param  string $make_date_min &#x60;after&#x60;と同義 (optional)
+     * @param  string $make_date_max &#x60;before&#x60;と同義 (optional)
+     * @param  string $update_date_min 指定日時以降に更新された受注から検索 (optional)
+     * @param  string $update_date_max 指定日時以降に更新された受注から検索 (optional)
+     * @param  string $customer_ids 購入した顧客IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
+     * @param  string $customer_name 購入した顧客名で部分一致検索 (optional)
+     * @param  string $customer_furigana 購入した顧客フリガナがで部分一致検索 (optional)
+     * @param  string $customer_mail 購入した顧客メールアドレスで部分一致検索 (optional)
+     * @param  int $accepted_mail_state 受注メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  int $paid_mail_state 入金メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  int $delivered_mail_state 配送メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  bool $mobile &#x60;true&#x60;なら携帯からの受注のみ取得 (optional)
+     * @param  bool $paid &#x60;true&#x60;なら入金済みの受注のみ取得 (optional)
+     * @param  bool $delivered &#x60;true&#x60;なら配送済みの受注のみ取得 (optional)
+     * @param  string $payment_ids 使用された決済のIDで検索。カンマ区切りで複数指定可能 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \ColorMeShop\Swagger\Model\InlineResponse2001, HTTP status code, HTTP response headers (array of strings)
      */
     public function getSalesWithHttpInfo($ids = null, $after = null, $before = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $customer_ids = null, $customer_name = null, $customer_furigana = null, $customer_mail = null, $accepted_mail_state = null, $paid_mail_state = null, $delivered_mail_state = null, $mobile = null, $paid = null, $delivered = null, $payment_ids = null, $fields = null, $limit = null, $offset = null)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2001';
+        $request = $this->getSalesRequest($ids, $after, $before, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $customer_ids, $customer_name, $customer_furigana, $customer_mail, $accepted_mail_state, $paid_mail_state, $delivered_mail_state, $mobile, $paid, $delivered, $payment_ids, $fields, $limit, $offset);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse2001',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getSalesAsync
+     *
+     * 受注データのリストを取得
+     *
+     * @param  string $ids 受注IDで検索。カンマ区切りで複数指定可能 (optional)
+     * @param  string $after 指定日時以降の受注から検索 (optional)
+     * @param  string $before 指定日時以前の受注から検索 (optional)
+     * @param  string $make_date_min &#x60;after&#x60;と同義 (optional)
+     * @param  string $make_date_max &#x60;before&#x60;と同義 (optional)
+     * @param  string $update_date_min 指定日時以降に更新された受注から検索 (optional)
+     * @param  string $update_date_max 指定日時以降に更新された受注から検索 (optional)
+     * @param  string $customer_ids 購入した顧客IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
+     * @param  string $customer_name 購入した顧客名で部分一致検索 (optional)
+     * @param  string $customer_furigana 購入した顧客フリガナがで部分一致検索 (optional)
+     * @param  string $customer_mail 購入した顧客メールアドレスで部分一致検索 (optional)
+     * @param  int $accepted_mail_state 受注メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  int $paid_mail_state 入金メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  int $delivered_mail_state 配送メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  bool $mobile &#x60;true&#x60;なら携帯からの受注のみ取得 (optional)
+     * @param  bool $paid &#x60;true&#x60;なら入金済みの受注のみ取得 (optional)
+     * @param  bool $delivered &#x60;true&#x60;なら配送済みの受注のみ取得 (optional)
+     * @param  string $payment_ids 使用された決済のIDで検索。カンマ区切りで複数指定可能 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getSalesAsync($ids = null, $after = null, $before = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $customer_ids = null, $customer_name = null, $customer_furigana = null, $customer_mail = null, $accepted_mail_state = null, $paid_mail_state = null, $delivered_mail_state = null, $mobile = null, $paid = null, $delivered = null, $payment_ids = null, $fields = null, $limit = null, $offset = null)
+    {
+        return $this->getSalesAsyncWithHttpInfo($ids, $after, $before, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $customer_ids, $customer_name, $customer_furigana, $customer_mail, $accepted_mail_state, $paid_mail_state, $delivered_mail_state, $mobile, $paid, $delivered, $payment_ids, $fields, $limit, $offset)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getSalesAsyncWithHttpInfo
+     *
+     * 受注データのリストを取得
+     *
+     * @param  string $ids 受注IDで検索。カンマ区切りで複数指定可能 (optional)
+     * @param  string $after 指定日時以降の受注から検索 (optional)
+     * @param  string $before 指定日時以前の受注から検索 (optional)
+     * @param  string $make_date_min &#x60;after&#x60;と同義 (optional)
+     * @param  string $make_date_max &#x60;before&#x60;と同義 (optional)
+     * @param  string $update_date_min 指定日時以降に更新された受注から検索 (optional)
+     * @param  string $update_date_max 指定日時以降に更新された受注から検索 (optional)
+     * @param  string $customer_ids 購入した顧客IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
+     * @param  string $customer_name 購入した顧客名で部分一致検索 (optional)
+     * @param  string $customer_furigana 購入した顧客フリガナがで部分一致検索 (optional)
+     * @param  string $customer_mail 購入した顧客メールアドレスで部分一致検索 (optional)
+     * @param  int $accepted_mail_state 受注メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  int $paid_mail_state 入金メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  int $delivered_mail_state 配送メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  bool $mobile &#x60;true&#x60;なら携帯からの受注のみ取得 (optional)
+     * @param  bool $paid &#x60;true&#x60;なら入金済みの受注のみ取得 (optional)
+     * @param  bool $delivered &#x60;true&#x60;なら配送済みの受注のみ取得 (optional)
+     * @param  string $payment_ids 使用された決済のIDで検索。カンマ区切りで複数指定可能 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getSalesAsyncWithHttpInfo($ids = null, $after = null, $before = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $customer_ids = null, $customer_name = null, $customer_furigana = null, $customer_mail = null, $accepted_mail_state = null, $paid_mail_state = null, $delivered_mail_state = null, $mobile = null, $paid = null, $delivered = null, $payment_ids = null, $fields = null, $limit = null, $offset = null)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2001';
+        $request = $this->getSalesRequest($ids, $after, $before, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $customer_ids, $customer_name, $customer_furigana, $customer_mail, $accepted_mail_state, $paid_mail_state, $delivered_mail_state, $mobile, $paid, $delivered, $payment_ids, $fields, $limit, $offset);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getSales'
+     *
+     * @param  string $ids 受注IDで検索。カンマ区切りで複数指定可能 (optional)
+     * @param  string $after 指定日時以降の受注から検索 (optional)
+     * @param  string $before 指定日時以前の受注から検索 (optional)
+     * @param  string $make_date_min &#x60;after&#x60;と同義 (optional)
+     * @param  string $make_date_max &#x60;before&#x60;と同義 (optional)
+     * @param  string $update_date_min 指定日時以降に更新された受注から検索 (optional)
+     * @param  string $update_date_max 指定日時以降に更新された受注から検索 (optional)
+     * @param  string $customer_ids 購入した顧客IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
+     * @param  string $customer_name 購入した顧客名で部分一致検索 (optional)
+     * @param  string $customer_furigana 購入した顧客フリガナがで部分一致検索 (optional)
+     * @param  string $customer_mail 購入した顧客メールアドレスで部分一致検索 (optional)
+     * @param  int $accepted_mail_state 受注メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  int $paid_mail_state 入金メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  int $delivered_mail_state 配送メールの送信状態で検索  - &#x60;0&#x60;: 未送信 - &#x60;1&#x60;: 送信済み - &#x60;2&#x60;: 送信しない (optional)
+     * @param  bool $mobile &#x60;true&#x60;なら携帯からの受注のみ取得 (optional)
+     * @param  bool $paid &#x60;true&#x60;なら入金済みの受注のみ取得 (optional)
+     * @param  bool $delivered &#x60;true&#x60;なら配送済みの受注のみ取得 (optional)
+     * @param  string $payment_ids 使用された決済のIDで検索。カンマ区切りで複数指定可能 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function getSalesRequest($ids = null, $after = null, $before = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $customer_ids = null, $customer_name = null, $customer_furigana = null, $customer_mail = null, $accepted_mail_state = null, $paid_mail_state = null, $delivered_mail_state = null, $mobile = null, $paid = null, $delivered = null, $payment_ids = null, $fields = null, $limit = null, $offset = null)
     {
 
         $resourcePath = '/v1/sales.json';
@@ -471,7 +903,6 @@ class SaleApi
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2001';
 
         // query params
         if ($ids !== null) {
@@ -559,29 +990,11 @@ class SaleApi
         }
 
 
-        
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        // body params
+        $_tempBody = null;
 
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
                 ['application/json']
             );
         } else {
@@ -591,13 +1004,39 @@ class SaleApi
             );
         }
 
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
         // this endpoint requires OAuth (access token)
         if ($this->config->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -610,69 +1049,23 @@ class SaleApi
             $headers
         );
 
-        $request = new Request(
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
             'GET',
-            $url,
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
-
-        try {
-
-            try {
-                $response = $this->client->send($request);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\ColorMeShop\Swagger\Model\InlineResponse2001', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
     }
+
     /**
      * Operation sendSalesMail
      *
      * メールの送信
      *
-     * @param int $sale_id  (required)
-     * @param \ColorMeShop\Swagger\Model\Mail $mail  (optional)
+     * @param  int $sale_id sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Mail $mail mail (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return void
@@ -687,105 +1080,28 @@ class SaleApi
      *
      * メールの送信
      *
-     * @param int $sale_id  (required)
-     * @param \ColorMeShop\Swagger\Model\Mail $mail  (optional)
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Mail $mail (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function sendSalesMailWithHttpInfo($sale_id, $mail = null)
     {
-        // verify the required parameter 'sale_id' is set
-        if ($sale_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $sale_id when calling sendSalesMail');
-        }
-
-        $resourcePath = '/v1/sales/{saleId}/mails.json';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
         $returnType = '';
-
-
-        // path params
-        if ($sale_id !== null) {
-            $resourcePath = str_replace('{' . 'saleId' . '}', ObjectSerializer::toPathValue($sale_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($mail)) {
-            $_tempBody = $mail;
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $request = new Request(
-            'POST',
-            $url,
-            $headers,
-            $httpBody
-        );
+        $request = $this->sendSalesMailRequest($sale_id, $mail);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $response = $this->client->send($request);
+                $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
                 );
             }
 
@@ -793,7 +1109,11 @@ class SaleApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -808,12 +1128,180 @@ class SaleApi
             throw $e;
         }
     }
+
+    /**
+     * Operation sendSalesMailAsync
+     *
+     * メールの送信
+     *
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Mail $mail (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function sendSalesMailAsync($sale_id, $mail = null)
+    {
+        return $this->sendSalesMailAsyncWithHttpInfo($sale_id, $mail)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation sendSalesMailAsyncWithHttpInfo
+     *
+     * メールの送信
+     *
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Mail $mail (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function sendSalesMailAsyncWithHttpInfo($sale_id, $mail = null)
+    {
+        $returnType = '';
+        $request = $this->sendSalesMailRequest($sale_id, $mail);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'sendSalesMail'
+     *
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Mail $mail (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function sendSalesMailRequest($sale_id, $mail = null)
+    {
+        // verify the required parameter 'sale_id' is set
+        if ($sale_id === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $sale_id when calling sendSalesMail'
+            );
+        }
+
+        $resourcePath = '/v1/sales/{saleId}/mails.json';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($sale_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'saleId' . '}',
+                ObjectSerializer::toPathValue($sale_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($mail)) {
+            $_tempBody = $mail;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
     /**
      * Operation statSale
      *
      * 売上集計の取得
      *
-     * @param string $make_date 集計対象とする売上の作成日。形式は\&quot;2017-04-12\&quot;、\&quot;2017/04/12\&quot;など。指定しない場合は今日の日付が使われる (optional)
+     * @param  string $make_date 集計対象とする売上の作成日。形式は\&quot;2017-04-12\&quot;、\&quot;2017/04/12\&quot;など。指定しない場合は今日の日付が使われる (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \ColorMeShop\Swagger\Model\InlineResponse2002
@@ -829,95 +1317,27 @@ class SaleApi
      *
      * 売上集計の取得
      *
-     * @param string $make_date 集計対象とする売上の作成日。形式は\&quot;2017-04-12\&quot;、\&quot;2017/04/12\&quot;など。指定しない場合は今日の日付が使われる (optional)
+     * @param  string $make_date 集計対象とする売上の作成日。形式は\&quot;2017-04-12\&quot;、\&quot;2017/04/12\&quot;など。指定しない場合は今日の日付が使われる (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \ColorMeShop\Swagger\Model\InlineResponse2002, HTTP status code, HTTP response headers (array of strings)
      */
     public function statSaleWithHttpInfo($make_date = null)
     {
-
-        $resourcePath = '/v1/sales/stat.json';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
         $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2002';
-
-        // query params
-        if ($make_date !== null) {
-            $queryParams['make_date'] = ObjectSerializer::toQueryValue($make_date);
-        }
-
-
-        
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $request = new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
+        $request = $this->statSaleRequest($make_date);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $response = $this->client->send($request);
+                $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
                 );
             }
 
@@ -925,7 +1345,11 @@ class SaleApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -951,20 +1375,190 @@ class SaleApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\ColorMeShop\Swagger\Model\InlineResponse2002', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse2002',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             }
             throw $e;
         }
     }
+
+    /**
+     * Operation statSaleAsync
+     *
+     * 売上集計の取得
+     *
+     * @param  string $make_date 集計対象とする売上の作成日。形式は\&quot;2017-04-12\&quot;、\&quot;2017/04/12\&quot;など。指定しない場合は今日の日付が使われる (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function statSaleAsync($make_date = null)
+    {
+        return $this->statSaleAsyncWithHttpInfo($make_date)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation statSaleAsyncWithHttpInfo
+     *
+     * 売上集計の取得
+     *
+     * @param  string $make_date 集計対象とする売上の作成日。形式は\&quot;2017-04-12\&quot;、\&quot;2017/04/12\&quot;など。指定しない場合は今日の日付が使われる (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function statSaleAsyncWithHttpInfo($make_date = null)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2002';
+        $request = $this->statSaleRequest($make_date);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'statSale'
+     *
+     * @param  string $make_date 集計対象とする売上の作成日。形式は\&quot;2017-04-12\&quot;、\&quot;2017/04/12\&quot;など。指定しない場合は今日の日付が使われる (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function statSaleRequest($make_date = null)
+    {
+
+        $resourcePath = '/v1/sales/stat.json';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($make_date !== null) {
+            $queryParams['make_date'] = ObjectSerializer::toQueryValue($make_date);
+        }
+
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
     /**
      * Operation updateSale
      *
      * 受注データの更新
      *
-     * @param int $sale_id  (required)
-     * @param \ColorMeShop\Swagger\Model\Sale $sale  (optional)
+     * @param  int $sale_id sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Sale $sale sale (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \ColorMeShop\Swagger\Model\InlineResponse2003
@@ -980,105 +1574,28 @@ class SaleApi
      *
      * 受注データの更新
      *
-     * @param int $sale_id  (required)
-     * @param \ColorMeShop\Swagger\Model\Sale $sale  (optional)
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Sale $sale (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \ColorMeShop\Swagger\Model\InlineResponse2003, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateSaleWithHttpInfo($sale_id, $sale = null)
     {
-        // verify the required parameter 'sale_id' is set
-        if ($sale_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $sale_id when calling updateSale');
-        }
-
-        $resourcePath = '/v1/sales/{saleId}.json';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
         $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2003';
-
-
-        // path params
-        if ($sale_id !== null) {
-            $resourcePath = str_replace('{' . 'saleId' . '}', ObjectSerializer::toPathValue($sale_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($sale)) {
-            $_tempBody = $sale;
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $request = new Request(
-            'PUT',
-            $url,
-            $headers,
-            $httpBody
-        );
+        $request = $this->updateSaleRequest($sale_id, $sale);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $response = $this->client->send($request);
+                $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
                 );
             }
 
@@ -1086,7 +1603,11 @@ class SaleApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -1112,11 +1633,214 @@ class SaleApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\ColorMeShop\Swagger\Model\InlineResponse2003', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse2003',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             }
             throw $e;
         }
+    }
+
+    /**
+     * Operation updateSaleAsync
+     *
+     * 受注データの更新
+     *
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Sale $sale (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateSaleAsync($sale_id, $sale = null)
+    {
+        return $this->updateSaleAsyncWithHttpInfo($sale_id, $sale)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation updateSaleAsyncWithHttpInfo
+     *
+     * 受注データの更新
+     *
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Sale $sale (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateSaleAsyncWithHttpInfo($sale_id, $sale = null)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2003';
+        $request = $this->updateSaleRequest($sale_id, $sale);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'updateSale'
+     *
+     * @param  int $sale_id (required)
+     * @param  \ColorMeShop\Swagger\Model\Sale $sale (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function updateSaleRequest($sale_id, $sale = null)
+    {
+        // verify the required parameter 'sale_id' is set
+        if ($sale_id === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $sale_id when calling updateSale'
+            );
+        }
+
+        $resourcePath = '/v1/sales/{saleId}.json';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($sale_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'saleId' . '}',
+                ObjectSerializer::toPathValue($sale_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($sale)) {
+            $_tempBody = $sale;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'PUT',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Create http client option
+     *
+     * @throws \RuntimeException on file opening failure
+     * @return array of http client options
+     */
+    protected function createHttpClientOption()
+    {
+        $options = [];
+        if ($this->config->getDebug()) {
+            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
+            if (!$options[RequestOptions::DEBUG]) {
+                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+            }
+        }
+
+        return $options;
     }
 }

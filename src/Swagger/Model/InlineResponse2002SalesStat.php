@@ -6,19 +6,19 @@
  *
  * @category Class
  * @package  ColorMeShop\Swagger
- * @author   Swaagger Codegen team
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_url`|アプリケーション登録時に入力したリダイレクトURL|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URL&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURLへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURL|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
  *
- * OpenAPI spec version: v1
+ * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- *
+ * Swagger Codegen version: 2.3.0
  */
 
 /**
@@ -30,27 +30,30 @@
 namespace ColorMeShop\Swagger\Model;
 
 use \ArrayAccess;
+use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
  * InlineResponse2002SalesStat Class Doc Comment
  *
- * @category    Class
- * @package     ColorMeShop\Swagger
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  ColorMeShop\Swagger
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2002SalesStat implements ArrayAccess
+class InlineResponse2002SalesStat implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'inline_response_200_2_sales_stat';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -58,17 +61,52 @@ class InlineResponse2002SalesStat implements ArrayAccess
         'date' => 'int',
         'amount_today' => 'int',
         'count_today' => 'int',
+        'amount_last_7days' => 'int',
+        'count_last_7days' => 'int',
         'amount_this_month' => 'int',
         'count_this_month' => 'int'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'account_id' => null,
+        'date' => null,
+        'amount_today' => null,
+        'count_today' => null,
+        'amount_last_7days' => null,
+        'count_last_7days' => null,
+        'amount_this_month' => null,
+        'count_this_month' => null
+    ];
+
+    /**
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @return array
+     */
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
     }
 
     /**
-     * Array of attributes where the key is the local name, and the value is the original name
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @return array
+     */
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
+    }
+
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -76,13 +114,15 @@ class InlineResponse2002SalesStat implements ArrayAccess
         'date' => 'date',
         'amount_today' => 'amount_today',
         'count_today' => 'count_today',
+        'amount_last_7days' => 'amount_last_7days',
+        'count_last_7days' => 'count_last_7days',
         'amount_this_month' => 'amount_this_month',
         'count_this_month' => 'count_this_month'
     ];
 
-
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -90,13 +130,15 @@ class InlineResponse2002SalesStat implements ArrayAccess
         'date' => 'setDate',
         'amount_today' => 'setAmountToday',
         'count_today' => 'setCountToday',
+        'amount_last_7days' => 'setAmountLast7days',
+        'count_last_7days' => 'setCountLast7days',
         'amount_this_month' => 'setAmountThisMonth',
         'count_this_month' => 'setCountThisMonth'
     ];
 
-
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -104,23 +146,51 @@ class InlineResponse2002SalesStat implements ArrayAccess
         'date' => 'getDate',
         'amount_today' => 'getAmountToday',
         'count_today' => 'getCountToday',
+        'amount_last_7days' => 'getAmountLast7days',
+        'count_last_7days' => 'getCountLast7days',
         'amount_this_month' => 'getAmountThisMonth',
         'count_this_month' => 'getCountThisMonth'
     ];
 
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @return array
+     */
     public static function attributeMap()
     {
         return self::$attributeMap;
     }
 
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @return array
+     */
     public static function setters()
     {
         return self::$setters;
     }
 
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @return array
+     */
     public static function getters()
     {
         return self::$getters;
+    }
+
+    /**
+     * The original name of the model.
+     *
+     * @return string
+     */
+    public function getModelName()
+    {
+        return self::$swaggerModelName;
     }
 
     
@@ -129,13 +199,16 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
     public function __construct(array $data = null)
     {
@@ -143,24 +216,26 @@ class InlineResponse2002SalesStat implements ArrayAccess
         $this->container['date'] = isset($data['date']) ? $data['date'] : null;
         $this->container['amount_today'] = isset($data['amount_today']) ? $data['amount_today'] : null;
         $this->container['count_today'] = isset($data['count_today']) ? $data['count_today'] : null;
+        $this->container['amount_last_7days'] = isset($data['amount_last_7days']) ? $data['amount_last_7days'] : null;
+        $this->container['count_last_7days'] = isset($data['count_last_7days']) ? $data['count_last_7days'] : null;
         $this->container['amount_this_month'] = isset($data['amount_this_month']) ? $data['amount_this_month'] : null;
         $this->container['count_this_month'] = isset($data['count_this_month']) ? $data['count_this_month'] : null;
     }
 
     /**
-     * show all the invalid properties with reasons.
+     * Show all the invalid properties with reasons.
      *
      * @return array invalid properties with reasons
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
-     * validate all the properties in the model
+     * Validate all the properties in the model
      * return true if all passed
      *
      * @return bool True if all properties are valid
@@ -174,6 +249,7 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Gets account_id
+     *
      * @return string
      */
     public function getAccountId()
@@ -183,7 +259,9 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Sets account_id
+     *
      * @param string $account_id ショップアカウントID
+     *
      * @return $this
      */
     public function setAccountId($account_id)
@@ -195,6 +273,7 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Gets date
+     *
      * @return int
      */
     public function getDate()
@@ -204,7 +283,9 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Sets date
+     *
      * @param int $date 集計対象とする売上の作成日
+     *
      * @return $this
      */
     public function setDate($date)
@@ -216,6 +297,7 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Gets amount_today
+     *
      * @return int
      */
     public function getAmountToday()
@@ -225,7 +307,9 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Sets amount_today
+     *
      * @param int $amount_today 合計売上金額
+     *
      * @return $this
      */
     public function setAmountToday($amount_today)
@@ -237,6 +321,7 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Gets count_today
+     *
      * @return int
      */
     public function getCountToday()
@@ -246,7 +331,9 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Sets count_today
+     *
      * @param int $count_today 合計件数
+     *
      * @return $this
      */
     public function setCountToday($count_today)
@@ -257,7 +344,56 @@ class InlineResponse2002SalesStat implements ArrayAccess
     }
 
     /**
+     * Gets amount_last_7days
+     *
+     * @return int
+     */
+    public function getAmountLast7days()
+    {
+        return $this->container['amount_last_7days'];
+    }
+
+    /**
+     * Sets amount_last_7days
+     *
+     * @param int $amount_last_7days `date`を含む過去7日間の合計売上金額
+     *
+     * @return $this
+     */
+    public function setAmountLast7days($amount_last_7days)
+    {
+        $this->container['amount_last_7days'] = $amount_last_7days;
+
+        return $this;
+    }
+
+    /**
+     * Gets count_last_7days
+     *
+     * @return int
+     */
+    public function getCountLast7days()
+    {
+        return $this->container['count_last_7days'];
+    }
+
+    /**
+     * Sets count_last_7days
+     *
+     * @param int $count_last_7days `date`を含む過去7日間の合計件数
+     *
+     * @return $this
+     */
+    public function setCountLast7days($count_last_7days)
+    {
+        $this->container['count_last_7days'] = $count_last_7days;
+
+        return $this;
+    }
+
+    /**
      * Gets amount_this_month
+     *
      * @return int
      */
     public function getAmountThisMonth()
@@ -267,7 +403,9 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Sets amount_this_month
+     *
      * @param int $amount_this_month `date`が含まれる月の合計売上金額
+     *
      * @return $this
      */
     public function setAmountThisMonth($amount_this_month)
@@ -279,6 +417,7 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Gets count_this_month
+     *
      * @return int
      */
     public function getCountThisMonth()
@@ -288,7 +427,9 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Sets count_this_month
+     *
      * @param int $count_this_month `date`が含まれる月の合計件数
+     *
      * @return $this
      */
     public function setCountThisMonth($count_this_month)
@@ -299,7 +440,9 @@ class InlineResponse2002SalesStat implements ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -309,7 +452,9 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Gets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -319,8 +464,10 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     *
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -334,7 +481,9 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Unsets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)
@@ -344,15 +493,19 @@ class InlineResponse2002SalesStat implements ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(
+                ObjectSerializer::sanitizeForSerialization($this),
+                JSON_PRETTY_PRINT
+            );
         }
 
-        return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 

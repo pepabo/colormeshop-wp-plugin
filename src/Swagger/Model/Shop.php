@@ -6,19 +6,19 @@
  *
  * @category Class
  * @package  ColorMeShop\Swagger
- * @author   Swaagger Codegen team
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_url`|アプリケーション登録時に入力したリダイレクトURL|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URL&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURLへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURL|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
  *
- * OpenAPI spec version: v1
+ * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- *
+ * Swagger Codegen version: 2.3.0
  */
 
 /**
@@ -30,27 +30,30 @@
 namespace ColorMeShop\Swagger\Model;
 
 use \ArrayAccess;
+use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
  * Shop Class Doc Comment
  *
- * @category    Class
- * @package     ColorMeShop\Swagger
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  ColorMeShop\Swagger
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Shop implements ArrayAccess
+class Shop implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'Shop';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -58,6 +61,9 @@ class Shop implements ArrayAccess
         'state' => 'string',
         'domain_plan' => 'string',
         'contract_plan' => 'string',
+        'contract_start_date' => 'int',
+        'contract_end_date' => 'int',
+        'contract_term' => 'int',
         'last_login_date' => 'int',
         'setup_date' => 'int',
         'make_date' => 'int',
@@ -85,13 +91,70 @@ class Shop implements ArrayAccess
         'shop_mail_2' => 'string'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'id' => null,
+        'state' => null,
+        'domain_plan' => null,
+        'contract_plan' => null,
+        'contract_start_date' => null,
+        'contract_end_date' => null,
+        'contract_term' => null,
+        'last_login_date' => null,
+        'setup_date' => null,
+        'make_date' => null,
+        'url' => null,
+        'open_state' => null,
+        'mobile_open_state' => null,
+        'login_id' => null,
+        'name1' => null,
+        'name2' => null,
+        'name1_kana' => null,
+        'name2_kana' => null,
+        'hojin' => null,
+        'hojin_kana' => null,
+        'user_mail' => 'email',
+        'tel' => null,
+        'fax' => null,
+        'postal' => null,
+        'pref_id' => null,
+        'pref_name' => null,
+        'address1' => null,
+        'address2' => null,
+        'title' => null,
+        'title_short' => null,
+        'shop_mail_1' => 'email',
+        'shop_mail_2' => 'email'
+    ];
+
+    /**
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @return array
+     */
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
     }
 
     /**
-     * Array of attributes where the key is the local name, and the value is the original name
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @return array
+     */
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
+    }
+
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -99,6 +162,9 @@ class Shop implements ArrayAccess
         'state' => 'state',
         'domain_plan' => 'domain_plan',
         'contract_plan' => 'contract_plan',
+        'contract_start_date' => 'contract_start_date',
+        'contract_end_date' => 'contract_end_date',
+        'contract_term' => 'contract_term',
         'last_login_date' => 'last_login_date',
         'setup_date' => 'setup_date',
         'make_date' => 'make_date',
@@ -126,9 +192,9 @@ class Shop implements ArrayAccess
         'shop_mail_2' => 'shop_mail_2'
     ];
 
-
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -136,6 +202,9 @@ class Shop implements ArrayAccess
         'state' => 'setState',
         'domain_plan' => 'setDomainPlan',
         'contract_plan' => 'setContractPlan',
+        'contract_start_date' => 'setContractStartDate',
+        'contract_end_date' => 'setContractEndDate',
+        'contract_term' => 'setContractTerm',
         'last_login_date' => 'setLastLoginDate',
         'setup_date' => 'setSetupDate',
         'make_date' => 'setMakeDate',
@@ -163,9 +232,9 @@ class Shop implements ArrayAccess
         'shop_mail_2' => 'setShopMail2'
     ];
 
-
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -173,6 +242,9 @@ class Shop implements ArrayAccess
         'state' => 'getState',
         'domain_plan' => 'getDomainPlan',
         'contract_plan' => 'getContractPlan',
+        'contract_start_date' => 'getContractStartDate',
+        'contract_end_date' => 'getContractEndDate',
+        'contract_term' => 'getContractTerm',
         'last_login_date' => 'getLastLoginDate',
         'setup_date' => 'getSetupDate',
         'make_date' => 'getMakeDate',
@@ -200,19 +272,45 @@ class Shop implements ArrayAccess
         'shop_mail_2' => 'getShopMail2'
     ];
 
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @return array
+     */
     public static function attributeMap()
     {
         return self::$attributeMap;
     }
 
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @return array
+     */
     public static function setters()
     {
         return self::$setters;
     }
 
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @return array
+     */
     public static function getters()
     {
         return self::$getters;
+    }
+
+    /**
+     * The original name of the model.
+     *
+     * @return string
+     */
+    public function getModelName()
+    {
+        return self::$swaggerModelName;
     }
 
     const STATE_ENABLED = 'enabled';
@@ -233,14 +331,17 @@ class Shop implements ArrayAccess
     const OPEN_STATE_OPENED = 'opened';
     const OPEN_STATE_CLOSED = 'closed';
     const OPEN_STATE_PREPARE = 'prepare';
+    const OPEN_STATE_PAUSED = 'paused';
     const MOBILE_OPEN_STATE_OPENED = 'opened';
     const MOBILE_OPEN_STATE_CLOSED = 'closed';
     const MOBILE_OPEN_STATE_PREPARE = 'prepare';
+    const MOBILE_OPEN_STATE_PAUSED = 'paused';
     
 
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getStateAllowableValues()
@@ -254,6 +355,7 @@ class Shop implements ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getDomainPlanAllowableValues()
@@ -267,6 +369,7 @@ class Shop implements ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getContractPlanAllowableValues()
@@ -286,6 +389,7 @@ class Shop implements ArrayAccess
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getOpenStateAllowableValues()
@@ -294,11 +398,13 @@ class Shop implements ArrayAccess
             self::OPEN_STATE_OPENED,
             self::OPEN_STATE_CLOSED,
             self::OPEN_STATE_PREPARE,
+            self::OPEN_STATE_PAUSED,
         ];
     }
     
     /**
      * Gets allowable values of the enum
+     *
      * @return string[]
      */
     public function getMobileOpenStateAllowableValues()
@@ -307,19 +413,23 @@ class Shop implements ArrayAccess
             self::MOBILE_OPEN_STATE_OPENED,
             self::MOBILE_OPEN_STATE_CLOSED,
             self::MOBILE_OPEN_STATE_PREPARE,
+            self::MOBILE_OPEN_STATE_PAUSED,
         ];
     }
     
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
     public function __construct(array $data = null)
     {
@@ -327,6 +437,9 @@ class Shop implements ArrayAccess
         $this->container['state'] = isset($data['state']) ? $data['state'] : null;
         $this->container['domain_plan'] = isset($data['domain_plan']) ? $data['domain_plan'] : null;
         $this->container['contract_plan'] = isset($data['contract_plan']) ? $data['contract_plan'] : null;
+        $this->container['contract_start_date'] = isset($data['contract_start_date']) ? $data['contract_start_date'] : null;
+        $this->container['contract_end_date'] = isset($data['contract_end_date']) ? $data['contract_end_date'] : null;
+        $this->container['contract_term'] = isset($data['contract_term']) ? $data['contract_term'] : null;
         $this->container['last_login_date'] = isset($data['last_login_date']) ? $data['last_login_date'] : null;
         $this->container['setup_date'] = isset($data['setup_date']) ? $data['setup_date'] : null;
         $this->container['make_date'] = isset($data['make_date']) ? $data['make_date'] : null;
@@ -355,59 +468,59 @@ class Shop implements ArrayAccess
     }
 
     /**
-     * show all the invalid properties with reasons.
+     * Show all the invalid properties with reasons.
      *
      * @return array invalid properties with reasons
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
-        $allowed_values = $this->getStateAllowableValues();
-        if (!in_array($this->container['state'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getStateAllowableValues();
+        if (!in_array($this->container['state'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'state', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        $allowed_values = $this->getDomainPlanAllowableValues();
-        if (!in_array($this->container['domain_plan'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getDomainPlanAllowableValues();
+        if (!in_array($this->container['domain_plan'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'domain_plan', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        $allowed_values = $this->getContractPlanAllowableValues();
-        if (!in_array($this->container['contract_plan'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getContractPlanAllowableValues();
+        if (!in_array($this->container['contract_plan'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'contract_plan', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        $allowed_values = $this->getOpenStateAllowableValues();
-        if (!in_array($this->container['open_state'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getOpenStateAllowableValues();
+        if (!in_array($this->container['open_state'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'open_state', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        $allowed_values = $this->getMobileOpenStateAllowableValues();
-        if (!in_array($this->container['mobile_open_state'], $allowed_values)) {
-            $invalid_properties[] = sprintf(
+        $allowedValues = $this->getMobileOpenStateAllowableValues();
+        if (!in_array($this->container['mobile_open_state'], $allowedValues)) {
+            $invalidProperties[] = sprintf(
                 "invalid value for 'mobile_open_state', must be one of '%s'",
-                implode("', '", $allowed_values)
+                implode("', '", $allowedValues)
             );
         }
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
-     * validate all the properties in the model
+     * Validate all the properties in the model
      * return true if all passed
      *
      * @return bool True if all properties are valid
@@ -415,24 +528,24 @@ class Shop implements ArrayAccess
     public function valid()
     {
 
-        $allowed_values = $this->getStateAllowableValues();
-        if (!in_array($this->container['state'], $allowed_values)) {
+        $allowedValues = $this->getStateAllowableValues();
+        if (!in_array($this->container['state'], $allowedValues)) {
             return false;
         }
-        $allowed_values = $this->getDomainPlanAllowableValues();
-        if (!in_array($this->container['domain_plan'], $allowed_values)) {
+        $allowedValues = $this->getDomainPlanAllowableValues();
+        if (!in_array($this->container['domain_plan'], $allowedValues)) {
             return false;
         }
-        $allowed_values = $this->getContractPlanAllowableValues();
-        if (!in_array($this->container['contract_plan'], $allowed_values)) {
+        $allowedValues = $this->getContractPlanAllowableValues();
+        if (!in_array($this->container['contract_plan'], $allowedValues)) {
             return false;
         }
-        $allowed_values = $this->getOpenStateAllowableValues();
-        if (!in_array($this->container['open_state'], $allowed_values)) {
+        $allowedValues = $this->getOpenStateAllowableValues();
+        if (!in_array($this->container['open_state'], $allowedValues)) {
             return false;
         }
-        $allowed_values = $this->getMobileOpenStateAllowableValues();
-        if (!in_array($this->container['mobile_open_state'], $allowed_values)) {
+        $allowedValues = $this->getMobileOpenStateAllowableValues();
+        if (!in_array($this->container['mobile_open_state'], $allowedValues)) {
             return false;
         }
         return true;
@@ -441,6 +554,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets id
+     *
      * @return string
      */
     public function getId()
@@ -450,7 +564,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets id
+     *
      * @param string $id ショップアカウントID
+     *
      * @return $this
      */
     public function setId($id)
@@ -462,6 +578,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets state
+     *
      * @return string
      */
     public function getState()
@@ -471,17 +588,19 @@ class Shop implements ArrayAccess
 
     /**
      * Sets state
+     *
      * @param string $state アカウント状態
+     *
      * @return $this
      */
     public function setState($state)
     {
-        $allowed_values = $this->getStateAllowableValues();
-        if (!is_null($state) && !in_array($state, $allowed_values)) {
+        $allowedValues = $this->getStateAllowableValues();
+        if (!is_null($state) && !in_array($state, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'state', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }
@@ -492,6 +611,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets domain_plan
+     *
      * @return string
      */
     public function getDomainPlan()
@@ -501,17 +621,19 @@ class Shop implements ArrayAccess
 
     /**
      * Sets domain_plan
+     *
      * @param string $domain_plan ドメインプラン
+     *
      * @return $this
      */
     public function setDomainPlan($domain_plan)
     {
-        $allowed_values = $this->getDomainPlanAllowableValues();
-        if (!is_null($domain_plan) && !in_array($domain_plan, $allowed_values)) {
+        $allowedValues = $this->getDomainPlanAllowableValues();
+        if (!is_null($domain_plan) && !in_array($domain_plan, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'domain_plan', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }
@@ -522,6 +644,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets contract_plan
+     *
      * @return string
      */
     public function getContractPlan()
@@ -531,17 +654,19 @@ class Shop implements ArrayAccess
 
     /**
      * Sets contract_plan
+     *
      * @param string $contract_plan 契約プラン
+     *
      * @return $this
      */
     public function setContractPlan($contract_plan)
     {
-        $allowed_values = $this->getContractPlanAllowableValues();
-        if (!is_null($contract_plan) && !in_array($contract_plan, $allowed_values)) {
+        $allowedValues = $this->getContractPlanAllowableValues();
+        if (!is_null($contract_plan) && !in_array($contract_plan, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'contract_plan', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }
@@ -551,7 +676,80 @@ class Shop implements ArrayAccess
     }
 
     /**
+     * Gets contract_start_date
+     *
+     * @return int
+     */
+    public function getContractStartDate()
+    {
+        return $this->container['contract_start_date'];
+    }
+
+    /**
+     * Sets contract_start_date
+     *
+     * @param int $contract_start_date 契約開始日時
+     *
+     * @return $this
+     */
+    public function setContractStartDate($contract_start_date)
+    {
+        $this->container['contract_start_date'] = $contract_start_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets contract_end_date
+     *
+     * @return int
+     */
+    public function getContractEndDate()
+    {
+        return $this->container['contract_end_date'];
+    }
+
+    /**
+     * Sets contract_end_date
+     *
+     * @param int $contract_end_date 契約終了日時
+     *
+     * @return $this
+     */
+    public function setContractEndDate($contract_end_date)
+    {
+        $this->container['contract_end_date'] = $contract_end_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets contract_term
+     *
+     * @return int
+     */
+    public function getContractTerm()
+    {
+        return $this->container['contract_term'];
+    }
+
+    /**
+     * Sets contract_term
+     *
+     * @param int $contract_term 契約期間
+     *
+     * @return $this
+     */
+    public function setContractTerm($contract_term)
+    {
+        $this->container['contract_term'] = $contract_term;
+
+        return $this;
+    }
+
+    /**
      * Gets last_login_date
+     *
      * @return int
      */
     public function getLastLoginDate()
@@ -561,7 +759,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets last_login_date
+     *
      * @param int $last_login_date 最終ログイン日時
+     *
      * @return $this
      */
     public function setLastLoginDate($last_login_date)
@@ -573,6 +773,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets setup_date
+     *
      * @return int
      */
     public function getSetupDate()
@@ -582,7 +783,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets setup_date
+     *
      * @param int $setup_date 申し込み完了日時
+     *
      * @return $this
      */
     public function setSetupDate($setup_date)
@@ -594,6 +797,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets make_date
+     *
      * @return int
      */
     public function getMakeDate()
@@ -603,7 +807,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets make_date
+     *
      * @param int $make_date アカウント作成日時
+     *
      * @return $this
      */
     public function setMakeDate($make_date)
@@ -615,6 +821,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets url
+     *
      * @return string
      */
     public function getUrl()
@@ -624,7 +831,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets url
+     *
      * @param string $url ショップURL
+     *
      * @return $this
      */
     public function setUrl($url)
@@ -636,6 +845,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets open_state
+     *
      * @return string
      */
     public function getOpenState()
@@ -645,17 +855,19 @@ class Shop implements ArrayAccess
 
     /**
      * Sets open_state
+     *
      * @param string $open_state 開店状態
+     *
      * @return $this
      */
     public function setOpenState($open_state)
     {
-        $allowed_values = $this->getOpenStateAllowableValues();
-        if (!is_null($open_state) && !in_array($open_state, $allowed_values)) {
+        $allowedValues = $this->getOpenStateAllowableValues();
+        if (!is_null($open_state) && !in_array($open_state, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'open_state', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }
@@ -666,6 +878,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets mobile_open_state
+     *
      * @return string
      */
     public function getMobileOpenState()
@@ -675,17 +888,19 @@ class Shop implements ArrayAccess
 
     /**
      * Sets mobile_open_state
+     *
      * @param string $mobile_open_state モバイルショップ開店状態
+     *
      * @return $this
      */
     public function setMobileOpenState($mobile_open_state)
     {
-        $allowed_values = $this->getMobileOpenStateAllowableValues();
-        if (!is_null($mobile_open_state) && !in_array($mobile_open_state, $allowed_values)) {
+        $allowedValues = $this->getMobileOpenStateAllowableValues();
+        if (!is_null($mobile_open_state) && !in_array($mobile_open_state, $allowedValues)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'mobile_open_state', must be one of '%s'",
-                    implode("', '", $allowed_values)
+                    implode("', '", $allowedValues)
                 )
             );
         }
@@ -696,6 +911,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets login_id
+     *
      * @return string
      */
     public function getLoginId()
@@ -705,7 +921,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets login_id
+     *
      * @param string $login_id ログインID
+     *
      * @return $this
      */
     public function setLoginId($login_id)
@@ -717,6 +935,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets name1
+     *
      * @return string
      */
     public function getName1()
@@ -726,7 +945,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets name1
+     *
      * @param string $name1 登録者氏名（姓）
+     *
      * @return $this
      */
     public function setName1($name1)
@@ -738,6 +959,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets name2
+     *
      * @return string
      */
     public function getName2()
@@ -747,7 +969,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets name2
+     *
      * @param string $name2 登録者氏名（名）
+     *
      * @return $this
      */
     public function setName2($name2)
@@ -759,6 +983,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets name1_kana
+     *
      * @return string
      */
     public function getName1Kana()
@@ -768,7 +993,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets name1_kana
+     *
      * @param string $name1_kana 登録者氏名カナ（姓）
+     *
      * @return $this
      */
     public function setName1Kana($name1_kana)
@@ -780,6 +1007,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets name2_kana
+     *
      * @return string
      */
     public function getName2Kana()
@@ -789,7 +1017,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets name2_kana
+     *
      * @param string $name2_kana 登録者氏名カナ（名）
+     *
      * @return $this
      */
     public function setName2Kana($name2_kana)
@@ -801,6 +1031,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets hojin
+     *
      * @return string
      */
     public function getHojin()
@@ -810,7 +1041,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets hojin
+     *
      * @param string $hojin 法人名
+     *
      * @return $this
      */
     public function setHojin($hojin)
@@ -822,6 +1055,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets hojin_kana
+     *
      * @return string
      */
     public function getHojinKana()
@@ -831,7 +1065,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets hojin_kana
+     *
      * @param string $hojin_kana 法人名カナ
+     *
      * @return $this
      */
     public function setHojinKana($hojin_kana)
@@ -843,6 +1079,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets user_mail
+     *
      * @return string
      */
     public function getUserMail()
@@ -852,7 +1089,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets user_mail
+     *
      * @param string $user_mail 登録者メールアドレス
+     *
      * @return $this
      */
     public function setUserMail($user_mail)
@@ -864,6 +1103,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets tel
+     *
      * @return string
      */
     public function getTel()
@@ -873,7 +1113,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets tel
+     *
      * @param string $tel 登録者電話番号
+     *
      * @return $this
      */
     public function setTel($tel)
@@ -885,6 +1127,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets fax
+     *
      * @return string
      */
     public function getFax()
@@ -894,7 +1137,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets fax
+     *
      * @param string $fax 登録者FAX番号
+     *
      * @return $this
      */
     public function setFax($fax)
@@ -906,6 +1151,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets postal
+     *
      * @return string
      */
     public function getPostal()
@@ -915,7 +1161,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets postal
+     *
      * @param string $postal 郵便番号
+     *
      * @return $this
      */
     public function setPostal($postal)
@@ -927,6 +1175,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets pref_id
+     *
      * @return int
      */
     public function getPrefId()
@@ -936,7 +1185,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets pref_id
+     *
      * @param int $pref_id 都道府県ID
+     *
      * @return $this
      */
     public function setPrefId($pref_id)
@@ -948,6 +1199,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets pref_name
+     *
      * @return string
      */
     public function getPrefName()
@@ -957,7 +1209,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets pref_name
+     *
      * @param string $pref_name 都道府県名
+     *
      * @return $this
      */
     public function setPrefName($pref_name)
@@ -969,6 +1223,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets address1
+     *
      * @return string
      */
     public function getAddress1()
@@ -978,7 +1233,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets address1
+     *
      * @param string $address1 住所1
+     *
      * @return $this
      */
     public function setAddress1($address1)
@@ -990,6 +1247,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets address2
+     *
      * @return string
      */
     public function getAddress2()
@@ -999,7 +1257,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets address2
+     *
      * @param string $address2 住所2
+     *
      * @return $this
      */
     public function setAddress2($address2)
@@ -1011,6 +1271,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets title
+     *
      * @return string
      */
     public function getTitle()
@@ -1020,7 +1281,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets title
+     *
      * @param string $title ショップ名
+     *
      * @return $this
      */
     public function setTitle($title)
@@ -1032,6 +1295,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets title_short
+     *
      * @return string
      */
     public function getTitleShort()
@@ -1041,7 +1305,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets title_short
+     *
      * @param string $title_short メールタイトル用ショップ名
+     *
      * @return $this
      */
     public function setTitleShort($title_short)
@@ -1053,6 +1319,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets shop_mail_1
+     *
      * @return string
      */
     public function getShopMail1()
@@ -1062,7 +1329,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets shop_mail_1
+     *
      * @param string $shop_mail_1 管理者メールアドレス
+     *
      * @return $this
      */
     public function setShopMail1($shop_mail_1)
@@ -1074,6 +1343,7 @@ class Shop implements ArrayAccess
 
     /**
      * Gets shop_mail_2
+     *
      * @return string
      */
     public function getShopMail2()
@@ -1083,7 +1353,9 @@ class Shop implements ArrayAccess
 
     /**
      * Sets shop_mail_2
+     *
      * @param string $shop_mail_2 管理者携帯メールアドレス
+     *
      * @return $this
      */
     public function setShopMail2($shop_mail_2)
@@ -1094,7 +1366,9 @@ class Shop implements ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -1104,7 +1378,9 @@ class Shop implements ArrayAccess
 
     /**
      * Gets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -1114,8 +1390,10 @@ class Shop implements ArrayAccess
 
     /**
      * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     *
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -1129,7 +1407,9 @@ class Shop implements ArrayAccess
 
     /**
      * Unsets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)
@@ -1139,15 +1419,19 @@ class Shop implements ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(
+                ObjectSerializer::sanitizeForSerialization($this),
+                JSON_PRETTY_PRINT
+            );
         }
 
-        return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 

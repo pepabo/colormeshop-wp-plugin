@@ -12,12 +12,12 @@
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_url`|アプリケーション登録時に入力したリダイレクトURL|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URL&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURLへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURL|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
  *
- * OpenAPI spec version: v1
+ * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- *
+ * Swagger Codegen version: 2.3.0
  */
 
 /**
@@ -33,6 +33,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use ColorMeShop\Swagger\ApiException;
 use ColorMeShop\Swagger\Configuration;
 use ColorMeShop\Swagger\HeaderSelector;
@@ -60,8 +61,8 @@ class ProductApi
 
     /**
      * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
+     * @param Configuration   $config
+     * @param HeaderSelector  $selector
      */
     public function __construct(
         ClientInterface $client = null,
@@ -82,119 +83,50 @@ class ProductApi
     }
 
     /**
-     * Operation getProduct
+     * Operation deleteProductPickup
      *
-     * 商品データの取得
+     * おすすめ商品情報の削除
      *
-     * @param int $product_id 商品ID (required)
+     * @param  int $product_id 商品ID (required)
+     * @param  int $pickup_type おすすめ商品情報種別（0:おすすめ商品, 1:売れ筋商品, 3:新着商品, 4:イチオシ商品） (required)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2007
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2008
      */
-    public function getProduct($product_id)
+    public function deleteProductPickup($product_id, $pickup_type)
     {
-        list($response) = $this->getProductWithHttpInfo($product_id);
+        list($response) = $this->deleteProductPickupWithHttpInfo($product_id, $pickup_type);
         return $response;
     }
 
     /**
-     * Operation getProductWithHttpInfo
+     * Operation deleteProductPickupWithHttpInfo
      *
-     * 商品データの取得
+     * おすすめ商品情報の削除
      *
-     * @param int $product_id 商品ID (required)
+     * @param  int $product_id 商品ID (required)
+     * @param  int $pickup_type おすすめ商品情報種別（0:おすすめ商品, 1:売れ筋商品, 3:新着商品, 4:イチオシ商品） (required)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2007, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2008, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getProductWithHttpInfo($product_id)
+    public function deleteProductPickupWithHttpInfo($product_id, $pickup_type)
     {
-        // verify the required parameter 'product_id' is set
-        if ($product_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $product_id when calling getProduct');
-        }
-
-        $resourcePath = '/v1/products/{productId}.json';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2007';
-
-
-        // path params
-        if ($product_id !== null) {
-            $resourcePath = str_replace('{' . 'productId' . '}', ObjectSerializer::toPathValue($product_id), $resourcePath);
-        }
-
-        
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $request = new Request(
-            'GET',
-            $url,
-            $headers,
-            $httpBody
-        );
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
+        $request = $this->deleteProductPickupRequest($product_id, $pickup_type);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $response = $this->client->send($request);
+                $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
                 );
             }
 
@@ -202,7 +134,11 @@ class ProductApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -228,34 +164,497 @@ class ProductApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\ColorMeShop\Swagger\Model\InlineResponse2007', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse2008',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             }
             throw $e;
         }
     }
+
+    /**
+     * Operation deleteProductPickupAsync
+     *
+     * おすすめ商品情報の削除
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  int $pickup_type おすすめ商品情報種別（0:おすすめ商品, 1:売れ筋商品, 3:新着商品, 4:イチオシ商品） (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteProductPickupAsync($product_id, $pickup_type)
+    {
+        return $this->deleteProductPickupAsyncWithHttpInfo($product_id, $pickup_type)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation deleteProductPickupAsyncWithHttpInfo
+     *
+     * おすすめ商品情報の削除
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  int $pickup_type おすすめ商品情報種別（0:おすすめ商品, 1:売れ筋商品, 3:新着商品, 4:イチオシ商品） (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteProductPickupAsyncWithHttpInfo($product_id, $pickup_type)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
+        $request = $this->deleteProductPickupRequest($product_id, $pickup_type);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'deleteProductPickup'
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  int $pickup_type おすすめ商品情報種別（0:おすすめ商品, 1:売れ筋商品, 3:新着商品, 4:イチオシ商品） (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function deleteProductPickupRequest($product_id, $pickup_type)
+    {
+        // verify the required parameter 'product_id' is set
+        if ($product_id === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $product_id when calling deleteProductPickup'
+            );
+        }
+        // verify the required parameter 'pickup_type' is set
+        if ($pickup_type === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $pickup_type when calling deleteProductPickup'
+            );
+        }
+
+        $resourcePath = '/v1/products/{productId}/pickups/{pickupType}.json';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($product_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'productId' . '}',
+                ObjectSerializer::toPathValue($product_id),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($pickup_type !== null) {
+            $resourcePath = str_replace(
+                '{' . 'pickupType' . '}',
+                ObjectSerializer::toPathValue($pickup_type),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'DELETE',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getProduct
+     *
+     * 商品データの取得
+     *
+     * @param  int $product_id 商品ID (required)
+     *
+     * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2007
+     */
+    public function getProduct($product_id)
+    {
+        list($response) = $this->getProductWithHttpInfo($product_id);
+        return $response;
+    }
+
+    /**
+     * Operation getProductWithHttpInfo
+     *
+     * 商品データの取得
+     *
+     * @param  int $product_id 商品ID (required)
+     *
+     * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2007, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getProductWithHttpInfo($product_id)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2007';
+        $request = $this->getProductRequest($product_id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse2007',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getProductAsync
+     *
+     * 商品データの取得
+     *
+     * @param  int $product_id 商品ID (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getProductAsync($product_id)
+    {
+        return $this->getProductAsyncWithHttpInfo($product_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getProductAsyncWithHttpInfo
+     *
+     * 商品データの取得
+     *
+     * @param  int $product_id 商品ID (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getProductAsyncWithHttpInfo($product_id)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2007';
+        $request = $this->getProductRequest($product_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getProduct'
+     *
+     * @param  int $product_id 商品ID (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function getProductRequest($product_id)
+    {
+        // verify the required parameter 'product_id' is set
+        if ($product_id === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $product_id when calling getProduct'
+            );
+        }
+
+        $resourcePath = '/v1/products/{productId}.json';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($product_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'productId' . '}',
+                ObjectSerializer::toPathValue($product_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
     /**
      * Operation getProducts
      *
      * 商品一覧の取得
      *
-     * @param string $ids 商品IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
-     * @param int $category_id_big 大カテゴリーIDで検索 (optional)
-     * @param int $category_id_small 小カテゴリーIDで検索 (optional)
-     * @param string $model_number 型番で部分一致検索 (optional)
-     * @param string $name 商品名で部分一致検索 (optional)
-     * @param string $display_state 掲載設定で検索 (optional)
-     * @param int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、合計在庫数で検索される (optional)
-     * @param bool $stock_managed 在庫管理している、またはしていない商品から検索 (optional)
-     * @param bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
-     * @param string $make_date_min 指定日時以降に作成された商品から検索 (optional)
-     * @param string $make_date_max 指定日時以前に作成された商品から検索 (optional)
-     * @param string $update_date_min 指定日時以降に更新された商品から検索 (optional)
-     * @param string $update_date_max 指定日時以降に更新された商品から検索 (optional)
-     * @param string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
-     * @param int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
-     * @param int $offset 指定した数値+1件目以降のデータを返す (optional)
+     * @param  string $ids 商品IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
+     * @param  int $category_id_big 大カテゴリーIDで検索 (optional)
+     * @param  int $category_id_small 小カテゴリーIDで検索 (optional)
+     * @param  string $model_number 型番で部分一致検索 (optional)
+     * @param  string $name 商品名で部分一致検索 (optional)
+     * @param  string $display_state 掲載設定で検索 (optional)
+     * @param  int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、合計在庫数で検索される (optional)
+     * @param  bool $stock_managed 在庫管理している、またはしていない商品から検索 (optional)
+     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
+     * @param  string $make_date_min 指定日時以降に作成された商品から検索 (optional)
+     * @param  string $make_date_max 指定日時以前に作成された商品から検索 (optional)
+     * @param  string $update_date_min 指定日時以降に更新された商品から検索 (optional)
+     * @param  string $update_date_max 指定日時以降に更新された商品から検索 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \ColorMeShop\Swagger\Model\InlineResponse2006
@@ -271,27 +670,217 @@ class ProductApi
      *
      * 商品一覧の取得
      *
-     * @param string $ids 商品IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
-     * @param int $category_id_big 大カテゴリーIDで検索 (optional)
-     * @param int $category_id_small 小カテゴリーIDで検索 (optional)
-     * @param string $model_number 型番で部分一致検索 (optional)
-     * @param string $name 商品名で部分一致検索 (optional)
-     * @param string $display_state 掲載設定で検索 (optional)
-     * @param int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、合計在庫数で検索される (optional)
-     * @param bool $stock_managed 在庫管理している、またはしていない商品から検索 (optional)
-     * @param bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
-     * @param string $make_date_min 指定日時以降に作成された商品から検索 (optional)
-     * @param string $make_date_max 指定日時以前に作成された商品から検索 (optional)
-     * @param string $update_date_min 指定日時以降に更新された商品から検索 (optional)
-     * @param string $update_date_max 指定日時以降に更新された商品から検索 (optional)
-     * @param string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
-     * @param int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
-     * @param int $offset 指定した数値+1件目以降のデータを返す (optional)
+     * @param  string $ids 商品IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
+     * @param  int $category_id_big 大カテゴリーIDで検索 (optional)
+     * @param  int $category_id_small 小カテゴリーIDで検索 (optional)
+     * @param  string $model_number 型番で部分一致検索 (optional)
+     * @param  string $name 商品名で部分一致検索 (optional)
+     * @param  string $display_state 掲載設定で検索 (optional)
+     * @param  int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、合計在庫数で検索される (optional)
+     * @param  bool $stock_managed 在庫管理している、またはしていない商品から検索 (optional)
+     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
+     * @param  string $make_date_min 指定日時以降に作成された商品から検索 (optional)
+     * @param  string $make_date_max 指定日時以前に作成された商品から検索 (optional)
+     * @param  string $update_date_min 指定日時以降に更新された商品から検索 (optional)
+     * @param  string $update_date_max 指定日時以降に更新された商品から検索 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \ColorMeShop\Swagger\Model\InlineResponse2006, HTTP status code, HTTP response headers (array of strings)
      */
     public function getProductsWithHttpInfo($ids = null, $category_id_big = null, $category_id_small = null, $model_number = null, $name = null, $display_state = null, $stocks = null, $stock_managed = null, $recent_zero_stocks = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $fields = null, $limit = null, $offset = null)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2006';
+        $request = $this->getProductsRequest($ids, $category_id_big, $category_id_small, $model_number, $name, $display_state, $stocks, $stock_managed, $recent_zero_stocks, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $fields, $limit, $offset);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse2006',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getProductsAsync
+     *
+     * 商品一覧の取得
+     *
+     * @param  string $ids 商品IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
+     * @param  int $category_id_big 大カテゴリーIDで検索 (optional)
+     * @param  int $category_id_small 小カテゴリーIDで検索 (optional)
+     * @param  string $model_number 型番で部分一致検索 (optional)
+     * @param  string $name 商品名で部分一致検索 (optional)
+     * @param  string $display_state 掲載設定で検索 (optional)
+     * @param  int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、合計在庫数で検索される (optional)
+     * @param  bool $stock_managed 在庫管理している、またはしていない商品から検索 (optional)
+     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
+     * @param  string $make_date_min 指定日時以降に作成された商品から検索 (optional)
+     * @param  string $make_date_max 指定日時以前に作成された商品から検索 (optional)
+     * @param  string $update_date_min 指定日時以降に更新された商品から検索 (optional)
+     * @param  string $update_date_max 指定日時以降に更新された商品から検索 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getProductsAsync($ids = null, $category_id_big = null, $category_id_small = null, $model_number = null, $name = null, $display_state = null, $stocks = null, $stock_managed = null, $recent_zero_stocks = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $fields = null, $limit = null, $offset = null)
+    {
+        return $this->getProductsAsyncWithHttpInfo($ids, $category_id_big, $category_id_small, $model_number, $name, $display_state, $stocks, $stock_managed, $recent_zero_stocks, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $fields, $limit, $offset)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getProductsAsyncWithHttpInfo
+     *
+     * 商品一覧の取得
+     *
+     * @param  string $ids 商品IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
+     * @param  int $category_id_big 大カテゴリーIDで検索 (optional)
+     * @param  int $category_id_small 小カテゴリーIDで検索 (optional)
+     * @param  string $model_number 型番で部分一致検索 (optional)
+     * @param  string $name 商品名で部分一致検索 (optional)
+     * @param  string $display_state 掲載設定で検索 (optional)
+     * @param  int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、合計在庫数で検索される (optional)
+     * @param  bool $stock_managed 在庫管理している、またはしていない商品から検索 (optional)
+     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
+     * @param  string $make_date_min 指定日時以降に作成された商品から検索 (optional)
+     * @param  string $make_date_max 指定日時以前に作成された商品から検索 (optional)
+     * @param  string $update_date_min 指定日時以降に更新された商品から検索 (optional)
+     * @param  string $update_date_max 指定日時以降に更新された商品から検索 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getProductsAsyncWithHttpInfo($ids = null, $category_id_big = null, $category_id_small = null, $model_number = null, $name = null, $display_state = null, $stocks = null, $stock_managed = null, $recent_zero_stocks = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $fields = null, $limit = null, $offset = null)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2006';
+        $request = $this->getProductsRequest($ids, $category_id_big, $category_id_small, $model_number, $name, $display_state, $stocks, $stock_managed, $recent_zero_stocks, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $fields, $limit, $offset);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getProducts'
+     *
+     * @param  string $ids 商品IDで検索。カンマ区切りにすることで複数検索が可能 (optional)
+     * @param  int $category_id_big 大カテゴリーIDで検索 (optional)
+     * @param  int $category_id_small 小カテゴリーIDで検索 (optional)
+     * @param  string $model_number 型番で部分一致検索 (optional)
+     * @param  string $name 商品名で部分一致検索 (optional)
+     * @param  string $display_state 掲載設定で検索 (optional)
+     * @param  int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、合計在庫数で検索される (optional)
+     * @param  bool $stock_managed 在庫管理している、またはしていない商品から検索 (optional)
+     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
+     * @param  string $make_date_min 指定日時以降に作成された商品から検索 (optional)
+     * @param  string $make_date_max 指定日時以前に作成された商品から検索 (optional)
+     * @param  string $update_date_min 指定日時以降に更新された商品から検索 (optional)
+     * @param  string $update_date_max 指定日時以降に更新された商品から検索 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function getProductsRequest($ids = null, $category_id_big = null, $category_id_small = null, $model_number = null, $name = null, $display_state = null, $stocks = null, $stock_managed = null, $recent_zero_stocks = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $fields = null, $limit = null, $offset = null)
     {
 
         $resourcePath = '/v1/products.json';
@@ -300,7 +889,6 @@ class ProductApi
         $headerParams = [];
         $httpBody = '';
         $multipart = false;
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2006';
 
         // query params
         if ($ids !== null) {
@@ -368,29 +956,11 @@ class ProductApi
         }
 
 
-        
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        // body params
+        $_tempBody = null;
 
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
                 ['application/json']
             );
         } else {
@@ -400,13 +970,39 @@ class ProductApi
             );
         }
 
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
         // this endpoint requires OAuth (access token)
         if ($this->config->getAccessToken() !== null) {
             $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
         }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
 
         $defaultHeaders = [];
         if ($this->config->getUserAgent()) {
@@ -419,22 +1015,60 @@ class ProductApi
             $headers
         );
 
-        $request = new Request(
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
             'GET',
-            $url,
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
         );
+    }
+
+    /**
+     * Operation postProductPickup
+     *
+     * おすすめ商品情報の追加
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  \ColorMeShop\Swagger\Model\Body $body body (required)
+     *
+     * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2008
+     */
+    public function postProductPickup($product_id, $body)
+    {
+        list($response) = $this->postProductPickupWithHttpInfo($product_id, $body);
+        return $response;
+    }
+
+    /**
+     * Operation postProductPickupWithHttpInfo
+     *
+     * おすすめ商品情報の追加
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  \ColorMeShop\Swagger\Model\Body $body (required)
+     *
+     * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2008, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function postProductPickupWithHttpInfo($product_id, $body)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
+        $request = $this->postProductPickupRequest($product_id, $body);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $response = $this->client->send($request);
+                $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
                 );
             }
 
@@ -442,7 +1076,11 @@ class ProductApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -468,20 +1106,212 @@ class ProductApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\ColorMeShop\Swagger\Model\InlineResponse2006', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse2008',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             }
             throw $e;
         }
     }
+
+    /**
+     * Operation postProductPickupAsync
+     *
+     * おすすめ商品情報の追加
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  \ColorMeShop\Swagger\Model\Body $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function postProductPickupAsync($product_id, $body)
+    {
+        return $this->postProductPickupAsyncWithHttpInfo($product_id, $body)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation postProductPickupAsyncWithHttpInfo
+     *
+     * おすすめ商品情報の追加
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  \ColorMeShop\Swagger\Model\Body $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function postProductPickupAsyncWithHttpInfo($product_id, $body)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
+        $request = $this->postProductPickupRequest($product_id, $body);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'postProductPickup'
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  \ColorMeShop\Swagger\Model\Body $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function postProductPickupRequest($product_id, $body)
+    {
+        // verify the required parameter 'product_id' is set
+        if ($product_id === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $product_id when calling postProductPickup'
+            );
+        }
+        // verify the required parameter 'body' is set
+        if ($body === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling postProductPickup'
+            );
+        }
+
+        $resourcePath = '/v1/products/{productId}/pickups.json';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($product_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'productId' . '}',
+                ObjectSerializer::toPathValue($product_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
     /**
      * Operation updateProduct
      *
      * 商品データの更新
      *
-     * @param int $product_id 商品ID (required)
-     * @param \ColorMeShop\Swagger\Model\ProductUpdateRequest $product 商品データ (optional)
+     * @param  int $product_id 商品ID (required)
+     * @param  \ColorMeShop\Swagger\Model\ProductUpdateRequest $product 商品データ (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \ColorMeShop\Swagger\Model\InlineResponse2007
@@ -497,105 +1327,28 @@ class ProductApi
      *
      * 商品データの更新
      *
-     * @param int $product_id 商品ID (required)
-     * @param \ColorMeShop\Swagger\Model\ProductUpdateRequest $product 商品データ (optional)
+     * @param  int $product_id 商品ID (required)
+     * @param  \ColorMeShop\Swagger\Model\ProductUpdateRequest $product 商品データ (optional)
+     *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \ColorMeShop\Swagger\Model\InlineResponse2007, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateProductWithHttpInfo($product_id, $product = null)
     {
-        // verify the required parameter 'product_id' is set
-        if ($product_id === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $product_id when calling updateProduct');
-        }
-
-        $resourcePath = '/v1/products/{productId}.json';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
         $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2007';
-
-
-        // path params
-        if ($product_id !== null) {
-            $resourcePath = str_replace('{' . 'productId' . '}', ObjectSerializer::toPathValue($product_id), $resourcePath);
-        }
-
-        // body params
-        $_tempBody = null;
-        if (isset($product)) {
-            $_tempBody = $product;
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                $httpBody = new MultipartStream($multipartContents); // for HTTP post (form)
-
-            } else {
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams); // for HTTP post (form)
-            }
-        }
-
-        if ($httpBody instanceof MultipartStream) {
-            $headers= $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                ['application/json']
-            );
-        }
-
-        // this endpoint requires OAuth (access token)
-        if ($this->config->getAccessToken() !== null) {
-            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
-        }
-
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        $url = $this->config->getHost() . $resourcePath . ($query ? '?' . $query : '');
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $request = new Request(
-            'PUT',
-            $url,
-            $headers,
-            $httpBody
-        );
+        $request = $this->updateProductRequest($product_id, $product);
 
         try {
-
+            $options = $this->createHttpClientOption();
             try {
-                $response = $this->client->send($request);
+                $response = $this->client->send($request, $options);
             } catch (RequestException $e) {
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
                 );
             }
 
@@ -603,7 +1356,11 @@ class ProductApi
 
             if ($statusCode < 200 || $statusCode > 299) {
                 throw new ApiException(
-                    "[$statusCode] Error connecting to the API ($url)",
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
                     $statusCode,
                     $response->getHeaders(),
                     $response->getBody()
@@ -629,11 +1386,214 @@ class ProductApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = ObjectSerializer::deserialize($e->getResponseBody(), '\ColorMeShop\Swagger\Model\InlineResponse2007', $e->getResponseHeaders());
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse2007',
+                        $e->getResponseHeaders()
+                    );
                     $e->setResponseObject($data);
                     break;
             }
             throw $e;
         }
+    }
+
+    /**
+     * Operation updateProductAsync
+     *
+     * 商品データの更新
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  \ColorMeShop\Swagger\Model\ProductUpdateRequest $product 商品データ (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateProductAsync($product_id, $product = null)
+    {
+        return $this->updateProductAsyncWithHttpInfo($product_id, $product)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation updateProductAsyncWithHttpInfo
+     *
+     * 商品データの更新
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  \ColorMeShop\Swagger\Model\ProductUpdateRequest $product 商品データ (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function updateProductAsyncWithHttpInfo($product_id, $product = null)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2007';
+        $request = $this->updateProductRequest($product_id, $product);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'updateProduct'
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  \ColorMeShop\Swagger\Model\ProductUpdateRequest $product 商品データ (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function updateProductRequest($product_id, $product = null)
+    {
+        // verify the required parameter 'product_id' is set
+        if ($product_id === null) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $product_id when calling updateProduct'
+            );
+        }
+
+        $resourcePath = '/v1/products/{productId}.json';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($product_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'productId' . '}',
+                ObjectSerializer::toPathValue($product_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($product)) {
+            $_tempBody = $product;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'PUT',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Create http client option
+     *
+     * @throws \RuntimeException on file opening failure
+     * @return array of http client options
+     */
+    protected function createHttpClientOption()
+    {
+        $options = [];
+        if ($this->config->getDebug()) {
+            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
+            if (!$options[RequestOptions::DEBUG]) {
+                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+            }
+        }
+
+        return $options;
     }
 }

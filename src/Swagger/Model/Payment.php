@@ -6,19 +6,19 @@
  *
  * @category Class
  * @package  ColorMeShop\Swagger
- * @author   Swaagger Codegen team
+ * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_url`|アプリケーション登録時に入力したリダイレクトURL|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URL&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURLへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURLに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURL|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
  *
- * OpenAPI spec version: v1
+ * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- *
+ * Swagger Codegen version: 2.3.0
  */
 
 /**
@@ -30,27 +30,30 @@
 namespace ColorMeShop\Swagger\Model;
 
 use \ArrayAccess;
+use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
  * Payment Class Doc Comment
  *
- * @category    Class
- * @package     ColorMeShop\Swagger
- * @author      Swagger Codegen team
- * @link        https://github.com/swagger-api/swagger-codegen
+ * @category Class
+ * @package  ColorMeShop\Swagger
+ * @author   Swagger Codegen team
+ * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Payment implements ArrayAccess
+class Payment implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
     /**
       * The original name of the model.
+      *
       * @var string
       */
     protected static $swaggerModelName = 'Payment';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
+      *
       * @var string[]
       */
     protected static $swaggerTypes = [
@@ -73,13 +76,55 @@ class Payment implements ArrayAccess
         'financial' => '\ColorMeShop\Swagger\Model\PaymentFinancial'
     ];
 
+    /**
+      * Array of property to format mappings. Used for (de)serialization
+      *
+      * @var string[]
+      */
+    protected static $swaggerFormats = [
+        'id' => null,
+        'account_id' => null,
+        'name' => null,
+        'fee' => null,
+        'ip_code' => null,
+        'memo' => null,
+        'memo_mobile' => null,
+        'sort' => null,
+        'image_url' => null,
+        'type' => null,
+        'display' => null,
+        'use_mobile' => null,
+        'make_date' => null,
+        'update_date' => null,
+        'cod' => null,
+        'card' => null,
+        'financial' => null
+    ];
+
+    /**
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @return array
+     */
     public static function swaggerTypes()
     {
         return self::$swaggerTypes;
     }
 
     /**
-     * Array of attributes where the key is the local name, and the value is the original name
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @return array
+     */
+    public static function swaggerFormats()
+    {
+        return self::$swaggerFormats;
+    }
+
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
      * @var string[]
      */
     protected static $attributeMap = [
@@ -102,9 +147,9 @@ class Payment implements ArrayAccess
         'financial' => 'financial'
     ];
 
-
     /**
      * Array of attributes to setter functions (for deserialization of responses)
+     *
      * @var string[]
      */
     protected static $setters = [
@@ -127,9 +172,9 @@ class Payment implements ArrayAccess
         'financial' => 'setFinancial'
     ];
 
-
     /**
      * Array of attributes to getter functions (for serialization of requests)
+     *
      * @var string[]
      */
     protected static $getters = [
@@ -152,19 +197,45 @@ class Payment implements ArrayAccess
         'financial' => 'getFinancial'
     ];
 
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @return array
+     */
     public static function attributeMap()
     {
         return self::$attributeMap;
     }
 
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @return array
+     */
     public static function setters()
     {
         return self::$setters;
     }
 
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @return array
+     */
     public static function getters()
     {
         return self::$getters;
+    }
+
+    /**
+     * The original name of the model.
+     *
+     * @return string
+     */
+    public function getModelName()
+    {
+        return self::$swaggerModelName;
     }
 
     
@@ -173,13 +244,16 @@ class Payment implements ArrayAccess
 
     /**
      * Associative array for storing property values
+     *
      * @var mixed[]
      */
     protected $container = [];
 
     /**
      * Constructor
-     * @param mixed[] $data Associated array of property values initializing the model
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
      */
     public function __construct(array $data = null)
     {
@@ -203,23 +277,23 @@ class Payment implements ArrayAccess
     }
 
     /**
-     * show all the invalid properties with reasons.
+     * Show all the invalid properties with reasons.
      *
      * @return array invalid properties with reasons
      */
     public function listInvalidProperties()
     {
-        $invalid_properties = [];
+        $invalidProperties = [];
 
         if (!is_null($this->container['type']) && ($this->container['type'] < 0)) {
-            $invalid_properties[] = "invalid value for 'type', must be bigger than or equal to 0.";
+            $invalidProperties[] = "invalid value for 'type', must be bigger than or equal to 0.";
         }
 
-        return $invalid_properties;
+        return $invalidProperties;
     }
 
     /**
-     * validate all the properties in the model
+     * Validate all the properties in the model
      * return true if all passed
      *
      * @return bool True if all properties are valid
@@ -236,6 +310,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets id
+     *
      * @return int
      */
     public function getId()
@@ -245,7 +320,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets id
+     *
      * @param int $id 決済方法ID
+     *
      * @return $this
      */
     public function setId($id)
@@ -257,6 +334,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets account_id
+     *
      * @return string
      */
     public function getAccountId()
@@ -266,7 +344,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets account_id
+     *
      * @param string $account_id ショップアカウントID
+     *
      * @return $this
      */
     public function setAccountId($account_id)
@@ -278,6 +358,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets name
+     *
      * @return string
      */
     public function getName()
@@ -287,7 +368,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets name
+     *
      * @param string $name 決済名
+     *
      * @return $this
      */
     public function setName($name)
@@ -299,6 +382,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets fee
+     *
      * @return int
      */
     public function getFee()
@@ -308,7 +392,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets fee
+     *
      * @param int $fee 決済手数料
+     *
      * @return $this
      */
     public function setFee($fee)
@@ -320,6 +406,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets ip_code
+     *
      * @return string
      */
     public function getIpCode()
@@ -329,7 +416,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets ip_code
+     *
      * @param string $ip_code GMOイプシロン等との契約コード
+     *
      * @return $this
      */
     public function setIpCode($ip_code)
@@ -341,6 +430,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets memo
+     *
      * @return string
      */
     public function getMemo()
@@ -350,7 +440,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets memo
+     *
      * @param string $memo 説明
+     *
      * @return $this
      */
     public function setMemo($memo)
@@ -362,6 +454,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets memo_mobile
+     *
      * @return string
      */
     public function getMemoMobile()
@@ -371,7 +464,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets memo_mobile
+     *
      * @param string $memo_mobile フィーチャーフォン向けショップ用の説明
+     *
      * @return $this
      */
     public function setMemoMobile($memo_mobile)
@@ -383,6 +478,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets sort
+     *
      * @return int
      */
     public function getSort()
@@ -392,7 +488,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets sort
+     *
      * @param int $sort 表示順
+     *
      * @return $this
      */
     public function setSort($sort)
@@ -404,6 +502,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets image_url
+     *
      * @return string
      */
     public function getImageUrl()
@@ -413,7 +512,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets image_url
+     *
      * @param string $image_url 決済画像URL
+     *
      * @return $this
      */
     public function setImageUrl($image_url)
@@ -425,6 +526,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets type
+     *
      * @return int
      */
     public function getType()
@@ -434,7 +536,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets type
+     *
      * @param int $type 決済タイプを表す数値。  |type|決済| |---|---| |0|代引き| |1|銀行振込| |2|郵便振替| |3|クレジット（ZEUS）| |4|クロネコ@ペイメント| |5|NP後払い| |6|クレジット（イプシロン）| |7|コンビニ決済（イプシロン）| |8|カラーミークレジット| |9|その他決済| |10|ウェブマネー| |11|イーバンクデビット| |12|ネット銀行（イプシロン）| |13|電子マネー（イプシロン）| |14|ATM・コンビニ・ネット銀行決済（ペイジェント）| |15|Do-Link決済（イプシロン）| |16|ペイジー（イプシロン）| |17|後払い.com| |18|ジャパンネット銀行（送料無料キャンペーン）| |19|クロネコwebコレクト| |20|PayPal（イプシロン）| |21|Yahoo!ウォレット（イプシロン）| |22|全額ポイント利用| |23|スマートフォンキャリア決済（イプシロン）| |24|GMO PG マルチペイメントクレジットカード| |25|住信SBIネット銀行（イプシロン）| |26|GMO後払い（イプシロン）| |27|GMO後払い（GMOペイメントサービス）| |28| - | |29|ATM（ペイジー）（ペイジェント）| |30|カード（ペイジェント）| |31|コンビニ番号方式（ペイジェント）| |32|インターネットバンキング（ペイジェント）| |33|PayPal（ペイパル）| |34|SMBC GMO PAYMENTクレジットカード| |35|Amazon Pay| |36|楽天ペイ（オンライン決済）|
+     *
      * @return $this
      */
     public function setType($type)
@@ -451,6 +555,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets display
+     *
      * @return bool
      */
     public function getDisplay()
@@ -460,7 +565,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets display
+     *
      * @param bool $display 表示設定。`true`なら表示される
+     *
      * @return $this
      */
     public function setDisplay($display)
@@ -472,6 +579,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets use_mobile
+     *
      * @return bool
      */
     public function getUseMobile()
@@ -481,7 +589,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets use_mobile
+     *
      * @param bool $use_mobile フィーチャーフォン向けショップでの表示設定
+     *
      * @return $this
      */
     public function setUseMobile($use_mobile)
@@ -493,6 +603,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets make_date
+     *
      * @return int
      */
     public function getMakeDate()
@@ -502,7 +613,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets make_date
+     *
      * @param int $make_date 決済作成日時
+     *
      * @return $this
      */
     public function setMakeDate($make_date)
@@ -514,6 +627,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets update_date
+     *
      * @return int
      */
     public function getUpdateDate()
@@ -523,7 +637,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets update_date
+     *
      * @param int $update_date 決済更新日時
+     *
      * @return $this
      */
     public function setUpdateDate($update_date)
@@ -535,6 +651,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets cod
+     *
      * @return \ColorMeShop\Swagger\Model\PaymentCod
      */
     public function getCod()
@@ -544,7 +661,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets cod
-     * @param \ColorMeShop\Swagger\Model\PaymentCod $cod
+     *
+     * @param \ColorMeShop\Swagger\Model\PaymentCod $cod cod
+     *
      * @return $this
      */
     public function setCod($cod)
@@ -556,6 +675,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets card
+     *
      * @return \ColorMeShop\Swagger\Model\PaymentCard
      */
     public function getCard()
@@ -565,7 +685,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets card
-     * @param \ColorMeShop\Swagger\Model\PaymentCard $card
+     *
+     * @param \ColorMeShop\Swagger\Model\PaymentCard $card card
+     *
      * @return $this
      */
     public function setCard($card)
@@ -577,6 +699,7 @@ class Payment implements ArrayAccess
 
     /**
      * Gets financial
+     *
      * @return \ColorMeShop\Swagger\Model\PaymentFinancial
      */
     public function getFinancial()
@@ -586,7 +709,9 @@ class Payment implements ArrayAccess
 
     /**
      * Sets financial
-     * @param \ColorMeShop\Swagger\Model\PaymentFinancial $financial
+     *
+     * @param \ColorMeShop\Swagger\Model\PaymentFinancial $financial financial
+     *
      * @return $this
      */
     public function setFinancial($financial)
@@ -597,7 +722,9 @@ class Payment implements ArrayAccess
     }
     /**
      * Returns true if offset exists. False otherwise.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return boolean
      */
     public function offsetExists($offset)
@@ -607,7 +734,9 @@ class Payment implements ArrayAccess
 
     /**
      * Gets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -617,8 +746,10 @@ class Payment implements ArrayAccess
 
     /**
      * Sets value based on offset.
-     * @param  integer $offset Offset
-     * @param  mixed   $value  Value to be set
+     *
+     * @param integer $offset Offset
+     * @param mixed   $value  Value to be set
+     *
      * @return void
      */
     public function offsetSet($offset, $value)
@@ -632,7 +763,9 @@ class Payment implements ArrayAccess
 
     /**
      * Unsets offset.
-     * @param  integer $offset Offset
+     *
+     * @param integer $offset Offset
+     *
      * @return void
      */
     public function offsetUnset($offset)
@@ -642,15 +775,19 @@ class Payment implements ArrayAccess
 
     /**
      * Gets the string presentation of the object
+     *
      * @return string
      */
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(
+                ObjectSerializer::sanitizeForSerialization($this),
+                JSON_PRETTY_PRINT
+            );
         }
 
-        return json_encode(\ColorMeShop\Swagger\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 
