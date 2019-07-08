@@ -39,7 +39,7 @@ class Image implements Shortcode_Interface {
 
 		switch ( $filtered_atts['type'] ) {
 			case 'main':
-				$image_url = ( $product['mobile_image_url'] && $container['is_mobile'] ) ? $product['mobile_image_url'] : $product['image_url'];
+				$image_url = $product['image_url'];
 				break;
 			case 'thumbnail':
 				$image_url = $product['thumbnail_image_url'];
