@@ -93,26 +93,6 @@ class Image_Test extends \WP_UnitTestCase {
 		);
 	}
 
-	/**
-	 * @test
-	 * @vcr shortcodes/product/image/200.yml
-	 */
-	public function show_モバイル用商品画像のタグを返す() {
-		$this->container['is_mobile'] = function ( $c ) {
-			return true;
-		};
-		$this->assertSame(
-			'<img src="http://img21.shop-pro.jp/PA01356/136/product/118849164_mb.jpg?cmsp_timestamp=20170622190708" />',
-			Image::show(
-				$this->container,
-				[
-					'product_id' => 123,
-				],
-				null,
-				null
-			)
-		);
-	}
 
 	/**
 	 * @test
@@ -191,41 +171,6 @@ class Image_Test extends \WP_UnitTestCase {
 
 		$this->assertSame(
 			'<img src="http://img21.shop-pro.jp/PA01356/136/product/118849164_o2.jpg?cmsp_timestamp=20170623170718" />',
-			Image::show(
-				$this->container,
-				[
-					'product_id' => 123,
-					'type' => 'other2',
-				],
-				null,
-				null
-			)
-		);
-	}
-
-	/**
-	 * @test
-	 * @vcr shortcodes/product/image/200.yml
-	 */
-	public function show_モバイル用その他画像のタグを返す() {
-		$this->container['is_mobile'] = function ( $c ) {
-			return true;
-		};
-		$this->assertSame(
-			'<img src="http://img21.shop-pro.jp/PA01356/136/product/118849164_o1_mb.jpg" />',
-			Image::show(
-				$this->container,
-				[
-					'product_id' => 123,
-					'type' => 'other1',
-				],
-				null,
-				null
-			)
-		);
-
-		$this->assertSame(
-			'<img src="http://img21.shop-pro.jp/PA01356/136/product/118849164_o2_mb.jpg" />',
 			Image::show(
 				$this->container,
 				[
