@@ -57,3 +57,5 @@ If you have any questions, please let me know via https://goo.gl/forms/s6zzeS3Q7
 * プラグインの説明文を更新
 = 1.0.2 =
 * 商品カテゴリー一覧ページの不具合を修正
+* = 1.0.3 =
+* 商品画像のショートコード不具合を修正
