@@ -89,15 +89,11 @@ class Image implements Shortcode_Interface {
 
 	/**
 	 * @param \stdClass $product
-	 * @param bool $is_mobile
 	 * @return array
 	 */
-	private static function extract_other_images( $product, $is_mobile ) {
-		$filtered_images = array_filter($product['images'], function ( $image ) use ( $is_mobile ) {
-			if ( $is_mobile ) {
-				return $image['mobile'];
-			}
-
+	private static function extract_other_images( $product ) {
+	    // その他画像のリストからフィーチャーフォン版用画像を取り除く
+		$filtered_images = array_filter($product['images'], function ( $image ) {
 			return ! $image['mobile'];
 		});
 
@@ -114,8 +110,7 @@ class Image implements Shortcode_Interface {
 	private static function extract_other_image( $container, $filtered_atts ) {
 		$index = self::extract_other_image_index( $filtered_atts['type'] );
 		$other_images = self::extract_other_images(
-			$container['api.product_api']->fetch( $filtered_atts['product_id'] )['product'],
-			$container['is_mobile']
+			$container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']
 		);
 
 		return isset( $other_images[ $index - 1 ] ) ? $other_images[ $index - 1 ]['src'] : '';
