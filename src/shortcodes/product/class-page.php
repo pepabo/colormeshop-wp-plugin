@@ -37,15 +37,13 @@ class Page implements Shortcode_Interface {
 
 		if ( empty( $filtered_atts['product_id'] ) ) {
 			if ( $container['WP_DEBUG_LOG'] ) {
-				error_log( 'パラメータが不足しています. atts: ' . json_encode( $filtered_atts ) );
+				error_log( '商品IDのパラメータが不足しています. atts: ' . json_encode( $filtered_atts ) );
 			}
 			return '';
 		}
 
 		try {
-			if (isset( $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']) ) {
-				$product = $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product'];
-			}
+			$product = $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product'];
 		} catch ( \RuntimeException $e ) {
 			if ( $container['WP_DEBUG_LOG'] ) {
 				error_log( $e );
