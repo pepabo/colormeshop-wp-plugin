@@ -47,6 +47,10 @@ class Product_Api {
 	 * @return \ColorMeShop\Swagger\Model\InlineResponse2007
 	 */
 	public function fetch( $product_id ) {
+		if ( empty($product_id) ) {
+			return [];
+		}
+
 		if ( isset( $this->caches[ $product_id ] ) ) {
 			return $this->caches[ $product_id ];
 		}
