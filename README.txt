@@ -61,3 +61,5 @@ If you have any questions, please let me know via https://goo.gl/forms/s6zzeS3Q7
 * 商品画像のショートコード不具合を修正
 = 1.0.4 =
 * 商品画像のショートコード不具合を修正
+= 1.0.5 =
+* 管理画面での編集時にエラーが出る不具合を修正
