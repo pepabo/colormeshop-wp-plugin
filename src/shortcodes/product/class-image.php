@@ -28,6 +28,13 @@ class Image implements Shortcode_Interface {
 			$atts
 		);
 
+		if ( empty( $filtered_atts['product_id'] ) ) {
+			if ( $container['WP_DEBUG_LOG'] ) {
+				error_log( '商品IDのパラメータが不足しています. atts: ' . json_encode( $filtered_atts ) );
+			}
+			return '';
+		}
+
 		try {
 			$product = $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product'];
 		} catch ( ApiException $e ) {
