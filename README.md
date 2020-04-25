@@ -48,18 +48,18 @@ $ open http://localhost:8080
 
 ### コーディング規約
 
-PHP_CodeSniffer の WordPress 用ルールセットである [WordPress-Coding-Standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards) を利用することを推奨しています。
+PHP_CodeSniffer の WordPress 用ルールセットである [WordPress-Coding-Standards](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards) を利用しています。
 
-当プラグインでは上記ルールセットの [WordPress-Core](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards#rulesets) に準拠していますので、Pull Request を作成される際は予め規約エラーがないことを確認してください。
+また、PHPの互換性をチェックするために、[PHPCompatibility](https://github.com/PHPCompatibility/PHPCompatibility)も利用しています。
+
+これらの設定は、[ruleset.xml](./ruleset.xml)にあります。以下のコマンドで、phpcsによるチェックや自動変換を行うことができます。
 
 
 ```
-# インストール
-$ composer create-project wp-coding-standards/wpcs --no-dev
 # 規約チェック
-$ wpcs/vendor/bin/phpcs --standard=WordPress-Core hoge.php
+$ docker-compose run composer vendor/bin/phpcs --standard=ruleset.xml
 # インデントなどは自動整形できます
-$ wpcs/vendor/bin/phpcbf --standard=WordPress-Core hoge.php
+$ docker-compose run composer vendor/bin/phpcbf --standard=ruleset.xml
 ```
 
 ### APIクライアント
