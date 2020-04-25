@@ -48,7 +48,7 @@ class Product_Api {
 	 */
 	public function fetch( $product_id ) {
 		if ( empty( $product_id ) ) {
-			return [];
+			return array();
 		}
 
 		if ( isset( $this->caches[ $product_id ] ) ) {
