@@ -21,7 +21,11 @@
   "require-dev": {
     "phpunit/phpunit": "^5.0",
     "php-vcr/php-vcr": "^1.3",
-    "php-vcr/phpunit-testlistener-vcr": "^1.0"
+    "php-vcr/phpunit-testlistener-vcr": "^1.0",
+    "squizlabs/php_codesniffer": "*",
+    "wp-coding-standards/wpcs": "*",
+    "phpcompatibility/php-compatibility": "*",
+    "dealerdirect/phpcodesniffer-composer-installer": "*"
   },
   "autoload": {
     "classmap": ["src/"]
