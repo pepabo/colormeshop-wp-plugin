@@ -50,9 +50,9 @@ class Admin {
 	}
 
 	public function register() {
-		add_action( 'admin_init', [ $this, 'page_init' ] );
-		add_action( 'admin_menu', [ $this, 'add_plugin_page' ] );
-		add_action( 'wp_ajax_colormeshop_callback', [ $this, 'wp_ajax_colormeshop_callback' ] );
+		add_action( 'admin_init', array( $this, 'page_init' ) );
+		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
+		add_action( 'wp_ajax_colormeshop_callback', array( $this, 'wp_ajax_colormeshop_callback' ) );
 	}
 
 	/**
@@ -62,10 +62,14 @@ class Admin {
 	 */
 	public function add_plugin_page() {
 		add_menu_page(
-			'カラーミーショップ', 'カラーミーショップ', 'manage_options', self::MENU_SLUG, [
+			'カラーミーショップ',
+			'カラーミーショップ',
+			'manage_options',
+			self::MENU_SLUG,
+			array(
 				$this,
 				'create_admin_page',
-			]
+			)
 		);
 	}
 
@@ -82,28 +86,44 @@ class Admin {
 		register_setting( Setting::KEY, Setting::KEY );
 		add_settings_section( 'general', '', '', self::MENU_SLUG );
 		add_settings_field(
-			'client_id', 'クライアントID', [
+			'client_id',
+			'クライアントID',
+			array(
 				$this,
 				'client_id_setting_callback',
-			], self::MENU_SLUG, 'general'
+			),
+			self::MENU_SLUG,
+			'general'
 		);
 		add_settings_field(
-			'client_secret', 'クライアントシークレット', [
+			'client_secret',
+			'クライアントシークレット',
+			array(
 				$this,
 				'client_secret_setting_callback',
-			], self::MENU_SLUG, 'general'
+			),
+			self::MENU_SLUG,
+			'general'
 		);
 		add_settings_field(
-			'token', 'トークン', [
+			'token',
+			'トークン',
+			array(
 				$this,
 				'token_setting_callback',
-			], self::MENU_SLUG, 'general'
+			),
+			self::MENU_SLUG,
+			'general'
 		);
 		add_settings_field(
-			'product_page_id', '商品ページID', [
+			'product_page_id',
+			'商品ページID',
+			array(
 				$this,
 				'pruduct_page_id_setting_callback',
-			], self::MENU_SLUG, 'general'
+			),
+			self::MENU_SLUG,
+			'general'
 		);
 	}
 
@@ -162,14 +182,15 @@ class Admin {
 	 */
 	public function on_authorized() {
 		$access_token = $this->oauth2_client->getAccessToken(
-			'authorization_code', [
+			'authorization_code',
+			array(
 				'code' => $_GET['code'],
-			]
+			)
 		);
 		$this->setting->update(
-			[
+			array(
 				'token' => $access_token->getToken(),
-			]
+			)
 		);
 	}
 }

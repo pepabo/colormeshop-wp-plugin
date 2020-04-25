@@ -20,10 +20,10 @@ class Page implements Shortcode_Interface {
 	 */
 	public static function show( $container, $atts, $content, $tag ) {
 		$filtered_atts = shortcode_atts(
-			[
+			array(
 				'product_id' => $container['target_id'],
-				'template' => 'default',
-			],
+				'template'   => 'default',
+			),
 			$atts
 		);
 		$template_file = $container['templates_dir'] . '/product/' . $filtered_atts['template'] . '.php';

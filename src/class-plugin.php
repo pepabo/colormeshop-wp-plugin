@@ -40,15 +40,18 @@ class Plugin {
 			$this->container['admin']->register();
 		}
 
-		add_action( 'init', [ $this, 'add_rewrite_rules' ] );
-		add_action( 'update_option_' . Setting::KEY, [ $this, 'on_update_settings' ] , 10, 2 );
-		add_filter( 'document_title_parts', [ $this, 'filter_title' ] );
-		add_filter( 'query_vars', [ $this, 'add_query_vars' ] );
+		add_action( 'init', array( $this, 'add_rewrite_rules' ) );
+		add_action( 'update_option_' . Setting::KEY, array( $this, 'on_update_settings' ), 10, 2 );
+		add_filter( 'document_title_parts', array( $this, 'filter_title' ) );
+		add_filter( 'query_vars', array( $this, 'add_query_vars' ) );
 		add_filter( 'template_redirect', array( $this, 'handle_template_redirect' ), 1, 0 );
-		register_activation_hook( dirname( __DIR__ ) . '/colormeshop-wp-plugin.php', [
-			$this,
-			'flush_rewrite_rules',
-		] );
+		register_activation_hook(
+			dirname( __DIR__ ) . '/colormeshop-wp-plugin.php',
+			array(
+				$this,
+				'flush_rewrite_rules',
+			)
+		);
 	}
 
 	/**
@@ -58,14 +61,14 @@ class Plugin {
 	 * @return void
 	 */
 	public function add_rewrite_rules( $settings = null ) {
-		$product_page_id = ($settings && isset( $settings['product_page_id'] )) ? $settings['product_page_id'] : $this->container['model.setting']->product_page_id();
+		$product_page_id = ( $settings && isset( $settings['product_page_id'] ) ) ? $settings['product_page_id'] : $this->container['model.setting']->product_page_id();
 		if ( ! $this->container['model.setting']->is_valid_product_page_id( $product_page_id ) ) {
 			return;
 		}
 
 		// サイトマップ用のリライトルール
 		$product_page_path = str_replace( site_url(), '', get_permalink( $product_page_id ) );
-		$trimmed = trim( $product_page_path, '/' );
+		$trimmed           = trim( $product_page_path, '/' );
 		add_rewrite_rule( '^' . $trimmed . '/sitemap\.xml$', 'index.php?page_id=' . $product_page_id . '&colorme_page=sitemap', 'top' );
 	}
 
@@ -160,7 +163,7 @@ class Plugin {
 				exit;
 			}
 			// ヘッダやサイドバー等を残して、本文のみを差し替えるために the_content をフィルタする
-			add_filter( 'the_content', [ $this, 'show_categories' ] );
+			add_filter( 'the_content', array( $this, 'show_categories' ) );
 			return;
 		}
 
@@ -171,7 +174,7 @@ class Plugin {
 				include $template;
 				exit;
 			}
-			add_filter( 'the_content', [ $this, 'show_items' ] );
+			add_filter( 'the_content', array( $this, 'show_items' ) );
 			return;
 		}
 
@@ -235,7 +238,7 @@ class Plugin {
 	 */
 	private function output_sitemap_index() {
 		global $wp_query;
-		$wp_query->is_404 = false;
+		$wp_query->is_404  = false;
 		$wp_query->is_feed = true;
 
 		header( 'Content-Type:text/xml' );
@@ -257,7 +260,7 @@ class Plugin {
 	 */
 	private function output_sitemap( $offset ) {
 		global $wp_query;
-		$wp_query->is_404 = false;
+		$wp_query->is_404  = false;
 		$wp_query->is_feed = true;
 
 		header( 'Content-Type:text/xml' );
@@ -292,11 +295,13 @@ class Plugin {
 		};
 
 		$container['oauth2_client'] = function ( $c ) {
-			return new OAuth2Client( [
-				'clientId'     => $c['model.setting']->client_id(),
-				'clientSecret' => $c['model.setting']->client_secret(),
-				'redirectUri'  => admin_url( 'admin-ajax.php?action=colormeshop_callback' ),
-			] );
+			return new OAuth2Client(
+				array(
+					'clientId'     => $c['model.setting']->client_id(),
+					'clientSecret' => $c['model.setting']->client_secret(),
+					'redirectUri'  => admin_url( 'admin-ajax.php?action=colormeshop_callback' ),
+				)
+			);
 		};
 
 		$container['target_id'] = function ( $c ) {
@@ -370,14 +375,14 @@ class Plugin {
 		};
 
 		$shortcode_invoker = new Shortcode_Invoker( $this->container );
-		$classmap = include( __DIR__ . '/../vendor/composer/autoload_classmap.php' );
+		$classmap          = include( __DIR__ . '/../vendor/composer/autoload_classmap.php' );
 		foreach ( $classmap as $class => $path ) {
 			if ( strpos( $path, dirname( __DIR__ ) . '/src/shortcodes/' ) !== 0 ) {
 				continue;
 			}
 			add_shortcode(
-				call_user_func( [ $class, 'name' ] ),
-				[ $shortcode_invoker, $to_invoker_methodname( $class ) ]
+				call_user_func( array( $class, 'name' ) ),
+				array( $shortcode_invoker, $to_invoker_methodname( $class ) )
 			);
 		}
 	}

@@ -21,10 +21,10 @@ class Image implements Shortcode_Interface {
 	 */
 	public static function show( $container, $atts, $content, $tag ) {
 		$filtered_atts = shortcode_atts(
-			[
+			array(
 				'product_id' => $container['target_id'],
-				'type' => 'main',
-			],
+				'type'       => 'main',
+			),
 			$atts
 		);
 
@@ -99,10 +99,13 @@ class Image implements Shortcode_Interface {
 	 * @return array
 	 */
 	private static function extract_other_images( $product ) {
-	    // その他画像のリストからフィーチャーフォン版用画像を取り除く
-		$filtered_images = array_filter($product['images'], function ( $image ) {
-			return ! $image['mobile'];
-		});
+		// その他画像のリストからフィーチャーフォン版用画像を取り除く
+		$filtered_images = array_filter(
+			$product['images'],
+			function ( $image ) {
+				return ! $image['mobile'];
+			}
+		);
 
 		return array_values( $filtered_images );
 	}
@@ -115,7 +118,7 @@ class Image implements Shortcode_Interface {
 	 * @return string
 	 */
 	private static function extract_other_image( $container, $filtered_atts ) {
-		$index = self::extract_other_image_index( $filtered_atts['type'] );
+		$index        = self::extract_other_image_index( $filtered_atts['type'] );
 		$other_images = self::extract_other_images(
 			$container['api.product_api']->fetch( $filtered_atts['product_id'] )['product']
 		);
