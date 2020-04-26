@@ -40,5 +40,5 @@ jobs:
 
       - run: composer install
 
-      - run: bin/install-wp-tests.sh test root root-password mysql
+      - run: bin/install-wp-tests.sh test root root-password mysql:${{ job.services.mysql.ports['3306'] }}
       - run: ./vendor/bin/phpunit
