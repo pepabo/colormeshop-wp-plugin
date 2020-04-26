@@ -26,10 +26,10 @@ class Product implements Shortcode_Interface {
 	 */
 	public static function show( $container, $atts, $content, $tag ) {
 		$filtered_atts = shortcode_atts(
-			[
+			array(
 				'product_id' => $container['target_id'],
-				'data' => null,
-			],
+				'data'       => null,
+			),
 			$atts
 		);
 
@@ -43,8 +43,8 @@ class Product implements Shortcode_Interface {
 		if ( method_exists( self::class, '_' . $filtered_atts['data'] ) ) {
 			try {
 				return call_user_func_array(
-					[ self::class, '_' . $filtered_atts['data'] ],
-					[ $container, $filtered_atts, $content, $tag ]
+					array( self::class, '_' . $filtered_atts['data'] ),
+					array( $container, $filtered_atts, $content, $tag )
 				);
 			} catch ( ApiException $e ) {
 				if ( $container['WP_DEBUG_LOG'] ) {

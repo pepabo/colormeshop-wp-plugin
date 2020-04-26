@@ -32,14 +32,14 @@ class Url_Builder {
 	 * @param array $params
 	 * @return string
 	 */
-	public function items( $params = [] ) {
+	public function items( $params = array() ) {
 		if ( $this->product_page_has_query() ) {
 			$items_url = $this->product_page_permalink() . '&colorme_page=items';
 		} else {
 			$items_url = trim( $this->product_page_permalink(), '/' ) . '/?colorme_page=items';
 		}
 
-		return $items_url . ( ($params) ? '&' . http_build_query( $params ) : '');
+		return $items_url . ( ( $params ) ? '&' . http_build_query( $params ) : '' );
 	}
 
 	/**
@@ -66,10 +66,10 @@ class Url_Builder {
 	 */
 	public function sitemap( $offset = null ) {
 		if ( $this->product_page_has_query() ) {
-			return $this->product_page_permalink() . '&colorme_page=sitemap' . ((null === $offset) ? '' : '&offset=' . $offset);
+			return $this->product_page_permalink() . '&colorme_page=sitemap' . ( ( null === $offset ) ? '' : '&offset=' . $offset );
 		}
 
-		return trim( $this->product_page_permalink(), '/' ) . '/sitemap.xml' . ((null === $offset) ? '' : '?offset=' . $offset);
+		return trim( $this->product_page_permalink(), '/' ) . '/sitemap.xml' . ( ( null === $offset ) ? '' : '?offset=' . $offset );
 	}
 
 	/**

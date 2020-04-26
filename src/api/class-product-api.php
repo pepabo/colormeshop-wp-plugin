@@ -27,7 +27,7 @@ class Product_Api {
 	/**
 	 * @var array
 	 */
-	private $caches = [];
+	private $caches = array();
 
 	/**
 	 * @param Paginator_Factory $paginator_factory
@@ -35,7 +35,7 @@ class Product_Api {
 	 */
 	public function __construct( $paginator_factory, $swagger_api ) {
 		$this->paginator_factory = $paginator_factory;
-		$this->swagger_api = $swagger_api;
+		$this->swagger_api       = $swagger_api;
 	}
 
 	/**
@@ -47,8 +47,8 @@ class Product_Api {
 	 * @return \ColorMeShop\Swagger\Model\InlineResponse2007
 	 */
 	public function fetch( $product_id ) {
-		if ( empty($product_id) ) {
-			return [];
+		if ( empty( $product_id ) ) {
+			return array();
 		}
 
 		if ( isset( $this->caches[ $product_id ] ) ) {
@@ -68,10 +68,14 @@ class Product_Api {
 	 */
 	public function total() {
 		try {
-			$response = (new Client)->send( $this->create_request( [
-				'limit' => 1,
-				'offset' => 0,
-			] ) );
+			$response = ( new Client )->send(
+				$this->create_request(
+					array(
+						'limit'  => 1,
+						'offset' => 0,
+					)
+				)
+			);
 		} catch ( RequestException $e ) {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
@@ -88,30 +92,36 @@ class Product_Api {
 	 */
 	public function fetch_with_callback( $fulfilled, $initial_offset, $limit ) {
 		$client = new Client;
-		$total = $this->total();
+		$total  = $this->total();
 
 		$should_continue = function ( $current_offset ) use ( $total, $initial_offset, $limit ) {
 			return $current_offset < $total
-				&& $current_offset < ($initial_offset + $limit);
+				&& $current_offset < ( $initial_offset + $limit );
 		};
 
 		// 商品情報を取得
 		$requests = function () use ( $initial_offset, $should_continue ) {
-			for ( $offset = $initial_offset; $should_continue($offset); $offset += self::MAXIMUM_NUMBER_PER_REQUEST ) {
-				yield $this->create_request( [
-					'limit' => self::MAXIMUM_NUMBER_PER_REQUEST,
-					'offset' => $offset,
-				] );
+			for ( $offset = $initial_offset; $should_continue( $offset ); $offset += self::MAXIMUM_NUMBER_PER_REQUEST ) {
+				yield $this->create_request(
+					array(
+						'limit'  => self::MAXIMUM_NUMBER_PER_REQUEST,
+						'offset' => $offset,
+					)
+				);
 			}
 		};
 
-		$pool = new Pool($client, $requests(), [
-			'concurrency' => 5,
-			'fulfilled' => $fulfilled,
-			'rejected' => function ( $reason ) {
-				throw new \RuntimeException( $reason->getMessage() );
-			},
-		]);
+		$pool = new Pool(
+			$client,
+			$requests(),
+			array(
+				'concurrency' => 5,
+				'fulfilled'   => $fulfilled,
+				'rejected'    => function ( $reason ) {
+					throw new \RuntimeException( $reason->getMessage() );
+				},
+			)
+		);
 		$pool->promise()->wait();
 	}
 
@@ -121,7 +131,7 @@ class Product_Api {
 	 */
 	public function paginate( $params ) {
 		try {
-			$response = (new Client)->send( $this->create_request( $params ) );
+			$response = ( new Client )->send( $this->create_request( $params ) );
 		} catch ( RequestException $e ) {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
@@ -141,9 +151,9 @@ class Product_Api {
 		return new Request(
 			'GET',
 			'https://api.shop-pro.jp/v1/products.json?' . http_build_query( $params ),
-			[
+			array(
 				'Authorization' => 'Bearer ' . $this->swagger_api->getConfig()->getAccessToken(),
-			]
+			)
 		);
 	}
 

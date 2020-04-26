@@ -17,7 +17,7 @@ class Paginator_Factory {
 	 * @param int $current_page_no
 	 */
 	public function __construct( Url_Builder $url_builder, $current_page_no ) {
-		$this->url_builder = $url_builder;
+		$this->url_builder     = $url_builder;
 		$this->current_page_no = $current_page_no;
 	}
 

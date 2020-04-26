@@ -34,8 +34,8 @@ class Sitemap {
 	 */
 	public function __construct( $product_api, $url ) {
 		$this->product_api = $product_api;
-		$this->url = $url;
-		$this->sitemap = new S();
+		$this->url         = $url;
+		$this->sitemap     = new S();
 	}
 
 	/**
@@ -46,7 +46,7 @@ class Sitemap {
 	 */
 	public function generate_index() {
 		$sitemap_index = new SitemapIndex;
-		$total = $this->product_api->total();
+		$total         = $this->product_api->total();
 
 		for ( $i = 0; $i <= $total; $i += self::NUMBER_OF_ITEM_URLS_PER_PAGE ) {
 			$sitemap_index->add( $this->url->sitemap( $i ), null );

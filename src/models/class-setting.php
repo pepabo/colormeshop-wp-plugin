@@ -11,8 +11,8 @@ class Setting {
 	 */
 	public function get( $name = null ) {
 		$setting = get_option( self::KEY );
-		if ( $name === null ) {
-			return $setting ? $setting : [];
+		if ( is_null( $name ) ) {
+			return $setting ? $setting : array();
 		}
 
 		return $setting && array_key_exists( $name, $setting ) ? $setting[ $name ] : '';

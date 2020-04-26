@@ -24,9 +24,9 @@ class Paginator {
 	 */
 	public function __construct( $search_params, $response, $product_page_url, $page_name, $current_page_no ) {
 		$pager_params = array_merge(
-			[
+			array(
 				'colorme_page' => $page_name,
-			],
+			),
 			$search_params
 		);
 		unset( $pager_params['limit'] );
@@ -37,13 +37,13 @@ class Paginator {
 			$response['meta']['total'],
 			$response['meta']['limit'],
 			$current_page_no,
-			[
-				'path' => $product_page_url,
-				'query' => $pager_params,
+			array(
+				'path'     => $product_page_url,
+				'query'    => $pager_params,
 				'pageName' => 'page_no',
-			]
+			)
 		);
-		$this->response = $response;
+		$this->response  = $response;
 	}
 
 	/**
