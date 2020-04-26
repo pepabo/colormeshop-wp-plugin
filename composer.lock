@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c62d31a3d57415836750d85786418b60",
+    "content-hash": "2632665726a794e86f59c47037bf84ac",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1338,22 +1338,30 @@
         },
         {
             "name": "php-vcr/phpunit-testlistener-vcr",
-            "version": "1.1.7",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-vcr/phpunit-testlistener-vcr.git",
-                "reference": "e29c11dcf2a215ff51f0ae5cdf56dfd3cdd30c11"
+                "reference": "aa276316fbfd6be5919a7a351bde0beb3d332fab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-vcr/phpunit-testlistener-vcr/zipball/e29c11dcf2a215ff51f0ae5cdf56dfd3cdd30c11",
-                "reference": "e29c11dcf2a215ff51f0ae5cdf56dfd3cdd30c11",
+                "url": "https://api.github.com/repos/php-vcr/phpunit-testlistener-vcr/zipball/aa276316fbfd6be5919a7a351bde0beb3d332fab",
+                "reference": "aa276316fbfd6be5919a7a351bde0beb3d332fab",
                 "shasum": ""
             },
             "require": {
-                "php-vcr/php-vcr": "*"
+                "php-vcr/php-vcr": "^1.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7"
             },
             "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "VCR\\PHPUnit\\TestListener\\": "src/"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -1365,7 +1373,7 @@
                 }
             ],
             "description": "Integrates PHPUnit with PHP-VCR.",
-            "time": "2016-01-12T21:15:47+00:00"
+            "time": "2018-06-22T07:52:39+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
