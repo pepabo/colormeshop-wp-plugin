@@ -17,3 +17,28 @@ jobs:
       - run: composer install
 
       - run: ./vendor/bin/phpcs --standard=./ruleset.xml
+
+  phpunit:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root-password
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.3'
+          tools: composer
+
+      - run: composer install
+
+      - run: bin/install-wp-tests.sh test root root-password mysql
+      - run: ./vendor/bin/phpunit
