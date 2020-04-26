@@ -45,6 +45,7 @@ class Plugin_Test extends \WP_UnitTestCase {
 #
 __EOS__;
 		$this->expectOutputRegex( $regex );
+		the_post();
 		the_content();
 	}
 
@@ -76,6 +77,7 @@ __EOS__;
 #
 __EOS__;
 		$this->expectOutputRegex( $regex );
+		the_post();
 		the_content();
 	}
 

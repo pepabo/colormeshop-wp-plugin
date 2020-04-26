@@ -3,7 +3,6 @@ version: "3"
 services:
   wordpress:
     build: .
-    container_name: "colormeshop_wp_plugin_wordpress"
     ports:
       - 8080:80
     env_file: wp.env
@@ -12,6 +11,8 @@ services:
       - vendor_data:/var/www/html/wp-content/plugins/colormeshop-wp-plugin/vendor
     depends_on:
       - composer
+      - mysql
+    links:
       - mysql
 
   composer:
