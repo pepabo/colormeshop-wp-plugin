@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c62d31a3d57415836750d85786418b60",
+    "content-hash": "690c063b80c2e7e1eca4f7f4aae4594c",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1338,20 +1338,23 @@
         },
         {
             "name": "php-vcr/phpunit-testlistener-vcr",
-            "version": "1.1.7",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-vcr/phpunit-testlistener-vcr.git",
-                "reference": "e29c11dcf2a215ff51f0ae5cdf56dfd3cdd30c11"
+                "reference": "392d7e11bfe30d7c376ba2bc25d3f372bcea98cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-vcr/phpunit-testlistener-vcr/zipball/e29c11dcf2a215ff51f0ae5cdf56dfd3cdd30c11",
-                "reference": "e29c11dcf2a215ff51f0ae5cdf56dfd3cdd30c11",
+                "url": "https://api.github.com/repos/php-vcr/phpunit-testlistener-vcr/zipball/392d7e11bfe30d7c376ba2bc25d3f372bcea98cb",
+                "reference": "392d7e11bfe30d7c376ba2bc25d3f372bcea98cb",
                 "shasum": ""
             },
             "require": {
-                "php-vcr/php-vcr": "*"
+                "php-vcr/php-vcr": "^1.1.8"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.0"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -1365,7 +1368,7 @@
                 }
             ],
             "description": "Integrates PHPUnit with PHP-VCR.",
-            "time": "2016-01-12T21:15:47+00:00"
+            "time": "2016-12-19T10:10:57+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
