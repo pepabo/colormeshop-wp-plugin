@@ -14,15 +14,15 @@
 	<filter>
 		<whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
 			<directory suffix=".php">./src</directory>
-            <exclude>
-                <directory suffix=".php">./src/Swagger</directory>
-            </exclude>
+			<exclude>
+				<directory suffix=".php">./src/Swagger</directory>
+			</exclude>
 		</whitelist>
 	</filter>
 	<logging>
 		<log type="coverage-text" target="php://stdout" />
 	</logging>
 	<listeners>
-    <listener class="VCR\PHPUnit\TestListener\VCRTestListener" file="vendor/php-vcr/phpunit-testlistener-vcr/src/VCRTestListener.php" />
+		<listener class="VCR\PHPUnit\TestListener\VCRTestListener" file="vendor/php-vcr/phpunit-testlistener-vcr/src/VCRTestListener.php" />
 	</listeners>
 </phpunit>
