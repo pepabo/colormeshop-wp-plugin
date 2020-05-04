@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c62d31a3d57415836750d85786418b60",
+    "content-hash": "27bf227d1bdaaf6b9d298abd285df0dd",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1288,17 +1288,11 @@
         },
         {
             "name": "php-vcr/php-vcr",
-            "version": "1.4.4",
+            "version": "dev-issues/289",
             "source": {
                 "type": "git",
-                "url": "https://github.com/php-vcr/php-vcr.git",
-                "reference": "13872a0b291c1a398461ac178850837648998271"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-vcr/php-vcr/zipball/13872a0b291c1a398461ac178850837648998271",
-                "reference": "13872a0b291c1a398461ac178850837648998271",
-                "shasum": ""
+                "url": "https://github.com/morozov/php-vcr",
+                "reference": "42ec927f8a80a96c71b3cbbe9c8309127d588265"
             },
             "require": {
                 "beberlei/assert": "^2.0",
@@ -1323,7 +1317,17 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "scripts": {
+                "test": [
+                    "./vendor/bin/phpunit"
+                ],
+                "lint": [
+                    "./vendor/bin/php-cs-fixer fix --verbose --diff --dry-run --config-file=.php_cs"
+                ],
+                "fix": [
+                    "./vendor/bin/php-cs-fixer fix --verbose --diff --config-file=.php_cs"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -1334,7 +1338,7 @@
                 }
             ],
             "description": "Record your test suite's HTTP interactions and replay them during future test runs for fast, deterministic, accurate tests.",
-            "time": "2018-05-30T15:10:47+00:00"
+            "time": "2020-01-06T21:28:46+00:00"
         },
         {
             "name": "php-vcr/phpunit-testlistener-vcr",
@@ -2865,14 +2869,24 @@
             "time": "2020-02-04T02:52:06+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "1.4.5",
+            "alias_normalized": "1.4.5.0",
+            "version": "dev-issues/289",
+            "package": "php-vcr/php-vcr"
+        }
+    ],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "php-vcr/php-vcr": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
     "platform-overrides": {
         "php": "5.6"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
