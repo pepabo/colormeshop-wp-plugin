@@ -11,7 +11,7 @@ jobs:
 
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.3'
+          php-version: '7.4'
           tools: composer
 
       - run: composer install
@@ -20,6 +20,10 @@ jobs:
 
   phpunit:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [7.3, 7.4]
 
     services:
       mysql:
@@ -35,7 +39,7 @@ jobs:
 
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.3'
+          php-version: ${{ matrix.php-version }}
           extensions: mysqli
           tools: composer
 
