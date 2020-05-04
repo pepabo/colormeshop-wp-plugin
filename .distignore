@@ -1,0 +1,16 @@
+.git/
+.gitignore
+.idea/
+.github/
+bin/
+Dockerfile
+docker-compose.yml
+phpunit.xml
+tests/
+wp.env
+wp.env.sample
+composer.phar
+fabfile.py
+README.md
+Pipfile
+Pipfile.lock
