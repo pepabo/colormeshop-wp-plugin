@@ -30,7 +30,7 @@
     "php-vcr/phpunit-testlistener-vcr": "*",
     "squizlabs/php_codesniffer": "*",
     "wp-coding-standards/wpcs": "*",
-    "phpcompatibility/php-compatibility": "*",
+    "phpcompatibility/phpcompatibility-wp": "*",
     "dealerdirect/phpcodesniffer-composer-installer": "*"
   },
   "autoload": {

@@ -2,7 +2,7 @@
 
   <ruleset name="ColorMeShop WordPress Plugin Rules">
     <rule ref="WordPress-Core"/>
-    <rule ref="PHPCompatibility"/>
+    <rule ref="PHPCompatibilityWP"/>
 
     <config name="testVersion" value="5.6-"/>
 
