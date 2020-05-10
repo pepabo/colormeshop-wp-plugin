@@ -1,7 +1,6 @@
 .distignore
 .git/
 .github/
-.github/
 .gitignore
 .idea/
 Dockerfile
