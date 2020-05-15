@@ -68,13 +68,8 @@ $ docker-compose run composer vendor/bin/phpcbf --standard=ruleset.xml
 
 APIクライアントを更新する場合は下記のコマンドを実行してください。
 
-```bash
-# 準備
-$ brew install pipenv
-$ pipenv install
-
-# APIクライアントを生成する
-$ pipenv run fab generate_api_client
+```shell-session
+$ make generate_api_client
 ```
 
 ### モデルやショートコードを追加したけどオートロードされない場合は
@@ -99,14 +94,8 @@ $ tests/run.sh
 
 ### ビルド
 
+Dockerfile.buildで作成したコンテナを使って、zipファイルを作成します。
+
 ```
-# 準備
-$ brew install pipenv
-$ pipenv install
-
-# zipファイルを作成する
-$ pipenv run fab build
-
-# 開発中のプラグイン(ワーキングディレクトリのファイル)でzipファイルを作成する場合
-$ pipenv run fab build:dev
+$ make
 ```

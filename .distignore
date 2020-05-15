@@ -1,0 +1,16 @@
+.distignore
+.git/
+.github/
+.gitignore
+.idea/
+Dockerfile
+Dockerfile.build
+README.md
+bin/
+colormeshop-wp-plugin.zip
+docker-compose.yml
+phpunit.xml
+ruleset.xml
+tests/
+wp.env
+wp.env.sample
