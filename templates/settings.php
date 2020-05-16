@@ -62,14 +62,14 @@ $plugin_dir_url = plugin_dir_url( dirname( __DIR__ ) . '/colormeshop-wp-plugin.p
 						<h2>1. デベロッパーアカウントの作成</h2>
 						<div class="inside">
 							<p>
-								カラーミー デベロッパーアカウントを <a href="https://api.shop-pro.jp/developers/sign_up" target="_blank">こちら</a> から作成してください。
+								カラーミー デベロッパーアカウントを <a href="https://developer.shop-pro.jp/sign_up" target="_blank">こちら</a> から作成してください。
 							</p>
 						</div>
 						<!-- .inside -->
 						<h2>2. アプリケーションの追加</h2>
 						<div class="inside">
 							<p>
-								作成したデベロッパーアカウントで「<a href="https://api.shop-pro.jp/developers/sign_in" target="_blank">カラーミーショップDevelopers</a>」にログインしてください。「<a href="https://api.shop-pro.jp/oauth/applications/new" target="_blank">アプリケーション追加</a>」からプラグイン用のアプリケーションを追加します。
+								作成したデベロッパーアカウントで「<a href="https://developer.shop-pro.jp/sign_in" target="_blank">カラーミーショップDevelopers</a>」にログインしてください。「<a href="https://developer.shop-pro.jp/my/private_application/new" target="_blank">アプリを作成</a>」からプラグイン用のアプリケーションを追加します。
 							</p>
 							<div>
 								<img height="250" src="<?php echo $plugin_dir_url ?>screenshots/add_application.png" />
