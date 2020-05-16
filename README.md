@@ -1,6 +1,4 @@
-<h1 align="center">カラーミーショップ WordPress プラグイン</h1>
-
-<div align="center">
+# カラーミーショップ WordPress プラグイン
 
 ![icon](https://user-images.githubusercontent.com/1885716/42558421-255927dc-852c-11e8-98ad-2ff181592abe.png)
 
@@ -10,11 +8,11 @@ WordPress で [カラーミーショップ](https://shop-pro.jp/) に登録し�
 
 ## 利用方法
 
-当プラグインは [カラーミーショップ API](https://shop-pro.jp/func/api/) を利用して商品情報などを取得しています。  
+当プラグインは [カラーミーショップ API](https://developer.shop-pro.jp/docs/colorme-api) を利用して商品情報などを取得しています。  
 そのため、予め下記に登録していただき、発行された情報を WordPress 管理画面で入力してください。
 
-- [カラーミーデベロッパーアカウント](https://api.shop-pro.jp/developers/sign_up)
-- [OAuthアプリケーション登録](https://api.shop-pro.jp/oauth/applications/new)
+- [カラーミーショップデベロッパーアカウント](https://developer.shop-pro.jp/sign_up)
+- [カラーミーショップアプリ作成](https://developer.shop-pro.jp/my/private_application/new)
 
 ## 動作環境
 
@@ -79,7 +77,7 @@ WordPress の命名規則は [PSR](http://www.php-fig.org/psr/psr-4/) と異な�
 
 
 ```
-$ composer dump-autoload
+$ docker-compose run --rm composer dump-autoload
 ```
 
 ### ユニットテスト
