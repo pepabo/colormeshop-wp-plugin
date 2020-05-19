@@ -4,7 +4,7 @@ Tags: ecommerce, ec, colormeshop
 Requires at least: 4.6
 Tested up to: 4.9.6
 Requires PHP: 5.6.0
-Stable tag: trunk
+Stable tag: tags/1.0.6
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
