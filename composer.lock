@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7de86f11a340abb1b48cd64dfb0f580e",
+    "content-hash": "52395573575e5a90878a4c058094ae52",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -488,12 +488,6 @@
                 "s3",
                 "sftp",
                 "storage"
-            ],
-            "funding": [
-                {
-                    "url": "https://offset.earth/frankdejonge",
-                    "type": "other"
-                }
             ],
             "time": "2020-04-16T13:21:26+00:00"
         },
@@ -1404,11 +1398,17 @@
         },
         {
             "name": "php-vcr/php-vcr",
-            "version": "dev-issues/289",
+            "version": "1.4.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/morozov/php-vcr",
-                "reference": "29a19a1a9de92acac2ce18de8a37dc519e46bf90"
+                "url": "https://github.com/php-vcr/php-vcr.git",
+                "reference": "267674dc88e0dbe304c6de79697215e295a36d05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-vcr/php-vcr/zipball/267674dc88e0dbe304c6de79697215e295a36d05",
+                "reference": "267674dc88e0dbe304c6de79697215e295a36d05",
+                "shasum": ""
             },
             "require": {
                 "beberlei/assert": "^2.0",
@@ -1433,17 +1433,7 @@
                     "src/"
                 ]
             },
-            "scripts": {
-                "test": [
-                    "./vendor/bin/phpunit"
-                ],
-                "lint": [
-                    "./vendor/bin/php-cs-fixer fix --verbose --diff --dry-run --config-file=.php_cs"
-                ],
-                "fix": [
-                    "./vendor/bin/php-cs-fixer fix --verbose --diff --config-file=.php_cs"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1454,7 +1444,7 @@
                 }
             ],
             "description": "Record your test suite's HTTP interactions and replay them during future test runs for fast, deterministic, accurate tests.",
-            "time": "2020-01-06T21:28:46+00:00"
+            "time": "2020-06-03T17:37:04+00:00"
         },
         {
             "name": "php-vcr/phpunit-testlistener-vcr",
@@ -2888,20 +2878,6 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-03-27T16:54:36+00:00"
         },
         {
@@ -3018,20 +2994,6 @@
                 "polyfill",
                 "portable"
             ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-02-27T09:26:54+00:00"
         },
         {
@@ -3091,20 +3053,6 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-04-28T17:55:16+00:00"
         },
         {
@@ -3242,24 +3190,14 @@
             "time": "2020-05-13T23:57:56+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "1.4.5",
-            "alias_normalized": "1.4.5.0",
-            "version": "dev-issues/289",
-            "package": "php-vcr/php-vcr"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "php-vcr/php-vcr": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.4"
-    },
-    "plugin-api-version": "1.1.0"
+    }
 }
