@@ -37,7 +37,17 @@ class Paginator_Test extends \WP_UnitTestCase {
 	 */
 	public function links() {
 		$expected = <<<__EOS__
-<ul class="pagination"><li><a href="https://example.com/shop?colorme_page=items&amp;page_no=1" rel="prev">&laquo;</a></li> <li><a href="https://example.com/shop?colorme_page=items&amp;page_no=1">1</a></li><li class="active"><span>2</span></li><li><a href="https://example.com/shop?colorme_page=items&amp;page_no=3">3</a></li><li><a href="https://example.com/shop?colorme_page=items&amp;page_no=4">4</a></li><li><a href="https://example.com/shop?colorme_page=items&amp;page_no=5">5</a></li><li><a href="https://example.com/shop?colorme_page=items&amp;page_no=6">6</a></li><li><a href="https://example.com/shop?colorme_page=items&amp;page_no=7">7</a></li><li><a href="https://example.com/shop?colorme_page=items&amp;page_no=8">8</a></li><li class="disabled"><span>...</span></li><li><a href="https://example.com/shop?colorme_page=items&amp;page_no=999">999</a></li><li><a href="https://example.com/shop?colorme_page=items&amp;page_no=1000">1000</a></li> <li><a href="https://example.com/shop?colorme_page=items&amp;page_no=3" rel="next">&raquo;</a></li></ul>
+<ul class='page-numbers'>
+	<li><a class="prev page-numbers" href="http://example.org/">&laquo;</a></li>
+	<li><a class="page-numbers" href="http://example.org/">1</a></li>
+	<li><span aria-current="page" class="page-numbers current">2</span></li>
+	<li><a class="page-numbers" href="http://example.org/?page_no=3">3</a></li>
+	<li><a class="page-numbers" href="http://example.org/?page_no=4">4</a></li>
+	<li><span class="page-numbers dots">&hellip;</span></li>
+	<li><a class="page-numbers" href="http://example.org/?page_no=1000">1,000</a></li>
+	<li><a class="next page-numbers" href="http://example.org/?page_no=3">&raquo;</a></li>
+</ul>
+
 __EOS__;
 
 		$this->assertSame( $expected, (string) $this->paginator->links() );
