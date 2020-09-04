@@ -1,9 +1,9 @@
 === ColorMeShop Wordpress Plugin ===
 Contributors: colormeshop
 Tags: ecommerce, ec, colormeshop
-Requires at least: 4.6
-Tested up to: 4.9.6
-Requires PHP: 5.6.0
+Requires at least: 5.2
+Tested up to: 5.5.1
+Requires PHP: 7.3.0
 Stable tag: tags/1.0.6
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -65,3 +65,5 @@ If you have any questions, please let me know via https://goo.gl/forms/s6zzeS3Q7
 * 管理画面での編集時にエラーが出る不具合を修正
 = 1.0.6 =
 * count関数のWarningが出ているのを修正
+= 2.0.0 =
+* サポートバージョンをWordPress 5.2.0、PHP 7.3.0以上に変更
