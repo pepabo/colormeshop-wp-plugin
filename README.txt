@@ -36,7 +36,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 ### 備考
 
-カラーミーショップWordpressプラグインの利用には[カラーミーショップ](https://shop-pro.jp/)の契約と[開発者アカウントの登録(無償)](https://api.shop-pro.jp/developers/sign_up)が必要になります。
+カラーミーショップWordpressプラグインの利用には[カラーミーショップ](https://shop-pro.jp/)の契約と[デベロッパーの登録(無償)](https://developer.shop-pro.jp/sign_up)が必要になります。
 プラグインはカラーミーショップAPIを介してカラーミーショップで作成されたオンラインショップの商品情報を取得し、Wordpress側へ反映を行います。
 
 == Installation ==
