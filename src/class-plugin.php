@@ -177,10 +177,6 @@ class Plugin {
 			add_filter( 'the_content', array( $this, 'show_items' ) );
 			return;
 		}
-
-		if ( ! get_query_var( 'colorme_item' ) ) {
-			$this->show_404();
-		}
 	}
 
 	/**
