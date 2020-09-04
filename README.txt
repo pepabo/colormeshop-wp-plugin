@@ -48,7 +48,8 @@ Wordpressのダッシュボードより
 3. プラグイン内の説明に従って、プラグインとカラーミーショップAPIの連携を設定してください
 
 == Frequently Asked Questions ==
-If you have any questions, please let me know via https://goo.gl/forms/s6zzeS3Q7jKDTbFO2
+
+If you have any questions, please let me know via https://github.com/pepabo/colormeshop-wp-plugin/issues/
 
 == Changelog ==
 = 1.0.0 =
