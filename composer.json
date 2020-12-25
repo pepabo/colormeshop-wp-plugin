@@ -6,12 +6,6 @@
       "email": "kenichi.taka@gmail.com"
     }
   ],
-  "repositories" : [
-    {
-      "type": "git",
-      "url": "https://github.com/morozov/php-vcr"
-    }
-  ],
   "config": {
     "platform": {
       "php": "7.4"
@@ -21,12 +15,11 @@
     "guzzlehttp/guzzle": "^6.3",
     "pepabo/oauth2-colormeshop": "^1.0",
     "pimple/pimple": "~3.0",
-    "tackk/cartographer": "1.1.*",
-    "illuminate/pagination": "5.2.45"
+    "tackk/cartographer": "1.1.*"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.0",
-    "php-vcr/php-vcr": "dev-issues/289 as 1.4.5",
+    "php-vcr/php-vcr": "^1.4.5",
     "php-vcr/phpunit-testlistener-vcr": "*",
     "squizlabs/php_codesniffer": "*",
     "wp-coding-standards/wpcs": "*",
