@@ -48,6 +48,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: mysqli
           tools: composer
+          coverage: xdebug
 
       - run: composer install
 
