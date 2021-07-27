@@ -80,7 +80,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'http://api.shop-pro.jp';
+    protected $host = 'https://api.shop-pro.jp';
 
     /**
      * User agent of the HTTP request, set to "PHP-Swagger" by default
