@@ -2,7 +2,7 @@
 -
     request:
         method: GET
-        url: 'https://api.shop-pro.jp/v1/products/123.json'
+        url: 'https://api.shop-pro.jp/v1/products/123'
         headers:
             Host: api.shop-pro.jp
             Accept-Encoding: null

@@ -13,14 +13,13 @@
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  ## 利用手順  ### OAuthアプリケーションの登録  デベロッパーアカウントをお持ちでない場合は作成します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリ登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  ### 認可  カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリ詳細画面で確認できるクライアントID| |`response_type`|\"code\"を指定| |`scope`| 別表参照| |`redirect_uri`|アプリ登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新| |`read_shop_coupons`|ショップクーポンの参照|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのログインIDとパスワードの入力を求められます。  ログイン後の認証ページでアプリとの連携が承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリ登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされ、 認可コードがURLの末尾に付与されます。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  ### 認可コードをアクセストークンに交換  以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリ詳細画面に表示されているクライアントID| |`client_secret`|アプリ詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"を指定| |`redirect_uri`|アプリ登録時に入力したリダイレクトURI|  curlによるリクエストの例を以下に示します。 ```console $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返却されます  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、[許可済みアプリ一覧画面](https://admin.shop-pro.jp/?mode=app_use_lst)から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  ### APIの利用  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する例を示します。  ```console $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPIでは、以下の形式の配列でエラーを表現します。  - `code` エラーコード - `message` エラーメッセージ - `status` ステータスコード  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```  ## 都道府県コードについて APIを利用して都道府県コードを更新したり、レスポンスを参照される際には以下の表を参考にしてください。  <details>   <summary>都道府県コード一覧</summary>    |id|都道府県|   |---|---|   |1|北海道|   |2|青森県|   |3|岩手県|   |4|秋田県|   |5|宮城県|   |6|山形県|   |7|福島県|   |8|茨城県|   |9|栃木県|   |10|群馬県|   |11|埼玉県|   |12|千葉県|   |13|東京都|   |14|神奈川県|   |15|新潟県|   |16|福井県|   |17|石川県|   |18|富山県|   |19|静岡県|   |20|山梨県|   |21|長野県|   |22|愛知県|   |23|岐阜県|   |24|三重県|   |25|和歌山県|   |26|滋賀県|   |27|奈良県|   |28|京都府|   |29|大阪府|   |30|兵庫県|   |31|岡山県|   |32|広島県|   |33|鳥取県|   |34|島根県|   |35|山口県|   |36|香川県|   |37|徳島県|   |38|愛媛県|   |39|高知県|   |40|福岡県|   |41|佐賀県|   |42|長崎県|   |43|大分県|   |44|熊本県|   |45|宮崎県|   |46|鹿児島県|   |47|沖縄県|   |48|海外|  </details>
  *
  * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- * Swagger Codegen version: 2.3.0
+ * Swagger Codegen version: 3.0.27
  */
-
 /**
  * NOTE: This class is auto generated by the swagger code generator program.
  * https://github.com/swagger-api/swagger-codegen
@@ -49,7 +48,7 @@ class Stock implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'Stock';
+    protected static $swaggerModelName = 'stock';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,40 +57,41 @@ class Stock implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'account_id' => 'string',
-        'product_id' => 'int',
-        'name' => 'string',
-        'option1_value' => 'string',
-        'option2_value' => 'string',
-        'stocks' => 'int',
-        'few_num' => 'int',
-        'model_number' => 'string',
-        'category' => '\ColorMeShop\Swagger\Model\StockCategory',
-        'display_state' => 'string',
-        'sales_price' => 'int',
-        'price' => 'int',
-        'members_price' => 'int',
-        'cost' => 'int',
-        'delivery_charge' => 'int',
-        'min_num' => 'int',
-        'max_num' => 'int',
-        'sale_start_date' => 'int',
-        'sale_end_date' => 'int',
-        'unit' => 'string',
-        'weight' => 'int',
-        'soldout_display' => 'bool',
-        'sort' => 'int',
-        'simple_expl' => 'string',
-        'expl' => 'string',
-        'mobile_expl' => 'string',
-        'smartphone_expl' => 'string',
-        'make_date' => 'int',
-        'update_date' => 'int',
-        'memo' => 'string',
-        'image_url' => 'string',
-        'mobile_image_url' => 'string',
-        'thumbnail_image_url' => 'string',
-        'images' => '\ColorMeShop\Swagger\Model\StockImages[]'
-    ];
+'product_id' => 'int',
+'name' => 'string',
+'option1_value' => 'string',
+'option2_value' => 'string',
+'stocks' => 'int',
+'few_num' => 'int',
+'model_number' => 'string',
+'variant_model_number' => 'string',
+'category' => '\ColorMeShop\Swagger\Model\StockCategory',
+'display_state' => 'string',
+'sales_price' => 'int',
+'price' => 'int',
+'members_price' => 'int',
+'cost' => 'int',
+'delivery_charge' => 'int',
+'cool_charge' => 'int',
+'min_num' => 'int',
+'max_num' => 'int',
+'sale_start_date' => 'int',
+'sale_end_date' => 'int',
+'unit' => 'string',
+'weight' => 'int',
+'soldout_display' => 'bool',
+'sort' => 'int',
+'simple_expl' => 'string',
+'expl' => 'string',
+'mobile_expl' => 'string',
+'smartphone_expl' => 'string',
+'make_date' => 'int',
+'update_date' => 'int',
+'memo' => 'string',
+'image_url' => 'string',
+'mobile_image_url' => 'string',
+'thumbnail_image_url' => 'string',
+'images' => '\ColorMeShop\Swagger\Model\StockImages[]'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -100,40 +100,41 @@ class Stock implements ModelInterface, ArrayAccess
       */
     protected static $swaggerFormats = [
         'account_id' => null,
-        'product_id' => null,
-        'name' => null,
-        'option1_value' => null,
-        'option2_value' => null,
-        'stocks' => null,
-        'few_num' => null,
-        'model_number' => null,
-        'category' => null,
-        'display_state' => null,
-        'sales_price' => null,
-        'price' => null,
-        'members_price' => null,
-        'cost' => null,
-        'delivery_charge' => null,
-        'min_num' => null,
-        'max_num' => null,
-        'sale_start_date' => null,
-        'sale_end_date' => null,
-        'unit' => null,
-        'weight' => null,
-        'soldout_display' => null,
-        'sort' => null,
-        'simple_expl' => null,
-        'expl' => null,
-        'mobile_expl' => null,
-        'smartphone_expl' => null,
-        'make_date' => null,
-        'update_date' => null,
-        'memo' => null,
-        'image_url' => null,
-        'mobile_image_url' => null,
-        'thumbnail_image_url' => null,
-        'images' => null
-    ];
+'product_id' => null,
+'name' => null,
+'option1_value' => null,
+'option2_value' => null,
+'stocks' => null,
+'few_num' => null,
+'model_number' => null,
+'variant_model_number' => null,
+'category' => null,
+'display_state' => null,
+'sales_price' => null,
+'price' => null,
+'members_price' => null,
+'cost' => null,
+'delivery_charge' => null,
+'cool_charge' => null,
+'min_num' => null,
+'max_num' => null,
+'sale_start_date' => null,
+'sale_end_date' => null,
+'unit' => null,
+'weight' => null,
+'soldout_display' => null,
+'sort' => null,
+'simple_expl' => null,
+'expl' => null,
+'mobile_expl' => null,
+'smartphone_expl' => null,
+'make_date' => null,
+'update_date' => null,
+'memo' => null,
+'image_url' => null,
+'mobile_image_url' => null,
+'thumbnail_image_url' => null,
+'images' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -163,40 +164,41 @@ class Stock implements ModelInterface, ArrayAccess
      */
     protected static $attributeMap = [
         'account_id' => 'account_id',
-        'product_id' => 'product_id',
-        'name' => 'name',
-        'option1_value' => 'option1_value',
-        'option2_value' => 'option2_value',
-        'stocks' => 'stocks',
-        'few_num' => 'few_num',
-        'model_number' => 'model_number',
-        'category' => 'category',
-        'display_state' => 'display_state',
-        'sales_price' => 'sales_price',
-        'price' => 'price',
-        'members_price' => 'members_price',
-        'cost' => 'cost',
-        'delivery_charge' => 'delivery_charge',
-        'min_num' => 'min_num',
-        'max_num' => 'max_num',
-        'sale_start_date' => 'sale_start_date',
-        'sale_end_date' => 'sale_end_date',
-        'unit' => 'unit',
-        'weight' => 'weight',
-        'soldout_display' => 'soldout_display',
-        'sort' => 'sort',
-        'simple_expl' => 'simple_expl',
-        'expl' => 'expl',
-        'mobile_expl' => 'mobile_expl',
-        'smartphone_expl' => 'smartphone_expl',
-        'make_date' => 'make_date',
-        'update_date' => 'update_date',
-        'memo' => 'memo',
-        'image_url' => 'image_url',
-        'mobile_image_url' => 'mobile_image_url',
-        'thumbnail_image_url' => 'thumbnail_image_url',
-        'images' => 'images'
-    ];
+'product_id' => 'product_id',
+'name' => 'name',
+'option1_value' => 'option1_value',
+'option2_value' => 'option2_value',
+'stocks' => 'stocks',
+'few_num' => 'few_num',
+'model_number' => 'model_number',
+'variant_model_number' => 'variant_model_number',
+'category' => 'category',
+'display_state' => 'display_state',
+'sales_price' => 'sales_price',
+'price' => 'price',
+'members_price' => 'members_price',
+'cost' => 'cost',
+'delivery_charge' => 'delivery_charge',
+'cool_charge' => 'cool_charge',
+'min_num' => 'min_num',
+'max_num' => 'max_num',
+'sale_start_date' => 'sale_start_date',
+'sale_end_date' => 'sale_end_date',
+'unit' => 'unit',
+'weight' => 'weight',
+'soldout_display' => 'soldout_display',
+'sort' => 'sort',
+'simple_expl' => 'simple_expl',
+'expl' => 'expl',
+'mobile_expl' => 'mobile_expl',
+'smartphone_expl' => 'smartphone_expl',
+'make_date' => 'make_date',
+'update_date' => 'update_date',
+'memo' => 'memo',
+'image_url' => 'image_url',
+'mobile_image_url' => 'mobile_image_url',
+'thumbnail_image_url' => 'thumbnail_image_url',
+'images' => 'images'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -205,40 +207,41 @@ class Stock implements ModelInterface, ArrayAccess
      */
     protected static $setters = [
         'account_id' => 'setAccountId',
-        'product_id' => 'setProductId',
-        'name' => 'setName',
-        'option1_value' => 'setOption1Value',
-        'option2_value' => 'setOption2Value',
-        'stocks' => 'setStocks',
-        'few_num' => 'setFewNum',
-        'model_number' => 'setModelNumber',
-        'category' => 'setCategory',
-        'display_state' => 'setDisplayState',
-        'sales_price' => 'setSalesPrice',
-        'price' => 'setPrice',
-        'members_price' => 'setMembersPrice',
-        'cost' => 'setCost',
-        'delivery_charge' => 'setDeliveryCharge',
-        'min_num' => 'setMinNum',
-        'max_num' => 'setMaxNum',
-        'sale_start_date' => 'setSaleStartDate',
-        'sale_end_date' => 'setSaleEndDate',
-        'unit' => 'setUnit',
-        'weight' => 'setWeight',
-        'soldout_display' => 'setSoldoutDisplay',
-        'sort' => 'setSort',
-        'simple_expl' => 'setSimpleExpl',
-        'expl' => 'setExpl',
-        'mobile_expl' => 'setMobileExpl',
-        'smartphone_expl' => 'setSmartphoneExpl',
-        'make_date' => 'setMakeDate',
-        'update_date' => 'setUpdateDate',
-        'memo' => 'setMemo',
-        'image_url' => 'setImageUrl',
-        'mobile_image_url' => 'setMobileImageUrl',
-        'thumbnail_image_url' => 'setThumbnailImageUrl',
-        'images' => 'setImages'
-    ];
+'product_id' => 'setProductId',
+'name' => 'setName',
+'option1_value' => 'setOption1Value',
+'option2_value' => 'setOption2Value',
+'stocks' => 'setStocks',
+'few_num' => 'setFewNum',
+'model_number' => 'setModelNumber',
+'variant_model_number' => 'setVariantModelNumber',
+'category' => 'setCategory',
+'display_state' => 'setDisplayState',
+'sales_price' => 'setSalesPrice',
+'price' => 'setPrice',
+'members_price' => 'setMembersPrice',
+'cost' => 'setCost',
+'delivery_charge' => 'setDeliveryCharge',
+'cool_charge' => 'setCoolCharge',
+'min_num' => 'setMinNum',
+'max_num' => 'setMaxNum',
+'sale_start_date' => 'setSaleStartDate',
+'sale_end_date' => 'setSaleEndDate',
+'unit' => 'setUnit',
+'weight' => 'setWeight',
+'soldout_display' => 'setSoldoutDisplay',
+'sort' => 'setSort',
+'simple_expl' => 'setSimpleExpl',
+'expl' => 'setExpl',
+'mobile_expl' => 'setMobileExpl',
+'smartphone_expl' => 'setSmartphoneExpl',
+'make_date' => 'setMakeDate',
+'update_date' => 'setUpdateDate',
+'memo' => 'setMemo',
+'image_url' => 'setImageUrl',
+'mobile_image_url' => 'setMobileImageUrl',
+'thumbnail_image_url' => 'setThumbnailImageUrl',
+'images' => 'setImages'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -247,40 +250,41 @@ class Stock implements ModelInterface, ArrayAccess
      */
     protected static $getters = [
         'account_id' => 'getAccountId',
-        'product_id' => 'getProductId',
-        'name' => 'getName',
-        'option1_value' => 'getOption1Value',
-        'option2_value' => 'getOption2Value',
-        'stocks' => 'getStocks',
-        'few_num' => 'getFewNum',
-        'model_number' => 'getModelNumber',
-        'category' => 'getCategory',
-        'display_state' => 'getDisplayState',
-        'sales_price' => 'getSalesPrice',
-        'price' => 'getPrice',
-        'members_price' => 'getMembersPrice',
-        'cost' => 'getCost',
-        'delivery_charge' => 'getDeliveryCharge',
-        'min_num' => 'getMinNum',
-        'max_num' => 'getMaxNum',
-        'sale_start_date' => 'getSaleStartDate',
-        'sale_end_date' => 'getSaleEndDate',
-        'unit' => 'getUnit',
-        'weight' => 'getWeight',
-        'soldout_display' => 'getSoldoutDisplay',
-        'sort' => 'getSort',
-        'simple_expl' => 'getSimpleExpl',
-        'expl' => 'getExpl',
-        'mobile_expl' => 'getMobileExpl',
-        'smartphone_expl' => 'getSmartphoneExpl',
-        'make_date' => 'getMakeDate',
-        'update_date' => 'getUpdateDate',
-        'memo' => 'getMemo',
-        'image_url' => 'getImageUrl',
-        'mobile_image_url' => 'getMobileImageUrl',
-        'thumbnail_image_url' => 'getThumbnailImageUrl',
-        'images' => 'getImages'
-    ];
+'product_id' => 'getProductId',
+'name' => 'getName',
+'option1_value' => 'getOption1Value',
+'option2_value' => 'getOption2Value',
+'stocks' => 'getStocks',
+'few_num' => 'getFewNum',
+'model_number' => 'getModelNumber',
+'variant_model_number' => 'getVariantModelNumber',
+'category' => 'getCategory',
+'display_state' => 'getDisplayState',
+'sales_price' => 'getSalesPrice',
+'price' => 'getPrice',
+'members_price' => 'getMembersPrice',
+'cost' => 'getCost',
+'delivery_charge' => 'getDeliveryCharge',
+'cool_charge' => 'getCoolCharge',
+'min_num' => 'getMinNum',
+'max_num' => 'getMaxNum',
+'sale_start_date' => 'getSaleStartDate',
+'sale_end_date' => 'getSaleEndDate',
+'unit' => 'getUnit',
+'weight' => 'getWeight',
+'soldout_display' => 'getSoldoutDisplay',
+'sort' => 'getSort',
+'simple_expl' => 'getSimpleExpl',
+'expl' => 'getExpl',
+'mobile_expl' => 'getMobileExpl',
+'smartphone_expl' => 'getSmartphoneExpl',
+'make_date' => 'getMakeDate',
+'update_date' => 'getUpdateDate',
+'memo' => 'getMemo',
+'image_url' => 'getImageUrl',
+'mobile_image_url' => 'getMobileImageUrl',
+'thumbnail_image_url' => 'getThumbnailImageUrl',
+'images' => 'getImages'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -324,12 +328,10 @@ class Stock implements ModelInterface, ArrayAccess
     }
 
     const DISPLAY_STATE_SHOWING = 'showing';
-    const DISPLAY_STATE_HIDDEN = 'hidden';
-    const DISPLAY_STATE_SHOWING_FOR_MEMBERS = 'showing_for_members';
-    const DISPLAY_STATE_SALE_FOR_MEMBERS = 'sale_for_members';
-    
+const DISPLAY_STATE_HIDDEN = 'hidden';
+const DISPLAY_STATE_SHOWING_FOR_MEMBERS = 'showing_for_members';
+const DISPLAY_STATE_SALE_FOR_MEMBERS = 'sale_for_members';
 
-    
     /**
      * Gets allowable values of the enum
      *
@@ -339,12 +341,10 @@ class Stock implements ModelInterface, ArrayAccess
     {
         return [
             self::DISPLAY_STATE_SHOWING,
-            self::DISPLAY_STATE_HIDDEN,
-            self::DISPLAY_STATE_SHOWING_FOR_MEMBERS,
-            self::DISPLAY_STATE_SALE_FOR_MEMBERS,
-        ];
+self::DISPLAY_STATE_HIDDEN,
+self::DISPLAY_STATE_SHOWING_FOR_MEMBERS,
+self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
     }
-    
 
     /**
      * Associative array for storing property values
@@ -369,6 +369,7 @@ class Stock implements ModelInterface, ArrayAccess
         $this->container['stocks'] = isset($data['stocks']) ? $data['stocks'] : null;
         $this->container['few_num'] = isset($data['few_num']) ? $data['few_num'] : null;
         $this->container['model_number'] = isset($data['model_number']) ? $data['model_number'] : null;
+        $this->container['variant_model_number'] = isset($data['variant_model_number']) ? $data['variant_model_number'] : null;
         $this->container['category'] = isset($data['category']) ? $data['category'] : null;
         $this->container['display_state'] = isset($data['display_state']) ? $data['display_state'] : null;
         $this->container['sales_price'] = isset($data['sales_price']) ? $data['sales_price'] : null;
@@ -376,6 +377,7 @@ class Stock implements ModelInterface, ArrayAccess
         $this->container['members_price'] = isset($data['members_price']) ? $data['members_price'] : null;
         $this->container['cost'] = isset($data['cost']) ? $data['cost'] : null;
         $this->container['delivery_charge'] = isset($data['delivery_charge']) ? $data['delivery_charge'] : null;
+        $this->container['cool_charge'] = isset($data['cool_charge']) ? $data['cool_charge'] : null;
         $this->container['min_num'] = isset($data['min_num']) ? $data['min_num'] : null;
         $this->container['max_num'] = isset($data['max_num']) ? $data['max_num'] : null;
         $this->container['sale_start_date'] = isset($data['sale_start_date']) ? $data['sale_start_date'] : null;
@@ -407,7 +409,7 @@ class Stock implements ModelInterface, ArrayAccess
         $invalidProperties = [];
 
         $allowedValues = $this->getDisplayStateAllowableValues();
-        if (!in_array($this->container['display_state'], $allowedValues)) {
+        if (!is_null($this->container['display_state']) && !in_array($this->container['display_state'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'display_state', must be one of '%s'",
                 implode("', '", $allowedValues)
@@ -425,12 +427,7 @@ class Stock implements ModelInterface, ArrayAccess
      */
     public function valid()
     {
-
-        $allowedValues = $this->getDisplayStateAllowableValues();
-        if (!in_array($this->container['display_state'], $allowedValues)) {
-            return false;
-        }
-        return true;
+        return count($this->listInvalidProperties()) === 0;
     }
 
 
@@ -627,6 +624,30 @@ class Stock implements ModelInterface, ArrayAccess
     }
 
     /**
+     * Gets variant_model_number
+     *
+     * @return string
+     */
+    public function getVariantModelNumber()
+    {
+        return $this->container['variant_model_number'];
+    }
+
+    /**
+     * Sets variant_model_number
+     *
+     * @param string $variant_model_number オプションの型番
+     *
+     * @return $this
+     */
+    public function setVariantModelNumber($variant_model_number)
+    {
+        $this->container['variant_model_number'] = $variant_model_number;
+
+        return $this;
+    }
+
+    /**
      * Gets category
      *
      * @return \ColorMeShop\Swagger\Model\StockCategory
@@ -663,14 +684,14 @@ class Stock implements ModelInterface, ArrayAccess
     /**
      * Sets display_state
      *
-     * @param string $display_state 掲載設定
+     * @param string $display_state 掲載設定  - `showing`: 掲載状態 - `hidden`: 非掲載状態 - `showing_for_members`: 会員にのみ掲載 - `sale_for_members`: 掲載状態だが購入は会員のみ可能
      *
      * @return $this
      */
     public function setDisplayState($display_state)
     {
         $allowedValues = $this->getDisplayStateAllowableValues();
-        if (!is_null($display_state) && !in_array($display_state, $allowedValues)) {
+        if (!is_null($display_state) && !in_array($display_state, $allowedValues, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'display_state', must be one of '%s'",
@@ -799,6 +820,30 @@ class Stock implements ModelInterface, ArrayAccess
     public function setDeliveryCharge($delivery_charge)
     {
         $this->container['delivery_charge'] = $delivery_charge;
+
+        return $this;
+    }
+
+    /**
+     * Gets cool_charge
+     *
+     * @return int
+     */
+    public function getCoolCharge()
+    {
+        return $this->container['cool_charge'];
+    }
+
+    /**
+     * Sets cool_charge
+     *
+     * @param int $cool_charge クール便の追加料金
+     *
+     * @return $this
+     */
+    public function setCoolCharge($cool_charge)
+    {
+        $this->container['cool_charge'] = $cool_charge;
 
         return $this;
     }
@@ -1328,5 +1373,3 @@ class Stock implements ModelInterface, ArrayAccess
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-
