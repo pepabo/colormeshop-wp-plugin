@@ -13,14 +13,13 @@
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  ## 利用手順  ### OAuthアプリケーションの登録  デベロッパーアカウントをお持ちでない場合は作成します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリ登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  ### 認可  カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリ詳細画面で確認できるクライアントID| |`response_type`|\"code\"を指定| |`scope`| 別表参照| |`redirect_uri`|アプリ登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新| |`read_shop_coupons`|ショップクーポンの参照|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのログインIDとパスワードの入力を求められます。  ログイン後の認証ページでアプリとの連携が承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリ登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされ、 認可コードがURLの末尾に付与されます。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  ### 認可コードをアクセストークンに交換  以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリ詳細画面に表示されているクライアントID| |`client_secret`|アプリ詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"を指定| |`redirect_uri`|アプリ登録時に入力したリダイレクトURI|  curlによるリクエストの例を以下に示します。 ```console $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返却されます  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、[許可済みアプリ一覧画面](https://admin.shop-pro.jp/?mode=app_use_lst)から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  ### APIの利用  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する例を示します。  ```console $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPIでは、以下の形式の配列でエラーを表現します。  - `code` エラーコード - `message` エラーメッセージ - `status` ステータスコード  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```  ## 都道府県コードについて APIを利用して都道府県コードを更新したり、レスポンスを参照される際には以下の表を参考にしてください。  <details>   <summary>都道府県コード一覧</summary>    |id|都道府県|   |---|---|   |1|北海道|   |2|青森県|   |3|岩手県|   |4|秋田県|   |5|宮城県|   |6|山形県|   |7|福島県|   |8|茨城県|   |9|栃木県|   |10|群馬県|   |11|埼玉県|   |12|千葉県|   |13|東京都|   |14|神奈川県|   |15|新潟県|   |16|福井県|   |17|石川県|   |18|富山県|   |19|静岡県|   |20|山梨県|   |21|長野県|   |22|愛知県|   |23|岐阜県|   |24|三重県|   |25|和歌山県|   |26|滋賀県|   |27|奈良県|   |28|京都府|   |29|大阪府|   |30|兵庫県|   |31|岡山県|   |32|広島県|   |33|鳥取県|   |34|島根県|   |35|山口県|   |36|香川県|   |37|徳島県|   |38|愛媛県|   |39|高知県|   |40|福岡県|   |41|佐賀県|   |42|長崎県|   |43|大分県|   |44|熊本県|   |45|宮崎県|   |46|鹿児島県|   |47|沖縄県|   |48|海外|  </details>
  *
  * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- * Swagger Codegen version: 2.3.0
+ * Swagger Codegen version: 3.0.27
  */
-
 /**
  * NOTE: This class is auto generated by the swagger code generator program.
  * https://github.com/swagger-api/swagger-codegen
@@ -57,8 +56,46 @@ class Sale implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => '\ColorMeShop\Swagger\Model\V1salessaleIdJsonSale'
-    ];
+        'id' => 'int',
+'account_id' => 'string',
+'make_date' => 'int',
+'update_date' => 'int',
+'memo' => 'string',
+'payment_id' => 'int',
+'mobile' => 'bool',
+'paid' => 'bool',
+'delivered' => 'bool',
+'canceled' => 'bool',
+'accepted_mail_state' => 'string',
+'paid_mail_state' => 'string',
+'delivered_mail_state' => 'string',
+'accepted_mail_sent_date' => 'int',
+'paid_mail_sent_date' => 'int',
+'delivered_mail_sent_date' => 'int',
+'point_state' => 'string',
+'gmo_point_state' => 'string',
+'yahoo_point_state' => 'string',
+'product_total_price' => 'int',
+'delivery_total_charge' => 'int',
+'fee' => 'int',
+'tax' => 'int',
+'noshi_total_charge' => 'int',
+'card_total_charge' => 'int',
+'wrapping_total_charge' => 'int',
+'point_discount' => 'int',
+'gmo_point_discount' => 'int',
+'other_discount' => 'int',
+'other_discount_name' => 'string',
+'total_price' => 'int',
+'granted_points' => 'int',
+'use_points' => 'int',
+'granted_gmo_points' => 'int',
+'use_gmo_points' => 'int',
+'granted_yahoo_points' => 'int',
+'use_yahoo_points' => 'int',
+'customer' => '\ColorMeShop\Swagger\Model\SaleCustomer',
+'details' => '\ColorMeShop\Swagger\Model\SaleDetails[]',
+'sale_deliveries' => '\ColorMeShop\Swagger\Model\V1salessaleIdSaleSaleDeliveries[]'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -66,8 +103,46 @@ class Sale implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null
-    ];
+        'id' => null,
+'account_id' => null,
+'make_date' => null,
+'update_date' => null,
+'memo' => null,
+'payment_id' => null,
+'mobile' => null,
+'paid' => null,
+'delivered' => null,
+'canceled' => null,
+'accepted_mail_state' => null,
+'paid_mail_state' => null,
+'delivered_mail_state' => null,
+'accepted_mail_sent_date' => null,
+'paid_mail_sent_date' => null,
+'delivered_mail_sent_date' => null,
+'point_state' => null,
+'gmo_point_state' => null,
+'yahoo_point_state' => null,
+'product_total_price' => null,
+'delivery_total_charge' => null,
+'fee' => null,
+'tax' => null,
+'noshi_total_charge' => null,
+'card_total_charge' => null,
+'wrapping_total_charge' => null,
+'point_discount' => null,
+'gmo_point_discount' => null,
+'other_discount' => null,
+'other_discount_name' => null,
+'total_price' => null,
+'granted_points' => null,
+'use_points' => null,
+'granted_gmo_points' => null,
+'use_gmo_points' => null,
+'granted_yahoo_points' => null,
+'use_yahoo_points' => null,
+'customer' => null,
+'details' => null,
+'sale_deliveries' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -96,8 +171,46 @@ class Sale implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'
-    ];
+        'id' => 'id',
+'account_id' => 'account_id',
+'make_date' => 'make_date',
+'update_date' => 'update_date',
+'memo' => 'memo',
+'payment_id' => 'payment_id',
+'mobile' => 'mobile',
+'paid' => 'paid',
+'delivered' => 'delivered',
+'canceled' => 'canceled',
+'accepted_mail_state' => 'accepted_mail_state',
+'paid_mail_state' => 'paid_mail_state',
+'delivered_mail_state' => 'delivered_mail_state',
+'accepted_mail_sent_date' => 'accepted_mail_sent_date',
+'paid_mail_sent_date' => 'paid_mail_sent_date',
+'delivered_mail_sent_date' => 'delivered_mail_sent_date',
+'point_state' => 'point_state',
+'gmo_point_state' => 'gmo_point_state',
+'yahoo_point_state' => 'yahoo_point_state',
+'product_total_price' => 'product_total_price',
+'delivery_total_charge' => 'delivery_total_charge',
+'fee' => 'fee',
+'tax' => 'tax',
+'noshi_total_charge' => 'noshi_total_charge',
+'card_total_charge' => 'card_total_charge',
+'wrapping_total_charge' => 'wrapping_total_charge',
+'point_discount' => 'point_discount',
+'gmo_point_discount' => 'gmo_point_discount',
+'other_discount' => 'other_discount',
+'other_discount_name' => 'other_discount_name',
+'total_price' => 'total_price',
+'granted_points' => 'granted_points',
+'use_points' => 'use_points',
+'granted_gmo_points' => 'granted_gmo_points',
+'use_gmo_points' => 'use_gmo_points',
+'granted_yahoo_points' => 'granted_yahoo_points',
+'use_yahoo_points' => 'use_yahoo_points',
+'customer' => 'customer',
+'details' => 'details',
+'sale_deliveries' => 'sale_deliveries'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -105,8 +218,46 @@ class Sale implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'
-    ];
+        'id' => 'setId',
+'account_id' => 'setAccountId',
+'make_date' => 'setMakeDate',
+'update_date' => 'setUpdateDate',
+'memo' => 'setMemo',
+'payment_id' => 'setPaymentId',
+'mobile' => 'setMobile',
+'paid' => 'setPaid',
+'delivered' => 'setDelivered',
+'canceled' => 'setCanceled',
+'accepted_mail_state' => 'setAcceptedMailState',
+'paid_mail_state' => 'setPaidMailState',
+'delivered_mail_state' => 'setDeliveredMailState',
+'accepted_mail_sent_date' => 'setAcceptedMailSentDate',
+'paid_mail_sent_date' => 'setPaidMailSentDate',
+'delivered_mail_sent_date' => 'setDeliveredMailSentDate',
+'point_state' => 'setPointState',
+'gmo_point_state' => 'setGmoPointState',
+'yahoo_point_state' => 'setYahooPointState',
+'product_total_price' => 'setProductTotalPrice',
+'delivery_total_charge' => 'setDeliveryTotalCharge',
+'fee' => 'setFee',
+'tax' => 'setTax',
+'noshi_total_charge' => 'setNoshiTotalCharge',
+'card_total_charge' => 'setCardTotalCharge',
+'wrapping_total_charge' => 'setWrappingTotalCharge',
+'point_discount' => 'setPointDiscount',
+'gmo_point_discount' => 'setGmoPointDiscount',
+'other_discount' => 'setOtherDiscount',
+'other_discount_name' => 'setOtherDiscountName',
+'total_price' => 'setTotalPrice',
+'granted_points' => 'setGrantedPoints',
+'use_points' => 'setUsePoints',
+'granted_gmo_points' => 'setGrantedGmoPoints',
+'use_gmo_points' => 'setUseGmoPoints',
+'granted_yahoo_points' => 'setGrantedYahooPoints',
+'use_yahoo_points' => 'setUseYahooPoints',
+'customer' => 'setCustomer',
+'details' => 'setDetails',
+'sale_deliveries' => 'setSaleDeliveries'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -114,8 +265,46 @@ class Sale implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'
-    ];
+        'id' => 'getId',
+'account_id' => 'getAccountId',
+'make_date' => 'getMakeDate',
+'update_date' => 'getUpdateDate',
+'memo' => 'getMemo',
+'payment_id' => 'getPaymentId',
+'mobile' => 'getMobile',
+'paid' => 'getPaid',
+'delivered' => 'getDelivered',
+'canceled' => 'getCanceled',
+'accepted_mail_state' => 'getAcceptedMailState',
+'paid_mail_state' => 'getPaidMailState',
+'delivered_mail_state' => 'getDeliveredMailState',
+'accepted_mail_sent_date' => 'getAcceptedMailSentDate',
+'paid_mail_sent_date' => 'getPaidMailSentDate',
+'delivered_mail_sent_date' => 'getDeliveredMailSentDate',
+'point_state' => 'getPointState',
+'gmo_point_state' => 'getGmoPointState',
+'yahoo_point_state' => 'getYahooPointState',
+'product_total_price' => 'getProductTotalPrice',
+'delivery_total_charge' => 'getDeliveryTotalCharge',
+'fee' => 'getFee',
+'tax' => 'getTax',
+'noshi_total_charge' => 'getNoshiTotalCharge',
+'card_total_charge' => 'getCardTotalCharge',
+'wrapping_total_charge' => 'getWrappingTotalCharge',
+'point_discount' => 'getPointDiscount',
+'gmo_point_discount' => 'getGmoPointDiscount',
+'other_discount' => 'getOtherDiscount',
+'other_discount_name' => 'getOtherDiscountName',
+'total_price' => 'getTotalPrice',
+'granted_points' => 'getGrantedPoints',
+'use_points' => 'getUsePoints',
+'granted_gmo_points' => 'getGrantedGmoPoints',
+'use_gmo_points' => 'getUseGmoPoints',
+'granted_yahoo_points' => 'getGrantedYahooPoints',
+'use_yahoo_points' => 'getUseYahooPoints',
+'customer' => 'getCustomer',
+'details' => 'getDetails',
+'sale_deliveries' => 'getSaleDeliveries'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -158,9 +347,97 @@ class Sale implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    
+    const ACCEPTED_MAIL_STATE_NOT_YET = 'not_yet';
+const ACCEPTED_MAIL_STATE_SENT = 'sent';
+const ACCEPTED_MAIL_STATE_PASS = 'pass';
+const PAID_MAIL_STATE_NOT_YET = 'not_yet';
+const PAID_MAIL_STATE_SENT = 'sent';
+const PAID_MAIL_STATE_PASS = 'pass';
+const DELIVERED_MAIL_STATE_NOT_YET = 'not_yet';
+const DELIVERED_MAIL_STATE_SENT = 'sent';
+const DELIVERED_MAIL_STATE_PASS = 'pass';
+const POINT_STATE_ASSUMED = 'assumed';
+const POINT_STATE_FIXED = 'fixed';
+const POINT_STATE_CANCELED = 'canceled';
+const GMO_POINT_STATE_ASSUMED = 'assumed';
+const GMO_POINT_STATE_FIXED = 'fixed';
+const GMO_POINT_STATE_CANCELED = 'canceled';
+const YAHOO_POINT_STATE_ASSUMED = 'assumed';
+const YAHOO_POINT_STATE_FIXED = 'fixed';
+const YAHOO_POINT_STATE_CANCELED = 'canceled';
 
-    
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getAcceptedMailStateAllowableValues()
+    {
+        return [
+            self::ACCEPTED_MAIL_STATE_NOT_YET,
+self::ACCEPTED_MAIL_STATE_SENT,
+self::ACCEPTED_MAIL_STATE_PASS,        ];
+    }
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getPaidMailStateAllowableValues()
+    {
+        return [
+            self::PAID_MAIL_STATE_NOT_YET,
+self::PAID_MAIL_STATE_SENT,
+self::PAID_MAIL_STATE_PASS,        ];
+    }
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getDeliveredMailStateAllowableValues()
+    {
+        return [
+            self::DELIVERED_MAIL_STATE_NOT_YET,
+self::DELIVERED_MAIL_STATE_SENT,
+self::DELIVERED_MAIL_STATE_PASS,        ];
+    }
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getPointStateAllowableValues()
+    {
+        return [
+            self::POINT_STATE_ASSUMED,
+self::POINT_STATE_FIXED,
+self::POINT_STATE_CANCELED,        ];
+    }
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getGmoPointStateAllowableValues()
+    {
+        return [
+            self::GMO_POINT_STATE_ASSUMED,
+self::GMO_POINT_STATE_FIXED,
+self::GMO_POINT_STATE_CANCELED,        ];
+    }
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getYahooPointStateAllowableValues()
+    {
+        return [
+            self::YAHOO_POINT_STATE_ASSUMED,
+self::YAHOO_POINT_STATE_FIXED,
+self::YAHOO_POINT_STATE_CANCELED,        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -177,7 +454,46 @@ class Sale implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
+        $this->container['make_date'] = isset($data['make_date']) ? $data['make_date'] : null;
+        $this->container['update_date'] = isset($data['update_date']) ? $data['update_date'] : null;
+        $this->container['memo'] = isset($data['memo']) ? $data['memo'] : null;
+        $this->container['payment_id'] = isset($data['payment_id']) ? $data['payment_id'] : null;
+        $this->container['mobile'] = isset($data['mobile']) ? $data['mobile'] : null;
+        $this->container['paid'] = isset($data['paid']) ? $data['paid'] : null;
+        $this->container['delivered'] = isset($data['delivered']) ? $data['delivered'] : null;
+        $this->container['canceled'] = isset($data['canceled']) ? $data['canceled'] : null;
+        $this->container['accepted_mail_state'] = isset($data['accepted_mail_state']) ? $data['accepted_mail_state'] : null;
+        $this->container['paid_mail_state'] = isset($data['paid_mail_state']) ? $data['paid_mail_state'] : null;
+        $this->container['delivered_mail_state'] = isset($data['delivered_mail_state']) ? $data['delivered_mail_state'] : null;
+        $this->container['accepted_mail_sent_date'] = isset($data['accepted_mail_sent_date']) ? $data['accepted_mail_sent_date'] : null;
+        $this->container['paid_mail_sent_date'] = isset($data['paid_mail_sent_date']) ? $data['paid_mail_sent_date'] : null;
+        $this->container['delivered_mail_sent_date'] = isset($data['delivered_mail_sent_date']) ? $data['delivered_mail_sent_date'] : null;
+        $this->container['point_state'] = isset($data['point_state']) ? $data['point_state'] : null;
+        $this->container['gmo_point_state'] = isset($data['gmo_point_state']) ? $data['gmo_point_state'] : null;
+        $this->container['yahoo_point_state'] = isset($data['yahoo_point_state']) ? $data['yahoo_point_state'] : null;
+        $this->container['product_total_price'] = isset($data['product_total_price']) ? $data['product_total_price'] : null;
+        $this->container['delivery_total_charge'] = isset($data['delivery_total_charge']) ? $data['delivery_total_charge'] : null;
+        $this->container['fee'] = isset($data['fee']) ? $data['fee'] : null;
+        $this->container['tax'] = isset($data['tax']) ? $data['tax'] : null;
+        $this->container['noshi_total_charge'] = isset($data['noshi_total_charge']) ? $data['noshi_total_charge'] : null;
+        $this->container['card_total_charge'] = isset($data['card_total_charge']) ? $data['card_total_charge'] : null;
+        $this->container['wrapping_total_charge'] = isset($data['wrapping_total_charge']) ? $data['wrapping_total_charge'] : null;
+        $this->container['point_discount'] = isset($data['point_discount']) ? $data['point_discount'] : null;
+        $this->container['gmo_point_discount'] = isset($data['gmo_point_discount']) ? $data['gmo_point_discount'] : null;
+        $this->container['other_discount'] = isset($data['other_discount']) ? $data['other_discount'] : null;
+        $this->container['other_discount_name'] = isset($data['other_discount_name']) ? $data['other_discount_name'] : null;
+        $this->container['total_price'] = isset($data['total_price']) ? $data['total_price'] : null;
+        $this->container['granted_points'] = isset($data['granted_points']) ? $data['granted_points'] : null;
+        $this->container['use_points'] = isset($data['use_points']) ? $data['use_points'] : null;
+        $this->container['granted_gmo_points'] = isset($data['granted_gmo_points']) ? $data['granted_gmo_points'] : null;
+        $this->container['use_gmo_points'] = isset($data['use_gmo_points']) ? $data['use_gmo_points'] : null;
+        $this->container['granted_yahoo_points'] = isset($data['granted_yahoo_points']) ? $data['granted_yahoo_points'] : null;
+        $this->container['use_yahoo_points'] = isset($data['use_yahoo_points']) ? $data['use_yahoo_points'] : null;
+        $this->container['customer'] = isset($data['customer']) ? $data['customer'] : null;
+        $this->container['details'] = isset($data['details']) ? $data['details'] : null;
+        $this->container['sale_deliveries'] = isset($data['sale_deliveries']) ? $data['sale_deliveries'] : null;
     }
 
     /**
@@ -188,6 +504,54 @@ class Sale implements ModelInterface, ArrayAccess
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        $allowedValues = $this->getAcceptedMailStateAllowableValues();
+        if (!is_null($this->container['accepted_mail_state']) && !in_array($this->container['accepted_mail_state'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'accepted_mail_state', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getPaidMailStateAllowableValues();
+        if (!is_null($this->container['paid_mail_state']) && !in_array($this->container['paid_mail_state'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'paid_mail_state', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getDeliveredMailStateAllowableValues();
+        if (!is_null($this->container['delivered_mail_state']) && !in_array($this->container['delivered_mail_state'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'delivered_mail_state', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getPointStateAllowableValues();
+        if (!is_null($this->container['point_state']) && !in_array($this->container['point_state'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'point_state', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getGmoPointStateAllowableValues();
+        if (!is_null($this->container['gmo_point_state']) && !in_array($this->container['gmo_point_state'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'gmo_point_state', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getYahooPointStateAllowableValues();
+        if (!is_null($this->container['yahoo_point_state']) && !in_array($this->container['yahoo_point_state'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'yahoo_point_state', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
 
         return $invalidProperties;
     }
@@ -200,31 +564,1020 @@ class Sale implements ModelInterface, ArrayAccess
      */
     public function valid()
     {
-
-        return true;
+        return count($this->listInvalidProperties()) === 0;
     }
 
 
     /**
-     * Gets sale
+     * Gets id
      *
-     * @return \ColorMeShop\Swagger\Model\V1salessaleIdJsonSale
+     * @return int
      */
-    public function getSale()
+    public function getId()
     {
-        return $this->container['sale'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets sale
+     * Sets id
      *
-     * @param \ColorMeShop\Swagger\Model\V1salessaleIdJsonSale $sale sale
+     * @param int $id 売上ID
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setId($id)
     {
-        $this->container['sale'] = $sale;
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets account_id
+     *
+     * @return string
+     */
+    public function getAccountId()
+    {
+        return $this->container['account_id'];
+    }
+
+    /**
+     * Sets account_id
+     *
+     * @param string $account_id ショップアカウントID
+     *
+     * @return $this
+     */
+    public function setAccountId($account_id)
+    {
+        $this->container['account_id'] = $account_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets make_date
+     *
+     * @return int
+     */
+    public function getMakeDate()
+    {
+        return $this->container['make_date'];
+    }
+
+    /**
+     * Sets make_date
+     *
+     * @param int $make_date 受注日時
+     *
+     * @return $this
+     */
+    public function setMakeDate($make_date)
+    {
+        $this->container['make_date'] = $make_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets update_date
+     *
+     * @return int
+     */
+    public function getUpdateDate()
+    {
+        return $this->container['update_date'];
+    }
+
+    /**
+     * Sets update_date
+     *
+     * @param int $update_date 受注更新日時
+     *
+     * @return $this
+     */
+    public function setUpdateDate($update_date)
+    {
+        $this->container['update_date'] = $update_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets memo
+     *
+     * @return string
+     */
+    public function getMemo()
+    {
+        return $this->container['memo'];
+    }
+
+    /**
+     * Sets memo
+     *
+     * @param string $memo 備考
+     *
+     * @return $this
+     */
+    public function setMemo($memo)
+    {
+        $this->container['memo'] = $memo;
+
+        return $this;
+    }
+
+    /**
+     * Gets payment_id
+     *
+     * @return int
+     */
+    public function getPaymentId()
+    {
+        return $this->container['payment_id'];
+    }
+
+    /**
+     * Sets payment_id
+     *
+     * @param int $payment_id 使用された決済方法ID
+     *
+     * @return $this
+     */
+    public function setPaymentId($payment_id)
+    {
+        $this->container['payment_id'] = $payment_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets mobile
+     *
+     * @return bool
+     */
+    public function getMobile()
+    {
+        return $this->container['mobile'];
+    }
+
+    /**
+     * Sets mobile
+     *
+     * @param bool $mobile モバイルからの注文であるか否か
+     *
+     * @return $this
+     */
+    public function setMobile($mobile)
+    {
+        $this->container['mobile'] = $mobile;
+
+        return $this;
+    }
+
+    /**
+     * Gets paid
+     *
+     * @return bool
+     */
+    public function getPaid()
+    {
+        return $this->container['paid'];
+    }
+
+    /**
+     * Sets paid
+     *
+     * @param bool $paid 入金済みであるか否か
+     *
+     * @return $this
+     */
+    public function setPaid($paid)
+    {
+        $this->container['paid'] = $paid;
+
+        return $this;
+    }
+
+    /**
+     * Gets delivered
+     *
+     * @return bool
+     */
+    public function getDelivered()
+    {
+        return $this->container['delivered'];
+    }
+
+    /**
+     * Sets delivered
+     *
+     * @param bool $delivered 発送済みである否か
+     *
+     * @return $this
+     */
+    public function setDelivered($delivered)
+    {
+        $this->container['delivered'] = $delivered;
+
+        return $this;
+    }
+
+    /**
+     * Gets canceled
+     *
+     * @return bool
+     */
+    public function getCanceled()
+    {
+        return $this->container['canceled'];
+    }
+
+    /**
+     * Sets canceled
+     *
+     * @param bool $canceled キャンセル済みであるか否か
+     *
+     * @return $this
+     */
+    public function setCanceled($canceled)
+    {
+        $this->container['canceled'] = $canceled;
+
+        return $this;
+    }
+
+    /**
+     * Gets accepted_mail_state
+     *
+     * @return string
+     */
+    public function getAcceptedMailState()
+    {
+        return $this->container['accepted_mail_state'];
+    }
+
+    /**
+     * Sets accepted_mail_state
+     *
+     * @param string $accepted_mail_state 受注メールの送信状態  - `not_yet`: 未送信 - `sent`: 送信済み - `pass`: 送信しない
+     *
+     * @return $this
+     */
+    public function setAcceptedMailState($accepted_mail_state)
+    {
+        $allowedValues = $this->getAcceptedMailStateAllowableValues();
+        if (!is_null($accepted_mail_state) && !in_array($accepted_mail_state, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'accepted_mail_state', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['accepted_mail_state'] = $accepted_mail_state;
+
+        return $this;
+    }
+
+    /**
+     * Gets paid_mail_state
+     *
+     * @return string
+     */
+    public function getPaidMailState()
+    {
+        return $this->container['paid_mail_state'];
+    }
+
+    /**
+     * Sets paid_mail_state
+     *
+     * @param string $paid_mail_state 入金メールの送信状態  - `not_yet`: 未送信 - `sent`: 送信済み - `pass`: 送信しない
+     *
+     * @return $this
+     */
+    public function setPaidMailState($paid_mail_state)
+    {
+        $allowedValues = $this->getPaidMailStateAllowableValues();
+        if (!is_null($paid_mail_state) && !in_array($paid_mail_state, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'paid_mail_state', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['paid_mail_state'] = $paid_mail_state;
+
+        return $this;
+    }
+
+    /**
+     * Gets delivered_mail_state
+     *
+     * @return string
+     */
+    public function getDeliveredMailState()
+    {
+        return $this->container['delivered_mail_state'];
+    }
+
+    /**
+     * Sets delivered_mail_state
+     *
+     * @param string $delivered_mail_state 発送メールの送信状態  - `not_yet`: 未送信 - `sent`: 送信済み - `pass`: 送信しない
+     *
+     * @return $this
+     */
+    public function setDeliveredMailState($delivered_mail_state)
+    {
+        $allowedValues = $this->getDeliveredMailStateAllowableValues();
+        if (!is_null($delivered_mail_state) && !in_array($delivered_mail_state, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'delivered_mail_state', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['delivered_mail_state'] = $delivered_mail_state;
+
+        return $this;
+    }
+
+    /**
+     * Gets accepted_mail_sent_date
+     *
+     * @return int
+     */
+    public function getAcceptedMailSentDate()
+    {
+        return $this->container['accepted_mail_sent_date'];
+    }
+
+    /**
+     * Sets accepted_mail_sent_date
+     *
+     * @param int $accepted_mail_sent_date 受注メールの送信日時
+     *
+     * @return $this
+     */
+    public function setAcceptedMailSentDate($accepted_mail_sent_date)
+    {
+        $this->container['accepted_mail_sent_date'] = $accepted_mail_sent_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets paid_mail_sent_date
+     *
+     * @return int
+     */
+    public function getPaidMailSentDate()
+    {
+        return $this->container['paid_mail_sent_date'];
+    }
+
+    /**
+     * Sets paid_mail_sent_date
+     *
+     * @param int $paid_mail_sent_date 入金メールの送信日時
+     *
+     * @return $this
+     */
+    public function setPaidMailSentDate($paid_mail_sent_date)
+    {
+        $this->container['paid_mail_sent_date'] = $paid_mail_sent_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets delivered_mail_sent_date
+     *
+     * @return int
+     */
+    public function getDeliveredMailSentDate()
+    {
+        return $this->container['delivered_mail_sent_date'];
+    }
+
+    /**
+     * Sets delivered_mail_sent_date
+     *
+     * @param int $delivered_mail_sent_date 発送メールの送信日時
+     *
+     * @return $this
+     */
+    public function setDeliveredMailSentDate($delivered_mail_sent_date)
+    {
+        $this->container['delivered_mail_sent_date'] = $delivered_mail_sent_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets point_state
+     *
+     * @return string
+     */
+    public function getPointState()
+    {
+        return $this->container['point_state'];
+    }
+
+    /**
+     * Sets point_state
+     *
+     * @param string $point_state ショップポイント付与状態  - `assumed`: 仮付与 - `fixed`: 確定済み - `canceled`: キャンセル済み
+     *
+     * @return $this
+     */
+    public function setPointState($point_state)
+    {
+        $allowedValues = $this->getPointStateAllowableValues();
+        if (!is_null($point_state) && !in_array($point_state, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'point_state', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['point_state'] = $point_state;
+
+        return $this;
+    }
+
+    /**
+     * Gets gmo_point_state
+     *
+     * @return string
+     */
+    public function getGmoPointState()
+    {
+        return $this->container['gmo_point_state'];
+    }
+
+    /**
+     * Sets gmo_point_state
+     *
+     * @param string $gmo_point_state GMOポイント付与状態  - `assumed`: 仮付与 - `fixed`: 確定済み - `canceled`: キャンセル済み
+     *
+     * @return $this
+     */
+    public function setGmoPointState($gmo_point_state)
+    {
+        $allowedValues = $this->getGmoPointStateAllowableValues();
+        if (!is_null($gmo_point_state) && !in_array($gmo_point_state, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'gmo_point_state', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['gmo_point_state'] = $gmo_point_state;
+
+        return $this;
+    }
+
+    /**
+     * Gets yahoo_point_state
+     *
+     * @return string
+     */
+    public function getYahooPointState()
+    {
+        return $this->container['yahoo_point_state'];
+    }
+
+    /**
+     * Sets yahoo_point_state
+     *
+     * @param string $yahoo_point_state Yahooポイント付与状態  - `assumed`: 仮付与 - `fixed`: 確定済み - `canceled`: キャンセル済み
+     *
+     * @return $this
+     */
+    public function setYahooPointState($yahoo_point_state)
+    {
+        $allowedValues = $this->getYahooPointStateAllowableValues();
+        if (!is_null($yahoo_point_state) && !in_array($yahoo_point_state, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'yahoo_point_state', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['yahoo_point_state'] = $yahoo_point_state;
+
+        return $this;
+    }
+
+    /**
+     * Gets product_total_price
+     *
+     * @return int
+     */
+    public function getProductTotalPrice()
+    {
+        return $this->container['product_total_price'];
+    }
+
+    /**
+     * Sets product_total_price
+     *
+     * @param int $product_total_price 商品の合計金額
+     *
+     * @return $this
+     */
+    public function setProductTotalPrice($product_total_price)
+    {
+        $this->container['product_total_price'] = $product_total_price;
+
+        return $this;
+    }
+
+    /**
+     * Gets delivery_total_charge
+     *
+     * @return int
+     */
+    public function getDeliveryTotalCharge()
+    {
+        return $this->container['delivery_total_charge'];
+    }
+
+    /**
+     * Sets delivery_total_charge
+     *
+     * @param int $delivery_total_charge 配送料
+     *
+     * @return $this
+     */
+    public function setDeliveryTotalCharge($delivery_total_charge)
+    {
+        $this->container['delivery_total_charge'] = $delivery_total_charge;
+
+        return $this;
+    }
+
+    /**
+     * Gets fee
+     *
+     * @return int
+     */
+    public function getFee()
+    {
+        return $this->container['fee'];
+    }
+
+    /**
+     * Sets fee
+     *
+     * @param int $fee 決済手数料
+     *
+     * @return $this
+     */
+    public function setFee($fee)
+    {
+        $this->container['fee'] = $fee;
+
+        return $this;
+    }
+
+    /**
+     * Gets tax
+     *
+     * @return int
+     */
+    public function getTax()
+    {
+        return $this->container['tax'];
+    }
+
+    /**
+     * Sets tax
+     *
+     * @param int $tax 商品合計金額に対する消費税
+     *
+     * @return $this
+     */
+    public function setTax($tax)
+    {
+        $this->container['tax'] = $tax;
+
+        return $this;
+    }
+
+    /**
+     * Gets noshi_total_charge
+     *
+     * @return int
+     */
+    public function getNoshiTotalCharge()
+    {
+        return $this->container['noshi_total_charge'];
+    }
+
+    /**
+     * Sets noshi_total_charge
+     *
+     * @param int $noshi_total_charge 熨斗料金
+     *
+     * @return $this
+     */
+    public function setNoshiTotalCharge($noshi_total_charge)
+    {
+        $this->container['noshi_total_charge'] = $noshi_total_charge;
+
+        return $this;
+    }
+
+    /**
+     * Gets card_total_charge
+     *
+     * @return int
+     */
+    public function getCardTotalCharge()
+    {
+        return $this->container['card_total_charge'];
+    }
+
+    /**
+     * Sets card_total_charge
+     *
+     * @param int $card_total_charge メッセージカード料金
+     *
+     * @return $this
+     */
+    public function setCardTotalCharge($card_total_charge)
+    {
+        $this->container['card_total_charge'] = $card_total_charge;
+
+        return $this;
+    }
+
+    /**
+     * Gets wrapping_total_charge
+     *
+     * @return int
+     */
+    public function getWrappingTotalCharge()
+    {
+        return $this->container['wrapping_total_charge'];
+    }
+
+    /**
+     * Sets wrapping_total_charge
+     *
+     * @param int $wrapping_total_charge ラッピング料金
+     *
+     * @return $this
+     */
+    public function setWrappingTotalCharge($wrapping_total_charge)
+    {
+        $this->container['wrapping_total_charge'] = $wrapping_total_charge;
+
+        return $this;
+    }
+
+    /**
+     * Gets point_discount
+     *
+     * @return int
+     */
+    public function getPointDiscount()
+    {
+        return $this->container['point_discount'];
+    }
+
+    /**
+     * Sets point_discount
+     *
+     * @param int $point_discount ショップポイントによる割引額
+     *
+     * @return $this
+     */
+    public function setPointDiscount($point_discount)
+    {
+        $this->container['point_discount'] = $point_discount;
+
+        return $this;
+    }
+
+    /**
+     * Gets gmo_point_discount
+     *
+     * @return int
+     */
+    public function getGmoPointDiscount()
+    {
+        return $this->container['gmo_point_discount'];
+    }
+
+    /**
+     * Sets gmo_point_discount
+     *
+     * @param int $gmo_point_discount GMOポイントによる割引額
+     *
+     * @return $this
+     */
+    public function setGmoPointDiscount($gmo_point_discount)
+    {
+        $this->container['gmo_point_discount'] = $gmo_point_discount;
+
+        return $this;
+    }
+
+    /**
+     * Gets other_discount
+     *
+     * @return int
+     */
+    public function getOtherDiscount()
+    {
+        return $this->container['other_discount'];
+    }
+
+    /**
+     * Sets other_discount
+     *
+     * @param int $other_discount その他、クーポン等による割引額
+     *
+     * @return $this
+     */
+    public function setOtherDiscount($other_discount)
+    {
+        $this->container['other_discount'] = $other_discount;
+
+        return $this;
+    }
+
+    /**
+     * Gets other_discount_name
+     *
+     * @return string
+     */
+    public function getOtherDiscountName()
+    {
+        return $this->container['other_discount_name'];
+    }
+
+    /**
+     * Sets other_discount_name
+     *
+     * @param string $other_discount_name その他割引の名称
+     *
+     * @return $this
+     */
+    public function setOtherDiscountName($other_discount_name)
+    {
+        $this->container['other_discount_name'] = $other_discount_name;
+
+        return $this;
+    }
+
+    /**
+     * Gets total_price
+     *
+     * @return int
+     */
+    public function getTotalPrice()
+    {
+        return $this->container['total_price'];
+    }
+
+    /**
+     * Sets total_price
+     *
+     * @param int $total_price 注文総額
+     *
+     * @return $this
+     */
+    public function setTotalPrice($total_price)
+    {
+        $this->container['total_price'] = $total_price;
+
+        return $this;
+    }
+
+    /**
+     * Gets granted_points
+     *
+     * @return int
+     */
+    public function getGrantedPoints()
+    {
+        return $this->container['granted_points'];
+    }
+
+    /**
+     * Sets granted_points
+     *
+     * @param int $granted_points 付与されたショップポイント数
+     *
+     * @return $this
+     */
+    public function setGrantedPoints($granted_points)
+    {
+        $this->container['granted_points'] = $granted_points;
+
+        return $this;
+    }
+
+    /**
+     * Gets use_points
+     *
+     * @return int
+     */
+    public function getUsePoints()
+    {
+        return $this->container['use_points'];
+    }
+
+    /**
+     * Sets use_points
+     *
+     * @param int $use_points 使用されたショップポイント数
+     *
+     * @return $this
+     */
+    public function setUsePoints($use_points)
+    {
+        $this->container['use_points'] = $use_points;
+
+        return $this;
+    }
+
+    /**
+     * Gets granted_gmo_points
+     *
+     * @return int
+     */
+    public function getGrantedGmoPoints()
+    {
+        return $this->container['granted_gmo_points'];
+    }
+
+    /**
+     * Sets granted_gmo_points
+     *
+     * @param int $granted_gmo_points 付与されたGMOポイント数
+     *
+     * @return $this
+     */
+    public function setGrantedGmoPoints($granted_gmo_points)
+    {
+        $this->container['granted_gmo_points'] = $granted_gmo_points;
+
+        return $this;
+    }
+
+    /**
+     * Gets use_gmo_points
+     *
+     * @return int
+     */
+    public function getUseGmoPoints()
+    {
+        return $this->container['use_gmo_points'];
+    }
+
+    /**
+     * Sets use_gmo_points
+     *
+     * @param int $use_gmo_points 使用されたGMOポイント数
+     *
+     * @return $this
+     */
+    public function setUseGmoPoints($use_gmo_points)
+    {
+        $this->container['use_gmo_points'] = $use_gmo_points;
+
+        return $this;
+    }
+
+    /**
+     * Gets granted_yahoo_points
+     *
+     * @return int
+     */
+    public function getGrantedYahooPoints()
+    {
+        return $this->container['granted_yahoo_points'];
+    }
+
+    /**
+     * Sets granted_yahoo_points
+     *
+     * @param int $granted_yahoo_points 付与されたYahooポイント数
+     *
+     * @return $this
+     */
+    public function setGrantedYahooPoints($granted_yahoo_points)
+    {
+        $this->container['granted_yahoo_points'] = $granted_yahoo_points;
+
+        return $this;
+    }
+
+    /**
+     * Gets use_yahoo_points
+     *
+     * @return int
+     */
+    public function getUseYahooPoints()
+    {
+        return $this->container['use_yahoo_points'];
+    }
+
+    /**
+     * Sets use_yahoo_points
+     *
+     * @param int $use_yahoo_points 使用されたYahooポイント数
+     *
+     * @return $this
+     */
+    public function setUseYahooPoints($use_yahoo_points)
+    {
+        $this->container['use_yahoo_points'] = $use_yahoo_points;
+
+        return $this;
+    }
+
+    /**
+     * Gets customer
+     *
+     * @return \ColorMeShop\Swagger\Model\SaleCustomer
+     */
+    public function getCustomer()
+    {
+        return $this->container['customer'];
+    }
+
+    /**
+     * Sets customer
+     *
+     * @param \ColorMeShop\Swagger\Model\SaleCustomer $customer customer
+     *
+     * @return $this
+     */
+    public function setCustomer($customer)
+    {
+        $this->container['customer'] = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Gets details
+     *
+     * @return \ColorMeShop\Swagger\Model\SaleDetails[]
+     */
+    public function getDetails()
+    {
+        return $this->container['details'];
+    }
+
+    /**
+     * Sets details
+     *
+     * @param \ColorMeShop\Swagger\Model\SaleDetails[] $details details
+     *
+     * @return $this
+     */
+    public function setDetails($details)
+    {
+        $this->container['details'] = $details;
+
+        return $this;
+    }
+
+    /**
+     * Gets sale_deliveries
+     *
+     * @return \ColorMeShop\Swagger\Model\V1salessaleIdSaleSaleDeliveries[]
+     */
+    public function getSaleDeliveries()
+    {
+        return $this->container['sale_deliveries'];
+    }
+
+    /**
+     * Sets sale_deliveries
+     *
+     * @param \ColorMeShop\Swagger\Model\V1salessaleIdSaleSaleDeliveries[] $sale_deliveries sale_deliveries
+     *
+     * @return $this
+     */
+    public function setSaleDeliveries($sale_deliveries)
+    {
+        $this->container['sale_deliveries'] = $sale_deliveries;
 
         return $this;
     }
@@ -298,5 +1651,3 @@ class Sale implements ModelInterface, ArrayAccess
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

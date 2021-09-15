@@ -13,14 +13,13 @@
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  ## 利用手順  ### OAuthアプリケーションの登録  デベロッパーアカウントをお持ちでない場合は作成します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリ登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  ### 認可  カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリ詳細画面で確認できるクライアントID| |`response_type`|\"code\"を指定| |`scope`| 別表参照| |`redirect_uri`|アプリ登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新| |`read_shop_coupons`|ショップクーポンの参照|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのログインIDとパスワードの入力を求められます。  ログイン後の認証ページでアプリとの連携が承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリ登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされ、 認可コードがURLの末尾に付与されます。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  ### 認可コードをアクセストークンに交換  以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリ詳細画面に表示されているクライアントID| |`client_secret`|アプリ詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"を指定| |`redirect_uri`|アプリ登録時に入力したリダイレクトURI|  curlによるリクエストの例を以下に示します。 ```console $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返却されます  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、[許可済みアプリ一覧画面](https://admin.shop-pro.jp/?mode=app_use_lst)から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  ### APIの利用  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する例を示します。  ```console $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPIでは、以下の形式の配列でエラーを表現します。  - `code` エラーコード - `message` エラーメッセージ - `status` ステータスコード  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```  ## 都道府県コードについて APIを利用して都道府県コードを更新したり、レスポンスを参照される際には以下の表を参考にしてください。  <details>   <summary>都道府県コード一覧</summary>    |id|都道府県|   |---|---|   |1|北海道|   |2|青森県|   |3|岩手県|   |4|秋田県|   |5|宮城県|   |6|山形県|   |7|福島県|   |8|茨城県|   |9|栃木県|   |10|群馬県|   |11|埼玉県|   |12|千葉県|   |13|東京都|   |14|神奈川県|   |15|新潟県|   |16|福井県|   |17|石川県|   |18|富山県|   |19|静岡県|   |20|山梨県|   |21|長野県|   |22|愛知県|   |23|岐阜県|   |24|三重県|   |25|和歌山県|   |26|滋賀県|   |27|奈良県|   |28|京都府|   |29|大阪府|   |30|兵庫県|   |31|岡山県|   |32|広島県|   |33|鳥取県|   |34|島根県|   |35|山口県|   |36|香川県|   |37|徳島県|   |38|愛媛県|   |39|高知県|   |40|福岡県|   |41|佐賀県|   |42|長崎県|   |43|大分県|   |44|熊本県|   |45|宮崎県|   |46|鹿児島県|   |47|沖縄県|   |48|海外|  </details>
  *
  * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- * Swagger Codegen version: 2.3.0
+ * Swagger Codegen version: 3.0.27
  */
-
 /**
  * NOTE: This class is auto generated by the swagger code generator program.
  * https://github.com/swagger-api/swagger-codegen
@@ -49,7 +48,7 @@ class Shop implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'Shop';
+    protected static $swaggerModelName = 'shop';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -58,38 +57,42 @@ class Shop implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'id' => 'string',
-        'state' => 'string',
-        'domain_plan' => 'string',
-        'contract_plan' => 'string',
-        'contract_start_date' => 'int',
-        'contract_end_date' => 'int',
-        'contract_term' => 'int',
-        'last_login_date' => 'int',
-        'setup_date' => 'int',
-        'make_date' => 'int',
-        'url' => 'string',
-        'open_state' => 'string',
-        'mobile_open_state' => 'string',
-        'login_id' => 'string',
-        'name1' => 'string',
-        'name2' => 'string',
-        'name1_kana' => 'string',
-        'name2_kana' => 'string',
-        'hojin' => 'string',
-        'hojin_kana' => 'string',
-        'user_mail' => 'string',
-        'tel' => 'string',
-        'fax' => 'string',
-        'postal' => 'string',
-        'pref_id' => 'int',
-        'pref_name' => 'string',
-        'address1' => 'string',
-        'address2' => 'string',
-        'title' => 'string',
-        'title_short' => 'string',
-        'shop_mail_1' => 'string',
-        'shop_mail_2' => 'string'
-    ];
+'state' => 'string',
+'domain_plan' => 'string',
+'contract_plan' => 'string',
+'contract_start_date' => 'int',
+'contract_end_date' => 'int',
+'contract_term' => 'int',
+'last_login_date' => 'int',
+'setup_date' => 'int',
+'make_date' => 'int',
+'url' => 'string',
+'open_state' => 'string',
+'mobile_open_state' => 'string',
+'login_id' => 'string',
+'name1' => 'string',
+'name2' => 'string',
+'name1_kana' => 'string',
+'name2_kana' => 'string',
+'hojin' => 'string',
+'hojin_kana' => 'string',
+'user_mail' => 'string',
+'tel' => 'string',
+'fax' => 'string',
+'postal' => 'string',
+'pref_id' => 'int',
+'pref_name' => 'string',
+'address1' => 'string',
+'address2' => 'string',
+'title' => 'string',
+'title_short' => 'string',
+'shop_mail_1' => 'string',
+'shop_mail_2' => 'string',
+'tax_type' => 'string',
+'tax' => 'int',
+'tax_rounding_method' => 'string',
+'reduce_tax_rate' => 'int',
+'shop_logo_url' => 'string'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -98,38 +101,42 @@ class Shop implements ModelInterface, ArrayAccess
       */
     protected static $swaggerFormats = [
         'id' => null,
-        'state' => null,
-        'domain_plan' => null,
-        'contract_plan' => null,
-        'contract_start_date' => null,
-        'contract_end_date' => null,
-        'contract_term' => null,
-        'last_login_date' => null,
-        'setup_date' => null,
-        'make_date' => null,
-        'url' => null,
-        'open_state' => null,
-        'mobile_open_state' => null,
-        'login_id' => null,
-        'name1' => null,
-        'name2' => null,
-        'name1_kana' => null,
-        'name2_kana' => null,
-        'hojin' => null,
-        'hojin_kana' => null,
-        'user_mail' => 'email',
-        'tel' => null,
-        'fax' => null,
-        'postal' => null,
-        'pref_id' => null,
-        'pref_name' => null,
-        'address1' => null,
-        'address2' => null,
-        'title' => null,
-        'title_short' => null,
-        'shop_mail_1' => 'email',
-        'shop_mail_2' => 'email'
-    ];
+'state' => null,
+'domain_plan' => null,
+'contract_plan' => null,
+'contract_start_date' => null,
+'contract_end_date' => null,
+'contract_term' => null,
+'last_login_date' => null,
+'setup_date' => null,
+'make_date' => null,
+'url' => null,
+'open_state' => null,
+'mobile_open_state' => null,
+'login_id' => null,
+'name1' => null,
+'name2' => null,
+'name1_kana' => null,
+'name2_kana' => null,
+'hojin' => null,
+'hojin_kana' => null,
+'user_mail' => 'email',
+'tel' => null,
+'fax' => null,
+'postal' => null,
+'pref_id' => null,
+'pref_name' => null,
+'address1' => null,
+'address2' => null,
+'title' => null,
+'title_short' => null,
+'shop_mail_1' => 'email',
+'shop_mail_2' => 'email',
+'tax_type' => null,
+'tax' => null,
+'tax_rounding_method' => null,
+'reduce_tax_rate' => null,
+'shop_logo_url' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -159,38 +166,42 @@ class Shop implements ModelInterface, ArrayAccess
      */
     protected static $attributeMap = [
         'id' => 'id',
-        'state' => 'state',
-        'domain_plan' => 'domain_plan',
-        'contract_plan' => 'contract_plan',
-        'contract_start_date' => 'contract_start_date',
-        'contract_end_date' => 'contract_end_date',
-        'contract_term' => 'contract_term',
-        'last_login_date' => 'last_login_date',
-        'setup_date' => 'setup_date',
-        'make_date' => 'make_date',
-        'url' => 'url',
-        'open_state' => 'open_state',
-        'mobile_open_state' => 'mobile_open_state',
-        'login_id' => 'login_id',
-        'name1' => 'name1',
-        'name2' => 'name2',
-        'name1_kana' => 'name1_kana',
-        'name2_kana' => 'name2_kana',
-        'hojin' => 'hojin',
-        'hojin_kana' => 'hojin_kana',
-        'user_mail' => 'user_mail',
-        'tel' => 'tel',
-        'fax' => 'fax',
-        'postal' => 'postal',
-        'pref_id' => 'pref_id',
-        'pref_name' => 'pref_name',
-        'address1' => 'address1',
-        'address2' => 'address2',
-        'title' => 'title',
-        'title_short' => 'title_short',
-        'shop_mail_1' => 'shop_mail_1',
-        'shop_mail_2' => 'shop_mail_2'
-    ];
+'state' => 'state',
+'domain_plan' => 'domain_plan',
+'contract_plan' => 'contract_plan',
+'contract_start_date' => 'contract_start_date',
+'contract_end_date' => 'contract_end_date',
+'contract_term' => 'contract_term',
+'last_login_date' => 'last_login_date',
+'setup_date' => 'setup_date',
+'make_date' => 'make_date',
+'url' => 'url',
+'open_state' => 'open_state',
+'mobile_open_state' => 'mobile_open_state',
+'login_id' => 'login_id',
+'name1' => 'name1',
+'name2' => 'name2',
+'name1_kana' => 'name1_kana',
+'name2_kana' => 'name2_kana',
+'hojin' => 'hojin',
+'hojin_kana' => 'hojin_kana',
+'user_mail' => 'user_mail',
+'tel' => 'tel',
+'fax' => 'fax',
+'postal' => 'postal',
+'pref_id' => 'pref_id',
+'pref_name' => 'pref_name',
+'address1' => 'address1',
+'address2' => 'address2',
+'title' => 'title',
+'title_short' => 'title_short',
+'shop_mail_1' => 'shop_mail_1',
+'shop_mail_2' => 'shop_mail_2',
+'tax_type' => 'tax_type',
+'tax' => 'tax',
+'tax_rounding_method' => 'tax_rounding_method',
+'reduce_tax_rate' => 'reduce_tax_rate',
+'shop_logo_url' => 'shop_logo_url'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -199,38 +210,42 @@ class Shop implements ModelInterface, ArrayAccess
      */
     protected static $setters = [
         'id' => 'setId',
-        'state' => 'setState',
-        'domain_plan' => 'setDomainPlan',
-        'contract_plan' => 'setContractPlan',
-        'contract_start_date' => 'setContractStartDate',
-        'contract_end_date' => 'setContractEndDate',
-        'contract_term' => 'setContractTerm',
-        'last_login_date' => 'setLastLoginDate',
-        'setup_date' => 'setSetupDate',
-        'make_date' => 'setMakeDate',
-        'url' => 'setUrl',
-        'open_state' => 'setOpenState',
-        'mobile_open_state' => 'setMobileOpenState',
-        'login_id' => 'setLoginId',
-        'name1' => 'setName1',
-        'name2' => 'setName2',
-        'name1_kana' => 'setName1Kana',
-        'name2_kana' => 'setName2Kana',
-        'hojin' => 'setHojin',
-        'hojin_kana' => 'setHojinKana',
-        'user_mail' => 'setUserMail',
-        'tel' => 'setTel',
-        'fax' => 'setFax',
-        'postal' => 'setPostal',
-        'pref_id' => 'setPrefId',
-        'pref_name' => 'setPrefName',
-        'address1' => 'setAddress1',
-        'address2' => 'setAddress2',
-        'title' => 'setTitle',
-        'title_short' => 'setTitleShort',
-        'shop_mail_1' => 'setShopMail1',
-        'shop_mail_2' => 'setShopMail2'
-    ];
+'state' => 'setState',
+'domain_plan' => 'setDomainPlan',
+'contract_plan' => 'setContractPlan',
+'contract_start_date' => 'setContractStartDate',
+'contract_end_date' => 'setContractEndDate',
+'contract_term' => 'setContractTerm',
+'last_login_date' => 'setLastLoginDate',
+'setup_date' => 'setSetupDate',
+'make_date' => 'setMakeDate',
+'url' => 'setUrl',
+'open_state' => 'setOpenState',
+'mobile_open_state' => 'setMobileOpenState',
+'login_id' => 'setLoginId',
+'name1' => 'setName1',
+'name2' => 'setName2',
+'name1_kana' => 'setName1Kana',
+'name2_kana' => 'setName2Kana',
+'hojin' => 'setHojin',
+'hojin_kana' => 'setHojinKana',
+'user_mail' => 'setUserMail',
+'tel' => 'setTel',
+'fax' => 'setFax',
+'postal' => 'setPostal',
+'pref_id' => 'setPrefId',
+'pref_name' => 'setPrefName',
+'address1' => 'setAddress1',
+'address2' => 'setAddress2',
+'title' => 'setTitle',
+'title_short' => 'setTitleShort',
+'shop_mail_1' => 'setShopMail1',
+'shop_mail_2' => 'setShopMail2',
+'tax_type' => 'setTaxType',
+'tax' => 'setTax',
+'tax_rounding_method' => 'setTaxRoundingMethod',
+'reduce_tax_rate' => 'setReduceTaxRate',
+'shop_logo_url' => 'setShopLogoUrl'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -239,38 +254,42 @@ class Shop implements ModelInterface, ArrayAccess
      */
     protected static $getters = [
         'id' => 'getId',
-        'state' => 'getState',
-        'domain_plan' => 'getDomainPlan',
-        'contract_plan' => 'getContractPlan',
-        'contract_start_date' => 'getContractStartDate',
-        'contract_end_date' => 'getContractEndDate',
-        'contract_term' => 'getContractTerm',
-        'last_login_date' => 'getLastLoginDate',
-        'setup_date' => 'getSetupDate',
-        'make_date' => 'getMakeDate',
-        'url' => 'getUrl',
-        'open_state' => 'getOpenState',
-        'mobile_open_state' => 'getMobileOpenState',
-        'login_id' => 'getLoginId',
-        'name1' => 'getName1',
-        'name2' => 'getName2',
-        'name1_kana' => 'getName1Kana',
-        'name2_kana' => 'getName2Kana',
-        'hojin' => 'getHojin',
-        'hojin_kana' => 'getHojinKana',
-        'user_mail' => 'getUserMail',
-        'tel' => 'getTel',
-        'fax' => 'getFax',
-        'postal' => 'getPostal',
-        'pref_id' => 'getPrefId',
-        'pref_name' => 'getPrefName',
-        'address1' => 'getAddress1',
-        'address2' => 'getAddress2',
-        'title' => 'getTitle',
-        'title_short' => 'getTitleShort',
-        'shop_mail_1' => 'getShopMail1',
-        'shop_mail_2' => 'getShopMail2'
-    ];
+'state' => 'getState',
+'domain_plan' => 'getDomainPlan',
+'contract_plan' => 'getContractPlan',
+'contract_start_date' => 'getContractStartDate',
+'contract_end_date' => 'getContractEndDate',
+'contract_term' => 'getContractTerm',
+'last_login_date' => 'getLastLoginDate',
+'setup_date' => 'getSetupDate',
+'make_date' => 'getMakeDate',
+'url' => 'getUrl',
+'open_state' => 'getOpenState',
+'mobile_open_state' => 'getMobileOpenState',
+'login_id' => 'getLoginId',
+'name1' => 'getName1',
+'name2' => 'getName2',
+'name1_kana' => 'getName1Kana',
+'name2_kana' => 'getName2Kana',
+'hojin' => 'getHojin',
+'hojin_kana' => 'getHojinKana',
+'user_mail' => 'getUserMail',
+'tel' => 'getTel',
+'fax' => 'getFax',
+'postal' => 'getPostal',
+'pref_id' => 'getPrefId',
+'pref_name' => 'getPrefName',
+'address1' => 'getAddress1',
+'address2' => 'getAddress2',
+'title' => 'getTitle',
+'title_short' => 'getTitleShort',
+'shop_mail_1' => 'getShopMail1',
+'shop_mail_2' => 'getShopMail2',
+'tax_type' => 'getTaxType',
+'tax' => 'getTax',
+'tax_rounding_method' => 'getTaxRoundingMethod',
+'reduce_tax_rate' => 'getReduceTaxRate',
+'shop_logo_url' => 'getShopLogoUrl'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -314,31 +333,35 @@ class Shop implements ModelInterface, ArrayAccess
     }
 
     const STATE_ENABLED = 'enabled';
-    const STATE_SUSPENDED = 'suspended';
-    const STATE_UNSIGNED = 'unsigned';
-    const DOMAIN_PLAN_CMSP_SUB_DOMAIN = 'cmsp_sub_domain';
-    const DOMAIN_PLAN_OWN_DOMAIN = 'own_domain';
-    const DOMAIN_PLAN_OWN_SUB_DOMAIN = 'own_sub_domain';
-    const CONTRACT_PLAN_UNKNOWN = 'unknown';
-    const CONTRACT_PLAN_ECONOMY = 'economy';
-    const CONTRACT_PLAN_SMALL = 'small';
-    const CONTRACT_PLAN_REGULAR = 'regular';
-    const CONTRACT_PLAN_LOLIPOP = 'lolipop';
-    const CONTRACT_PLAN_HETEML = 'heteml';
-    const CONTRACT_PLAN_PLATINUM = 'platinum';
-    const CONTRACT_PLAN_GOOPE = 'goope';
-    const CONTRACT_PLAN_LARGE = 'large';
-    const OPEN_STATE_OPENED = 'opened';
-    const OPEN_STATE_CLOSED = 'closed';
-    const OPEN_STATE_PREPARE = 'prepare';
-    const OPEN_STATE_PAUSED = 'paused';
-    const MOBILE_OPEN_STATE_OPENED = 'opened';
-    const MOBILE_OPEN_STATE_CLOSED = 'closed';
-    const MOBILE_OPEN_STATE_PREPARE = 'prepare';
-    const MOBILE_OPEN_STATE_PAUSED = 'paused';
-    
+const STATE_SUSPENDED = 'suspended';
+const STATE_UNSIGNED = 'unsigned';
+const DOMAIN_PLAN_CMSP_SUB_DOMAIN = 'cmsp_sub_domain';
+const DOMAIN_PLAN_OWN_DOMAIN = 'own_domain';
+const DOMAIN_PLAN_OWN_SUB_DOMAIN = 'own_sub_domain';
+const CONTRACT_PLAN_UNKNOWN = 'unknown';
+const CONTRACT_PLAN_ECONOMY = 'economy';
+const CONTRACT_PLAN_SMALL = 'small';
+const CONTRACT_PLAN_REGULAR = 'regular';
+const CONTRACT_PLAN_LOLIPOP = 'lolipop';
+const CONTRACT_PLAN_HETEML = 'heteml';
+const CONTRACT_PLAN_PLATINUM = 'platinum';
+const CONTRACT_PLAN_GOOPE = 'goope';
+const CONTRACT_PLAN_LARGE = 'large';
+const CONTRACT_PLAN_FREE = 'free';
+const OPEN_STATE_OPENED = 'opened';
+const OPEN_STATE_CLOSED = 'closed';
+const OPEN_STATE_PREPARE = 'prepare';
+const OPEN_STATE_PAUSED = 'paused';
+const MOBILE_OPEN_STATE_OPENED = 'opened';
+const MOBILE_OPEN_STATE_CLOSED = 'closed';
+const MOBILE_OPEN_STATE_PREPARE = 'prepare';
+const MOBILE_OPEN_STATE_PAUSED = 'paused';
+const TAX_TYPE_EXCLUDED = 'excluded';
+const TAX_TYPE_INCLUDED = 'included';
+const TAX_ROUNDING_METHOD_OFF = 'round_off';
+const TAX_ROUNDING_METHOD_DOWN = 'round_down';
+const TAX_ROUNDING_METHOD_UP = 'round_up';
 
-    
     /**
      * Gets allowable values of the enum
      *
@@ -348,11 +371,9 @@ class Shop implements ModelInterface, ArrayAccess
     {
         return [
             self::STATE_ENABLED,
-            self::STATE_SUSPENDED,
-            self::STATE_UNSIGNED,
-        ];
+self::STATE_SUSPENDED,
+self::STATE_UNSIGNED,        ];
     }
-    
     /**
      * Gets allowable values of the enum
      *
@@ -362,11 +383,9 @@ class Shop implements ModelInterface, ArrayAccess
     {
         return [
             self::DOMAIN_PLAN_CMSP_SUB_DOMAIN,
-            self::DOMAIN_PLAN_OWN_DOMAIN,
-            self::DOMAIN_PLAN_OWN_SUB_DOMAIN,
-        ];
+self::DOMAIN_PLAN_OWN_DOMAIN,
+self::DOMAIN_PLAN_OWN_SUB_DOMAIN,        ];
     }
-    
     /**
      * Gets allowable values of the enum
      *
@@ -376,17 +395,16 @@ class Shop implements ModelInterface, ArrayAccess
     {
         return [
             self::CONTRACT_PLAN_UNKNOWN,
-            self::CONTRACT_PLAN_ECONOMY,
-            self::CONTRACT_PLAN_SMALL,
-            self::CONTRACT_PLAN_REGULAR,
-            self::CONTRACT_PLAN_LOLIPOP,
-            self::CONTRACT_PLAN_HETEML,
-            self::CONTRACT_PLAN_PLATINUM,
-            self::CONTRACT_PLAN_GOOPE,
-            self::CONTRACT_PLAN_LARGE,
-        ];
+self::CONTRACT_PLAN_ECONOMY,
+self::CONTRACT_PLAN_SMALL,
+self::CONTRACT_PLAN_REGULAR,
+self::CONTRACT_PLAN_LOLIPOP,
+self::CONTRACT_PLAN_HETEML,
+self::CONTRACT_PLAN_PLATINUM,
+self::CONTRACT_PLAN_GOOPE,
+self::CONTRACT_PLAN_LARGE,
+self::CONTRACT_PLAN_FREE,        ];
     }
-    
     /**
      * Gets allowable values of the enum
      *
@@ -396,12 +414,10 @@ class Shop implements ModelInterface, ArrayAccess
     {
         return [
             self::OPEN_STATE_OPENED,
-            self::OPEN_STATE_CLOSED,
-            self::OPEN_STATE_PREPARE,
-            self::OPEN_STATE_PAUSED,
-        ];
+self::OPEN_STATE_CLOSED,
+self::OPEN_STATE_PREPARE,
+self::OPEN_STATE_PAUSED,        ];
     }
-    
     /**
      * Gets allowable values of the enum
      *
@@ -411,12 +427,33 @@ class Shop implements ModelInterface, ArrayAccess
     {
         return [
             self::MOBILE_OPEN_STATE_OPENED,
-            self::MOBILE_OPEN_STATE_CLOSED,
-            self::MOBILE_OPEN_STATE_PREPARE,
-            self::MOBILE_OPEN_STATE_PAUSED,
-        ];
+self::MOBILE_OPEN_STATE_CLOSED,
+self::MOBILE_OPEN_STATE_PREPARE,
+self::MOBILE_OPEN_STATE_PAUSED,        ];
     }
-    
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getTaxTypeAllowableValues()
+    {
+        return [
+            self::TAX_TYPE_EXCLUDED,
+self::TAX_TYPE_INCLUDED,        ];
+    }
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getTaxRoundingMethodAllowableValues()
+    {
+        return [
+            self::TAX_ROUNDING_METHOD_OFF,
+self::TAX_ROUNDING_METHOD_DOWN,
+self::TAX_ROUNDING_METHOD_UP,        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -465,6 +502,11 @@ class Shop implements ModelInterface, ArrayAccess
         $this->container['title_short'] = isset($data['title_short']) ? $data['title_short'] : null;
         $this->container['shop_mail_1'] = isset($data['shop_mail_1']) ? $data['shop_mail_1'] : null;
         $this->container['shop_mail_2'] = isset($data['shop_mail_2']) ? $data['shop_mail_2'] : null;
+        $this->container['tax_type'] = isset($data['tax_type']) ? $data['tax_type'] : null;
+        $this->container['tax'] = isset($data['tax']) ? $data['tax'] : null;
+        $this->container['tax_rounding_method'] = isset($data['tax_rounding_method']) ? $data['tax_rounding_method'] : null;
+        $this->container['reduce_tax_rate'] = isset($data['reduce_tax_rate']) ? $data['reduce_tax_rate'] : null;
+        $this->container['shop_logo_url'] = isset($data['shop_logo_url']) ? $data['shop_logo_url'] : null;
     }
 
     /**
@@ -477,7 +519,7 @@ class Shop implements ModelInterface, ArrayAccess
         $invalidProperties = [];
 
         $allowedValues = $this->getStateAllowableValues();
-        if (!in_array($this->container['state'], $allowedValues)) {
+        if (!is_null($this->container['state']) && !in_array($this->container['state'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'state', must be one of '%s'",
                 implode("', '", $allowedValues)
@@ -485,7 +527,7 @@ class Shop implements ModelInterface, ArrayAccess
         }
 
         $allowedValues = $this->getDomainPlanAllowableValues();
-        if (!in_array($this->container['domain_plan'], $allowedValues)) {
+        if (!is_null($this->container['domain_plan']) && !in_array($this->container['domain_plan'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'domain_plan', must be one of '%s'",
                 implode("', '", $allowedValues)
@@ -493,7 +535,7 @@ class Shop implements ModelInterface, ArrayAccess
         }
 
         $allowedValues = $this->getContractPlanAllowableValues();
-        if (!in_array($this->container['contract_plan'], $allowedValues)) {
+        if (!is_null($this->container['contract_plan']) && !in_array($this->container['contract_plan'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'contract_plan', must be one of '%s'",
                 implode("', '", $allowedValues)
@@ -501,7 +543,7 @@ class Shop implements ModelInterface, ArrayAccess
         }
 
         $allowedValues = $this->getOpenStateAllowableValues();
-        if (!in_array($this->container['open_state'], $allowedValues)) {
+        if (!is_null($this->container['open_state']) && !in_array($this->container['open_state'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'open_state', must be one of '%s'",
                 implode("', '", $allowedValues)
@@ -509,9 +551,25 @@ class Shop implements ModelInterface, ArrayAccess
         }
 
         $allowedValues = $this->getMobileOpenStateAllowableValues();
-        if (!in_array($this->container['mobile_open_state'], $allowedValues)) {
+        if (!is_null($this->container['mobile_open_state']) && !in_array($this->container['mobile_open_state'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
                 "invalid value for 'mobile_open_state', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getTaxTypeAllowableValues();
+        if (!is_null($this->container['tax_type']) && !in_array($this->container['tax_type'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'tax_type', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getTaxRoundingMethodAllowableValues();
+        if (!is_null($this->container['tax_rounding_method']) && !in_array($this->container['tax_rounding_method'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'tax_rounding_method', must be one of '%s'",
                 implode("', '", $allowedValues)
             );
         }
@@ -527,28 +585,7 @@ class Shop implements ModelInterface, ArrayAccess
      */
     public function valid()
     {
-
-        $allowedValues = $this->getStateAllowableValues();
-        if (!in_array($this->container['state'], $allowedValues)) {
-            return false;
-        }
-        $allowedValues = $this->getDomainPlanAllowableValues();
-        if (!in_array($this->container['domain_plan'], $allowedValues)) {
-            return false;
-        }
-        $allowedValues = $this->getContractPlanAllowableValues();
-        if (!in_array($this->container['contract_plan'], $allowedValues)) {
-            return false;
-        }
-        $allowedValues = $this->getOpenStateAllowableValues();
-        if (!in_array($this->container['open_state'], $allowedValues)) {
-            return false;
-        }
-        $allowedValues = $this->getMobileOpenStateAllowableValues();
-        if (!in_array($this->container['mobile_open_state'], $allowedValues)) {
-            return false;
-        }
-        return true;
+        return count($this->listInvalidProperties()) === 0;
     }
 
 
@@ -596,7 +633,7 @@ class Shop implements ModelInterface, ArrayAccess
     public function setState($state)
     {
         $allowedValues = $this->getStateAllowableValues();
-        if (!is_null($state) && !in_array($state, $allowedValues)) {
+        if (!is_null($state) && !in_array($state, $allowedValues, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'state', must be one of '%s'",
@@ -629,7 +666,7 @@ class Shop implements ModelInterface, ArrayAccess
     public function setDomainPlan($domain_plan)
     {
         $allowedValues = $this->getDomainPlanAllowableValues();
-        if (!is_null($domain_plan) && !in_array($domain_plan, $allowedValues)) {
+        if (!is_null($domain_plan) && !in_array($domain_plan, $allowedValues, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'domain_plan', must be one of '%s'",
@@ -662,7 +699,7 @@ class Shop implements ModelInterface, ArrayAccess
     public function setContractPlan($contract_plan)
     {
         $allowedValues = $this->getContractPlanAllowableValues();
-        if (!is_null($contract_plan) && !in_array($contract_plan, $allowedValues)) {
+        if (!is_null($contract_plan) && !in_array($contract_plan, $allowedValues, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'contract_plan', must be one of '%s'",
@@ -863,7 +900,7 @@ class Shop implements ModelInterface, ArrayAccess
     public function setOpenState($open_state)
     {
         $allowedValues = $this->getOpenStateAllowableValues();
-        if (!is_null($open_state) && !in_array($open_state, $allowedValues)) {
+        if (!is_null($open_state) && !in_array($open_state, $allowedValues, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'open_state', must be one of '%s'",
@@ -896,7 +933,7 @@ class Shop implements ModelInterface, ArrayAccess
     public function setMobileOpenState($mobile_open_state)
     {
         $allowedValues = $this->getMobileOpenStateAllowableValues();
-        if (!is_null($mobile_open_state) && !in_array($mobile_open_state, $allowedValues)) {
+        if (!is_null($mobile_open_state) && !in_array($mobile_open_state, $allowedValues, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     "Invalid value for 'mobile_open_state', must be one of '%s'",
@@ -1364,6 +1401,144 @@ class Shop implements ModelInterface, ArrayAccess
 
         return $this;
     }
+
+    /**
+     * Gets tax_type
+     *
+     * @return string
+     */
+    public function getTaxType()
+    {
+        return $this->container['tax_type'];
+    }
+
+    /**
+     * Sets tax_type
+     *
+     * @param string $tax_type 消費税の内税・外税設定
+     *
+     * @return $this
+     */
+    public function setTaxType($tax_type)
+    {
+        $allowedValues = $this->getTaxTypeAllowableValues();
+        if (!is_null($tax_type) && !in_array($tax_type, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'tax_type', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['tax_type'] = $tax_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets tax
+     *
+     * @return int
+     */
+    public function getTax()
+    {
+        return $this->container['tax'];
+    }
+
+    /**
+     * Sets tax
+     *
+     * @param int $tax 消費税率
+     *
+     * @return $this
+     */
+    public function setTax($tax)
+    {
+        $this->container['tax'] = $tax;
+
+        return $this;
+    }
+
+    /**
+     * Gets tax_rounding_method
+     *
+     * @return string
+     */
+    public function getTaxRoundingMethod()
+    {
+        return $this->container['tax_rounding_method'];
+    }
+
+    /**
+     * Sets tax_rounding_method
+     *
+     * @param string $tax_rounding_method 消費税の切り捨て、切り上げ設定
+     *
+     * @return $this
+     */
+    public function setTaxRoundingMethod($tax_rounding_method)
+    {
+        $allowedValues = $this->getTaxRoundingMethodAllowableValues();
+        if (!is_null($tax_rounding_method) && !in_array($tax_rounding_method, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'tax_rounding_method', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['tax_rounding_method'] = $tax_rounding_method;
+
+        return $this;
+    }
+
+    /**
+     * Gets reduce_tax_rate
+     *
+     * @return int
+     */
+    public function getReduceTaxRate()
+    {
+        return $this->container['reduce_tax_rate'];
+    }
+
+    /**
+     * Sets reduce_tax_rate
+     *
+     * @param int $reduce_tax_rate 軽減税率
+     *
+     * @return $this
+     */
+    public function setReduceTaxRate($reduce_tax_rate)
+    {
+        $this->container['reduce_tax_rate'] = $reduce_tax_rate;
+
+        return $this;
+    }
+
+    /**
+     * Gets shop_logo_url
+     *
+     * @return string
+     */
+    public function getShopLogoUrl()
+    {
+        return $this->container['shop_logo_url'];
+    }
+
+    /**
+     * Sets shop_logo_url
+     *
+     * @param string $shop_logo_url ショップロゴ画像のURL
+     *
+     * @return $this
+     */
+    public function setShopLogoUrl($shop_logo_url)
+    {
+        $this->container['shop_logo_url'] = $shop_logo_url;
+
+        return $this;
+    }
     /**
      * Returns true if offset exists. False otherwise.
      *
@@ -1434,5 +1609,3 @@ class Shop implements ModelInterface, ArrayAccess
         return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }
-
-

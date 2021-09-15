@@ -12,14 +12,13 @@
 /**
  * カラーミーショップ API
  *
- * # カラーミーショップ API  [カラーミーショップ](https://shop-pro.jp) APIでは、受注の検索や商品情報の更新を行うことができます。  ## 利用手順  はじめに、カラーミーデベロッパーアカウントを用意します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリケーション登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  その後、カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面で確認できるクライアントID| |`response_type`|\"code\"という文字列| |`scope`| 別表参照| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリケーションが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのIDとパスワードの入力を求められます。 承認ボタンを押すと、このアプリケーションがショップのデータにアクセスすることが許可され、リダイレクトURIへリダイレクトされます。  承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリケーション登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされます。 末尾のパスが認可コードになっています。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  最後に、認可コードとアクセストークンを交換します。以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリケーション詳細画面に表示されているクライアントID| |`client_secret`|アプリケーション詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"という文字列| |`redirect_uri`|アプリケーション登録時に入力したリダイレクトURI|  ```console # curl での例  $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返ってきます。  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、許可済みアプリケーション一覧画面から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する際の例を示します。  ```console # curlの例  $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPI v1では  - エラーコード - エラーメッセージ - ステータスコード  の配列でエラーを表現します。以下に例を示します。  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```
+ * # カラーミーショップ API  ## 利用手順  ### OAuthアプリケーションの登録  デベロッパーアカウントをお持ちでない場合は作成します。[デベロッパー登録ページ](https://api.shop-pro.jp/developers/sign_up)から登録してください。  次に、[登録ページ](https://api.shop-pro.jp/oauth/applications/new)からアプリ登録を行ってください。 スマートフォンのWebViewを利用する場合は、リダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を入力してください。  ### 認可  カラーミーショップアカウントの認証ページを開きます。認証ページのURLは、`https://api.shop-pro.jp/oauth/authorize`に必要なパラメータをつけたものです。  |パラメータ名|値| |---|---| |`client_id`|アプリ詳細画面で確認できるクライアントID| |`response_type`|\"code\"を指定| |`scope`| 別表参照| |`redirect_uri`|アプリ登録時に入力したリダイレクトURI|  `scope`は、以下のうち、アプリが利用したい機能をスペース区切りで指定してください。  |スコープ|機能| |---|---| |`read_products`|商品データの参照| |`write_products`|在庫データの更新| |`read_sales`|受注・顧客データの参照| |`write_sales`|受注データの更新| |`read_shop_coupons`|ショップクーポンの参照|  以下のようなURLとなります。  ``` https://api.shop-pro.jp/oauth/authorize?client_id=CLIENT_ID&redirect_uri=REDIRECT_URI&response_type=code&scope=read_products%20write_products ```  初めてこのページを訪れる場合は、カラーミーショップアカウントのログインIDとパスワードの入力を求められます。  ログイン後の認証ページでアプリとの連携が承認された場合は、`code`というクエリパラメータに認可コードが付与されます。承認がキャンセルされた、またはエラーが起きた場合は、 `error`パラメータにエラーの内容を表す文字列が与えられます。  アプリ登録時のリダイレクトURIに`urn:ietf:wg:oauth:2.0:oob`を指定した場合は、以下のようなURLにリダイレクトされ、 認可コードがURLの末尾に付与されます。  ``` https://api.shop-pro.jp/oauth/authorize/AUTH_CODE ```  認可コードの有効期限は発行から10分間です。  ### 認可コードをアクセストークンに交換  以下のパラメータを付けて、`https://api.shop-pro.jp/oauth/token`へリクエストを送ります。  |パラメータ名|値| |---|---| |`client_id`|アプリ詳細画面に表示されているクライアントID| |`client_secret`|アプリ詳細画面に表示されているクライアントシークレット| |`code`|取得した認可コード| |`grant_type`|\"authorization_code\"を指定| |`redirect_uri`|アプリ登録時に入力したリダイレクトURI|  curlによるリクエストの例を以下に示します。 ```console $ curl -X POST \\   -d'client_id=CLIENT_ID' \\   -d'client_secret=CLIENT_SECRET' \\   -d'code=CODE' \\   -d'grant_type=authorization_code'   \\   -d'redirect_uri=REDIRECT_URI'  \\   'https://api.shop-pro.jp/oauth/token' ```  リクエストが成功すると、以下のようなJSONが返却されます  ```json {   \"access_token\": \"d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX\",   \"token_type\": \"bearer\",   \"scope\": \"read_products write_products\" } ```  アクセストークンに有効期限はありませんが、[許可済みアプリ一覧画面](https://admin.shop-pro.jp/?mode=app_use_lst)から失効させることができます。なお、同じ認可コードをアクセストークンに交換できるのは1度だけです。  ### APIの利用  取得したアクセストークンは、Authorizationヘッダに入れて使用します。以下にショップ情報を取得する例を示します。  ```console $ curl -H 'Authorization: Bearer d461ab8XXXXXXXXXXXXXXXXXXXXXXXXX' https://api.shop-pro.jp/v1/shop.json ```  ## エラー  カラーミーショップAPIでは、以下の形式の配列でエラーを表現します。  - `code` エラーコード - `message` エラーメッセージ - `status` ステータスコード  ```json {   \"errors\": [     {       \"code\": 404100,       \"message\": \"レコードが見つかりませんでした。\",       \"status\": 404     }   ] } ```  ## 都道府県コードについて APIを利用して都道府県コードを更新したり、レスポンスを参照される際には以下の表を参考にしてください。  <details>   <summary>都道府県コード一覧</summary>    |id|都道府県|   |---|---|   |1|北海道|   |2|青森県|   |3|岩手県|   |4|秋田県|   |5|宮城県|   |6|山形県|   |7|福島県|   |8|茨城県|   |9|栃木県|   |10|群馬県|   |11|埼玉県|   |12|千葉県|   |13|東京都|   |14|神奈川県|   |15|新潟県|   |16|福井県|   |17|石川県|   |18|富山県|   |19|静岡県|   |20|山梨県|   |21|長野県|   |22|愛知県|   |23|岐阜県|   |24|三重県|   |25|和歌山県|   |26|滋賀県|   |27|奈良県|   |28|京都府|   |29|大阪府|   |30|兵庫県|   |31|岡山県|   |32|広島県|   |33|鳥取県|   |34|島根県|   |35|山口県|   |36|香川県|   |37|徳島県|   |38|愛媛県|   |39|高知県|   |40|福岡県|   |41|佐賀県|   |42|長崎県|   |43|大分県|   |44|熊本県|   |45|宮崎県|   |46|鹿児島県|   |47|沖縄県|   |48|海外|  </details>
  *
  * OpenAPI spec version: 1.0.0
  * 
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
- * Swagger Codegen version: 2.3.0
+ * Swagger Codegen version: 3.0.27
  */
-
 /**
  * NOTE: This class is auto generated by the swagger code generator program.
  * https://github.com/swagger-api/swagger-codegen
@@ -60,6 +59,11 @@ class CustomerApi
     protected $config;
 
     /**
+     * @var HeaderSelector
+     */
+    protected $headerSelector;
+
+    /**
      * @param ClientInterface $client
      * @param Configuration   $config
      * @param HeaderSelector  $selector
@@ -91,7 +95,7 @@ class CustomerApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2005
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2006
      */
     public function getCustomer($customer_id)
     {
@@ -108,11 +112,11 @@ class CustomerApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2005, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2006, HTTP status code, HTTP response headers (array of strings)
      */
     public function getCustomerWithHttpInfo($customer_id)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2005';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2006';
         $request = $this->getCustomerRequest($customer_id);
 
         try {
@@ -148,7 +152,7 @@ class CustomerApi
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
+                if (!in_array($returnType, ['string','integer','bool'])) {
                     $content = json_decode($content);
                 }
             }
@@ -164,7 +168,7 @@ class CustomerApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2005',
+                        '\ColorMeShop\Swagger\Model\InlineResponse2006',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -206,7 +210,7 @@ class CustomerApi
      */
     public function getCustomerAsyncWithHttpInfo($customer_id)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2005';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2006';
         $request = $this->getCustomerRequest($customer_id);
 
         return $this->client
@@ -257,13 +261,13 @@ class CustomerApi
     protected function getCustomerRequest($customer_id)
     {
         // verify the required parameter 'customer_id' is set
-        if ($customer_id === null) {
+        if ($customer_id === null || (is_array($customer_id) && count($customer_id) === 0)) {
             throw new \InvalidArgumentException(
                 'Missing the required parameter $customer_id when calling getCustomer'
             );
         }
 
-        $resourcePath = '/v1/customers/{customerId}.json';
+        $resourcePath = '/v1/customers/{customer_id}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -274,7 +278,7 @@ class CustomerApi
         // path params
         if ($customer_id !== null) {
             $resourcePath = str_replace(
-                '{' . 'customerId' . '}',
+                '{' . 'customer_id' . '}',
                 ObjectSerializer::toPathValue($customer_id),
                 $resourcePath
             );
@@ -290,7 +294,7 @@ class CustomerApi
         } else {
             $headers = $this->headerSelector->selectHeaders(
                 ['application/json'],
-                ['application/json']
+                []
             );
         }
 
@@ -355,23 +359,27 @@ class CustomerApi
      *
      * @param  string $ids 顧客IDで検索。カンマ区切りで複数指定可能 (optional)
      * @param  string $name 顧客名で部分一致検索 (optional)
-     * @param  string $furigana 顧客フリガナがで部分一致検索 (optional)
+     * @param  string $furigana 顧客フリガナで部分一致検索 (optional)
      * @param  string $mail 顧客メールアドレスで部分一致検索 (optional)
      * @param  string $postal 顧客の郵便番号で部分一致検索 (optional)
      * @param  string $tel 顧客の電話番号で部分一致検索 (optional)
-     * @param  bool $mobile &#x60;true&#x60;なら会員登録済みの顧客から検索 (optional)
+     * @param  string $sex 顧客の性別で検索  - &#x60;male&#x60;: 男性 - &#x60;female&#x60;: 女性 (optional)
+     * @param  bool $member &#x60;true&#x60;なら会員登録済みの顧客から検索 (optional)
+     * @param  bool $receive_mail_magazine メルマガ受信可否で検索 (optional)
      * @param  string $make_date_min 指定日時以降に登録された顧客から検索 (optional)
      * @param  string $make_date_max 指定日時以前に登録された顧客から検索 (optional)
      * @param  string $update_date_min 指定日時以降に更新された顧客から検索 (optional)
-     * @param  string $update_date_max 指定日時以降に更新された顧客から検索 (optional)
+     * @param  string $update_date_max 指定日時以前に更新された顧客から検索 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大100 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \ColorMeShop\Swagger\Model\InlineResponse2004
      */
-    public function getCustomers($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $mobile = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null)
+    public function getCustomers($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $sex = null, $member = null, $receive_mail_magazine = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $limit = null, $offset = null)
     {
-        list($response) = $this->getCustomersWithHttpInfo($ids, $name, $furigana, $mail, $postal, $tel, $mobile, $make_date_min, $make_date_max, $update_date_min, $update_date_max);
+        list($response) = $this->getCustomersWithHttpInfo($ids, $name, $furigana, $mail, $postal, $tel, $sex, $member, $receive_mail_magazine, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $limit, $offset);
         return $response;
     }
 
@@ -382,24 +390,28 @@ class CustomerApi
      *
      * @param  string $ids 顧客IDで検索。カンマ区切りで複数指定可能 (optional)
      * @param  string $name 顧客名で部分一致検索 (optional)
-     * @param  string $furigana 顧客フリガナがで部分一致検索 (optional)
+     * @param  string $furigana 顧客フリガナで部分一致検索 (optional)
      * @param  string $mail 顧客メールアドレスで部分一致検索 (optional)
      * @param  string $postal 顧客の郵便番号で部分一致検索 (optional)
      * @param  string $tel 顧客の電話番号で部分一致検索 (optional)
-     * @param  bool $mobile &#x60;true&#x60;なら会員登録済みの顧客から検索 (optional)
+     * @param  string $sex 顧客の性別で検索  - &#x60;male&#x60;: 男性 - &#x60;female&#x60;: 女性 (optional)
+     * @param  bool $member &#x60;true&#x60;なら会員登録済みの顧客から検索 (optional)
+     * @param  bool $receive_mail_magazine メルマガ受信可否で検索 (optional)
      * @param  string $make_date_min 指定日時以降に登録された顧客から検索 (optional)
      * @param  string $make_date_max 指定日時以前に登録された顧客から検索 (optional)
      * @param  string $update_date_min 指定日時以降に更新された顧客から検索 (optional)
-     * @param  string $update_date_max 指定日時以降に更新された顧客から検索 (optional)
+     * @param  string $update_date_max 指定日時以前に更新された顧客から検索 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大100 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \ColorMeShop\Swagger\Model\InlineResponse2004, HTTP status code, HTTP response headers (array of strings)
      */
-    public function getCustomersWithHttpInfo($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $mobile = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null)
+    public function getCustomersWithHttpInfo($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $sex = null, $member = null, $receive_mail_magazine = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $limit = null, $offset = null)
     {
         $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2004';
-        $request = $this->getCustomersRequest($ids, $name, $furigana, $mail, $postal, $tel, $mobile, $make_date_min, $make_date_max, $update_date_min, $update_date_max);
+        $request = $this->getCustomersRequest($ids, $name, $furigana, $mail, $postal, $tel, $sex, $member, $receive_mail_magazine, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $limit, $offset);
 
         try {
             $options = $this->createHttpClientOption();
@@ -434,7 +446,7 @@ class CustomerApi
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
+                if (!in_array($returnType, ['string','integer','bool'])) {
                     $content = json_decode($content);
                 }
             }
@@ -467,22 +479,26 @@ class CustomerApi
      *
      * @param  string $ids 顧客IDで検索。カンマ区切りで複数指定可能 (optional)
      * @param  string $name 顧客名で部分一致検索 (optional)
-     * @param  string $furigana 顧客フリガナがで部分一致検索 (optional)
+     * @param  string $furigana 顧客フリガナで部分一致検索 (optional)
      * @param  string $mail 顧客メールアドレスで部分一致検索 (optional)
      * @param  string $postal 顧客の郵便番号で部分一致検索 (optional)
      * @param  string $tel 顧客の電話番号で部分一致検索 (optional)
-     * @param  bool $mobile &#x60;true&#x60;なら会員登録済みの顧客から検索 (optional)
+     * @param  string $sex 顧客の性別で検索  - &#x60;male&#x60;: 男性 - &#x60;female&#x60;: 女性 (optional)
+     * @param  bool $member &#x60;true&#x60;なら会員登録済みの顧客から検索 (optional)
+     * @param  bool $receive_mail_magazine メルマガ受信可否で検索 (optional)
      * @param  string $make_date_min 指定日時以降に登録された顧客から検索 (optional)
      * @param  string $make_date_max 指定日時以前に登録された顧客から検索 (optional)
      * @param  string $update_date_min 指定日時以降に更新された顧客から検索 (optional)
-     * @param  string $update_date_max 指定日時以降に更新された顧客から検索 (optional)
+     * @param  string $update_date_max 指定日時以前に更新された顧客から検索 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大100 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCustomersAsync($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $mobile = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null)
+    public function getCustomersAsync($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $sex = null, $member = null, $receive_mail_magazine = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $limit = null, $offset = null)
     {
-        return $this->getCustomersAsyncWithHttpInfo($ids, $name, $furigana, $mail, $postal, $tel, $mobile, $make_date_min, $make_date_max, $update_date_min, $update_date_max)
+        return $this->getCustomersAsyncWithHttpInfo($ids, $name, $furigana, $mail, $postal, $tel, $sex, $member, $receive_mail_magazine, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $limit, $offset)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -497,23 +513,27 @@ class CustomerApi
      *
      * @param  string $ids 顧客IDで検索。カンマ区切りで複数指定可能 (optional)
      * @param  string $name 顧客名で部分一致検索 (optional)
-     * @param  string $furigana 顧客フリガナがで部分一致検索 (optional)
+     * @param  string $furigana 顧客フリガナで部分一致検索 (optional)
      * @param  string $mail 顧客メールアドレスで部分一致検索 (optional)
      * @param  string $postal 顧客の郵便番号で部分一致検索 (optional)
      * @param  string $tel 顧客の電話番号で部分一致検索 (optional)
-     * @param  bool $mobile &#x60;true&#x60;なら会員登録済みの顧客から検索 (optional)
+     * @param  string $sex 顧客の性別で検索  - &#x60;male&#x60;: 男性 - &#x60;female&#x60;: 女性 (optional)
+     * @param  bool $member &#x60;true&#x60;なら会員登録済みの顧客から検索 (optional)
+     * @param  bool $receive_mail_magazine メルマガ受信可否で検索 (optional)
      * @param  string $make_date_min 指定日時以降に登録された顧客から検索 (optional)
      * @param  string $make_date_max 指定日時以前に登録された顧客から検索 (optional)
      * @param  string $update_date_min 指定日時以降に更新された顧客から検索 (optional)
-     * @param  string $update_date_max 指定日時以降に更新された顧客から検索 (optional)
+     * @param  string $update_date_max 指定日時以前に更新された顧客から検索 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大100 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function getCustomersAsyncWithHttpInfo($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $mobile = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null)
+    public function getCustomersAsyncWithHttpInfo($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $sex = null, $member = null, $receive_mail_magazine = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $limit = null, $offset = null)
     {
         $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2004';
-        $request = $this->getCustomersRequest($ids, $name, $furigana, $mail, $postal, $tel, $mobile, $make_date_min, $make_date_max, $update_date_min, $update_date_max);
+        $request = $this->getCustomersRequest($ids, $name, $furigana, $mail, $postal, $tel, $sex, $member, $receive_mail_magazine, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $limit, $offset);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -557,23 +577,27 @@ class CustomerApi
      *
      * @param  string $ids 顧客IDで検索。カンマ区切りで複数指定可能 (optional)
      * @param  string $name 顧客名で部分一致検索 (optional)
-     * @param  string $furigana 顧客フリガナがで部分一致検索 (optional)
+     * @param  string $furigana 顧客フリガナで部分一致検索 (optional)
      * @param  string $mail 顧客メールアドレスで部分一致検索 (optional)
      * @param  string $postal 顧客の郵便番号で部分一致検索 (optional)
      * @param  string $tel 顧客の電話番号で部分一致検索 (optional)
-     * @param  bool $mobile &#x60;true&#x60;なら会員登録済みの顧客から検索 (optional)
+     * @param  string $sex 顧客の性別で検索  - &#x60;male&#x60;: 男性 - &#x60;female&#x60;: 女性 (optional)
+     * @param  bool $member &#x60;true&#x60;なら会員登録済みの顧客から検索 (optional)
+     * @param  bool $receive_mail_magazine メルマガ受信可否で検索 (optional)
      * @param  string $make_date_min 指定日時以降に登録された顧客から検索 (optional)
      * @param  string $make_date_max 指定日時以前に登録された顧客から検索 (optional)
      * @param  string $update_date_min 指定日時以降に更新された顧客から検索 (optional)
-     * @param  string $update_date_max 指定日時以降に更新された顧客から検索 (optional)
+     * @param  string $update_date_max 指定日時以前に更新された顧客から検索 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大100 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function getCustomersRequest($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $mobile = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null)
+    protected function getCustomersRequest($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $sex = null, $member = null, $receive_mail_magazine = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $limit = null, $offset = null)
     {
 
-        $resourcePath = '/v1/customers.json';
+        $resourcePath = '/v1/customers';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -582,47 +606,63 @@ class CustomerApi
 
         // query params
         if ($ids !== null) {
-            $queryParams['ids'] = ObjectSerializer::toQueryValue($ids);
+            $queryParams['ids'] = ObjectSerializer::toQueryValue($ids, null);
         }
         // query params
         if ($name !== null) {
-            $queryParams['name'] = ObjectSerializer::toQueryValue($name);
+            $queryParams['name'] = ObjectSerializer::toQueryValue($name, null);
         }
         // query params
         if ($furigana !== null) {
-            $queryParams['furigana'] = ObjectSerializer::toQueryValue($furigana);
+            $queryParams['furigana'] = ObjectSerializer::toQueryValue($furigana, null);
         }
         // query params
         if ($mail !== null) {
-            $queryParams['mail'] = ObjectSerializer::toQueryValue($mail);
+            $queryParams['mail'] = ObjectSerializer::toQueryValue($mail, null);
         }
         // query params
         if ($postal !== null) {
-            $queryParams['postal'] = ObjectSerializer::toQueryValue($postal);
+            $queryParams['postal'] = ObjectSerializer::toQueryValue($postal, null);
         }
         // query params
         if ($tel !== null) {
-            $queryParams['tel'] = ObjectSerializer::toQueryValue($tel);
+            $queryParams['tel'] = ObjectSerializer::toQueryValue($tel, null);
         }
         // query params
-        if ($mobile !== null) {
-            $queryParams['mobile'] = ObjectSerializer::toQueryValue($mobile);
+        if ($sex !== null) {
+            $queryParams['sex'] = ObjectSerializer::toQueryValue($sex, null);
+        }
+        // query params
+        if ($member !== null) {
+            $queryParams['member'] = ObjectSerializer::toQueryValue($member, null);
+        }
+        // query params
+        if ($receive_mail_magazine !== null) {
+            $queryParams['receive_mail_magazine'] = ObjectSerializer::toQueryValue($receive_mail_magazine, null);
         }
         // query params
         if ($make_date_min !== null) {
-            $queryParams['make_date_min'] = ObjectSerializer::toQueryValue($make_date_min);
+            $queryParams['make_date_min'] = ObjectSerializer::toQueryValue($make_date_min, 'YYYY-MM-DD | YYYY-MM-DD hh:mm:ss');
         }
         // query params
         if ($make_date_max !== null) {
-            $queryParams['make_date_max'] = ObjectSerializer::toQueryValue($make_date_max);
+            $queryParams['make_date_max'] = ObjectSerializer::toQueryValue($make_date_max, 'YYYY-MM-DD | YYYY-MM-DD hh:mm:ss');
         }
         // query params
         if ($update_date_min !== null) {
-            $queryParams['update_date_min'] = ObjectSerializer::toQueryValue($update_date_min);
+            $queryParams['update_date_min'] = ObjectSerializer::toQueryValue($update_date_min, 'YYYY-MM-DD | YYYY-MM-DD hh:mm:ss');
         }
         // query params
         if ($update_date_max !== null) {
-            $queryParams['update_date_max'] = ObjectSerializer::toQueryValue($update_date_max);
+            $queryParams['update_date_max'] = ObjectSerializer::toQueryValue($update_date_max, 'YYYY-MM-DD | YYYY-MM-DD hh:mm:ss');
+        }
+        // query params
+        if ($limit !== null) {
+            $queryParams['limit'] = ObjectSerializer::toQueryValue($limit, null);
+        }
+        // query params
+        if ($offset !== null) {
+            $queryParams['offset'] = ObjectSerializer::toQueryValue($offset, null);
         }
 
 
@@ -636,7 +676,7 @@ class CustomerApi
         } else {
             $headers = $this->headerSelector->selectHeaders(
                 ['application/json'],
-                ['application/json']
+                []
             );
         }
 
@@ -699,15 +739,15 @@ class CustomerApi
      *
      * 顧客データを追加
      *
-     * @param  \ColorMeShop\Swagger\Model\Customer $customer customer (required)
+     * @param  \ColorMeShop\Swagger\Model\V1CustomersBody $body body (optional)
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \ColorMeShop\Swagger\Model\InlineResponse2005
      */
-    public function postCustomers($customer)
+    public function postCustomers($body = null)
     {
-        list($response) = $this->postCustomersWithHttpInfo($customer);
+        list($response) = $this->postCustomersWithHttpInfo($body);
         return $response;
     }
 
@@ -716,16 +756,16 @@ class CustomerApi
      *
      * 顧客データを追加
      *
-     * @param  \ColorMeShop\Swagger\Model\Customer $customer (required)
+     * @param  \ColorMeShop\Swagger\Model\V1CustomersBody $body (optional)
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \ColorMeShop\Swagger\Model\InlineResponse2005, HTTP status code, HTTP response headers (array of strings)
      */
-    public function postCustomersWithHttpInfo($customer)
+    public function postCustomersWithHttpInfo($body = null)
     {
         $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2005';
-        $request = $this->postCustomersRequest($customer);
+        $request = $this->postCustomersRequest($body);
 
         try {
             $options = $this->createHttpClientOption();
@@ -760,7 +800,7 @@ class CustomerApi
                 $content = $responseBody; //stream goes to serializer
             } else {
                 $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
+                if (!in_array($returnType, ['string','integer','bool'])) {
                     $content = json_decode($content);
                 }
             }
@@ -791,14 +831,14 @@ class CustomerApi
      *
      * 顧客データを追加
      *
-     * @param  \ColorMeShop\Swagger\Model\Customer $customer (required)
+     * @param  \ColorMeShop\Swagger\Model\V1CustomersBody $body (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postCustomersAsync($customer)
+    public function postCustomersAsync($body = null)
     {
-        return $this->postCustomersAsyncWithHttpInfo($customer)
+        return $this->postCustomersAsyncWithHttpInfo($body)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -811,15 +851,15 @@ class CustomerApi
      *
      * 顧客データを追加
      *
-     * @param  \ColorMeShop\Swagger\Model\Customer $customer (required)
+     * @param  \ColorMeShop\Swagger\Model\V1CustomersBody $body (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function postCustomersAsyncWithHttpInfo($customer)
+    public function postCustomersAsyncWithHttpInfo($body = null)
     {
         $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2005';
-        $request = $this->postCustomersRequest($customer);
+        $request = $this->postCustomersRequest($body);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -861,21 +901,15 @@ class CustomerApi
     /**
      * Create request for operation 'postCustomers'
      *
-     * @param  \ColorMeShop\Swagger\Model\Customer $customer (required)
+     * @param  \ColorMeShop\Swagger\Model\V1CustomersBody $body (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function postCustomersRequest($customer)
+    protected function postCustomersRequest($body = null)
     {
-        // verify the required parameter 'customer' is set
-        if ($customer === null) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $customer when calling postCustomers'
-            );
-        }
 
-        $resourcePath = '/v1/customers.json';
+        $resourcePath = '/v1/customers';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -886,8 +920,8 @@ class CustomerApi
 
         // body params
         $_tempBody = null;
-        if (isset($customer)) {
-            $_tempBody = $customer;
+        if (isset($body)) {
+            $_tempBody = $body;
         }
 
         if ($multipart) {
