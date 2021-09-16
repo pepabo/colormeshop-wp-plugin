@@ -2,7 +2,7 @@
 Contributors: colormeshop
 Tags: ecommerce, ec, colormeshop
 Requires at least: 5.2
-Tested up to: 5.5.1
+Tested up to: 5.8.1
 Requires PHP: 7.3.0
 Stable tag: trunk
 License: GPLv2
