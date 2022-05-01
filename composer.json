@@ -10,6 +10,9 @@
     "platform": {
       "php": "7.4",
       "ext-filter": "7.1"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "require": {
