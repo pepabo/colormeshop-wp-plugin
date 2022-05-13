@@ -8,7 +8,7 @@
  * Author URI: https://pepabo.com/
  * License: GPL2
  */
-if ( version_compare( PHP_VERSION, '7.3', '<' ) ) {
+if ( version_compare( PHP_VERSION, '7.4', '<' ) ) {
 	add_action( 'admin_notices', 'colormeshop_wp_plugin_requirements_error' );
 	return;
 }
@@ -28,7 +28,7 @@ function colormeshop_wp_plugin_requirements_error() {
 	echo <<<__EOS__
 <div class="error">
 	<p>
-		カラーミーショップ WordPress プラグインは PHP7.3 以上が必要ですが、ご利用中のバージョンは <strong>{$v}</strong> です。<br />
+		カラーミーショップ WordPress プラグインは PHP7.4 以上が必要ですが、ご利用中のバージョンは <strong>{$v}</strong> です。<br />
 		現在、プラグインは動作を停止していますので、PHP のアップデート後に再度プラグインを有効化してください。<br />
 		ご利用お待ちしています！
 	</p>

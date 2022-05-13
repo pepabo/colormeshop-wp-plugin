@@ -8,7 +8,11 @@
   ],
   "config": {
     "platform": {
-      "php": "7.4"
+      "php": "7.4",
+      "ext-filter": "7.1"
+    },
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "require": {
@@ -24,7 +28,8 @@
     "squizlabs/php_codesniffer": "*",
     "wp-coding-standards/wpcs": "*",
     "phpcompatibility/phpcompatibility-wp": "*",
-    "dealerdirect/phpcodesniffer-composer-installer": "*"
+    "dealerdirect/phpcodesniffer-composer-installer": "*",
+    "yoast/phpunit-polyfills": "^1.0.3"
   },
   "autoload": {
     "classmap": ["src/"]
