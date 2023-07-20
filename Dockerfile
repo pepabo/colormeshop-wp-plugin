@@ -1,4 +1,4 @@
-FROM wordpress:php7.4
+FROM wordpress:php8.2
 
 RUN apt-get update \
  && apt-get -y install subversion \
