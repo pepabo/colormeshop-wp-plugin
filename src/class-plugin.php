@@ -83,11 +83,11 @@ class Plugin {
 	/**
 	 * プラグイン設定更新のコールバック
 	 *
-	 * @param array $old 古い設定値
-	 * @param array $new 新しい設定値
+	 * @param array $old_settings 古い設定値
+	 * @param array $new_settings 新しい設定値
 	 * @return void
 	 */
-	public function on_update_settings( $old, $new ) {
+	public function on_update_settings( $old_settings, $new_settings ) {
 		// 商品ページIDを元にサイトマップへのリライトを定義するため
 		$this->flush_rewrite_rules( $new );
 	}
@@ -366,8 +366,8 @@ class Plugin {
 	 * @return void
 	 */
 	private function register_shortcode() {
-		$to_invoker_methodname = function ( $class ) {
-			return '_' . str_replace( '/', '_', $class );
+		$to_invoker_methodname = function ( $klass ) {
+			return '_' . str_replace( '/', '_', $klass );
 		};
 
 		$shortcode_invoker = new Shortcode_Invoker( $this->container );
