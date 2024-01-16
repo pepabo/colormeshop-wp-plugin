@@ -56,8 +56,7 @@ class InlineResponse2006 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'customer' => '\ColorMeShop\Swagger\Model\SaleCustomer',
-'meta' => '\ColorMeShop\Swagger\Model\InlineResponse2006Meta'    ];
+        'customer' => '\ColorMeShop\Swagger\Model\SaleCustomer'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -65,8 +64,7 @@ class InlineResponse2006 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'customer' => null,
-'meta' => null    ];
+        'customer' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -95,8 +93,7 @@ class InlineResponse2006 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'customer' => 'customer',
-'meta' => 'meta'    ];
+        'customer' => 'customer'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -104,8 +101,7 @@ class InlineResponse2006 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'customer' => 'setCustomer',
-'meta' => 'setMeta'    ];
+        'customer' => 'setCustomer'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -113,8 +109,7 @@ class InlineResponse2006 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'customer' => 'getCustomer',
-'meta' => 'getMeta'    ];
+        'customer' => 'getCustomer'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -175,7 +170,6 @@ class InlineResponse2006 implements ModelInterface, ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['customer'] = isset($data['customer']) ? $data['customer'] : null;
-        $this->container['meta'] = isset($data['meta']) ? $data['meta'] : null;
     }
 
     /**
@@ -222,30 +216,6 @@ class InlineResponse2006 implements ModelInterface, ArrayAccess
     public function setCustomer($customer)
     {
         $this->container['customer'] = $customer;
-
-        return $this;
-    }
-
-    /**
-     * Gets meta
-     *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2006Meta
-     */
-    public function getMeta()
-    {
-        return $this->container['meta'];
-    }
-
-    /**
-     * Sets meta
-     *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse2006Meta $meta meta
-     *
-     * @return $this
-     */
-    public function setMeta($meta)
-    {
-        $this->container['meta'] = $meta;
 
         return $this;
     }

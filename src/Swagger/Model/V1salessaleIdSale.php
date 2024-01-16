@@ -268,7 +268,7 @@ self::POINT_STATE_CENCELED,        ];
     /**
      * Sets point_state
      *
-     * @param string $point_state ショップポイントの付与状態。`fixed`へ変更すると、購入者にショップポイントが付与される。`fixed`から別のステータスには変更できない  - `assumed`: 仮付与 - `fixed`: 確定済み - `cenceled`: キャンセル済み
+     * @param string $point_state ショップポイントの付与状態。`fixed`へ変更すると、購入者にショップポイントが付与される。`fixed`から別のステータスには変更できない また、受注が分割されている場合、子受注のショップポイント付与状態は変更することができません。  - `assumed`: 仮付与 - `fixed`: 確定済み - `cenceled`: キャンセル済み
      *
      * @return $this
      */

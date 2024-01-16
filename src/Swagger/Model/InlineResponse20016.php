@@ -56,7 +56,7 @@ class InlineResponse20016 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'gift' => '\ColorMeShop\Swagger\Model\InlineResponse20016Gift'    ];
+        'deliveries' => '\ColorMeShop\Swagger\Model\InlineResponse20016Deliveries[]'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +64,7 @@ class InlineResponse20016 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'gift' => null    ];
+        'deliveries' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +93,7 @@ class InlineResponse20016 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'gift' => 'gift'    ];
+        'deliveries' => 'deliveries'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +101,7 @@ class InlineResponse20016 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'gift' => 'setGift'    ];
+        'deliveries' => 'setDeliveries'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +109,7 @@ class InlineResponse20016 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'gift' => 'getGift'    ];
+        'deliveries' => 'getDeliveries'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +169,7 @@ class InlineResponse20016 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['gift'] = isset($data['gift']) ? $data['gift'] : null;
+        $this->container['deliveries'] = isset($data['deliveries']) ? $data['deliveries'] : null;
     }
 
     /**
@@ -197,25 +197,25 @@ class InlineResponse20016 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets gift
+     * Gets deliveries
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20016Gift
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20016Deliveries[]
      */
-    public function getGift()
+    public function getDeliveries()
     {
-        return $this->container['gift'];
+        return $this->container['deliveries'];
     }
 
     /**
-     * Sets gift
+     * Sets deliveries
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse20016Gift $gift gift
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20016Deliveries[] $deliveries deliveries
      *
      * @return $this
      */
-    public function setGift($gift)
+    public function setDeliveries($deliveries)
     {
-        $this->container['gift'] = $gift;
+        $this->container['deliveries'] = $deliveries;
 
         return $this;
     }

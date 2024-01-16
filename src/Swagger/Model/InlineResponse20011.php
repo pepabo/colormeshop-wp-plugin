@@ -56,7 +56,7 @@ class InlineResponse20011 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'groups' => '\ColorMeShop\Swagger\Model\InlineResponse20011Groups[]'    ];
+        'pickup' => '\ColorMeShop\Swagger\Model\InlineResponse20011Pickup'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +64,7 @@ class InlineResponse20011 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'groups' => null    ];
+        'pickup' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +93,7 @@ class InlineResponse20011 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'groups' => 'groups'    ];
+        'pickup' => 'pickup'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +101,7 @@ class InlineResponse20011 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'groups' => 'setGroups'    ];
+        'pickup' => 'setPickup'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +109,7 @@ class InlineResponse20011 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'groups' => 'getGroups'    ];
+        'pickup' => 'getPickup'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +169,7 @@ class InlineResponse20011 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['groups'] = isset($data['groups']) ? $data['groups'] : null;
+        $this->container['pickup'] = isset($data['pickup']) ? $data['pickup'] : null;
     }
 
     /**
@@ -197,25 +197,25 @@ class InlineResponse20011 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets groups
+     * Gets pickup
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20011Groups[]
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20011Pickup
      */
-    public function getGroups()
+    public function getPickup()
     {
-        return $this->container['groups'];
+        return $this->container['pickup'];
     }
 
     /**
-     * Sets groups
+     * Sets pickup
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse20011Groups[] $groups グループ情報一覧
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20011Pickup $pickup pickup
      *
      * @return $this
      */
-    public function setGroups($groups)
+    public function setPickup($pickup)
     {
-        $this->container['groups'] = $groups;
+        $this->container['pickup'] = $pickup;
 
         return $this;
     }

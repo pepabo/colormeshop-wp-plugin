@@ -94,7 +94,7 @@ class PaymentApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20013
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20015
      */
     public function getPayments()
     {
@@ -110,11 +110,11 @@ class PaymentApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20013, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20015, HTTP status code, HTTP response headers (array of strings)
      */
     public function getPaymentsWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20013';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20015';
         $request = $this->getPaymentsRequest();
 
         try {
@@ -166,7 +166,7 @@ class PaymentApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse20013',
+                        '\ColorMeShop\Swagger\Model\InlineResponse20015',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -206,7 +206,7 @@ class PaymentApi
      */
     public function getPaymentsAsyncWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20013';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20015';
         $request = $this->getPaymentsRequest();
 
         return $this->client

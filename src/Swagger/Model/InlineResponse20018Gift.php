@@ -1,6 +1,6 @@
 <?php
 /**
- * InlineResponse2003
+ * InlineResponse20018Gift
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * InlineResponse2003 Class Doc Comment
+ * InlineResponse20018Gift Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2003 implements ModelInterface, ArrayAccess
+class InlineResponse20018Gift implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'inline_response_200_3';
+    protected static $swaggerModelName = 'inline_response_200_18_gift';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,7 +56,13 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => 'AllOfinlineResponse2003Sale'    ];
+        'account_id' => 'string',
+'enabled' => 'bool',
+'noshi' => '\ColorMeShop\Swagger\Model\InlineResponse20018GiftNoshi',
+'card' => '\ColorMeShop\Swagger\Model\InlineResponse20018GiftCard',
+'wrapping' => '\ColorMeShop\Swagger\Model\InlineResponse20018GiftWrapping',
+'make_date' => 'int',
+'update_date' => 'int'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +70,13 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null    ];
+        'account_id' => null,
+'enabled' => null,
+'noshi' => null,
+'card' => null,
+'wrapping' => null,
+'make_date' => null,
+'update_date' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +105,13 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'    ];
+        'account_id' => 'account_id',
+'enabled' => 'enabled',
+'noshi' => 'noshi',
+'card' => 'card',
+'wrapping' => 'wrapping',
+'make_date' => 'make_date',
+'update_date' => 'update_date'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +119,13 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'    ];
+        'account_id' => 'setAccountId',
+'enabled' => 'setEnabled',
+'noshi' => 'setNoshi',
+'card' => 'setCard',
+'wrapping' => 'setWrapping',
+'make_date' => 'setMakeDate',
+'update_date' => 'setUpdateDate'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +133,13 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'    ];
+        'account_id' => 'getAccountId',
+'enabled' => 'getEnabled',
+'noshi' => 'getNoshi',
+'card' => 'getCard',
+'wrapping' => 'getWrapping',
+'make_date' => 'getMakeDate',
+'update_date' => 'getUpdateDate'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +199,13 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
+        $this->container['enabled'] = isset($data['enabled']) ? $data['enabled'] : null;
+        $this->container['noshi'] = isset($data['noshi']) ? $data['noshi'] : null;
+        $this->container['card'] = isset($data['card']) ? $data['card'] : null;
+        $this->container['wrapping'] = isset($data['wrapping']) ? $data['wrapping'] : null;
+        $this->container['make_date'] = isset($data['make_date']) ? $data['make_date'] : null;
+        $this->container['update_date'] = isset($data['update_date']) ? $data['update_date'] : null;
     }
 
     /**
@@ -197,25 +233,169 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets sale
+     * Gets account_id
      *
-     * @return AllOfinlineResponse2003Sale
+     * @return string
      */
-    public function getSale()
+    public function getAccountId()
     {
-        return $this->container['sale'];
+        return $this->container['account_id'];
     }
 
     /**
-     * Sets sale
+     * Sets account_id
      *
-     * @param AllOfinlineResponse2003Sale $sale sale
+     * @param string $account_id account_id
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setAccountId($account_id)
     {
-        $this->container['sale'] = $sale;
+        $this->container['account_id'] = $account_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets enabled
+     *
+     * @return bool
+     */
+    public function getEnabled()
+    {
+        return $this->container['enabled'];
+    }
+
+    /**
+     * Sets enabled
+     *
+     * @param bool $enabled enabled
+     *
+     * @return $this
+     */
+    public function setEnabled($enabled)
+    {
+        $this->container['enabled'] = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets noshi
+     *
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20018GiftNoshi
+     */
+    public function getNoshi()
+    {
+        return $this->container['noshi'];
+    }
+
+    /**
+     * Sets noshi
+     *
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20018GiftNoshi $noshi noshi
+     *
+     * @return $this
+     */
+    public function setNoshi($noshi)
+    {
+        $this->container['noshi'] = $noshi;
+
+        return $this;
+    }
+
+    /**
+     * Gets card
+     *
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20018GiftCard
+     */
+    public function getCard()
+    {
+        return $this->container['card'];
+    }
+
+    /**
+     * Sets card
+     *
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20018GiftCard $card card
+     *
+     * @return $this
+     */
+    public function setCard($card)
+    {
+        $this->container['card'] = $card;
+
+        return $this;
+    }
+
+    /**
+     * Gets wrapping
+     *
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20018GiftWrapping
+     */
+    public function getWrapping()
+    {
+        return $this->container['wrapping'];
+    }
+
+    /**
+     * Sets wrapping
+     *
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20018GiftWrapping $wrapping wrapping
+     *
+     * @return $this
+     */
+    public function setWrapping($wrapping)
+    {
+        $this->container['wrapping'] = $wrapping;
+
+        return $this;
+    }
+
+    /**
+     * Gets make_date
+     *
+     * @return int
+     */
+    public function getMakeDate()
+    {
+        return $this->container['make_date'];
+    }
+
+    /**
+     * Sets make_date
+     *
+     * @param int $make_date make_date
+     *
+     * @return $this
+     */
+    public function setMakeDate($make_date)
+    {
+        $this->container['make_date'] = $make_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets update_date
+     *
+     * @return int
+     */
+    public function getUpdateDate()
+    {
+        return $this->container['update_date'];
+    }
+
+    /**
+     * Sets update_date
+     *
+     * @param int $update_date update_date
+     *
+     * @return $this
+     */
+    public function setUpdateDate($update_date)
+    {
+        $this->container['update_date'] = $update_date;
 
         return $this;
     }

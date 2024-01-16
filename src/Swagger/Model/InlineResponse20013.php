@@ -56,7 +56,7 @@ class InlineResponse20013 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'payments' => '\ColorMeShop\Swagger\Model\InlineResponse20013Payments[]'    ];
+        'groups' => '\ColorMeShop\Swagger\Model\InlineResponse20013Groups[]'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +64,7 @@ class InlineResponse20013 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'payments' => null    ];
+        'groups' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +93,7 @@ class InlineResponse20013 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'payments' => 'payments'    ];
+        'groups' => 'groups'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +101,7 @@ class InlineResponse20013 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'payments' => 'setPayments'    ];
+        'groups' => 'setGroups'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +109,7 @@ class InlineResponse20013 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'payments' => 'getPayments'    ];
+        'groups' => 'getGroups'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +169,7 @@ class InlineResponse20013 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['payments'] = isset($data['payments']) ? $data['payments'] : null;
+        $this->container['groups'] = isset($data['groups']) ? $data['groups'] : null;
     }
 
     /**
@@ -197,25 +197,25 @@ class InlineResponse20013 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets payments
+     * Gets groups
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20013Payments[]
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20013Groups[]
      */
-    public function getPayments()
+    public function getGroups()
     {
-        return $this->container['payments'];
+        return $this->container['groups'];
     }
 
     /**
-     * Sets payments
+     * Sets groups
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse20013Payments[] $payments payments
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20013Groups[] $groups グループ情報一覧
      *
      * @return $this
      */
-    public function setPayments($payments)
+    public function setGroups($groups)
     {
-        $this->container['payments'] = $payments;
+        $this->container['groups'] = $groups;
 
         return $this;
     }

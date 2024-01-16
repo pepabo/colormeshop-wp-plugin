@@ -1,6 +1,6 @@
 <?php
 /**
- * InlineResponse2003
+ * SaleTotals
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * InlineResponse2003 Class Doc Comment
+ * SaleTotals Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2003 implements ModelInterface, ArrayAccess
+class SaleTotals implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'inline_response_200_3';
+    protected static $swaggerModelName = 'sale_totals';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,7 +56,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => 'AllOfinlineResponse2003Sale'    ];
+        'normal_tax_amount' => 'int',
+'reduced_tax_amount' => 'int',
+'discount_amount_for_normal_tax' => 'int',
+'discount_amount_for_reduced_tax' => 'int',
+'total_price_with_normal_tax' => 'int',
+'total_price_with_reduced_tax' => 'int'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +69,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null    ];
+        'normal_tax_amount' => null,
+'reduced_tax_amount' => null,
+'discount_amount_for_normal_tax' => null,
+'discount_amount_for_reduced_tax' => null,
+'total_price_with_normal_tax' => null,
+'total_price_with_reduced_tax' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +103,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'    ];
+        'normal_tax_amount' => 'normal_tax_amount',
+'reduced_tax_amount' => 'reduced_tax_amount',
+'discount_amount_for_normal_tax' => 'discount_amount_for_normal_tax',
+'discount_amount_for_reduced_tax' => 'discount_amount_for_reduced_tax',
+'total_price_with_normal_tax' => 'total_price_with_normal_tax',
+'total_price_with_reduced_tax' => 'total_price_with_reduced_tax'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +116,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'    ];
+        'normal_tax_amount' => 'setNormalTaxAmount',
+'reduced_tax_amount' => 'setReducedTaxAmount',
+'discount_amount_for_normal_tax' => 'setDiscountAmountForNormalTax',
+'discount_amount_for_reduced_tax' => 'setDiscountAmountForReducedTax',
+'total_price_with_normal_tax' => 'setTotalPriceWithNormalTax',
+'total_price_with_reduced_tax' => 'setTotalPriceWithReducedTax'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +129,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'    ];
+        'normal_tax_amount' => 'getNormalTaxAmount',
+'reduced_tax_amount' => 'getReducedTaxAmount',
+'discount_amount_for_normal_tax' => 'getDiscountAmountForNormalTax',
+'discount_amount_for_reduced_tax' => 'getDiscountAmountForReducedTax',
+'total_price_with_normal_tax' => 'getTotalPriceWithNormalTax',
+'total_price_with_reduced_tax' => 'getTotalPriceWithReducedTax'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +194,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['normal_tax_amount'] = isset($data['normal_tax_amount']) ? $data['normal_tax_amount'] : null;
+        $this->container['reduced_tax_amount'] = isset($data['reduced_tax_amount']) ? $data['reduced_tax_amount'] : null;
+        $this->container['discount_amount_for_normal_tax'] = isset($data['discount_amount_for_normal_tax']) ? $data['discount_amount_for_normal_tax'] : null;
+        $this->container['discount_amount_for_reduced_tax'] = isset($data['discount_amount_for_reduced_tax']) ? $data['discount_amount_for_reduced_tax'] : null;
+        $this->container['total_price_with_normal_tax'] = isset($data['total_price_with_normal_tax']) ? $data['total_price_with_normal_tax'] : null;
+        $this->container['total_price_with_reduced_tax'] = isset($data['total_price_with_reduced_tax']) ? $data['total_price_with_reduced_tax'] : null;
     }
 
     /**
@@ -197,25 +227,145 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets sale
+     * Gets normal_tax_amount
      *
-     * @return AllOfinlineResponse2003Sale
+     * @return int
      */
-    public function getSale()
+    public function getNormalTaxAmount()
     {
-        return $this->container['sale'];
+        return $this->container['normal_tax_amount'];
     }
 
     /**
-     * Sets sale
+     * Sets normal_tax_amount
      *
-     * @param AllOfinlineResponse2003Sale $sale sale
+     * @param int $normal_tax_amount 受注における通常税率(10%)の消費税
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setNormalTaxAmount($normal_tax_amount)
     {
-        $this->container['sale'] = $sale;
+        $this->container['normal_tax_amount'] = $normal_tax_amount;
+
+        return $this;
+    }
+
+    /**
+     * Gets reduced_tax_amount
+     *
+     * @return int
+     */
+    public function getReducedTaxAmount()
+    {
+        return $this->container['reduced_tax_amount'];
+    }
+
+    /**
+     * Sets reduced_tax_amount
+     *
+     * @param int $reduced_tax_amount 受注における軽減税率(8%)の消費税
+     *
+     * @return $this
+     */
+    public function setReducedTaxAmount($reduced_tax_amount)
+    {
+        $this->container['reduced_tax_amount'] = $reduced_tax_amount;
+
+        return $this;
+    }
+
+    /**
+     * Gets discount_amount_for_normal_tax
+     *
+     * @return int
+     */
+    public function getDiscountAmountForNormalTax()
+    {
+        return $this->container['discount_amount_for_normal_tax'];
+    }
+
+    /**
+     * Sets discount_amount_for_normal_tax
+     *
+     * @param int $discount_amount_for_normal_tax 通常税率(10%)の適用金額を対象としたの割引額
+     *
+     * @return $this
+     */
+    public function setDiscountAmountForNormalTax($discount_amount_for_normal_tax)
+    {
+        $this->container['discount_amount_for_normal_tax'] = $discount_amount_for_normal_tax;
+
+        return $this;
+    }
+
+    /**
+     * Gets discount_amount_for_reduced_tax
+     *
+     * @return int
+     */
+    public function getDiscountAmountForReducedTax()
+    {
+        return $this->container['discount_amount_for_reduced_tax'];
+    }
+
+    /**
+     * Sets discount_amount_for_reduced_tax
+     *
+     * @param int $discount_amount_for_reduced_tax 軽減税率(8%)の適用金額を対象としたの割引額
+     *
+     * @return $this
+     */
+    public function setDiscountAmountForReducedTax($discount_amount_for_reduced_tax)
+    {
+        $this->container['discount_amount_for_reduced_tax'] = $discount_amount_for_reduced_tax;
+
+        return $this;
+    }
+
+    /**
+     * Gets total_price_with_normal_tax
+     *
+     * @return int
+     */
+    public function getTotalPriceWithNormalTax()
+    {
+        return $this->container['total_price_with_normal_tax'];
+    }
+
+    /**
+     * Sets total_price_with_normal_tax
+     *
+     * @param int $total_price_with_normal_tax 通常税率(10%)の適用金額の税込合計額
+     *
+     * @return $this
+     */
+    public function setTotalPriceWithNormalTax($total_price_with_normal_tax)
+    {
+        $this->container['total_price_with_normal_tax'] = $total_price_with_normal_tax;
+
+        return $this;
+    }
+
+    /**
+     * Gets total_price_with_reduced_tax
+     *
+     * @return int
+     */
+    public function getTotalPriceWithReducedTax()
+    {
+        return $this->container['total_price_with_reduced_tax'];
+    }
+
+    /**
+     * Sets total_price_with_reduced_tax
+     *
+     * @param int $total_price_with_reduced_tax 軽減税率(8%)の適用金額の税込合計額
+     *
+     * @return $this
+     */
+    public function setTotalPriceWithReducedTax($total_price_with_reduced_tax)
+    {
+        $this->container['total_price_with_reduced_tax'] = $total_price_with_reduced_tax;
 
         return $this;
     }

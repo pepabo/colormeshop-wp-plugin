@@ -94,7 +94,7 @@ class GiftApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20016
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20018
      */
     public function getGift()
     {
@@ -110,11 +110,11 @@ class GiftApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20016, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20018, HTTP status code, HTTP response headers (array of strings)
      */
     public function getGiftWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20016';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20018';
         $request = $this->getGiftRequest();
 
         try {
@@ -166,7 +166,7 @@ class GiftApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse20016',
+                        '\ColorMeShop\Swagger\Model\InlineResponse20018',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -206,7 +206,7 @@ class GiftApi
      */
     public function getGiftAsyncWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20016';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20018';
         $request = $this->getGiftRequest();
 
         return $this->client

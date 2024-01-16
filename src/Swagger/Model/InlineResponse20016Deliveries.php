@@ -1,6 +1,6 @@
 <?php
 /**
- * Delivery
+ * InlineResponse20016Deliveries
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * Delivery Class Doc Comment
+ * InlineResponse20016Deliveries Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class Delivery implements ModelInterface, ArrayAccess
+class InlineResponse20016Deliveries implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class Delivery implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'delivery';
+    protected static $swaggerModelName = 'inline_response_200_16_deliveries';
 
     /**
       * Array of property to type mappings. Used for (de)serialization

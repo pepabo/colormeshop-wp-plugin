@@ -1,6 +1,6 @@
 <?php
 /**
- * InlineResponse2003
+ * InlineResponse20011Pickup
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * InlineResponse2003 Class Doc Comment
+ * InlineResponse20011Pickup Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2003 implements ModelInterface, ArrayAccess
+class InlineResponse20011Pickup implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'inline_response_200_3';
+    protected static $swaggerModelName = 'inline_response_200_11_pickup';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,7 +56,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => 'AllOfinlineResponse2003Sale'    ];
+        'pickup_type' => 'int',
+'product_id' => 'int',
+'account_id' => 'string',
+'order_num' => 'int',
+'make_date' => 'int',
+'update_date' => 'int'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +69,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null    ];
+        'pickup_type' => null,
+'product_id' => null,
+'account_id' => null,
+'order_num' => null,
+'make_date' => null,
+'update_date' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +103,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'    ];
+        'pickup_type' => 'pickup_type',
+'product_id' => 'product_id',
+'account_id' => 'account_id',
+'order_num' => 'order_num',
+'make_date' => 'make_date',
+'update_date' => 'update_date'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +116,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'    ];
+        'pickup_type' => 'setPickupType',
+'product_id' => 'setProductId',
+'account_id' => 'setAccountId',
+'order_num' => 'setOrderNum',
+'make_date' => 'setMakeDate',
+'update_date' => 'setUpdateDate'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +129,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'    ];
+        'pickup_type' => 'getPickupType',
+'product_id' => 'getProductId',
+'account_id' => 'getAccountId',
+'order_num' => 'getOrderNum',
+'make_date' => 'getMakeDate',
+'update_date' => 'getUpdateDate'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +194,12 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['pickup_type'] = isset($data['pickup_type']) ? $data['pickup_type'] : null;
+        $this->container['product_id'] = isset($data['product_id']) ? $data['product_id'] : null;
+        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
+        $this->container['order_num'] = isset($data['order_num']) ? $data['order_num'] : null;
+        $this->container['make_date'] = isset($data['make_date']) ? $data['make_date'] : null;
+        $this->container['update_date'] = isset($data['update_date']) ? $data['update_date'] : null;
     }
 
     /**
@@ -197,25 +227,145 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets sale
+     * Gets pickup_type
      *
-     * @return AllOfinlineResponse2003Sale
+     * @return int
      */
-    public function getSale()
+    public function getPickupType()
     {
-        return $this->container['sale'];
+        return $this->container['pickup_type'];
     }
 
     /**
-     * Sets sale
+     * Sets pickup_type
      *
-     * @param AllOfinlineResponse2003Sale $sale sale
+     * @param int $pickup_type おすすめ商品情報種別
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setPickupType($pickup_type)
     {
-        $this->container['sale'] = $sale;
+        $this->container['pickup_type'] = $pickup_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets product_id
+     *
+     * @return int
+     */
+    public function getProductId()
+    {
+        return $this->container['product_id'];
+    }
+
+    /**
+     * Sets product_id
+     *
+     * @param int $product_id 商品ID
+     *
+     * @return $this
+     */
+    public function setProductId($product_id)
+    {
+        $this->container['product_id'] = $product_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets account_id
+     *
+     * @return string
+     */
+    public function getAccountId()
+    {
+        return $this->container['account_id'];
+    }
+
+    /**
+     * Sets account_id
+     *
+     * @param string $account_id ショップアカウントID
+     *
+     * @return $this
+     */
+    public function setAccountId($account_id)
+    {
+        $this->container['account_id'] = $account_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets order_num
+     *
+     * @return int
+     */
+    public function getOrderNum()
+    {
+        return $this->container['order_num'];
+    }
+
+    /**
+     * Sets order_num
+     *
+     * @param int $order_num 商品の表示順
+     *
+     * @return $this
+     */
+    public function setOrderNum($order_num)
+    {
+        $this->container['order_num'] = $order_num;
+
+        return $this;
+    }
+
+    /**
+     * Gets make_date
+     *
+     * @return int
+     */
+    public function getMakeDate()
+    {
+        return $this->container['make_date'];
+    }
+
+    /**
+     * Sets make_date
+     *
+     * @param int $make_date 作成日時
+     *
+     * @return $this
+     */
+    public function setMakeDate($make_date)
+    {
+        $this->container['make_date'] = $make_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets update_date
+     *
+     * @return int
+     */
+    public function getUpdateDate()
+    {
+        return $this->container['update_date'];
+    }
+
+    /**
+     * Sets update_date
+     *
+     * @param int $update_date 更新日時
+     *
+     * @return $this
+     */
+    public function setUpdateDate($update_date)
+    {
+        $this->container['update_date'] = $update_date;
 
         return $this;
     }

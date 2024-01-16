@@ -1,6 +1,6 @@
 <?php
 /**
- * InlineResponse2003
+ * InlineResponse20013Groups
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * InlineResponse2003 Class Doc Comment
+ * InlineResponse20013Groups Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2003 implements ModelInterface, ArrayAccess
+class InlineResponse20013Groups implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'inline_response_200_3';
+    protected static $swaggerModelName = 'inline_response_200_13_groups';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,7 +56,14 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => 'AllOfinlineResponse2003Sale'    ];
+        'id' => 'int',
+'account_id' => 'string',
+'name' => 'string',
+'image_url' => 'string',
+'expl' => 'string',
+'sort' => 'int',
+'display_state' => 'string',
+'parent_group_id' => 'int'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +71,14 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null    ];
+        'id' => null,
+'account_id' => null,
+'name' => null,
+'image_url' => null,
+'expl' => null,
+'sort' => null,
+'display_state' => null,
+'parent_group_id' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +107,14 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'    ];
+        'id' => 'id',
+'account_id' => 'account_id',
+'name' => 'name',
+'image_url' => 'image_url',
+'expl' => 'expl',
+'sort' => 'sort',
+'display_state' => 'display_state',
+'parent_group_id' => 'parent_group_id'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +122,14 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'    ];
+        'id' => 'setId',
+'account_id' => 'setAccountId',
+'name' => 'setName',
+'image_url' => 'setImageUrl',
+'expl' => 'setExpl',
+'sort' => 'setSort',
+'display_state' => 'setDisplayState',
+'parent_group_id' => 'setParentGroupId'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +137,14 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'    ];
+        'id' => 'getId',
+'account_id' => 'getAccountId',
+'name' => 'getName',
+'image_url' => 'getImageUrl',
+'expl' => 'getExpl',
+'sort' => 'getSort',
+'display_state' => 'getDisplayState',
+'parent_group_id' => 'getParentGroupId'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -152,7 +187,24 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    
+    const DISPLAY_STATE_SHOWING = 'showing';
+const DISPLAY_STATE_HIDDEN = 'hidden';
+const DISPLAY_STATE_SHOWING_FOR_MEMBERS = 'showing_for_members';
+const DISPLAY_STATE_SALE_FOR_MEMBERS = 'sale_for_members';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getDisplayStateAllowableValues()
+    {
+        return [
+            self::DISPLAY_STATE_SHOWING,
+self::DISPLAY_STATE_HIDDEN,
+self::DISPLAY_STATE_SHOWING_FOR_MEMBERS,
+self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -169,7 +221,14 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
+        $this->container['image_url'] = isset($data['image_url']) ? $data['image_url'] : null;
+        $this->container['expl'] = isset($data['expl']) ? $data['expl'] : null;
+        $this->container['sort'] = isset($data['sort']) ? $data['sort'] : null;
+        $this->container['display_state'] = isset($data['display_state']) ? $data['display_state'] : null;
+        $this->container['parent_group_id'] = isset($data['parent_group_id']) ? $data['parent_group_id'] : null;
     }
 
     /**
@@ -180,6 +239,14 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!is_null($this->container['display_state']) && !in_array($this->container['display_state'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'display_state', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
 
         return $invalidProperties;
     }
@@ -197,25 +264,202 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets sale
+     * Gets id
      *
-     * @return AllOfinlineResponse2003Sale
+     * @return int
      */
-    public function getSale()
+    public function getId()
     {
-        return $this->container['sale'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets sale
+     * Sets id
      *
-     * @param AllOfinlineResponse2003Sale $sale sale
+     * @param int $id 商品グループID
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setId($id)
     {
-        $this->container['sale'] = $sale;
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets account_id
+     *
+     * @return string
+     */
+    public function getAccountId()
+    {
+        return $this->container['account_id'];
+    }
+
+    /**
+     * Sets account_id
+     *
+     * @param string $account_id ショップアカウントID
+     *
+     * @return $this
+     */
+    public function setAccountId($account_id)
+    {
+        $this->container['account_id'] = $account_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->container['name'];
+    }
+
+    /**
+     * Sets name
+     *
+     * @param string $name 商品グループ名
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets image_url
+     *
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        return $this->container['image_url'];
+    }
+
+    /**
+     * Sets image_url
+     *
+     * @param string $image_url 商品グループ画像URL
+     *
+     * @return $this
+     */
+    public function setImageUrl($image_url)
+    {
+        $this->container['image_url'] = $image_url;
+
+        return $this;
+    }
+
+    /**
+     * Gets expl
+     *
+     * @return string
+     */
+    public function getExpl()
+    {
+        return $this->container['expl'];
+    }
+
+    /**
+     * Sets expl
+     *
+     * @param string $expl 商品グループ説明
+     *
+     * @return $this
+     */
+    public function setExpl($expl)
+    {
+        $this->container['expl'] = $expl;
+
+        return $this;
+    }
+
+    /**
+     * Gets sort
+     *
+     * @return int
+     */
+    public function getSort()
+    {
+        return $this->container['sort'];
+    }
+
+    /**
+     * Sets sort
+     *
+     * @param int $sort 表示順
+     *
+     * @return $this
+     */
+    public function setSort($sort)
+    {
+        $this->container['sort'] = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Gets display_state
+     *
+     * @return string
+     */
+    public function getDisplayState()
+    {
+        return $this->container['display_state'];
+    }
+
+    /**
+     * Sets display_state
+     *
+     * @param string $display_state 掲載設定  - `showing`: 掲載状態 - `hidden`: 非掲載状態 - `showing_for_members`: 会員にのみ掲載 - `sale_for_members`: 掲載状態だが購入は会員のみ可能
+     *
+     * @return $this
+     */
+    public function setDisplayState($display_state)
+    {
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!is_null($display_state) && !in_array($display_state, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'display_state', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['display_state'] = $display_state;
+
+        return $this;
+    }
+
+    /**
+     * Gets parent_group_id
+     *
+     * @return int
+     */
+    public function getParentGroupId()
+    {
+        return $this->container['parent_group_id'];
+    }
+
+    /**
+     * Sets parent_group_id
+     *
+     * @param int $parent_group_id 親の商品グループID
+     *
+     * @return $this
+     */
+    public function setParentGroupId($parent_group_id)
+    {
+        $this->container['parent_group_id'] = $parent_group_id;
 
         return $this;
     }

@@ -56,8 +56,8 @@ class InlineResponse2007 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'products' => '\ColorMeShop\Swagger\Model\InlineResponse2007Products[]',
-'meta' => '\ColorMeShop\Swagger\Model\InlineResponse2001Meta'    ];
+        'customer' => '\ColorMeShop\Swagger\Model\SaleCustomer',
+'meta' => '\ColorMeShop\Swagger\Model\InlineResponse2007Meta'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -65,7 +65,7 @@ class InlineResponse2007 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'products' => null,
+        'customer' => null,
 'meta' => null    ];
 
     /**
@@ -95,7 +95,7 @@ class InlineResponse2007 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'products' => 'products',
+        'customer' => 'customer',
 'meta' => 'meta'    ];
 
     /**
@@ -104,7 +104,7 @@ class InlineResponse2007 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'products' => 'setProducts',
+        'customer' => 'setCustomer',
 'meta' => 'setMeta'    ];
 
     /**
@@ -113,7 +113,7 @@ class InlineResponse2007 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'products' => 'getProducts',
+        'customer' => 'getCustomer',
 'meta' => 'getMeta'    ];
 
     /**
@@ -174,7 +174,7 @@ class InlineResponse2007 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['products'] = isset($data['products']) ? $data['products'] : null;
+        $this->container['customer'] = isset($data['customer']) ? $data['customer'] : null;
         $this->container['meta'] = isset($data['meta']) ? $data['meta'] : null;
     }
 
@@ -203,25 +203,25 @@ class InlineResponse2007 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets products
+     * Gets customer
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2007Products[]
+     * @return \ColorMeShop\Swagger\Model\SaleCustomer
      */
-    public function getProducts()
+    public function getCustomer()
     {
-        return $this->container['products'];
+        return $this->container['customer'];
     }
 
     /**
-     * Sets products
+     * Sets customer
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse2007Products[] $products products
+     * @param \ColorMeShop\Swagger\Model\SaleCustomer $customer customer
      *
      * @return $this
      */
-    public function setProducts($products)
+    public function setCustomer($customer)
     {
-        $this->container['products'] = $products;
+        $this->container['customer'] = $customer;
 
         return $this;
     }
@@ -229,7 +229,7 @@ class InlineResponse2007 implements ModelInterface, ArrayAccess
     /**
      * Gets meta
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2001Meta
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2007Meta
      */
     public function getMeta()
     {
@@ -239,7 +239,7 @@ class InlineResponse2007 implements ModelInterface, ArrayAccess
     /**
      * Sets meta
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse2001Meta $meta meta
+     * @param \ColorMeShop\Swagger\Model\InlineResponse2007Meta $meta meta
      *
      * @return $this
      */

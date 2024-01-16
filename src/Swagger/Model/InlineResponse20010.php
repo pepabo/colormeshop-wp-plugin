@@ -56,7 +56,7 @@ class InlineResponse20010 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'stocks' => '\ColorMeShop\Swagger\Model\InlineResponse20010Stocks[]',
+        'variants' => '\ColorMeShop\Swagger\Model\ProductVariants[]',
 'meta' => '\ColorMeShop\Swagger\Model\InlineResponse2001Meta'    ];
 
     /**
@@ -65,7 +65,7 @@ class InlineResponse20010 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'stocks' => null,
+        'variants' => null,
 'meta' => null    ];
 
     /**
@@ -95,7 +95,7 @@ class InlineResponse20010 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'stocks' => 'stocks',
+        'variants' => 'variants',
 'meta' => 'meta'    ];
 
     /**
@@ -104,7 +104,7 @@ class InlineResponse20010 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'stocks' => 'setStocks',
+        'variants' => 'setVariants',
 'meta' => 'setMeta'    ];
 
     /**
@@ -113,7 +113,7 @@ class InlineResponse20010 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'stocks' => 'getStocks',
+        'variants' => 'getVariants',
 'meta' => 'getMeta'    ];
 
     /**
@@ -174,7 +174,7 @@ class InlineResponse20010 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['stocks'] = isset($data['stocks']) ? $data['stocks'] : null;
+        $this->container['variants'] = isset($data['variants']) ? $data['variants'] : null;
         $this->container['meta'] = isset($data['meta']) ? $data['meta'] : null;
     }
 
@@ -203,25 +203,25 @@ class InlineResponse20010 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets stocks
+     * Gets variants
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20010Stocks[]
+     * @return \ColorMeShop\Swagger\Model\ProductVariants[]
      */
-    public function getStocks()
+    public function getVariants()
     {
-        return $this->container['stocks'];
+        return $this->container['variants'];
     }
 
     /**
-     * Sets stocks
+     * Sets variants
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse20010Stocks[] $stocks stocks
+     * @param \ColorMeShop\Swagger\Model\ProductVariants[] $variants variants
      *
      * @return $this
      */
-    public function setStocks($stocks)
+    public function setVariants($variants)
     {
-        $this->container['stocks'] = $stocks;
+        $this->container['variants'] = $variants;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * InlineResponse2003
+ * InlineResponse20018GiftWrapping
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * InlineResponse2003 Class Doc Comment
+ * InlineResponse20018GiftWrapping Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2003 implements ModelInterface, ArrayAccess
+class InlineResponse20018GiftWrapping implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'inline_response_200_3';
+    protected static $swaggerModelName = 'inline_response_200_18_gift_wrapping';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,7 +56,9 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => 'AllOfinlineResponse2003Sale'    ];
+        'enabled' => 'bool',
+'types' => '\ColorMeShop\Swagger\Model\InlineResponse20018GiftWrappingTypes[]',
+'comment' => 'string'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +66,9 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null    ];
+        'enabled' => null,
+'types' => null,
+'comment' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +97,9 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'    ];
+        'enabled' => 'enabled',
+'types' => 'types',
+'comment' => 'comment'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +107,9 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'    ];
+        'enabled' => 'setEnabled',
+'types' => 'setTypes',
+'comment' => 'setComment'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +117,9 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'    ];
+        'enabled' => 'getEnabled',
+'types' => 'getTypes',
+'comment' => 'getComment'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +179,9 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['enabled'] = isset($data['enabled']) ? $data['enabled'] : null;
+        $this->container['types'] = isset($data['types']) ? $data['types'] : null;
+        $this->container['comment'] = isset($data['comment']) ? $data['comment'] : null;
     }
 
     /**
@@ -197,25 +209,73 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets sale
+     * Gets enabled
      *
-     * @return AllOfinlineResponse2003Sale
+     * @return bool
      */
-    public function getSale()
+    public function getEnabled()
     {
-        return $this->container['sale'];
+        return $this->container['enabled'];
     }
 
     /**
-     * Sets sale
+     * Sets enabled
      *
-     * @param AllOfinlineResponse2003Sale $sale sale
+     * @param bool $enabled enabled
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setEnabled($enabled)
     {
-        $this->container['sale'] = $sale;
+        $this->container['enabled'] = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets types
+     *
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20018GiftWrappingTypes[]
+     */
+    public function getTypes()
+    {
+        return $this->container['types'];
+    }
+
+    /**
+     * Sets types
+     *
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20018GiftWrappingTypes[] $types types
+     *
+     * @return $this
+     */
+    public function setTypes($types)
+    {
+        $this->container['types'] = $types;
+
+        return $this;
+    }
+
+    /**
+     * Gets comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->container['comment'];
+    }
+
+    /**
+     * Sets comment
+     *
+     * @param string $comment comment
+     *
+     * @return $this
+     */
+    public function setComment($comment)
+    {
+        $this->container['comment'] = $comment;
 
         return $this;
     }

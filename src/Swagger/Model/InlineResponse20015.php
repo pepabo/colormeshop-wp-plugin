@@ -56,7 +56,7 @@ class InlineResponse20015 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'delivery_date' => '\ColorMeShop\Swagger\Model\InlineResponse20015DeliveryDate'    ];
+        'payments' => '\ColorMeShop\Swagger\Model\InlineResponse20015Payments[]'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +64,7 @@ class InlineResponse20015 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'delivery_date' => null    ];
+        'payments' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +93,7 @@ class InlineResponse20015 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'delivery_date' => 'delivery_date'    ];
+        'payments' => 'payments'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +101,7 @@ class InlineResponse20015 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'delivery_date' => 'setDeliveryDate'    ];
+        'payments' => 'setPayments'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +109,7 @@ class InlineResponse20015 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'delivery_date' => 'getDeliveryDate'    ];
+        'payments' => 'getPayments'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +169,7 @@ class InlineResponse20015 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['delivery_date'] = isset($data['delivery_date']) ? $data['delivery_date'] : null;
+        $this->container['payments'] = isset($data['payments']) ? $data['payments'] : null;
     }
 
     /**
@@ -197,25 +197,25 @@ class InlineResponse20015 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets delivery_date
+     * Gets payments
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20015DeliveryDate
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20015Payments[]
      */
-    public function getDeliveryDate()
+    public function getPayments()
     {
-        return $this->container['delivery_date'];
+        return $this->container['payments'];
     }
 
     /**
-     * Sets delivery_date
+     * Sets payments
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse20015DeliveryDate $delivery_date delivery_date
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20015Payments[] $payments payments
      *
      * @return $this
      */
-    public function setDeliveryDate($delivery_date)
+    public function setPayments($payments)
     {
-        $this->container['delivery_date'] = $delivery_date;
+        $this->container['payments'] = $payments;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * InlineResponse2003
+ * InlineResponse20018GiftNoshi
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * InlineResponse2003 Class Doc Comment
+ * InlineResponse20018GiftNoshi Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2003 implements ModelInterface, ArrayAccess
+class InlineResponse20018GiftNoshi implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'inline_response_200_3';
+    protected static $swaggerModelName = 'inline_response_200_18_gift_noshi';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,7 +56,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => 'AllOfinlineResponse2003Sale'    ];
+        'enabled' => 'bool',
+'text_enabled' => 'bool',
+'text_charge' => 'int',
+'types' => '\ColorMeShop\Swagger\Model\InlineResponse20018GiftNoshiTypes[]',
+'comment' => 'string'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +68,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null    ];
+        'enabled' => null,
+'text_enabled' => null,
+'text_charge' => null,
+'types' => null,
+'comment' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +101,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'    ];
+        'enabled' => 'enabled',
+'text_enabled' => 'text_enabled',
+'text_charge' => 'text_charge',
+'types' => 'types',
+'comment' => 'comment'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +113,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'    ];
+        'enabled' => 'setEnabled',
+'text_enabled' => 'setTextEnabled',
+'text_charge' => 'setTextCharge',
+'types' => 'setTypes',
+'comment' => 'setComment'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +125,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'    ];
+        'enabled' => 'getEnabled',
+'text_enabled' => 'getTextEnabled',
+'text_charge' => 'getTextCharge',
+'types' => 'getTypes',
+'comment' => 'getComment'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +189,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['enabled'] = isset($data['enabled']) ? $data['enabled'] : null;
+        $this->container['text_enabled'] = isset($data['text_enabled']) ? $data['text_enabled'] : null;
+        $this->container['text_charge'] = isset($data['text_charge']) ? $data['text_charge'] : null;
+        $this->container['types'] = isset($data['types']) ? $data['types'] : null;
+        $this->container['comment'] = isset($data['comment']) ? $data['comment'] : null;
     }
 
     /**
@@ -197,25 +221,121 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets sale
+     * Gets enabled
      *
-     * @return AllOfinlineResponse2003Sale
+     * @return bool
      */
-    public function getSale()
+    public function getEnabled()
     {
-        return $this->container['sale'];
+        return $this->container['enabled'];
     }
 
     /**
-     * Sets sale
+     * Sets enabled
      *
-     * @param AllOfinlineResponse2003Sale $sale sale
+     * @param bool $enabled enabled
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setEnabled($enabled)
     {
-        $this->container['sale'] = $sale;
+        $this->container['enabled'] = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets text_enabled
+     *
+     * @return bool
+     */
+    public function getTextEnabled()
+    {
+        return $this->container['text_enabled'];
+    }
+
+    /**
+     * Sets text_enabled
+     *
+     * @param bool $text_enabled text_enabled
+     *
+     * @return $this
+     */
+    public function setTextEnabled($text_enabled)
+    {
+        $this->container['text_enabled'] = $text_enabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets text_charge
+     *
+     * @return int
+     */
+    public function getTextCharge()
+    {
+        return $this->container['text_charge'];
+    }
+
+    /**
+     * Sets text_charge
+     *
+     * @param int $text_charge text_charge
+     *
+     * @return $this
+     */
+    public function setTextCharge($text_charge)
+    {
+        $this->container['text_charge'] = $text_charge;
+
+        return $this;
+    }
+
+    /**
+     * Gets types
+     *
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20018GiftNoshiTypes[]
+     */
+    public function getTypes()
+    {
+        return $this->container['types'];
+    }
+
+    /**
+     * Sets types
+     *
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20018GiftNoshiTypes[] $types types
+     *
+     * @return $this
+     */
+    public function setTypes($types)
+    {
+        $this->container['types'] = $types;
+
+        return $this;
+    }
+
+    /**
+     * Gets comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->container['comment'];
+    }
+
+    /**
+     * Sets comment
+     *
+     * @param string $comment comment
+     *
+     * @return $this
+     */
+    public function setComment($comment)
+    {
+        $this->container['comment'] = $comment;
 
         return $this;
     }

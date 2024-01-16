@@ -56,7 +56,8 @@ class InlineResponse2008 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'product' => '\ColorMeShop\Swagger\Model\InlineResponse2007Products'    ];
+        'products' => '\ColorMeShop\Swagger\Model\InlineResponse2008Products[]',
+'meta' => '\ColorMeShop\Swagger\Model\InlineResponse2001Meta'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +65,8 @@ class InlineResponse2008 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'product' => null    ];
+        'products' => null,
+'meta' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +95,8 @@ class InlineResponse2008 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'product' => 'product'    ];
+        'products' => 'products',
+'meta' => 'meta'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +104,8 @@ class InlineResponse2008 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'product' => 'setProduct'    ];
+        'products' => 'setProducts',
+'meta' => 'setMeta'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +113,8 @@ class InlineResponse2008 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'product' => 'getProduct'    ];
+        'products' => 'getProducts',
+'meta' => 'getMeta'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +174,8 @@ class InlineResponse2008 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['product'] = isset($data['product']) ? $data['product'] : null;
+        $this->container['products'] = isset($data['products']) ? $data['products'] : null;
+        $this->container['meta'] = isset($data['meta']) ? $data['meta'] : null;
     }
 
     /**
@@ -197,25 +203,49 @@ class InlineResponse2008 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets product
+     * Gets products
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2007Products
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2008Products[]
      */
-    public function getProduct()
+    public function getProducts()
     {
-        return $this->container['product'];
+        return $this->container['products'];
     }
 
     /**
-     * Sets product
+     * Sets products
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse2007Products $product product
+     * @param \ColorMeShop\Swagger\Model\InlineResponse2008Products[] $products products
      *
      * @return $this
      */
-    public function setProduct($product)
+    public function setProducts($products)
     {
-        $this->container['product'] = $product;
+        $this->container['products'] = $products;
+
+        return $this;
+    }
+
+    /**
+     * Gets meta
+     *
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2001Meta
+     */
+    public function getMeta()
+    {
+        return $this->container['meta'];
+    }
+
+    /**
+     * Sets meta
+     *
+     * @param \ColorMeShop\Swagger\Model\InlineResponse2001Meta $meta meta
+     *
+     * @return $this
+     */
+    public function setMeta($meta)
+    {
+        $this->container['meta'] = $meta;
 
         return $this;
     }
