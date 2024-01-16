@@ -331,7 +331,7 @@ class Plugin {
 		};
 
 		$container['model.setting'] = function ( $c ) {
-			return new Setting;
+			return new Setting();
 		};
 
 		$container['model.sitemap'] = function ( $c ) {
@@ -371,7 +371,7 @@ class Plugin {
 		};
 
 		$shortcode_invoker = new Shortcode_Invoker( $this->container );
-		$classmap          = include( __DIR__ . '/../vendor/composer/autoload_classmap.php' );
+		$classmap          = include __DIR__ . '/../vendor/composer/autoload_classmap.php';
 		foreach ( $classmap as $class => $path ) {
 			if ( strpos( $path, dirname( __DIR__ ) . '/src/shortcodes/' ) !== 0 ) {
 				continue;

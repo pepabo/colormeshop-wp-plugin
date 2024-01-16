@@ -45,7 +45,7 @@ class Sitemap {
 	 * @throws \RuntimeException
 	 */
 	public function generate_index() {
-		$sitemap_index = new SitemapIndex;
+		$sitemap_index = new SitemapIndex();
 		$total         = $this->product_api->total();
 
 		for ( $i = 0; $i <= $total; $i += self::NUMBER_OF_ITEM_URLS_PER_PAGE ) {

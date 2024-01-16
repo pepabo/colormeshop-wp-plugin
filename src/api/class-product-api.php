@@ -68,7 +68,7 @@ class Product_Api {
 	 */
 	public function total() {
 		try {
-			$response = ( new Client )->send(
+			$response = ( new Client() )->send(
 				$this->create_request(
 					array(
 						'limit'  => 1,
@@ -91,7 +91,7 @@ class Product_Api {
 	 * @throws \RuntimeException
 	 */
 	public function fetch_with_callback( $fulfilled, $initial_offset, $limit ) {
-		$client = new Client;
+		$client = new Client();
 		$total  = $this->total();
 
 		$should_continue = function ( $current_offset ) use ( $total, $initial_offset, $limit ) {
@@ -131,7 +131,7 @@ class Product_Api {
 	 */
 	public function paginate( $params ) {
 		try {
-			$response = ( new Client )->send( $this->create_request( $params ) );
+			$response = ( new Client() )->send( $this->create_request( $params ) );
 		} catch ( RequestException $e ) {
 			throw new \RuntimeException( '商品情報取得に失敗しました.' );
 		}
