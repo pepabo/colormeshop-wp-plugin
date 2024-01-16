@@ -89,7 +89,7 @@ class Plugin {
 	 */
 	public function on_update_settings( $old_settings, $new_settings ) {
 		// 商品ページIDを元にサイトマップへのリライトを定義するため
-		$this->flush_rewrite_rules( $new );
+		$this->flush_rewrite_rules( $new_settings );
 	}
 
 
