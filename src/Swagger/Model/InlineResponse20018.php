@@ -56,7 +56,7 @@ class InlineResponse20018 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'shop_coupon' => '\ColorMeShop\Swagger\Model\InlineResponse20017ShopCoupons'    ];
+        'gift' => '\ColorMeShop\Swagger\Model\InlineResponse20018Gift'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +64,7 @@ class InlineResponse20018 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'shop_coupon' => null    ];
+        'gift' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +93,7 @@ class InlineResponse20018 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'shop_coupon' => 'shop_coupon'    ];
+        'gift' => 'gift'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +101,7 @@ class InlineResponse20018 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'shop_coupon' => 'setShopCoupon'    ];
+        'gift' => 'setGift'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +109,7 @@ class InlineResponse20018 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'shop_coupon' => 'getShopCoupon'    ];
+        'gift' => 'getGift'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +169,7 @@ class InlineResponse20018 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['shop_coupon'] = isset($data['shop_coupon']) ? $data['shop_coupon'] : null;
+        $this->container['gift'] = isset($data['gift']) ? $data['gift'] : null;
     }
 
     /**
@@ -197,25 +197,25 @@ class InlineResponse20018 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets shop_coupon
+     * Gets gift
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20017ShopCoupons
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20018Gift
      */
-    public function getShopCoupon()
+    public function getGift()
     {
-        return $this->container['shop_coupon'];
+        return $this->container['gift'];
     }
 
     /**
-     * Sets shop_coupon
+     * Sets gift
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse20017ShopCoupons $shop_coupon shop_coupon
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20018Gift $gift gift
      *
      * @return $this
      */
-    public function setShopCoupon($shop_coupon)
+    public function setGift($gift)
     {
-        $this->container['shop_coupon'] = $shop_coupon;
+        $this->container['gift'] = $gift;
 
         return $this;
     }

@@ -94,7 +94,7 @@ class CategoryApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20012
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20014
      */
     public function getProductCategories()
     {
@@ -110,11 +110,11 @@ class CategoryApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20012, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20014, HTTP status code, HTTP response headers (array of strings)
      */
     public function getProductCategoriesWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20012';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20014';
         $request = $this->getProductCategoriesRequest();
 
         try {
@@ -166,7 +166,7 @@ class CategoryApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse20012',
+                        '\ColorMeShop\Swagger\Model\InlineResponse20014',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -206,7 +206,7 @@ class CategoryApi
      */
     public function getProductCategoriesAsyncWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20012';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20014';
         $request = $this->getProductCategoriesRequest();
 
         return $this->client

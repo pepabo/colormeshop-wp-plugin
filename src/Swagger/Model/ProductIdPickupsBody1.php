@@ -1,6 +1,6 @@
 <?php
 /**
- * InlineResponse2003
+ * ProductIdPickupsBody1
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * InlineResponse2003 Class Doc Comment
+ * ProductIdPickupsBody1 Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2003 implements ModelInterface, ArrayAccess
+class ProductIdPickupsBody1 implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'inline_response_200_3';
+    protected static $swaggerModelName = 'product_id_pickups_body_1';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,7 +56,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => 'AllOfinlineResponse2003Sale'    ];
+        'pickup_type' => 'int',
+'order_num' => 'int'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +65,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null    ];
+        'pickup_type' => null,
+'order_num' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +95,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'    ];
+        'pickup_type' => 'pickup_type',
+'order_num' => 'order_num'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +104,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'    ];
+        'pickup_type' => 'setPickupType',
+'order_num' => 'setOrderNum'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +113,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'    ];
+        'pickup_type' => 'getPickupType',
+'order_num' => 'getOrderNum'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -152,7 +157,24 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    
+    const PICKUP_TYPE_0 = 0;
+const PICKUP_TYPE_1 = 1;
+const PICKUP_TYPE_3 = 3;
+const PICKUP_TYPE_4 = 4;
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getPickupTypeAllowableValues()
+    {
+        return [
+            self::PICKUP_TYPE_0,
+self::PICKUP_TYPE_1,
+self::PICKUP_TYPE_3,
+self::PICKUP_TYPE_4,        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -169,7 +191,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['pickup_type'] = isset($data['pickup_type']) ? $data['pickup_type'] : null;
+        $this->container['order_num'] = isset($data['order_num']) ? $data['order_num'] : null;
     }
 
     /**
@@ -180,6 +203,14 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        $allowedValues = $this->getPickupTypeAllowableValues();
+        if (!is_null($this->container['pickup_type']) && !in_array($this->container['pickup_type'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'pickup_type', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
 
         return $invalidProperties;
     }
@@ -197,25 +228,58 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets sale
+     * Gets pickup_type
      *
-     * @return AllOfinlineResponse2003Sale
+     * @return int
      */
-    public function getSale()
+    public function getPickupType()
     {
-        return $this->container['sale'];
+        return $this->container['pickup_type'];
     }
 
     /**
-     * Sets sale
+     * Sets pickup_type
      *
-     * @param AllOfinlineResponse2003Sale $sale sale
+     * @param int $pickup_type おすすめ商品情報種別（0:おすすめ商品, 1:売れ筋商品, 3:新着商品, 4:イチオシ商品）
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setPickupType($pickup_type)
     {
-        $this->container['sale'] = $sale;
+        $allowedValues = $this->getPickupTypeAllowableValues();
+        if (!is_null($pickup_type) && !in_array($pickup_type, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'pickup_type', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['pickup_type'] = $pickup_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets order_num
+     *
+     * @return int
+     */
+    public function getOrderNum()
+    {
+        return $this->container['order_num'];
+    }
+
+    /**
+     * Sets order_num
+     *
+     * @param int $order_num 商品の表示順
+     *
+     * @return $this
+     */
+    public function setOrderNum($order_num)
+    {
+        $this->container['order_num'] = $order_num;
 
         return $this;
     }

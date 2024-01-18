@@ -94,7 +94,7 @@ class GroupApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20011
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20013
      */
     public function getProductGroups()
     {
@@ -110,11 +110,11 @@ class GroupApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20011, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20013, HTTP status code, HTTP response headers (array of strings)
      */
     public function getProductGroupsWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20011';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20013';
         $request = $this->getProductGroupsRequest();
 
         try {
@@ -166,7 +166,7 @@ class GroupApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse20011',
+                        '\ColorMeShop\Swagger\Model\InlineResponse20013',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -206,7 +206,7 @@ class GroupApi
      */
     public function getProductGroupsAsyncWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20011';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20013';
         $request = $this->getProductGroupsRequest();
 
         return $this->client

@@ -56,7 +56,8 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'categories' => '\ColorMeShop\Swagger\Model\InlineResponse20012Categories[]'    ];
+        'stocks' => '\ColorMeShop\Swagger\Model\InlineResponse20012Stocks[]',
+'meta' => '\ColorMeShop\Swagger\Model\InlineResponse2001Meta'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +65,8 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'categories' => null    ];
+        'stocks' => null,
+'meta' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +95,8 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'categories' => 'categories'    ];
+        'stocks' => 'stocks',
+'meta' => 'meta'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +104,8 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'categories' => 'setCategories'    ];
+        'stocks' => 'setStocks',
+'meta' => 'setMeta'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +113,8 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'categories' => 'getCategories'    ];
+        'stocks' => 'getStocks',
+'meta' => 'getMeta'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +174,8 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['categories'] = isset($data['categories']) ? $data['categories'] : null;
+        $this->container['stocks'] = isset($data['stocks']) ? $data['stocks'] : null;
+        $this->container['meta'] = isset($data['meta']) ? $data['meta'] : null;
     }
 
     /**
@@ -197,25 +203,49 @@ class InlineResponse20012 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets categories
+     * Gets stocks
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20012Categories[]
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20012Stocks[]
      */
-    public function getCategories()
+    public function getStocks()
     {
-        return $this->container['categories'];
+        return $this->container['stocks'];
     }
 
     /**
-     * Sets categories
+     * Sets stocks
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse20012Categories[] $categories 商品カテゴリー情報一覧
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20012Stocks[] $stocks stocks
      *
      * @return $this
      */
-    public function setCategories($categories)
+    public function setStocks($stocks)
     {
-        $this->container['categories'] = $categories;
+        $this->container['stocks'] = $stocks;
+
+        return $this;
+    }
+
+    /**
+     * Gets meta
+     *
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2001Meta
+     */
+    public function getMeta()
+    {
+        return $this->container['meta'];
+    }
+
+    /**
+     * Sets meta
+     *
+     * @param \ColorMeShop\Swagger\Model\InlineResponse2001Meta $meta meta
+     *
+     * @return $this
+     */
+    public function setMeta($meta)
+    {
+        $this->container['meta'] = $meta;
 
         return $this;
     }

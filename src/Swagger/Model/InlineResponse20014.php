@@ -56,7 +56,7 @@ class InlineResponse20014 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'deliveries' => '\ColorMeShop\Swagger\Model\InlineResponse20014Deliveries[]'    ];
+        'categories' => '\ColorMeShop\Swagger\Model\InlineResponse20014Categories[]'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +64,7 @@ class InlineResponse20014 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'deliveries' => null    ];
+        'categories' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +93,7 @@ class InlineResponse20014 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'deliveries' => 'deliveries'    ];
+        'categories' => 'categories'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +101,7 @@ class InlineResponse20014 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'deliveries' => 'setDeliveries'    ];
+        'categories' => 'setCategories'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +109,7 @@ class InlineResponse20014 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'deliveries' => 'getDeliveries'    ];
+        'categories' => 'getCategories'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +169,7 @@ class InlineResponse20014 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['deliveries'] = isset($data['deliveries']) ? $data['deliveries'] : null;
+        $this->container['categories'] = isset($data['categories']) ? $data['categories'] : null;
     }
 
     /**
@@ -197,25 +197,25 @@ class InlineResponse20014 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets deliveries
+     * Gets categories
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20014Deliveries[]
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20014Categories[]
      */
-    public function getDeliveries()
+    public function getCategories()
     {
-        return $this->container['deliveries'];
+        return $this->container['categories'];
     }
 
     /**
-     * Sets deliveries
+     * Sets categories
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse20014Deliveries[] $deliveries deliveries
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20014Categories[] $categories 商品カテゴリー情報一覧
      *
      * @return $this
      */
-    public function setDeliveries($deliveries)
+    public function setCategories($categories)
     {
-        $this->container['deliveries'] = $deliveries;
+        $this->container['categories'] = $categories;
 
         return $this;
     }

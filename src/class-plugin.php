@@ -83,13 +83,13 @@ class Plugin {
 	/**
 	 * プラグイン設定更新のコールバック
 	 *
-	 * @param array $old 古い設定値
-	 * @param array $new 新しい設定値
+	 * @param array $old_settings 古い設定値
+	 * @param array $new_settings 新しい設定値
 	 * @return void
 	 */
-	public function on_update_settings( $old, $new ) {
+	public function on_update_settings( $old_settings, $new_settings ) {
 		// 商品ページIDを元にサイトマップへのリライトを定義するため
-		$this->flush_rewrite_rules( $new );
+		$this->flush_rewrite_rules( $new_settings );
 	}
 
 
@@ -331,7 +331,7 @@ class Plugin {
 		};
 
 		$container['model.setting'] = function ( $c ) {
-			return new Setting;
+			return new Setting();
 		};
 
 		$container['model.sitemap'] = function ( $c ) {
@@ -366,12 +366,12 @@ class Plugin {
 	 * @return void
 	 */
 	private function register_shortcode() {
-		$to_invoker_methodname = function ( $class ) {
-			return '_' . str_replace( '/', '_', $class );
+		$to_invoker_methodname = function ( $klass ) {
+			return '_' . str_replace( '/', '_', $klass );
 		};
 
 		$shortcode_invoker = new Shortcode_Invoker( $this->container );
-		$classmap          = include( __DIR__ . '/../vendor/composer/autoload_classmap.php' );
+		$classmap          = include __DIR__ . '/../vendor/composer/autoload_classmap.php';
 		foreach ( $classmap as $class => $path ) {
 			if ( strpos( $path, dirname( __DIR__ ) . '/src/shortcodes/' ) !== 0 ) {
 				continue;

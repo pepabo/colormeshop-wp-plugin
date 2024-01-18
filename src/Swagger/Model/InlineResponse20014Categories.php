@@ -1,6 +1,6 @@
 <?php
 /**
- * InlineResponse2003
+ * InlineResponse20014Categories
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * InlineResponse2003 Class Doc Comment
+ * InlineResponse20014Categories Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2003 implements ModelInterface, ArrayAccess
+class InlineResponse20014Categories implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'inline_response_200_3';
+    protected static $swaggerModelName = 'inline_response_200_14_categories';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,7 +56,17 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => 'AllOfinlineResponse2003Sale'    ];
+        'id_big' => 'int',
+'id_small' => 'int',
+'account_id' => 'string',
+'name' => 'string',
+'image_url' => 'string',
+'expl' => 'string',
+'sort' => 'int',
+'display_state' => 'string',
+'make_date' => 'int',
+'update_date' => 'int',
+'children' => '\ColorMeShop\Swagger\Model\ProductCategoryChildren[]'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +74,17 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null    ];
+        'id_big' => null,
+'id_small' => null,
+'account_id' => null,
+'name' => null,
+'image_url' => null,
+'expl' => null,
+'sort' => null,
+'display_state' => null,
+'make_date' => null,
+'update_date' => null,
+'children' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +113,17 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'    ];
+        'id_big' => 'id_big',
+'id_small' => 'id_small',
+'account_id' => 'account_id',
+'name' => 'name',
+'image_url' => 'image_url',
+'expl' => 'expl',
+'sort' => 'sort',
+'display_state' => 'display_state',
+'make_date' => 'make_date',
+'update_date' => 'update_date',
+'children' => 'children'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +131,17 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'    ];
+        'id_big' => 'setIdBig',
+'id_small' => 'setIdSmall',
+'account_id' => 'setAccountId',
+'name' => 'setName',
+'image_url' => 'setImageUrl',
+'expl' => 'setExpl',
+'sort' => 'setSort',
+'display_state' => 'setDisplayState',
+'make_date' => 'setMakeDate',
+'update_date' => 'setUpdateDate',
+'children' => 'setChildren'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +149,17 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'    ];
+        'id_big' => 'getIdBig',
+'id_small' => 'getIdSmall',
+'account_id' => 'getAccountId',
+'name' => 'getName',
+'image_url' => 'getImageUrl',
+'expl' => 'getExpl',
+'sort' => 'getSort',
+'display_state' => 'getDisplayState',
+'make_date' => 'getMakeDate',
+'update_date' => 'getUpdateDate',
+'children' => 'getChildren'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -152,7 +202,22 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    
+    const DISPLAY_STATE_SHOWING = 'showing';
+const DISPLAY_STATE_HIDDEN = 'hidden';
+const DISPLAY_STATE_MEMBERS_ONLY = 'members_only';
+
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getDisplayStateAllowableValues()
+    {
+        return [
+            self::DISPLAY_STATE_SHOWING,
+self::DISPLAY_STATE_HIDDEN,
+self::DISPLAY_STATE_MEMBERS_ONLY,        ];
+    }
 
     /**
      * Associative array for storing property values
@@ -169,7 +234,17 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['id_big'] = isset($data['id_big']) ? $data['id_big'] : null;
+        $this->container['id_small'] = isset($data['id_small']) ? $data['id_small'] : null;
+        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
+        $this->container['image_url'] = isset($data['image_url']) ? $data['image_url'] : null;
+        $this->container['expl'] = isset($data['expl']) ? $data['expl'] : null;
+        $this->container['sort'] = isset($data['sort']) ? $data['sort'] : null;
+        $this->container['display_state'] = isset($data['display_state']) ? $data['display_state'] : null;
+        $this->container['make_date'] = isset($data['make_date']) ? $data['make_date'] : null;
+        $this->container['update_date'] = isset($data['update_date']) ? $data['update_date'] : null;
+        $this->container['children'] = isset($data['children']) ? $data['children'] : null;
     }
 
     /**
@@ -180,6 +255,14 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!is_null($this->container['display_state']) && !in_array($this->container['display_state'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'display_state', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
 
         return $invalidProperties;
     }
@@ -197,25 +280,274 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets sale
+     * Gets id_big
      *
-     * @return AllOfinlineResponse2003Sale
+     * @return int
      */
-    public function getSale()
+    public function getIdBig()
     {
-        return $this->container['sale'];
+        return $this->container['id_big'];
     }
 
     /**
-     * Sets sale
+     * Sets id_big
      *
-     * @param AllOfinlineResponse2003Sale $sale sale
+     * @param int $id_big 大カテゴリーID
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setIdBig($id_big)
     {
-        $this->container['sale'] = $sale;
+        $this->container['id_big'] = $id_big;
+
+        return $this;
+    }
+
+    /**
+     * Gets id_small
+     *
+     * @return int
+     */
+    public function getIdSmall()
+    {
+        return $this->container['id_small'];
+    }
+
+    /**
+     * Sets id_small
+     *
+     * @param int $id_small 小カテゴリーID。大カテゴリーのことを表している場合は0
+     *
+     * @return $this
+     */
+    public function setIdSmall($id_small)
+    {
+        $this->container['id_small'] = $id_small;
+
+        return $this;
+    }
+
+    /**
+     * Gets account_id
+     *
+     * @return string
+     */
+    public function getAccountId()
+    {
+        return $this->container['account_id'];
+    }
+
+    /**
+     * Sets account_id
+     *
+     * @param string $account_id ショップアカウントID
+     *
+     * @return $this
+     */
+    public function setAccountId($account_id)
+    {
+        $this->container['account_id'] = $account_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->container['name'];
+    }
+
+    /**
+     * Sets name
+     *
+     * @param string $name 商品カテゴリー名
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets image_url
+     *
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        return $this->container['image_url'];
+    }
+
+    /**
+     * Sets image_url
+     *
+     * @param string $image_url 商品カテゴリー画像URL
+     *
+     * @return $this
+     */
+    public function setImageUrl($image_url)
+    {
+        $this->container['image_url'] = $image_url;
+
+        return $this;
+    }
+
+    /**
+     * Gets expl
+     *
+     * @return string
+     */
+    public function getExpl()
+    {
+        return $this->container['expl'];
+    }
+
+    /**
+     * Sets expl
+     *
+     * @param string $expl 商品カテゴリー説明
+     *
+     * @return $this
+     */
+    public function setExpl($expl)
+    {
+        $this->container['expl'] = $expl;
+
+        return $this;
+    }
+
+    /**
+     * Gets sort
+     *
+     * @return int
+     */
+    public function getSort()
+    {
+        return $this->container['sort'];
+    }
+
+    /**
+     * Sets sort
+     *
+     * @param int $sort 表示順
+     *
+     * @return $this
+     */
+    public function setSort($sort)
+    {
+        $this->container['sort'] = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Gets display_state
+     *
+     * @return string
+     */
+    public function getDisplayState()
+    {
+        return $this->container['display_state'];
+    }
+
+    /**
+     * Sets display_state
+     *
+     * @param string $display_state 掲載設定  - `showing`: 掲載状態 - `hidden`: 非掲載状態 - `members_only`: 会員にのみ掲載
+     *
+     * @return $this
+     */
+    public function setDisplayState($display_state)
+    {
+        $allowedValues = $this->getDisplayStateAllowableValues();
+        if (!is_null($display_state) && !in_array($display_state, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'display_state', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['display_state'] = $display_state;
+
+        return $this;
+    }
+
+    /**
+     * Gets make_date
+     *
+     * @return int
+     */
+    public function getMakeDate()
+    {
+        return $this->container['make_date'];
+    }
+
+    /**
+     * Sets make_date
+     *
+     * @param int $make_date 商品カテゴリー作成日時
+     *
+     * @return $this
+     */
+    public function setMakeDate($make_date)
+    {
+        $this->container['make_date'] = $make_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets update_date
+     *
+     * @return int
+     */
+    public function getUpdateDate()
+    {
+        return $this->container['update_date'];
+    }
+
+    /**
+     * Sets update_date
+     *
+     * @param int $update_date 商品カテゴリー更新日時
+     *
+     * @return $this
+     */
+    public function setUpdateDate($update_date)
+    {
+        $this->container['update_date'] = $update_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets children
+     *
+     * @return \ColorMeShop\Swagger\Model\ProductCategoryChildren[]
+     */
+    public function getChildren()
+    {
+        return $this->container['children'];
+    }
+
+    /**
+     * Sets children
+     *
+     * @param \ColorMeShop\Swagger\Model\ProductCategoryChildren[] $children 子カテゴリー
+     *
+     * @return $this
+     */
+    public function setChildren($children)
+    {
+        $this->container['children'] = $children;
 
         return $this;
     }

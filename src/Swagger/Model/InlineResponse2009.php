@@ -56,7 +56,7 @@ class InlineResponse2009 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'pickup' => '\ColorMeShop\Swagger\Model\InlineResponse2009Pickup[]'    ];
+        'product' => '\ColorMeShop\Swagger\Model\InlineResponse2008Products'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +64,7 @@ class InlineResponse2009 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'pickup' => null    ];
+        'product' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +93,7 @@ class InlineResponse2009 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'pickup' => 'pickup'    ];
+        'product' => 'product'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +101,7 @@ class InlineResponse2009 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'pickup' => 'setPickup'    ];
+        'product' => 'setProduct'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +109,7 @@ class InlineResponse2009 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'pickup' => 'getPickup'    ];
+        'product' => 'getProduct'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +169,7 @@ class InlineResponse2009 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['pickup'] = isset($data['pickup']) ? $data['pickup'] : null;
+        $this->container['product'] = isset($data['product']) ? $data['product'] : null;
     }
 
     /**
@@ -197,25 +197,25 @@ class InlineResponse2009 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets pickup
+     * Gets product
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2009Pickup[]
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2008Products
      */
-    public function getPickup()
+    public function getProduct()
     {
-        return $this->container['pickup'];
+        return $this->container['product'];
     }
 
     /**
-     * Sets pickup
+     * Sets product
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse2009Pickup[] $pickup pickup
+     * @param \ColorMeShop\Swagger\Model\InlineResponse2008Products $product product
      *
      * @return $this
      */
-    public function setPickup($pickup)
+    public function setProduct($product)
     {
-        $this->container['pickup'] = $pickup;
+        $this->container['product'] = $product;
 
         return $this;
     }

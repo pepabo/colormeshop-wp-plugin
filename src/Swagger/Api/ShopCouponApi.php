@@ -95,7 +95,7 @@ class ShopCouponApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20018
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20020
      */
     public function getCoupon($coupon_id)
     {
@@ -112,11 +112,11 @@ class ShopCouponApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20018, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20020, HTTP status code, HTTP response headers (array of strings)
      */
     public function getCouponWithHttpInfo($coupon_id)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20018';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20020';
         $request = $this->getCouponRequest($coupon_id);
 
         try {
@@ -168,7 +168,7 @@ class ShopCouponApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse20018',
+                        '\ColorMeShop\Swagger\Model\InlineResponse20020',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -210,7 +210,7 @@ class ShopCouponApi
      */
     public function getCouponAsyncWithHttpInfo($coupon_id)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20018';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20020';
         $request = $this->getCouponRequest($coupon_id);
 
         return $this->client
@@ -360,7 +360,7 @@ class ShopCouponApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20017
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20019
      */
     public function getCoupons()
     {
@@ -376,11 +376,11 @@ class ShopCouponApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20017, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20019, HTTP status code, HTTP response headers (array of strings)
      */
     public function getCouponsWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20017';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20019';
         $request = $this->getCouponsRequest();
 
         try {
@@ -432,7 +432,7 @@ class ShopCouponApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse20017',
+                        '\ColorMeShop\Swagger\Model\InlineResponse20019',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -472,7 +472,7 @@ class ShopCouponApi
      */
     public function getCouponsAsyncWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20017';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20019';
         $request = $this->getCouponsRequest();
 
         return $this->client

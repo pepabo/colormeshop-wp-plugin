@@ -98,14 +98,14 @@ class StockApi
      * @param  string $name 商品名で部分一致検索 (optional)
      * @param  string $display_state 掲載設定で検索  - &#x60;showing&#x60;: 掲載状態 - &#x60;hidden&#x60;: 非掲載状態 - &#x60;showing_for_members&#x60;: 会員にのみ掲載 - &#x60;sale_for_members&#x60;: 掲載状態だが購入は会員のみ可能 (optional)
      * @param  int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、オプションごとの在庫数で検索される (optional)
-     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
+     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内にオプションが更新された商品から検索 (optional)
      * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
      * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
      * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20010
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20012
      */
     public function getStocks($ids = null, $category_id_big = null, $category_id_small = null, $model_number = null, $name = null, $display_state = null, $stocks = null, $recent_zero_stocks = null, $fields = null, $limit = null, $offset = null)
     {
@@ -125,18 +125,18 @@ class StockApi
      * @param  string $name 商品名で部分一致検索 (optional)
      * @param  string $display_state 掲載設定で検索  - &#x60;showing&#x60;: 掲載状態 - &#x60;hidden&#x60;: 非掲載状態 - &#x60;showing_for_members&#x60;: 会員にのみ掲載 - &#x60;sale_for_members&#x60;: 掲載状態だが購入は会員のみ可能 (optional)
      * @param  int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、オプションごとの在庫数で検索される (optional)
-     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
+     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内にオプションが更新された商品から検索 (optional)
      * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
      * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
      * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20010, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20012, HTTP status code, HTTP response headers (array of strings)
      */
     public function getStocksWithHttpInfo($ids = null, $category_id_big = null, $category_id_small = null, $model_number = null, $name = null, $display_state = null, $stocks = null, $recent_zero_stocks = null, $fields = null, $limit = null, $offset = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20010';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20012';
         $request = $this->getStocksRequest($ids, $category_id_big, $category_id_small, $model_number, $name, $display_state, $stocks, $recent_zero_stocks, $fields, $limit, $offset);
 
         try {
@@ -188,7 +188,7 @@ class StockApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse20010',
+                        '\ColorMeShop\Swagger\Model\InlineResponse20012',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -210,7 +210,7 @@ class StockApi
      * @param  string $name 商品名で部分一致検索 (optional)
      * @param  string $display_state 掲載設定で検索  - &#x60;showing&#x60;: 掲載状態 - &#x60;hidden&#x60;: 非掲載状態 - &#x60;showing_for_members&#x60;: 会員にのみ掲載 - &#x60;sale_for_members&#x60;: 掲載状態だが購入は会員のみ可能 (optional)
      * @param  int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、オプションごとの在庫数で検索される (optional)
-     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
+     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内にオプションが更新された商品から検索 (optional)
      * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
      * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
      * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
@@ -240,7 +240,7 @@ class StockApi
      * @param  string $name 商品名で部分一致検索 (optional)
      * @param  string $display_state 掲載設定で検索  - &#x60;showing&#x60;: 掲載状態 - &#x60;hidden&#x60;: 非掲載状態 - &#x60;showing_for_members&#x60;: 会員にのみ掲載 - &#x60;sale_for_members&#x60;: 掲載状態だが購入は会員のみ可能 (optional)
      * @param  int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、オプションごとの在庫数で検索される (optional)
-     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
+     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内にオプションが更新された商品から検索 (optional)
      * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
      * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
      * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
@@ -250,7 +250,7 @@ class StockApi
      */
     public function getStocksAsyncWithHttpInfo($ids = null, $category_id_big = null, $category_id_small = null, $model_number = null, $name = null, $display_state = null, $stocks = null, $recent_zero_stocks = null, $fields = null, $limit = null, $offset = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20010';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20012';
         $request = $this->getStocksRequest($ids, $category_id_big, $category_id_small, $model_number, $name, $display_state, $stocks, $recent_zero_stocks, $fields, $limit, $offset);
 
         return $this->client
@@ -300,7 +300,7 @@ class StockApi
      * @param  string $name 商品名で部分一致検索 (optional)
      * @param  string $display_state 掲載設定で検索  - &#x60;showing&#x60;: 掲載状態 - &#x60;hidden&#x60;: 非掲載状態 - &#x60;showing_for_members&#x60;: 会員にのみ掲載 - &#x60;sale_for_members&#x60;: 掲載状態だが購入は会員のみ可能 (optional)
      * @param  int $stocks 在庫管理している商品のうち、在庫数が指定した数値以下の商品を検索。オプションごとに在庫管理している商品は、オプションごとの在庫数で検索される (optional)
-     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内に更新された商品から検索 (optional)
+     * @param  bool $recent_zero_stocks &#x60;true&#x60; の場合、過去1週間以内にオプションが更新された商品から検索 (optional)
      * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
      * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
      * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)

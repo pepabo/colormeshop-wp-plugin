@@ -1,6 +1,6 @@
 <?php
 /**
- * V1productsproductIdProduct
+ * InlineResponse20015Payments
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * V1productsproductIdProduct Class Doc Comment
+ * InlineResponse20015Payments Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class V1productsproductIdProduct implements ModelInterface, ArrayAccess
+class InlineResponse20015Payments implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'v1productsproduct_id_product';
+    protected static $swaggerModelName = 'inline_response_200_15_payments';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,23 +56,24 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'name' => 'string',
-'price' => 'int',
-'category_id_big' => 'int',
-'category_id_small' => 'int',
-'cost' => 'int',
-'sales_price' => 'int',
-'members_price' => 'int',
-'model_number' => 'string',
-'expl' => 'string',
-'simple_expl' => 'string',
-'smartphone_expl' => 'string',
-'display_state' => 'string',
-'stock_managed' => 'bool',
-'stocks' => 'OneOfv1productsproductIdProductStocks',
-'group_ids' => 'int[]',
-'variants' => '\ColorMeShop\Swagger\Model\V1productsproductIdProductVariants[]',
-'tax_reduced' => 'bool'    ];
+        'id' => 'int',
+'account_id' => 'string',
+'name' => 'string',
+'fee' => 'int',
+'ip_code' => 'string',
+'memo' => 'string',
+'order_end_note' => 'string',
+'memo_mobile' => 'string',
+'sort' => 'int',
+'image_url' => 'string',
+'type' => 'int',
+'display' => 'bool',
+'use_mobile' => 'bool',
+'make_date' => 'int',
+'update_date' => 'int',
+'cod' => '\ColorMeShop\Swagger\Model\PaymentCod',
+'card' => '\ColorMeShop\Swagger\Model\PaymentCard',
+'financial' => '\ColorMeShop\Swagger\Model\PaymentFinancial'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -80,23 +81,24 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'name' => null,
-'price' => null,
-'category_id_big' => null,
-'category_id_small' => null,
-'cost' => null,
-'sales_price' => null,
-'members_price' => null,
-'model_number' => null,
-'expl' => null,
-'simple_expl' => null,
-'smartphone_expl' => null,
-'display_state' => null,
-'stock_managed' => null,
-'stocks' => null,
-'group_ids' => null,
-'variants' => null,
-'tax_reduced' => null    ];
+        'id' => null,
+'account_id' => null,
+'name' => null,
+'fee' => null,
+'ip_code' => null,
+'memo' => null,
+'order_end_note' => null,
+'memo_mobile' => null,
+'sort' => null,
+'image_url' => null,
+'type' => null,
+'display' => null,
+'use_mobile' => null,
+'make_date' => null,
+'update_date' => null,
+'cod' => null,
+'card' => null,
+'financial' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -125,23 +127,24 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'name' => 'name',
-'price' => 'price',
-'category_id_big' => 'category_id_big',
-'category_id_small' => 'category_id_small',
-'cost' => 'cost',
-'sales_price' => 'sales_price',
-'members_price' => 'members_price',
-'model_number' => 'model_number',
-'expl' => 'expl',
-'simple_expl' => 'simple_expl',
-'smartphone_expl' => 'smartphone_expl',
-'display_state' => 'display_state',
-'stock_managed' => 'stock_managed',
-'stocks' => 'stocks',
-'group_ids' => 'group_ids',
-'variants' => 'variants',
-'tax_reduced' => 'tax_reduced'    ];
+        'id' => 'id',
+'account_id' => 'account_id',
+'name' => 'name',
+'fee' => 'fee',
+'ip_code' => 'ip_code',
+'memo' => 'memo',
+'order_end_note' => 'order_end_note',
+'memo_mobile' => 'memo_mobile',
+'sort' => 'sort',
+'image_url' => 'image_url',
+'type' => 'type',
+'display' => 'display',
+'use_mobile' => 'use_mobile',
+'make_date' => 'make_date',
+'update_date' => 'update_date',
+'cod' => 'cod',
+'card' => 'card',
+'financial' => 'financial'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -149,23 +152,24 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'name' => 'setName',
-'price' => 'setPrice',
-'category_id_big' => 'setCategoryIdBig',
-'category_id_small' => 'setCategoryIdSmall',
-'cost' => 'setCost',
-'sales_price' => 'setSalesPrice',
-'members_price' => 'setMembersPrice',
-'model_number' => 'setModelNumber',
-'expl' => 'setExpl',
-'simple_expl' => 'setSimpleExpl',
-'smartphone_expl' => 'setSmartphoneExpl',
-'display_state' => 'setDisplayState',
-'stock_managed' => 'setStockManaged',
-'stocks' => 'setStocks',
-'group_ids' => 'setGroupIds',
-'variants' => 'setVariants',
-'tax_reduced' => 'setTaxReduced'    ];
+        'id' => 'setId',
+'account_id' => 'setAccountId',
+'name' => 'setName',
+'fee' => 'setFee',
+'ip_code' => 'setIpCode',
+'memo' => 'setMemo',
+'order_end_note' => 'setOrderEndNote',
+'memo_mobile' => 'setMemoMobile',
+'sort' => 'setSort',
+'image_url' => 'setImageUrl',
+'type' => 'setType',
+'display' => 'setDisplay',
+'use_mobile' => 'setUseMobile',
+'make_date' => 'setMakeDate',
+'update_date' => 'setUpdateDate',
+'cod' => 'setCod',
+'card' => 'setCard',
+'financial' => 'setFinancial'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -173,23 +177,24 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'name' => 'getName',
-'price' => 'getPrice',
-'category_id_big' => 'getCategoryIdBig',
-'category_id_small' => 'getCategoryIdSmall',
-'cost' => 'getCost',
-'sales_price' => 'getSalesPrice',
-'members_price' => 'getMembersPrice',
-'model_number' => 'getModelNumber',
-'expl' => 'getExpl',
-'simple_expl' => 'getSimpleExpl',
-'smartphone_expl' => 'getSmartphoneExpl',
-'display_state' => 'getDisplayState',
-'stock_managed' => 'getStockManaged',
-'stocks' => 'getStocks',
-'group_ids' => 'getGroupIds',
-'variants' => 'getVariants',
-'tax_reduced' => 'getTaxReduced'    ];
+        'id' => 'getId',
+'account_id' => 'getAccountId',
+'name' => 'getName',
+'fee' => 'getFee',
+'ip_code' => 'getIpCode',
+'memo' => 'getMemo',
+'order_end_note' => 'getOrderEndNote',
+'memo_mobile' => 'getMemoMobile',
+'sort' => 'getSort',
+'image_url' => 'getImageUrl',
+'type' => 'getType',
+'display' => 'getDisplay',
+'use_mobile' => 'getUseMobile',
+'make_date' => 'getMakeDate',
+'update_date' => 'getUpdateDate',
+'cod' => 'getCod',
+'card' => 'getCard',
+'financial' => 'getFinancial'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -232,24 +237,7 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const DISPLAY_STATE_SHOWING = 'showing';
-const DISPLAY_STATE_HIDDEN = 'hidden';
-const DISPLAY_STATE_SHOWING_FOR_MEMBERS = 'showing_for_members';
-const DISPLAY_STATE_SALE_FOR_MEMBERS = 'sale_for_members';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getDisplayStateAllowableValues()
-    {
-        return [
-            self::DISPLAY_STATE_SHOWING,
-self::DISPLAY_STATE_HIDDEN,
-self::DISPLAY_STATE_SHOWING_FOR_MEMBERS,
-self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
-    }
+    
 
     /**
      * Associative array for storing property values
@@ -266,23 +254,24 @@ self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
      */
     public function __construct(array $data = null)
     {
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
         $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['price'] = isset($data['price']) ? $data['price'] : null;
-        $this->container['category_id_big'] = isset($data['category_id_big']) ? $data['category_id_big'] : null;
-        $this->container['category_id_small'] = isset($data['category_id_small']) ? $data['category_id_small'] : null;
-        $this->container['cost'] = isset($data['cost']) ? $data['cost'] : null;
-        $this->container['sales_price'] = isset($data['sales_price']) ? $data['sales_price'] : null;
-        $this->container['members_price'] = isset($data['members_price']) ? $data['members_price'] : null;
-        $this->container['model_number'] = isset($data['model_number']) ? $data['model_number'] : null;
-        $this->container['expl'] = isset($data['expl']) ? $data['expl'] : null;
-        $this->container['simple_expl'] = isset($data['simple_expl']) ? $data['simple_expl'] : null;
-        $this->container['smartphone_expl'] = isset($data['smartphone_expl']) ? $data['smartphone_expl'] : null;
-        $this->container['display_state'] = isset($data['display_state']) ? $data['display_state'] : null;
-        $this->container['stock_managed'] = isset($data['stock_managed']) ? $data['stock_managed'] : null;
-        $this->container['stocks'] = isset($data['stocks']) ? $data['stocks'] : null;
-        $this->container['group_ids'] = isset($data['group_ids']) ? $data['group_ids'] : null;
-        $this->container['variants'] = isset($data['variants']) ? $data['variants'] : null;
-        $this->container['tax_reduced'] = isset($data['tax_reduced']) ? $data['tax_reduced'] : null;
+        $this->container['fee'] = isset($data['fee']) ? $data['fee'] : null;
+        $this->container['ip_code'] = isset($data['ip_code']) ? $data['ip_code'] : null;
+        $this->container['memo'] = isset($data['memo']) ? $data['memo'] : null;
+        $this->container['order_end_note'] = isset($data['order_end_note']) ? $data['order_end_note'] : null;
+        $this->container['memo_mobile'] = isset($data['memo_mobile']) ? $data['memo_mobile'] : null;
+        $this->container['sort'] = isset($data['sort']) ? $data['sort'] : null;
+        $this->container['image_url'] = isset($data['image_url']) ? $data['image_url'] : null;
+        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
+        $this->container['display'] = isset($data['display']) ? $data['display'] : null;
+        $this->container['use_mobile'] = isset($data['use_mobile']) ? $data['use_mobile'] : null;
+        $this->container['make_date'] = isset($data['make_date']) ? $data['make_date'] : null;
+        $this->container['update_date'] = isset($data['update_date']) ? $data['update_date'] : null;
+        $this->container['cod'] = isset($data['cod']) ? $data['cod'] : null;
+        $this->container['card'] = isset($data['card']) ? $data['card'] : null;
+        $this->container['financial'] = isset($data['financial']) ? $data['financial'] : null;
     }
 
     /**
@@ -293,14 +282,6 @@ self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
     public function listInvalidProperties()
     {
         $invalidProperties = [];
-
-        $allowedValues = $this->getDisplayStateAllowableValues();
-        if (!is_null($this->container['display_state']) && !in_array($this->container['display_state'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value for 'display_state', must be one of '%s'",
-                implode("', '", $allowedValues)
-            );
-        }
 
         return $invalidProperties;
     }
@@ -318,6 +299,54 @@ self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
 
 
     /**
+     * Gets id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->container['id'];
+    }
+
+    /**
+     * Sets id
+     *
+     * @param int $id 決済方法ID
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets account_id
+     *
+     * @return string
+     */
+    public function getAccountId()
+    {
+        return $this->container['account_id'];
+    }
+
+    /**
+     * Sets account_id
+     *
+     * @param string $account_id ショップアカウントID
+     *
+     * @return $this
+     */
+    public function setAccountId($account_id)
+    {
+        $this->container['account_id'] = $account_id;
+
+        return $this;
+    }
+
+    /**
      * Gets name
      *
      * @return string
@@ -330,7 +359,7 @@ self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
     /**
      * Sets name
      *
-     * @param string $name 商品名
+     * @param string $name 決済名
      *
      * @return $this
      */
@@ -342,394 +371,361 @@ self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
     }
 
     /**
-     * Gets price
+     * Gets fee
      *
      * @return int
      */
-    public function getPrice()
+    public function getFee()
     {
-        return $this->container['price'];
+        return $this->container['fee'];
     }
 
     /**
-     * Sets price
+     * Sets fee
      *
-     * @param int $price 定価
+     * @param int $fee 決済手数料
      *
      * @return $this
      */
-    public function setPrice($price)
+    public function setFee($fee)
     {
-        $this->container['price'] = $price;
+        $this->container['fee'] = $fee;
 
         return $this;
     }
 
     /**
-     * Gets category_id_big
-     *
-     * @return int
-     */
-    public function getCategoryIdBig()
-    {
-        return $this->container['category_id_big'];
-    }
-
-    /**
-     * Sets category_id_big
-     *
-     * @param int $category_id_big 大カテゴリーID
-     *
-     * @return $this
-     */
-    public function setCategoryIdBig($category_id_big)
-    {
-        $this->container['category_id_big'] = $category_id_big;
-
-        return $this;
-    }
-
-    /**
-     * Gets category_id_small
-     *
-     * @return int
-     */
-    public function getCategoryIdSmall()
-    {
-        return $this->container['category_id_small'];
-    }
-
-    /**
-     * Sets category_id_small
-     *
-     * @param int $category_id_small 小カテゴリーID
-     *
-     * @return $this
-     */
-    public function setCategoryIdSmall($category_id_small)
-    {
-        $this->container['category_id_small'] = $category_id_small;
-
-        return $this;
-    }
-
-    /**
-     * Gets cost
-     *
-     * @return int
-     */
-    public function getCost()
-    {
-        return $this->container['cost'];
-    }
-
-    /**
-     * Sets cost
-     *
-     * @param int $cost 原価
-     *
-     * @return $this
-     */
-    public function setCost($cost)
-    {
-        $this->container['cost'] = $cost;
-
-        return $this;
-    }
-
-    /**
-     * Gets sales_price
-     *
-     * @return int
-     */
-    public function getSalesPrice()
-    {
-        return $this->container['sales_price'];
-    }
-
-    /**
-     * Sets sales_price
-     *
-     * @param int $sales_price 販売価格 フリープランを利用しているショップの場合、最低価格は100円です。
-     *
-     * @return $this
-     */
-    public function setSalesPrice($sales_price)
-    {
-        $this->container['sales_price'] = $sales_price;
-
-        return $this;
-    }
-
-    /**
-     * Gets members_price
-     *
-     * @return int
-     */
-    public function getMembersPrice()
-    {
-        return $this->container['members_price'];
-    }
-
-    /**
-     * Sets members_price
-     *
-     * @param int $members_price 会員価格 フリープランを利用しているショップの場合、最低価格は100円です。
-     *
-     * @return $this
-     */
-    public function setMembersPrice($members_price)
-    {
-        $this->container['members_price'] = $members_price;
-
-        return $this;
-    }
-
-    /**
-     * Gets model_number
+     * Gets ip_code
      *
      * @return string
      */
-    public function getModelNumber()
+    public function getIpCode()
     {
-        return $this->container['model_number'];
+        return $this->container['ip_code'];
     }
 
     /**
-     * Sets model_number
+     * Sets ip_code
      *
-     * @param string $model_number 型番
+     * @param string $ip_code GMOイプシロン等との契約コード
      *
      * @return $this
      */
-    public function setModelNumber($model_number)
+    public function setIpCode($ip_code)
     {
-        $this->container['model_number'] = $model_number;
+        $this->container['ip_code'] = $ip_code;
 
         return $this;
     }
 
     /**
-     * Gets expl
+     * Gets memo
      *
      * @return string
      */
-    public function getExpl()
+    public function getMemo()
     {
-        return $this->container['expl'];
+        return $this->container['memo'];
     }
 
     /**
-     * Sets expl
+     * Sets memo
      *
-     * @param string $expl 商品説明
+     * @param string $memo 説明
      *
      * @return $this
      */
-    public function setExpl($expl)
+    public function setMemo($memo)
     {
-        $this->container['expl'] = $expl;
+        $this->container['memo'] = $memo;
 
         return $this;
     }
 
     /**
-     * Gets simple_expl
+     * Gets order_end_note
      *
      * @return string
      */
-    public function getSimpleExpl()
+    public function getOrderEndNote()
     {
-        return $this->container['simple_expl'];
+        return $this->container['order_end_note'];
     }
 
     /**
-     * Sets simple_expl
+     * Sets order_end_note
      *
-     * @param string $simple_expl 簡易説明
+     * @param string $order_end_note 説明
      *
      * @return $this
      */
-    public function setSimpleExpl($simple_expl)
+    public function setOrderEndNote($order_end_note)
     {
-        $this->container['simple_expl'] = $simple_expl;
+        $this->container['order_end_note'] = $order_end_note;
 
         return $this;
     }
 
     /**
-     * Gets smartphone_expl
+     * Gets memo_mobile
      *
      * @return string
      */
-    public function getSmartphoneExpl()
+    public function getMemoMobile()
     {
-        return $this->container['smartphone_expl'];
+        return $this->container['memo_mobile'];
     }
 
     /**
-     * Sets smartphone_expl
+     * Sets memo_mobile
      *
-     * @param string $smartphone_expl スマホ向けショップの商品説明
+     * @param string $memo_mobile フィーチャーフォン向けショップ用の説明
      *
      * @return $this
      */
-    public function setSmartphoneExpl($smartphone_expl)
+    public function setMemoMobile($memo_mobile)
     {
-        $this->container['smartphone_expl'] = $smartphone_expl;
+        $this->container['memo_mobile'] = $memo_mobile;
 
         return $this;
     }
 
     /**
-     * Gets display_state
+     * Gets sort
+     *
+     * @return int
+     */
+    public function getSort()
+    {
+        return $this->container['sort'];
+    }
+
+    /**
+     * Sets sort
+     *
+     * @param int $sort 表示順
+     *
+     * @return $this
+     */
+    public function setSort($sort)
+    {
+        $this->container['sort'] = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Gets image_url
      *
      * @return string
      */
-    public function getDisplayState()
+    public function getImageUrl()
     {
-        return $this->container['display_state'];
+        return $this->container['image_url'];
     }
 
     /**
-     * Sets display_state
+     * Sets image_url
      *
-     * @param string $display_state 掲載設定  - `showing`: 掲載状態 - `hidden`: 非掲載状態 - `showing_for_members`: 会員にのみ掲載 - `sale_for_members`: 掲載状態だが購入は会員のみ可能
+     * @param string $image_url 決済画像URL
      *
      * @return $this
      */
-    public function setDisplayState($display_state)
+    public function setImageUrl($image_url)
     {
-        $allowedValues = $this->getDisplayStateAllowableValues();
-        if (!is_null($display_state) && !in_array($display_state, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'display_state', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
-        $this->container['display_state'] = $display_state;
+        $this->container['image_url'] = $image_url;
 
         return $this;
     }
 
     /**
-     * Gets stock_managed
+     * Gets type
+     *
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->container['type'];
+    }
+
+    /**
+     * Sets type
+     *
+     * @param int $type 決済タイプを表す数値。  |type|決済| |---|---| |0|代引き| |1|銀行振込| |2|郵便振替| |3|クレジット（ZEUS）| |4|クロネコ@ペイメント| |5|NP後払い| |6|クレジット（イプシロン）| |7|コンビニ決済（イプシロン）| |8|カラーミークレジット| |9|その他決済| |10|ウェブマネー| |11|イーバンクデビット| |12|ネット銀行（イプシロン）| |13|電子マネー（イプシロン）| |14|ATM・コンビニ・ネット銀行決済（ペイジェント）| |15|Do-Link決済（イプシロン）| |16|ペイジー（イプシロン）| |17|後払い.com| |18|ジャパンネット銀行（送料無料キャンペーン）| |19|クロネコwebコレクト| |20|PayPal（イプシロン）| |21|Yahoo!ウォレット（イプシロン）| |22|全額ポイント利用| |23|スマートフォンキャリア決済（イプシロン）| |24|GMO PG マルチペイメントクレジットカード| |25|住信SBIネット銀行（イプシロン）| |26|GMO後払い（イプシロン）| |27|GMO後払い（GMOペイメントサービス）| |28| - | |29|ATM（ペイジー）（ペイジェント）| |30|カード（ペイジェント）| |31|コンビニ番号方式（ペイジェント）| |32|インターネットバンキング（ペイジェント）| |33|PayPal（ペイパル）| |34|SMBC GMO PAYMENTクレジットカード| |35|Amazon Pay（イプシロン）| |36|楽天ペイ（オンライン決済）| |37|銀行振込（バーチャル口座）（イプシロン）| |38|Amazon Pay（アマゾンペイ）| |39|クレジットカード（SGシステム）| |40|LINE Pay（イプシロン）| |41|PayPal Commerce Platform（ペイパル）| |42|PayPay（イプシロン）| |43|Amazon Pay V2（アマゾンペイ）| |44|Amazon Pay V2（イプシロン）| |45|Square対面決済|
+     *
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->container['type'] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Gets display
      *
      * @return bool
      */
-    public function getStockManaged()
+    public function getDisplay()
     {
-        return $this->container['stock_managed'];
+        return $this->container['display'];
     }
 
     /**
-     * Sets stock_managed
+     * Sets display
      *
-     * @param bool $stock_managed 在庫管理する場合は `true`
+     * @param bool $display 表示設定。`true`なら表示される
      *
      * @return $this
      */
-    public function setStockManaged($stock_managed)
+    public function setDisplay($display)
     {
-        $this->container['stock_managed'] = $stock_managed;
+        $this->container['display'] = $display;
 
         return $this;
     }
 
     /**
-     * Gets stocks
-     *
-     * @return OneOfv1productsproductIdProductStocks
-     */
-    public function getStocks()
-    {
-        return $this->container['stocks'];
-    }
-
-    /**
-     * Sets stocks
-     *
-     * @param OneOfv1productsproductIdProductStocks $stocks （推奨） `increment`を利用すると、その数値だけ在庫数を増減させることが可能です。負の値も指定可能です。（-1, 1 等） ```json \"stocks\": {   \"increment\": 3 } ```  `increment`を利用せずに数値を指定した場合は、在庫数をその数値で更新します。商品オプションごとに在庫管理している場合、このパラメータは無視されます。
-     *
-     * @return $this
-     */
-    public function setStocks($stocks)
-    {
-        $this->container['stocks'] = $stocks;
-
-        return $this;
-    }
-
-    /**
-     * Gets group_ids
-     *
-     * @return int[]
-     */
-    public function getGroupIds()
-    {
-        return $this->container['group_ids'];
-    }
-
-    /**
-     * Sets group_ids
-     *
-     * @param int[] $group_ids グループIDの配列
-     *
-     * @return $this
-     */
-    public function setGroupIds($group_ids)
-    {
-        $this->container['group_ids'] = $group_ids;
-
-        return $this;
-    }
-
-    /**
-     * Gets variants
-     *
-     * @return \ColorMeShop\Swagger\Model\V1productsproductIdProductVariants[]
-     */
-    public function getVariants()
-    {
-        return $this->container['variants'];
-    }
-
-    /**
-     * Sets variants
-     *
-     * @param \ColorMeShop\Swagger\Model\V1productsproductIdProductVariants[] $variants 商品オプションによるバリエーションごとに更新
-     *
-     * @return $this
-     */
-    public function setVariants($variants)
-    {
-        $this->container['variants'] = $variants;
-
-        return $this;
-    }
-
-    /**
-     * Gets tax_reduced
+     * Gets use_mobile
      *
      * @return bool
      */
-    public function getTaxReduced()
+    public function getUseMobile()
     {
-        return $this->container['tax_reduced'];
+        return $this->container['use_mobile'];
     }
 
     /**
-     * Sets tax_reduced
+     * Sets use_mobile
      *
-     * @param bool $tax_reduced `true` の場合は軽減税率対象
+     * @param bool $use_mobile フィーチャーフォン向けショップでの表示設定
      *
      * @return $this
      */
-    public function setTaxReduced($tax_reduced)
+    public function setUseMobile($use_mobile)
     {
-        $this->container['tax_reduced'] = $tax_reduced;
+        $this->container['use_mobile'] = $use_mobile;
+
+        return $this;
+    }
+
+    /**
+     * Gets make_date
+     *
+     * @return int
+     */
+    public function getMakeDate()
+    {
+        return $this->container['make_date'];
+    }
+
+    /**
+     * Sets make_date
+     *
+     * @param int $make_date 決済作成日時
+     *
+     * @return $this
+     */
+    public function setMakeDate($make_date)
+    {
+        $this->container['make_date'] = $make_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets update_date
+     *
+     * @return int
+     */
+    public function getUpdateDate()
+    {
+        return $this->container['update_date'];
+    }
+
+    /**
+     * Sets update_date
+     *
+     * @param int $update_date 決済更新日時
+     *
+     * @return $this
+     */
+    public function setUpdateDate($update_date)
+    {
+        $this->container['update_date'] = $update_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets cod
+     *
+     * @return \ColorMeShop\Swagger\Model\PaymentCod
+     */
+    public function getCod()
+    {
+        return $this->container['cod'];
+    }
+
+    /**
+     * Sets cod
+     *
+     * @param \ColorMeShop\Swagger\Model\PaymentCod $cod cod
+     *
+     * @return $this
+     */
+    public function setCod($cod)
+    {
+        $this->container['cod'] = $cod;
+
+        return $this;
+    }
+
+    /**
+     * Gets card
+     *
+     * @return \ColorMeShop\Swagger\Model\PaymentCard
+     */
+    public function getCard()
+    {
+        return $this->container['card'];
+    }
+
+    /**
+     * Sets card
+     *
+     * @param \ColorMeShop\Swagger\Model\PaymentCard $card card
+     *
+     * @return $this
+     */
+    public function setCard($card)
+    {
+        $this->container['card'] = $card;
+
+        return $this;
+    }
+
+    /**
+     * Gets financial
+     *
+     * @return \ColorMeShop\Swagger\Model\PaymentFinancial
+     */
+    public function getFinancial()
+    {
+        return $this->container['financial'];
+    }
+
+    /**
+     * Sets financial
+     *
+     * @param \ColorMeShop\Swagger\Model\PaymentFinancial $financial financial
+     *
+     * @return $this
+     */
+    public function setFinancial($financial)
+    {
+        $this->container['financial'] = $financial;
 
         return $this;
     }

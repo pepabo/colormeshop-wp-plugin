@@ -96,7 +96,7 @@ class SaleApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2003
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2004
      */
     public function cancelSale($sale_id, $body = null)
     {
@@ -114,11 +114,11 @@ class SaleApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2003, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2004, HTTP status code, HTTP response headers (array of strings)
      */
     public function cancelSaleWithHttpInfo($sale_id, $body = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2003';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2004';
         $request = $this->cancelSaleRequest($sale_id, $body);
 
         try {
@@ -170,7 +170,7 @@ class SaleApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2003',
+                        '\ColorMeShop\Swagger\Model\InlineResponse2004',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -214,7 +214,7 @@ class SaleApi
      */
     public function cancelSaleAsyncWithHttpInfo($sale_id, $body = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2003';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2004';
         $request = $this->cancelSaleRequest($sale_id, $body);
 
         return $this->client
@@ -1574,7 +1574,7 @@ class SaleApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2003
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2004
      */
     public function updateSale($sale_id, $body = null)
     {
@@ -1592,11 +1592,11 @@ class SaleApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2003, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2004, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateSaleWithHttpInfo($sale_id, $body = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2003';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2004';
         $request = $this->updateSaleRequest($sale_id, $body);
 
         try {
@@ -1648,7 +1648,7 @@ class SaleApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2003',
+                        '\ColorMeShop\Swagger\Model\InlineResponse2004',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1692,7 +1692,7 @@ class SaleApi
      */
     public function updateSaleAsyncWithHttpInfo($sale_id, $body = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2003';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2004';
         $request = $this->updateSaleRequest($sale_id, $body);
 
         return $this->client

@@ -94,7 +94,7 @@ class DeliveryApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20014
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20016
      */
     public function getDeliveries()
     {
@@ -110,11 +110,11 @@ class DeliveryApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20014, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20016, HTTP status code, HTTP response headers (array of strings)
      */
     public function getDeliveriesWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20014';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20016';
         $request = $this->getDeliveriesRequest();
 
         try {
@@ -166,7 +166,7 @@ class DeliveryApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse20014',
+                        '\ColorMeShop\Swagger\Model\InlineResponse20016',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -206,7 +206,7 @@ class DeliveryApi
      */
     public function getDeliveriesAsyncWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20014';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20016';
         $request = $this->getDeliveriesRequest();
 
         return $this->client
@@ -341,7 +341,7 @@ class DeliveryApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20015
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20017
      */
     public function getDeliveryDateSetting()
     {
@@ -357,11 +357,11 @@ class DeliveryApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20015, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20017, HTTP status code, HTTP response headers (array of strings)
      */
     public function getDeliveryDateSettingWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20015';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20017';
         $request = $this->getDeliveryDateSettingRequest();
 
         try {
@@ -413,7 +413,7 @@ class DeliveryApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse20015',
+                        '\ColorMeShop\Swagger\Model\InlineResponse20017',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -453,7 +453,7 @@ class DeliveryApi
      */
     public function getDeliveryDateSettingAsyncWithHttpInfo()
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20015';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20017';
         $request = $this->getDeliveryDateSettingRequest();
 
         return $this->client

@@ -56,7 +56,7 @@ class InlineResponse20017 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'shop_coupons' => '\ColorMeShop\Swagger\Model\InlineResponse20017ShopCoupons[]'    ];
+        'delivery_date' => '\ColorMeShop\Swagger\Model\InlineResponse20017DeliveryDate'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +64,7 @@ class InlineResponse20017 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'shop_coupons' => null    ];
+        'delivery_date' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +93,7 @@ class InlineResponse20017 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'shop_coupons' => 'shop_coupons'    ];
+        'delivery_date' => 'delivery_date'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +101,7 @@ class InlineResponse20017 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'shop_coupons' => 'setShopCoupons'    ];
+        'delivery_date' => 'setDeliveryDate'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +109,7 @@ class InlineResponse20017 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'shop_coupons' => 'getShopCoupons'    ];
+        'delivery_date' => 'getDeliveryDate'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +169,7 @@ class InlineResponse20017 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['shop_coupons'] = isset($data['shop_coupons']) ? $data['shop_coupons'] : null;
+        $this->container['delivery_date'] = isset($data['delivery_date']) ? $data['delivery_date'] : null;
     }
 
     /**
@@ -197,25 +197,25 @@ class InlineResponse20017 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets shop_coupons
+     * Gets delivery_date
      *
-     * @return \ColorMeShop\Swagger\Model\InlineResponse20017ShopCoupons[]
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20017DeliveryDate
      */
-    public function getShopCoupons()
+    public function getDeliveryDate()
     {
-        return $this->container['shop_coupons'];
+        return $this->container['delivery_date'];
     }
 
     /**
-     * Sets shop_coupons
+     * Sets delivery_date
      *
-     * @param \ColorMeShop\Swagger\Model\InlineResponse20017ShopCoupons[] $shop_coupons shop_coupons
+     * @param \ColorMeShop\Swagger\Model\InlineResponse20017DeliveryDate $delivery_date delivery_date
      *
      * @return $this
      */
-    public function setShopCoupons($shop_coupons)
+    public function setDeliveryDate($delivery_date)
     {
-        $this->container['shop_coupons'] = $shop_coupons;
+        $this->container['delivery_date'] = $delivery_date;
 
         return $this;
     }

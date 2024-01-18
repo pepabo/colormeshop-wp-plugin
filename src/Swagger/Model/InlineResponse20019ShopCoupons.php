@@ -1,6 +1,6 @@
 <?php
 /**
- * V1productsproductIdProduct
+ * InlineResponse20019ShopCoupons
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * V1productsproductIdProduct Class Doc Comment
+ * InlineResponse20019ShopCoupons Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class V1productsproductIdProduct implements ModelInterface, ArrayAccess
+class InlineResponse20019ShopCoupons implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'v1productsproduct_id_product';
+    protected static $swaggerModelName = 'inline_response_200_19_shop_coupons';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,23 +56,20 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'name' => 'string',
-'price' => 'int',
-'category_id_big' => 'int',
-'category_id_small' => 'int',
-'cost' => 'int',
-'sales_price' => 'int',
-'members_price' => 'int',
-'model_number' => 'string',
-'expl' => 'string',
-'simple_expl' => 'string',
-'smartphone_expl' => 'string',
-'display_state' => 'string',
-'stock_managed' => 'bool',
-'stocks' => 'OneOfv1productsproductIdProductStocks',
-'group_ids' => 'int[]',
-'variants' => '\ColorMeShop\Swagger\Model\V1productsproductIdProductVariants[]',
-'tax_reduced' => 'bool'    ];
+        'id' => 'int',
+'name' => 'string',
+'code' => 'string',
+'coupon_type' => 'string',
+'discount_amount' => 'int',
+'minimum_amount' => 'int',
+'starts_at' => 'int',
+'ends_at' => 'int',
+'total_usage_limit' => 'int',
+'usage_limit' => 'string',
+'group_limit_type' => 'string',
+'status' => 'string',
+'created_at' => 'int',
+'updated_at' => 'int'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -80,23 +77,20 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'name' => null,
-'price' => null,
-'category_id_big' => null,
-'category_id_small' => null,
-'cost' => null,
-'sales_price' => null,
-'members_price' => null,
-'model_number' => null,
-'expl' => null,
-'simple_expl' => null,
-'smartphone_expl' => null,
-'display_state' => null,
-'stock_managed' => null,
-'stocks' => null,
-'group_ids' => null,
-'variants' => null,
-'tax_reduced' => null    ];
+        'id' => null,
+'name' => null,
+'code' => null,
+'coupon_type' => null,
+'discount_amount' => null,
+'minimum_amount' => null,
+'starts_at' => null,
+'ends_at' => null,
+'total_usage_limit' => null,
+'usage_limit' => null,
+'group_limit_type' => null,
+'status' => null,
+'created_at' => null,
+'updated_at' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -125,23 +119,20 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'name' => 'name',
-'price' => 'price',
-'category_id_big' => 'category_id_big',
-'category_id_small' => 'category_id_small',
-'cost' => 'cost',
-'sales_price' => 'sales_price',
-'members_price' => 'members_price',
-'model_number' => 'model_number',
-'expl' => 'expl',
-'simple_expl' => 'simple_expl',
-'smartphone_expl' => 'smartphone_expl',
-'display_state' => 'display_state',
-'stock_managed' => 'stock_managed',
-'stocks' => 'stocks',
-'group_ids' => 'group_ids',
-'variants' => 'variants',
-'tax_reduced' => 'tax_reduced'    ];
+        'id' => 'id',
+'name' => 'name',
+'code' => 'code',
+'coupon_type' => 'coupon_type',
+'discount_amount' => 'discount_amount',
+'minimum_amount' => 'minimum_amount',
+'starts_at' => 'starts_at',
+'ends_at' => 'ends_at',
+'total_usage_limit' => 'total_usage_limit',
+'usage_limit' => 'usage_limit',
+'group_limit_type' => 'group_limit_type',
+'status' => 'status',
+'created_at' => 'created_at',
+'updated_at' => 'updated_at'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -149,23 +140,20 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'name' => 'setName',
-'price' => 'setPrice',
-'category_id_big' => 'setCategoryIdBig',
-'category_id_small' => 'setCategoryIdSmall',
-'cost' => 'setCost',
-'sales_price' => 'setSalesPrice',
-'members_price' => 'setMembersPrice',
-'model_number' => 'setModelNumber',
-'expl' => 'setExpl',
-'simple_expl' => 'setSimpleExpl',
-'smartphone_expl' => 'setSmartphoneExpl',
-'display_state' => 'setDisplayState',
-'stock_managed' => 'setStockManaged',
-'stocks' => 'setStocks',
-'group_ids' => 'setGroupIds',
-'variants' => 'setVariants',
-'tax_reduced' => 'setTaxReduced'    ];
+        'id' => 'setId',
+'name' => 'setName',
+'code' => 'setCode',
+'coupon_type' => 'setCouponType',
+'discount_amount' => 'setDiscountAmount',
+'minimum_amount' => 'setMinimumAmount',
+'starts_at' => 'setStartsAt',
+'ends_at' => 'setEndsAt',
+'total_usage_limit' => 'setTotalUsageLimit',
+'usage_limit' => 'setUsageLimit',
+'group_limit_type' => 'setGroupLimitType',
+'status' => 'setStatus',
+'created_at' => 'setCreatedAt',
+'updated_at' => 'setUpdatedAt'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -173,23 +161,20 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'name' => 'getName',
-'price' => 'getPrice',
-'category_id_big' => 'getCategoryIdBig',
-'category_id_small' => 'getCategoryIdSmall',
-'cost' => 'getCost',
-'sales_price' => 'getSalesPrice',
-'members_price' => 'getMembersPrice',
-'model_number' => 'getModelNumber',
-'expl' => 'getExpl',
-'simple_expl' => 'getSimpleExpl',
-'smartphone_expl' => 'getSmartphoneExpl',
-'display_state' => 'getDisplayState',
-'stock_managed' => 'getStockManaged',
-'stocks' => 'getStocks',
-'group_ids' => 'getGroupIds',
-'variants' => 'getVariants',
-'tax_reduced' => 'getTaxReduced'    ];
+        'id' => 'getId',
+'name' => 'getName',
+'code' => 'getCode',
+'coupon_type' => 'getCouponType',
+'discount_amount' => 'getDiscountAmount',
+'minimum_amount' => 'getMinimumAmount',
+'starts_at' => 'getStartsAt',
+'ends_at' => 'getEndsAt',
+'total_usage_limit' => 'getTotalUsageLimit',
+'usage_limit' => 'getUsageLimit',
+'group_limit_type' => 'getGroupLimitType',
+'status' => 'getStatus',
+'created_at' => 'getCreatedAt',
+'updated_at' => 'getUpdatedAt'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -232,23 +217,62 @@ class V1productsproductIdProduct implements ModelInterface, ArrayAccess
         return self::$swaggerModelName;
     }
 
-    const DISPLAY_STATE_SHOWING = 'showing';
-const DISPLAY_STATE_HIDDEN = 'hidden';
-const DISPLAY_STATE_SHOWING_FOR_MEMBERS = 'showing_for_members';
-const DISPLAY_STATE_SALE_FOR_MEMBERS = 'sale_for_members';
+    const COUPON_TYPE_AMOUNT = 'amount';
+const COUPON_TYPE_RATE = 'rate';
+const COUPON_TYPE_DELIVERY_CHARGE = 'delivery_charge';
+const USAGE_LIMIT_INDISPOSABLE = 'indisposable';
+const USAGE_LIMIT_DISPOSABLE = 'disposable';
+const GROUP_LIMIT_TYPE_NONE = 'none';
+const GROUP_LIMIT_TYPE_INCLUDING = 'including';
+const GROUP_LIMIT_TYPE_EXCLUDING = 'excluding';
+const STATUS_UNAVAILABLE = 'unavailable';
+const STATUS_AVAILABLE = 'available';
 
     /**
      * Gets allowable values of the enum
      *
      * @return string[]
      */
-    public function getDisplayStateAllowableValues()
+    public function getCouponTypeAllowableValues()
     {
         return [
-            self::DISPLAY_STATE_SHOWING,
-self::DISPLAY_STATE_HIDDEN,
-self::DISPLAY_STATE_SHOWING_FOR_MEMBERS,
-self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
+            self::COUPON_TYPE_AMOUNT,
+self::COUPON_TYPE_RATE,
+self::COUPON_TYPE_DELIVERY_CHARGE,        ];
+    }
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getUsageLimitAllowableValues()
+    {
+        return [
+            self::USAGE_LIMIT_INDISPOSABLE,
+self::USAGE_LIMIT_DISPOSABLE,        ];
+    }
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getGroupLimitTypeAllowableValues()
+    {
+        return [
+            self::GROUP_LIMIT_TYPE_NONE,
+self::GROUP_LIMIT_TYPE_INCLUDING,
+self::GROUP_LIMIT_TYPE_EXCLUDING,        ];
+    }
+    /**
+     * Gets allowable values of the enum
+     *
+     * @return string[]
+     */
+    public function getStatusAllowableValues()
+    {
+        return [
+            self::STATUS_UNAVAILABLE,
+self::STATUS_AVAILABLE,        ];
     }
 
     /**
@@ -266,23 +290,20 @@ self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
      */
     public function __construct(array $data = null)
     {
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['price'] = isset($data['price']) ? $data['price'] : null;
-        $this->container['category_id_big'] = isset($data['category_id_big']) ? $data['category_id_big'] : null;
-        $this->container['category_id_small'] = isset($data['category_id_small']) ? $data['category_id_small'] : null;
-        $this->container['cost'] = isset($data['cost']) ? $data['cost'] : null;
-        $this->container['sales_price'] = isset($data['sales_price']) ? $data['sales_price'] : null;
-        $this->container['members_price'] = isset($data['members_price']) ? $data['members_price'] : null;
-        $this->container['model_number'] = isset($data['model_number']) ? $data['model_number'] : null;
-        $this->container['expl'] = isset($data['expl']) ? $data['expl'] : null;
-        $this->container['simple_expl'] = isset($data['simple_expl']) ? $data['simple_expl'] : null;
-        $this->container['smartphone_expl'] = isset($data['smartphone_expl']) ? $data['smartphone_expl'] : null;
-        $this->container['display_state'] = isset($data['display_state']) ? $data['display_state'] : null;
-        $this->container['stock_managed'] = isset($data['stock_managed']) ? $data['stock_managed'] : null;
-        $this->container['stocks'] = isset($data['stocks']) ? $data['stocks'] : null;
-        $this->container['group_ids'] = isset($data['group_ids']) ? $data['group_ids'] : null;
-        $this->container['variants'] = isset($data['variants']) ? $data['variants'] : null;
-        $this->container['tax_reduced'] = isset($data['tax_reduced']) ? $data['tax_reduced'] : null;
+        $this->container['code'] = isset($data['code']) ? $data['code'] : null;
+        $this->container['coupon_type'] = isset($data['coupon_type']) ? $data['coupon_type'] : null;
+        $this->container['discount_amount'] = isset($data['discount_amount']) ? $data['discount_amount'] : null;
+        $this->container['minimum_amount'] = isset($data['minimum_amount']) ? $data['minimum_amount'] : null;
+        $this->container['starts_at'] = isset($data['starts_at']) ? $data['starts_at'] : null;
+        $this->container['ends_at'] = isset($data['ends_at']) ? $data['ends_at'] : null;
+        $this->container['total_usage_limit'] = isset($data['total_usage_limit']) ? $data['total_usage_limit'] : null;
+        $this->container['usage_limit'] = isset($data['usage_limit']) ? $data['usage_limit'] : null;
+        $this->container['group_limit_type'] = isset($data['group_limit_type']) ? $data['group_limit_type'] : null;
+        $this->container['status'] = isset($data['status']) ? $data['status'] : null;
+        $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
+        $this->container['updated_at'] = isset($data['updated_at']) ? $data['updated_at'] : null;
     }
 
     /**
@@ -294,10 +315,34 @@ self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
     {
         $invalidProperties = [];
 
-        $allowedValues = $this->getDisplayStateAllowableValues();
-        if (!is_null($this->container['display_state']) && !in_array($this->container['display_state'], $allowedValues, true)) {
+        $allowedValues = $this->getCouponTypeAllowableValues();
+        if (!is_null($this->container['coupon_type']) && !in_array($this->container['coupon_type'], $allowedValues, true)) {
             $invalidProperties[] = sprintf(
-                "invalid value for 'display_state', must be one of '%s'",
+                "invalid value for 'coupon_type', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getUsageLimitAllowableValues();
+        if (!is_null($this->container['usage_limit']) && !in_array($this->container['usage_limit'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'usage_limit', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getGroupLimitTypeAllowableValues();
+        if (!is_null($this->container['group_limit_type']) && !in_array($this->container['group_limit_type'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'group_limit_type', must be one of '%s'",
+                implode("', '", $allowedValues)
+            );
+        }
+
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!is_null($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
+            $invalidProperties[] = sprintf(
+                "invalid value for 'status', must be one of '%s'",
                 implode("', '", $allowedValues)
             );
         }
@@ -318,6 +363,30 @@ self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
 
 
     /**
+     * Gets id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->container['id'];
+    }
+
+    /**
+     * Sets id
+     *
+     * @param int $id Coupon ID
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
      * Gets name
      *
      * @return string
@@ -330,7 +399,7 @@ self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
     /**
      * Sets name
      *
-     * @param string $name 商品名
+     * @param string $name クーポン名
      *
      * @return $this
      */
@@ -342,394 +411,325 @@ self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
     }
 
     /**
-     * Gets price
-     *
-     * @return int
-     */
-    public function getPrice()
-    {
-        return $this->container['price'];
-    }
-
-    /**
-     * Sets price
-     *
-     * @param int $price 定価
-     *
-     * @return $this
-     */
-    public function setPrice($price)
-    {
-        $this->container['price'] = $price;
-
-        return $this;
-    }
-
-    /**
-     * Gets category_id_big
-     *
-     * @return int
-     */
-    public function getCategoryIdBig()
-    {
-        return $this->container['category_id_big'];
-    }
-
-    /**
-     * Sets category_id_big
-     *
-     * @param int $category_id_big 大カテゴリーID
-     *
-     * @return $this
-     */
-    public function setCategoryIdBig($category_id_big)
-    {
-        $this->container['category_id_big'] = $category_id_big;
-
-        return $this;
-    }
-
-    /**
-     * Gets category_id_small
-     *
-     * @return int
-     */
-    public function getCategoryIdSmall()
-    {
-        return $this->container['category_id_small'];
-    }
-
-    /**
-     * Sets category_id_small
-     *
-     * @param int $category_id_small 小カテゴリーID
-     *
-     * @return $this
-     */
-    public function setCategoryIdSmall($category_id_small)
-    {
-        $this->container['category_id_small'] = $category_id_small;
-
-        return $this;
-    }
-
-    /**
-     * Gets cost
-     *
-     * @return int
-     */
-    public function getCost()
-    {
-        return $this->container['cost'];
-    }
-
-    /**
-     * Sets cost
-     *
-     * @param int $cost 原価
-     *
-     * @return $this
-     */
-    public function setCost($cost)
-    {
-        $this->container['cost'] = $cost;
-
-        return $this;
-    }
-
-    /**
-     * Gets sales_price
-     *
-     * @return int
-     */
-    public function getSalesPrice()
-    {
-        return $this->container['sales_price'];
-    }
-
-    /**
-     * Sets sales_price
-     *
-     * @param int $sales_price 販売価格 フリープランを利用しているショップの場合、最低価格は100円です。
-     *
-     * @return $this
-     */
-    public function setSalesPrice($sales_price)
-    {
-        $this->container['sales_price'] = $sales_price;
-
-        return $this;
-    }
-
-    /**
-     * Gets members_price
-     *
-     * @return int
-     */
-    public function getMembersPrice()
-    {
-        return $this->container['members_price'];
-    }
-
-    /**
-     * Sets members_price
-     *
-     * @param int $members_price 会員価格 フリープランを利用しているショップの場合、最低価格は100円です。
-     *
-     * @return $this
-     */
-    public function setMembersPrice($members_price)
-    {
-        $this->container['members_price'] = $members_price;
-
-        return $this;
-    }
-
-    /**
-     * Gets model_number
+     * Gets code
      *
      * @return string
      */
-    public function getModelNumber()
+    public function getCode()
     {
-        return $this->container['model_number'];
+        return $this->container['code'];
     }
 
     /**
-     * Sets model_number
+     * Sets code
      *
-     * @param string $model_number 型番
+     * @param string $code クーポンコード
      *
      * @return $this
      */
-    public function setModelNumber($model_number)
+    public function setCode($code)
     {
-        $this->container['model_number'] = $model_number;
+        $this->container['code'] = $code;
 
         return $this;
     }
 
     /**
-     * Gets expl
+     * Gets coupon_type
      *
      * @return string
      */
-    public function getExpl()
+    public function getCouponType()
     {
-        return $this->container['expl'];
+        return $this->container['coupon_type'];
     }
 
     /**
-     * Sets expl
+     * Sets coupon_type
      *
-     * @param string $expl 商品説明
+     * @param string $coupon_type クーポン種別  - `amount`: 定額 - `rate`: 定率 - `delivery_charge`: 送料無料
      *
      * @return $this
      */
-    public function setExpl($expl)
+    public function setCouponType($coupon_type)
     {
-        $this->container['expl'] = $expl;
-
-        return $this;
-    }
-
-    /**
-     * Gets simple_expl
-     *
-     * @return string
-     */
-    public function getSimpleExpl()
-    {
-        return $this->container['simple_expl'];
-    }
-
-    /**
-     * Sets simple_expl
-     *
-     * @param string $simple_expl 簡易説明
-     *
-     * @return $this
-     */
-    public function setSimpleExpl($simple_expl)
-    {
-        $this->container['simple_expl'] = $simple_expl;
-
-        return $this;
-    }
-
-    /**
-     * Gets smartphone_expl
-     *
-     * @return string
-     */
-    public function getSmartphoneExpl()
-    {
-        return $this->container['smartphone_expl'];
-    }
-
-    /**
-     * Sets smartphone_expl
-     *
-     * @param string $smartphone_expl スマホ向けショップの商品説明
-     *
-     * @return $this
-     */
-    public function setSmartphoneExpl($smartphone_expl)
-    {
-        $this->container['smartphone_expl'] = $smartphone_expl;
-
-        return $this;
-    }
-
-    /**
-     * Gets display_state
-     *
-     * @return string
-     */
-    public function getDisplayState()
-    {
-        return $this->container['display_state'];
-    }
-
-    /**
-     * Sets display_state
-     *
-     * @param string $display_state 掲載設定  - `showing`: 掲載状態 - `hidden`: 非掲載状態 - `showing_for_members`: 会員にのみ掲載 - `sale_for_members`: 掲載状態だが購入は会員のみ可能
-     *
-     * @return $this
-     */
-    public function setDisplayState($display_state)
-    {
-        $allowedValues = $this->getDisplayStateAllowableValues();
-        if (!is_null($display_state) && !in_array($display_state, $allowedValues, true)) {
+        $allowedValues = $this->getCouponTypeAllowableValues();
+        if (!is_null($coupon_type) && !in_array($coupon_type, $allowedValues, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    "Invalid value for 'display_state', must be one of '%s'",
+                    "Invalid value for 'coupon_type', must be one of '%s'",
                     implode("', '", $allowedValues)
                 )
             );
         }
-        $this->container['display_state'] = $display_state;
+        $this->container['coupon_type'] = $coupon_type;
 
         return $this;
     }
 
     /**
-     * Gets stock_managed
+     * Gets discount_amount
      *
-     * @return bool
+     * @return int
      */
-    public function getStockManaged()
+    public function getDiscountAmount()
     {
-        return $this->container['stock_managed'];
+        return $this->container['discount_amount'];
     }
 
     /**
-     * Sets stock_managed
+     * Sets discount_amount
      *
-     * @param bool $stock_managed 在庫管理する場合は `true`
+     * @param int $discount_amount 割引金額または割引率
      *
      * @return $this
      */
-    public function setStockManaged($stock_managed)
+    public function setDiscountAmount($discount_amount)
     {
-        $this->container['stock_managed'] = $stock_managed;
+        $this->container['discount_amount'] = $discount_amount;
 
         return $this;
     }
 
     /**
-     * Gets stocks
+     * Gets minimum_amount
      *
-     * @return OneOfv1productsproductIdProductStocks
+     * @return int
      */
-    public function getStocks()
+    public function getMinimumAmount()
     {
-        return $this->container['stocks'];
+        return $this->container['minimum_amount'];
     }
 
     /**
-     * Sets stocks
+     * Sets minimum_amount
      *
-     * @param OneOfv1productsproductIdProductStocks $stocks （推奨） `increment`を利用すると、その数値だけ在庫数を増減させることが可能です。負の値も指定可能です。（-1, 1 等） ```json \"stocks\": {   \"increment\": 3 } ```  `increment`を利用せずに数値を指定した場合は、在庫数をその数値で更新します。商品オプションごとに在庫管理している場合、このパラメータは無視されます。
+     * @param int $minimum_amount 利用最低額
      *
      * @return $this
      */
-    public function setStocks($stocks)
+    public function setMinimumAmount($minimum_amount)
     {
-        $this->container['stocks'] = $stocks;
+        $this->container['minimum_amount'] = $minimum_amount;
 
         return $this;
     }
 
     /**
-     * Gets group_ids
+     * Gets starts_at
      *
-     * @return int[]
+     * @return int
      */
-    public function getGroupIds()
+    public function getStartsAt()
     {
-        return $this->container['group_ids'];
+        return $this->container['starts_at'];
     }
 
     /**
-     * Sets group_ids
+     * Sets starts_at
      *
-     * @param int[] $group_ids グループIDの配列
+     * @param int $starts_at 利用開始日
      *
      * @return $this
      */
-    public function setGroupIds($group_ids)
+    public function setStartsAt($starts_at)
     {
-        $this->container['group_ids'] = $group_ids;
+        $this->container['starts_at'] = $starts_at;
 
         return $this;
     }
 
     /**
-     * Gets variants
+     * Gets ends_at
      *
-     * @return \ColorMeShop\Swagger\Model\V1productsproductIdProductVariants[]
+     * @return int
      */
-    public function getVariants()
+    public function getEndsAt()
     {
-        return $this->container['variants'];
+        return $this->container['ends_at'];
     }
 
     /**
-     * Sets variants
+     * Sets ends_at
      *
-     * @param \ColorMeShop\Swagger\Model\V1productsproductIdProductVariants[] $variants 商品オプションによるバリエーションごとに更新
+     * @param int $ends_at 利用終了日
      *
      * @return $this
      */
-    public function setVariants($variants)
+    public function setEndsAt($ends_at)
     {
-        $this->container['variants'] = $variants;
+        $this->container['ends_at'] = $ends_at;
 
         return $this;
     }
 
     /**
-     * Gets tax_reduced
+     * Gets total_usage_limit
      *
-     * @return bool
+     * @return int
      */
-    public function getTaxReduced()
+    public function getTotalUsageLimit()
     {
-        return $this->container['tax_reduced'];
+        return $this->container['total_usage_limit'];
     }
 
     /**
-     * Sets tax_reduced
+     * Sets total_usage_limit
      *
-     * @param bool $tax_reduced `true` の場合は軽減税率対象
+     * @param int $total_usage_limit 総利用可能数
      *
      * @return $this
      */
-    public function setTaxReduced($tax_reduced)
+    public function setTotalUsageLimit($total_usage_limit)
     {
-        $this->container['tax_reduced'] = $tax_reduced;
+        $this->container['total_usage_limit'] = $total_usage_limit;
+
+        return $this;
+    }
+
+    /**
+     * Gets usage_limit
+     *
+     * @return string
+     */
+    public function getUsageLimit()
+    {
+        return $this->container['usage_limit'];
+    }
+
+    /**
+     * Sets usage_limit
+     *
+     * @param string $usage_limit ユーザ毎の利用可能数  - `indisposable`: 無制限 - `disposable`: 一度のみ
+     *
+     * @return $this
+     */
+    public function setUsageLimit($usage_limit)
+    {
+        $allowedValues = $this->getUsageLimitAllowableValues();
+        if (!is_null($usage_limit) && !in_array($usage_limit, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'usage_limit', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['usage_limit'] = $usage_limit;
+
+        return $this;
+    }
+
+    /**
+     * Gets group_limit_type
+     *
+     * @return string
+     */
+    public function getGroupLimitType()
+    {
+        return $this->container['group_limit_type'];
+    }
+
+    /**
+     * Sets group_limit_type
+     *
+     * @param string $group_limit_type 商品グループによる制限  - `none`: 無制限 - `including`: 含む - `excluding`: 除外
+     *
+     * @return $this
+     */
+    public function setGroupLimitType($group_limit_type)
+    {
+        $allowedValues = $this->getGroupLimitTypeAllowableValues();
+        if (!is_null($group_limit_type) && !in_array($group_limit_type, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'group_limit_type', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['group_limit_type'] = $group_limit_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->container['status'];
+    }
+
+    /**
+     * Sets status
+     *
+     * @param string $status クーポンの利用可否  - `unavailable`: 利用不可 - `available`: 利用可能
+     *
+     * @return $this
+     */
+    public function setStatus($status)
+    {
+        $allowedValues = $this->getStatusAllowableValues();
+        if (!is_null($status) && !in_array($status, $allowedValues, true)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    "Invalid value for 'status', must be one of '%s'",
+                    implode("', '", $allowedValues)
+                )
+            );
+        }
+        $this->container['status'] = $status;
+
+        return $this;
+    }
+
+    /**
+     * Gets created_at
+     *
+     * @return int
+     */
+    public function getCreatedAt()
+    {
+        return $this->container['created_at'];
+    }
+
+    /**
+     * Sets created_at
+     *
+     * @param int $created_at 作成日時
+     *
+     * @return $this
+     */
+    public function setCreatedAt($created_at)
+    {
+        $this->container['created_at'] = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets updated_at
+     *
+     * @return int
+     */
+    public function getUpdatedAt()
+    {
+        return $this->container['updated_at'];
+    }
+
+    /**
+     * Sets updated_at
+     *
+     * @param int $updated_at 更新日時
+     *
+     * @return $this
+     */
+    public function setUpdatedAt($updated_at)
+    {
+        $this->container['updated_at'] = $updated_at;
 
         return $this;
     }

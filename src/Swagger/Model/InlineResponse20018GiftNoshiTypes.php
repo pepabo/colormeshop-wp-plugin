@@ -1,6 +1,6 @@
 <?php
 /**
- * InlineResponse2003
+ * InlineResponse20018GiftNoshiTypes
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * InlineResponse2003 Class Doc Comment
+ * InlineResponse20018GiftNoshiTypes Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2003 implements ModelInterface, ArrayAccess
+class InlineResponse20018GiftNoshiTypes implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'inline_response_200_3';
+    protected static $swaggerModelName = 'inline_response_200_18_gift_noshi_types';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,7 +56,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => 'AllOfinlineResponse2003Sale'    ];
+        'name' => 'string',
+'charge' => 'int'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +65,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null    ];
+        'name' => null,
+'charge' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +95,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'    ];
+        'name' => 'name',
+'charge' => 'charge'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +104,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'    ];
+        'name' => 'setName',
+'charge' => 'setCharge'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +113,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'    ];
+        'name' => 'getName',
+'charge' => 'getCharge'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +174,8 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
+        $this->container['charge'] = isset($data['charge']) ? $data['charge'] : null;
     }
 
     /**
@@ -197,25 +203,49 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets sale
+     * Gets name
      *
-     * @return AllOfinlineResponse2003Sale
+     * @return string
      */
-    public function getSale()
+    public function getName()
     {
-        return $this->container['sale'];
+        return $this->container['name'];
     }
 
     /**
-     * Sets sale
+     * Sets name
      *
-     * @param AllOfinlineResponse2003Sale $sale sale
+     * @param string $name name
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setName($name)
     {
-        $this->container['sale'] = $sale;
+        $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets charge
+     *
+     * @return int
+     */
+    public function getCharge()
+    {
+        return $this->container['charge'];
+    }
+
+    /**
+     * Sets charge
+     *
+     * @param int $charge charge
+     *
+     * @return $this
+     */
+    public function setCharge($charge)
+    {
+        $this->container['charge'] = $charge;
 
         return $this;
     }

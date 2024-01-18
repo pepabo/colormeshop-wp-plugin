@@ -30,4 +30,3 @@ class Paginator_Factory {
 		return new Paginator( $params, $response, $this->url_builder->product_page_permalink(), 'items', $this->current_page_no );
 	}
 }
-

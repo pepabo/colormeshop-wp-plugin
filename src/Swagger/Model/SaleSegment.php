@@ -1,6 +1,6 @@
 <?php
 /**
- * InlineResponse2003
+ * SaleSegment
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * InlineResponse2003 Class Doc Comment
+ * SaleSegment Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2003 implements ModelInterface, ArrayAccess
+class SaleSegment implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'inline_response_200_3';
+    protected static $swaggerModelName = 'sale_segment';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,7 +56,16 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => 'AllOfinlineResponse2003Sale'    ];
+        'id' => 'int',
+'name' => 'string',
+'parent_sale_id' => 'int',
+'splitted' => 'bool',
+'product_total_price' => 'int',
+'delivery_total_charge' => 'int',
+'total_price' => 'int',
+'noshi_total_charge' => 'int',
+'card_total_charge' => 'int',
+'wrapping_total_charge' => 'int'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +73,16 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null    ];
+        'id' => null,
+'name' => null,
+'parent_sale_id' => null,
+'splitted' => null,
+'product_total_price' => null,
+'delivery_total_charge' => null,
+'total_price' => null,
+'noshi_total_charge' => null,
+'card_total_charge' => null,
+'wrapping_total_charge' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +111,16 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'    ];
+        'id' => 'id',
+'name' => 'name',
+'parent_sale_id' => 'parent_sale_id',
+'splitted' => 'splitted',
+'product_total_price' => 'product_total_price',
+'delivery_total_charge' => 'delivery_total_charge',
+'total_price' => 'total_price',
+'noshi_total_charge' => 'noshi_total_charge',
+'card_total_charge' => 'card_total_charge',
+'wrapping_total_charge' => 'wrapping_total_charge'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +128,16 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'    ];
+        'id' => 'setId',
+'name' => 'setName',
+'parent_sale_id' => 'setParentSaleId',
+'splitted' => 'setSplitted',
+'product_total_price' => 'setProductTotalPrice',
+'delivery_total_charge' => 'setDeliveryTotalCharge',
+'total_price' => 'setTotalPrice',
+'noshi_total_charge' => 'setNoshiTotalCharge',
+'card_total_charge' => 'setCardTotalCharge',
+'wrapping_total_charge' => 'setWrappingTotalCharge'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +145,16 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'    ];
+        'id' => 'getId',
+'name' => 'getName',
+'parent_sale_id' => 'getParentSaleId',
+'splitted' => 'getSplitted',
+'product_total_price' => 'getProductTotalPrice',
+'delivery_total_charge' => 'getDeliveryTotalCharge',
+'total_price' => 'getTotalPrice',
+'noshi_total_charge' => 'getNoshiTotalCharge',
+'card_total_charge' => 'getCardTotalCharge',
+'wrapping_total_charge' => 'getWrappingTotalCharge'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +214,16 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
+        $this->container['parent_sale_id'] = isset($data['parent_sale_id']) ? $data['parent_sale_id'] : null;
+        $this->container['splitted'] = isset($data['splitted']) ? $data['splitted'] : null;
+        $this->container['product_total_price'] = isset($data['product_total_price']) ? $data['product_total_price'] : null;
+        $this->container['delivery_total_charge'] = isset($data['delivery_total_charge']) ? $data['delivery_total_charge'] : null;
+        $this->container['total_price'] = isset($data['total_price']) ? $data['total_price'] : null;
+        $this->container['noshi_total_charge'] = isset($data['noshi_total_charge']) ? $data['noshi_total_charge'] : null;
+        $this->container['card_total_charge'] = isset($data['card_total_charge']) ? $data['card_total_charge'] : null;
+        $this->container['wrapping_total_charge'] = isset($data['wrapping_total_charge']) ? $data['wrapping_total_charge'] : null;
     }
 
     /**
@@ -197,25 +251,241 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets sale
+     * Gets id
      *
-     * @return AllOfinlineResponse2003Sale
+     * @return int
      */
-    public function getSale()
+    public function getId()
     {
-        return $this->container['sale'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets sale
+     * Sets id
      *
-     * @param AllOfinlineResponse2003Sale $sale sale
+     * @param int $id 分割された受注内のID
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setId($id)
     {
-        $this->container['sale'] = $sale;
+        $this->container['id'] = $id;
+
+        return $this;
+    }
+
+    /**
+     * Gets name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->container['name'];
+    }
+
+    /**
+     * Sets name
+     *
+     * @param string $name 区分名
+     *
+     * @return $this
+     */
+    public function setName($name)
+    {
+        $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets parent_sale_id
+     *
+     * @return int
+     */
+    public function getParentSaleId()
+    {
+        return $this->container['parent_sale_id'];
+    }
+
+    /**
+     * Sets parent_sale_id
+     *
+     * @param int $parent_sale_id 親受注のID。 該当の受注が分割されていない場合、自身の受注IDを返します。
+     *
+     * @return $this
+     */
+    public function setParentSaleId($parent_sale_id)
+    {
+        $this->container['parent_sale_id'] = $parent_sale_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets splitted
+     *
+     * @return bool
+     */
+    public function getSplitted()
+    {
+        return $this->container['splitted'];
+    }
+
+    /**
+     * Sets splitted
+     *
+     * @param bool $splitted 該当の受注が分割されているか否か
+     *
+     * @return $this
+     */
+    public function setSplitted($splitted)
+    {
+        $this->container['splitted'] = $splitted;
+
+        return $this;
+    }
+
+    /**
+     * Gets product_total_price
+     *
+     * @return int
+     */
+    public function getProductTotalPrice()
+    {
+        return $this->container['product_total_price'];
+    }
+
+    /**
+     * Sets product_total_price
+     *
+     * @param int $product_total_price 分割された受注の商品の合計金額
+     *
+     * @return $this
+     */
+    public function setProductTotalPrice($product_total_price)
+    {
+        $this->container['product_total_price'] = $product_total_price;
+
+        return $this;
+    }
+
+    /**
+     * Gets delivery_total_charge
+     *
+     * @return int
+     */
+    public function getDeliveryTotalCharge()
+    {
+        return $this->container['delivery_total_charge'];
+    }
+
+    /**
+     * Sets delivery_total_charge
+     *
+     * @param int $delivery_total_charge 分割された受注の配送料の合計
+     *
+     * @return $this
+     */
+    public function setDeliveryTotalCharge($delivery_total_charge)
+    {
+        $this->container['delivery_total_charge'] = $delivery_total_charge;
+
+        return $this;
+    }
+
+    /**
+     * Gets total_price
+     *
+     * @return int
+     */
+    public function getTotalPrice()
+    {
+        return $this->container['total_price'];
+    }
+
+    /**
+     * Sets total_price
+     *
+     * @param int $total_price 分割された受注金額の総計
+     *
+     * @return $this
+     */
+    public function setTotalPrice($total_price)
+    {
+        $this->container['total_price'] = $total_price;
+
+        return $this;
+    }
+
+    /**
+     * Gets noshi_total_charge
+     *
+     * @return int
+     */
+    public function getNoshiTotalCharge()
+    {
+        return $this->container['noshi_total_charge'];
+    }
+
+    /**
+     * Sets noshi_total_charge
+     *
+     * @param int $noshi_total_charge 分割された受注の熨斗料金の合計
+     *
+     * @return $this
+     */
+    public function setNoshiTotalCharge($noshi_total_charge)
+    {
+        $this->container['noshi_total_charge'] = $noshi_total_charge;
+
+        return $this;
+    }
+
+    /**
+     * Gets card_total_charge
+     *
+     * @return int
+     */
+    public function getCardTotalCharge()
+    {
+        return $this->container['card_total_charge'];
+    }
+
+    /**
+     * Sets card_total_charge
+     *
+     * @param int $card_total_charge 分割された受注のメッセージカード料金の合計
+     *
+     * @return $this
+     */
+    public function setCardTotalCharge($card_total_charge)
+    {
+        $this->container['card_total_charge'] = $card_total_charge;
+
+        return $this;
+    }
+
+    /**
+     * Gets wrapping_total_charge
+     *
+     * @return int
+     */
+    public function getWrappingTotalCharge()
+    {
+        return $this->container['wrapping_total_charge'];
+    }
+
+    /**
+     * Sets wrapping_total_charge
+     *
+     * @param int $wrapping_total_charge 分割された受注のラッピング料金の合計
+     *
+     * @return $this
+     */
+    public function setWrappingTotalCharge($wrapping_total_charge)
+    {
+        $this->container['wrapping_total_charge'] = $wrapping_total_charge;
 
         return $this;
     }

@@ -306,7 +306,7 @@ self::DISPLAY_STATE_SALE_FOR_MEMBERS,        ];
     /**
      * Sets sales_price
      *
-     * @param int $sales_price 販売価格
+     * @param int $sales_price 販売価格 フリープランを利用しているショップの場合、最低価格は100円です。
      *
      * @return $this
      */

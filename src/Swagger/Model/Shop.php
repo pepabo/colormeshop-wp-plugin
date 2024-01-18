@@ -347,7 +347,9 @@ const CONTRACT_PLAN_HETEML = 'heteml';
 const CONTRACT_PLAN_PLATINUM = 'platinum';
 const CONTRACT_PLAN_GOOPE = 'goope';
 const CONTRACT_PLAN_LARGE = 'large';
+const CONTRACT_PLAN_DORMANT = 'dormant';
 const CONTRACT_PLAN_FREE = 'free';
+const CONTRACT_PLAN_PREMIUM = 'premium';
 const OPEN_STATE_OPENED = 'opened';
 const OPEN_STATE_CLOSED = 'closed';
 const OPEN_STATE_PREPARE = 'prepare';
@@ -403,7 +405,9 @@ self::CONTRACT_PLAN_HETEML,
 self::CONTRACT_PLAN_PLATINUM,
 self::CONTRACT_PLAN_GOOPE,
 self::CONTRACT_PLAN_LARGE,
-self::CONTRACT_PLAN_FREE,        ];
+self::CONTRACT_PLAN_DORMANT,
+self::CONTRACT_PLAN_FREE,
+self::CONTRACT_PLAN_PREMIUM,        ];
     }
     /**
      * Gets allowable values of the enum

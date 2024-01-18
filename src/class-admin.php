@@ -133,7 +133,6 @@ class Admin {
 			value="<?php echo esc_attr( $this->setting->token() ); ?>" class="regular-text" />
 		<br/>
 		<?php
-
 	}
 
 	public function client_id_setting_callback() {
@@ -141,7 +140,6 @@ class Admin {
 		<input type="text" id="message" name="colorme_wp_settings[client_id]"
 			value="<?php echo esc_attr( $this->setting->client_id() ); ?>" class="regular-text" /><br/>
 		<?php
-
 	}
 
 	public function client_secret_setting_callback() {
@@ -149,7 +147,6 @@ class Admin {
 		<input type="text" id="message" name="colorme_wp_settings[client_secret]"
 			value="<?php echo esc_attr( $this->setting->client_secret() ); ?>" class="regular-text" /><br/>
 		<?php
-
 	}
 
 	public function pruduct_page_id_setting_callback() {

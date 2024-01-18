@@ -93,9 +93,12 @@ class InlineResponse2001Sales implements ModelInterface, ArrayAccess
 'use_gmo_points' => 'int',
 'granted_yahoo_points' => 'int',
 'use_yahoo_points' => 'int',
+'external_order_id' => 'string',
 'customer' => '\ColorMeShop\Swagger\Model\SaleCustomer',
 'details' => '\ColorMeShop\Swagger\Model\SaleDetails[]',
-'sale_deliveries' => '\ColorMeShop\Swagger\Model\V1salessaleIdSaleSaleDeliveries[]'    ];
+'sale_deliveries' => '\ColorMeShop\Swagger\Model\V1salessaleIdSaleSaleDeliveries[]',
+'segment' => '\ColorMeShop\Swagger\Model\SaleSegment',
+'totals' => '\ColorMeShop\Swagger\Model\SaleTotals'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -140,9 +143,12 @@ class InlineResponse2001Sales implements ModelInterface, ArrayAccess
 'use_gmo_points' => null,
 'granted_yahoo_points' => null,
 'use_yahoo_points' => null,
+'external_order_id' => null,
 'customer' => null,
 'details' => null,
-'sale_deliveries' => null    ];
+'sale_deliveries' => null,
+'segment' => null,
+'totals' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -208,9 +214,12 @@ class InlineResponse2001Sales implements ModelInterface, ArrayAccess
 'use_gmo_points' => 'use_gmo_points',
 'granted_yahoo_points' => 'granted_yahoo_points',
 'use_yahoo_points' => 'use_yahoo_points',
+'external_order_id' => 'external_order_id',
 'customer' => 'customer',
 'details' => 'details',
-'sale_deliveries' => 'sale_deliveries'    ];
+'sale_deliveries' => 'sale_deliveries',
+'segment' => 'segment',
+'totals' => 'totals'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -255,9 +264,12 @@ class InlineResponse2001Sales implements ModelInterface, ArrayAccess
 'use_gmo_points' => 'setUseGmoPoints',
 'granted_yahoo_points' => 'setGrantedYahooPoints',
 'use_yahoo_points' => 'setUseYahooPoints',
+'external_order_id' => 'setExternalOrderId',
 'customer' => 'setCustomer',
 'details' => 'setDetails',
-'sale_deliveries' => 'setSaleDeliveries'    ];
+'sale_deliveries' => 'setSaleDeliveries',
+'segment' => 'setSegment',
+'totals' => 'setTotals'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -302,9 +314,12 @@ class InlineResponse2001Sales implements ModelInterface, ArrayAccess
 'use_gmo_points' => 'getUseGmoPoints',
 'granted_yahoo_points' => 'getGrantedYahooPoints',
 'use_yahoo_points' => 'getUseYahooPoints',
+'external_order_id' => 'getExternalOrderId',
 'customer' => 'getCustomer',
 'details' => 'getDetails',
-'sale_deliveries' => 'getSaleDeliveries'    ];
+'sale_deliveries' => 'getSaleDeliveries',
+'segment' => 'getSegment',
+'totals' => 'getTotals'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -491,9 +506,12 @@ self::YAHOO_POINT_STATE_CANCELED,        ];
         $this->container['use_gmo_points'] = isset($data['use_gmo_points']) ? $data['use_gmo_points'] : null;
         $this->container['granted_yahoo_points'] = isset($data['granted_yahoo_points']) ? $data['granted_yahoo_points'] : null;
         $this->container['use_yahoo_points'] = isset($data['use_yahoo_points']) ? $data['use_yahoo_points'] : null;
+        $this->container['external_order_id'] = isset($data['external_order_id']) ? $data['external_order_id'] : null;
         $this->container['customer'] = isset($data['customer']) ? $data['customer'] : null;
         $this->container['details'] = isset($data['details']) ? $data['details'] : null;
         $this->container['sale_deliveries'] = isset($data['sale_deliveries']) ? $data['sale_deliveries'] : null;
+        $this->container['segment'] = isset($data['segment']) ? $data['segment'] : null;
+        $this->container['totals'] = isset($data['totals']) ? $data['totals'] : null;
     }
 
     /**
@@ -1511,6 +1529,30 @@ self::YAHOO_POINT_STATE_CANCELED,        ];
     }
 
     /**
+     * Gets external_order_id
+     *
+     * @return string
+     */
+    public function getExternalOrderId()
+    {
+        return $this->container['external_order_id'];
+    }
+
+    /**
+     * Sets external_order_id
+     *
+     * @param string $external_order_id 外部システムで発行された決済識別番号  該当受注の決済が、楽天ペイ（オンライン決済）、LINE Pay、PayPal Commerce Platform、Amazon Pay、Amazon Pay V2、Square対面決済のいずれかである場合、その決済の決済識別番号を返します。 それ以外の決済に関しては空文字列を返します。
+     *
+     * @return $this
+     */
+    public function setExternalOrderId($external_order_id)
+    {
+        $this->container['external_order_id'] = $external_order_id;
+
+        return $this;
+    }
+
+    /**
      * Gets customer
      *
      * @return \ColorMeShop\Swagger\Model\SaleCustomer
@@ -1578,6 +1620,54 @@ self::YAHOO_POINT_STATE_CANCELED,        ];
     public function setSaleDeliveries($sale_deliveries)
     {
         $this->container['sale_deliveries'] = $sale_deliveries;
+
+        return $this;
+    }
+
+    /**
+     * Gets segment
+     *
+     * @return \ColorMeShop\Swagger\Model\SaleSegment
+     */
+    public function getSegment()
+    {
+        return $this->container['segment'];
+    }
+
+    /**
+     * Sets segment
+     *
+     * @param \ColorMeShop\Swagger\Model\SaleSegment $segment segment
+     *
+     * @return $this
+     */
+    public function setSegment($segment)
+    {
+        $this->container['segment'] = $segment;
+
+        return $this;
+    }
+
+    /**
+     * Gets totals
+     *
+     * @return \ColorMeShop\Swagger\Model\SaleTotals
+     */
+    public function getTotals()
+    {
+        return $this->container['totals'];
+    }
+
+    /**
+     * Sets totals
+     *
+     * @param \ColorMeShop\Swagger\Model\SaleTotals $totals totals
+     *
+     * @return $this
+     */
+    public function setTotals($totals)
+    {
+        $this->container['totals'] = $totals;
 
         return $this;
     }

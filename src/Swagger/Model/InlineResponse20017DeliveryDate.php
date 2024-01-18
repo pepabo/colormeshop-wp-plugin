@@ -1,6 +1,6 @@
 <?php
 /**
- * InlineResponse2003
+ * InlineResponse20017DeliveryDate
  *
  * PHP version 5
  *
@@ -32,14 +32,14 @@ use \ArrayAccess;
 use \ColorMeShop\Swagger\ObjectSerializer;
 
 /**
- * InlineResponse2003 Class Doc Comment
+ * InlineResponse20017DeliveryDate Class Doc Comment
  *
  * @category Class
  * @package  ColorMeShop\Swagger
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class InlineResponse2003 implements ModelInterface, ArrayAccess
+class InlineResponse20017DeliveryDate implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -48,7 +48,7 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'inline_response_200_3';
+    protected static $swaggerModelName = 'inline_response_200_17_delivery_date';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -56,7 +56,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'sale' => 'AllOfinlineResponse2003Sale'    ];
+        'account_id' => 'string',
+'days' => '\ColorMeShop\Swagger\Model\DeliveryDateSettingDays',
+'times' => '\ColorMeShop\Swagger\Model\DeliveryDateSettingTimes',
+'make_date' => 'int',
+'update_date' => 'int'    ];
 
     /**
       * Array of property to format mappings. Used for (de)serialization
@@ -64,7 +68,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sale' => null    ];
+        'account_id' => null,
+'days' => null,
+'times' => null,
+'make_date' => null,
+'update_date' => null    ];
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,7 +101,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'sale' => 'sale'    ];
+        'account_id' => 'account_id',
+'days' => 'days',
+'times' => 'times',
+'make_date' => 'make_date',
+'update_date' => 'update_date'    ];
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
@@ -101,7 +113,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'sale' => 'setSale'    ];
+        'account_id' => 'setAccountId',
+'days' => 'setDays',
+'times' => 'setTimes',
+'make_date' => 'setMakeDate',
+'update_date' => 'setUpdateDate'    ];
 
     /**
      * Array of attributes to getter functions (for serialization of requests)
@@ -109,7 +125,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'sale' => 'getSale'    ];
+        'account_id' => 'getAccountId',
+'days' => 'getDays',
+'times' => 'getTimes',
+'make_date' => 'getMakeDate',
+'update_date' => 'getUpdateDate'    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -169,7 +189,11 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['sale'] = isset($data['sale']) ? $data['sale'] : null;
+        $this->container['account_id'] = isset($data['account_id']) ? $data['account_id'] : null;
+        $this->container['days'] = isset($data['days']) ? $data['days'] : null;
+        $this->container['times'] = isset($data['times']) ? $data['times'] : null;
+        $this->container['make_date'] = isset($data['make_date']) ? $data['make_date'] : null;
+        $this->container['update_date'] = isset($data['update_date']) ? $data['update_date'] : null;
     }
 
     /**
@@ -197,25 +221,121 @@ class InlineResponse2003 implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets sale
+     * Gets account_id
      *
-     * @return AllOfinlineResponse2003Sale
+     * @return string
      */
-    public function getSale()
+    public function getAccountId()
     {
-        return $this->container['sale'];
+        return $this->container['account_id'];
     }
 
     /**
-     * Sets sale
+     * Sets account_id
      *
-     * @param AllOfinlineResponse2003Sale $sale sale
+     * @param string $account_id ショップアカウントID
      *
      * @return $this
      */
-    public function setSale($sale)
+    public function setAccountId($account_id)
     {
-        $this->container['sale'] = $sale;
+        $this->container['account_id'] = $account_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets days
+     *
+     * @return \ColorMeShop\Swagger\Model\DeliveryDateSettingDays
+     */
+    public function getDays()
+    {
+        return $this->container['days'];
+    }
+
+    /**
+     * Sets days
+     *
+     * @param \ColorMeShop\Swagger\Model\DeliveryDateSettingDays $days days
+     *
+     * @return $this
+     */
+    public function setDays($days)
+    {
+        $this->container['days'] = $days;
+
+        return $this;
+    }
+
+    /**
+     * Gets times
+     *
+     * @return \ColorMeShop\Swagger\Model\DeliveryDateSettingTimes
+     */
+    public function getTimes()
+    {
+        return $this->container['times'];
+    }
+
+    /**
+     * Sets times
+     *
+     * @param \ColorMeShop\Swagger\Model\DeliveryDateSettingTimes $times times
+     *
+     * @return $this
+     */
+    public function setTimes($times)
+    {
+        $this->container['times'] = $times;
+
+        return $this;
+    }
+
+    /**
+     * Gets make_date
+     *
+     * @return int
+     */
+    public function getMakeDate()
+    {
+        return $this->container['make_date'];
+    }
+
+    /**
+     * Sets make_date
+     *
+     * @param int $make_date 配送日時設定作成日時
+     *
+     * @return $this
+     */
+    public function setMakeDate($make_date)
+    {
+        $this->container['make_date'] = $make_date;
+
+        return $this;
+    }
+
+    /**
+     * Gets update_date
+     *
+     * @return int
+     */
+    public function getUpdateDate()
+    {
+        return $this->container['update_date'];
+    }
+
+    /**
+     * Sets update_date
+     *
+     * @param int $update_date 配送日時設定更新日時
+     *
+     * @return $this
+     */
+    public function setUpdateDate($update_date)
+    {
+        $this->container['update_date'] = $update_date;
 
         return $this;
     }

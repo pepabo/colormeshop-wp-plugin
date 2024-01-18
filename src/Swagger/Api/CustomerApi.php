@@ -95,7 +95,7 @@ class CustomerApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2006
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2007
      */
     public function getCustomer($customer_id)
     {
@@ -112,11 +112,11 @@ class CustomerApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2006, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2007, HTTP status code, HTTP response headers (array of strings)
      */
     public function getCustomerWithHttpInfo($customer_id)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2006';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2007';
         $request = $this->getCustomerRequest($customer_id);
 
         try {
@@ -168,7 +168,7 @@ class CustomerApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2006',
+                        '\ColorMeShop\Swagger\Model\InlineResponse2007',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -210,7 +210,7 @@ class CustomerApi
      */
     public function getCustomerAsyncWithHttpInfo($customer_id)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2006';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2007';
         $request = $this->getCustomerRequest($customer_id);
 
         return $this->client
@@ -375,7 +375,7 @@ class CustomerApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2004
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2005
      */
     public function getCustomers($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $sex = null, $member = null, $receive_mail_magazine = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $limit = null, $offset = null)
     {
@@ -406,11 +406,11 @@ class CustomerApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2004, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2005, HTTP status code, HTTP response headers (array of strings)
      */
     public function getCustomersWithHttpInfo($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $sex = null, $member = null, $receive_mail_magazine = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $limit = null, $offset = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2004';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2005';
         $request = $this->getCustomersRequest($ids, $name, $furigana, $mail, $postal, $tel, $sex, $member, $receive_mail_magazine, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $limit, $offset);
 
         try {
@@ -462,7 +462,7 @@ class CustomerApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2004',
+                        '\ColorMeShop\Swagger\Model\InlineResponse2005',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -532,7 +532,7 @@ class CustomerApi
      */
     public function getCustomersAsyncWithHttpInfo($ids = null, $name = null, $furigana = null, $mail = null, $postal = null, $tel = null, $sex = null, $member = null, $receive_mail_magazine = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $limit = null, $offset = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2004';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2005';
         $request = $this->getCustomersRequest($ids, $name, $furigana, $mail, $postal, $tel, $sex, $member, $receive_mail_magazine, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $limit, $offset);
 
         return $this->client
@@ -743,7 +743,7 @@ class CustomerApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2005
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2006
      */
     public function postCustomers($body = null)
     {
@@ -760,11 +760,11 @@ class CustomerApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2005, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2006, HTTP status code, HTTP response headers (array of strings)
      */
     public function postCustomersWithHttpInfo($body = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2005';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2006';
         $request = $this->postCustomersRequest($body);
 
         try {
@@ -816,7 +816,7 @@ class CustomerApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2005',
+                        '\ColorMeShop\Swagger\Model\InlineResponse2006',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -858,7 +858,7 @@ class CustomerApi
      */
     public function postCustomersAsyncWithHttpInfo($body = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2005';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2006';
         $request = $this->postCustomersRequest($body);
 
         return $this->client

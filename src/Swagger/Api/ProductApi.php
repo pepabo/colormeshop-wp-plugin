@@ -96,7 +96,7 @@ class ProductApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2009
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20011
      */
     public function deleteProductPickup($product_id, $pickup_type)
     {
@@ -114,11 +114,11 @@ class ProductApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2009, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20011, HTTP status code, HTTP response headers (array of strings)
      */
     public function deleteProductPickupWithHttpInfo($product_id, $pickup_type)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2009';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20011';
         $request = $this->deleteProductPickupRequest($product_id, $pickup_type);
 
         try {
@@ -170,7 +170,7 @@ class ProductApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2009',
+                        '\ColorMeShop\Swagger\Model\InlineResponse20011',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -214,7 +214,7 @@ class ProductApi
      */
     public function deleteProductPickupAsyncWithHttpInfo($product_id, $pickup_type)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2009';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20011';
         $request = $this->deleteProductPickupRequest($product_id, $pickup_type);
 
         return $this->client
@@ -380,7 +380,7 @@ class ProductApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2008
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2009
      */
     public function getProduct($product_id)
     {
@@ -397,11 +397,11 @@ class ProductApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2008, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2009, HTTP status code, HTTP response headers (array of strings)
      */
     public function getProductWithHttpInfo($product_id)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2009';
         $request = $this->getProductRequest($product_id);
 
         try {
@@ -453,7 +453,7 @@ class ProductApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2008',
+                        '\ColorMeShop\Swagger\Model\InlineResponse2009',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -495,7 +495,7 @@ class ProductApi
      */
     public function getProductAsyncWithHttpInfo($product_id)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2009';
         $request = $this->getProductRequest($product_id);
 
         return $this->client
@@ -638,6 +638,308 @@ class ProductApi
     }
 
     /**
+     * Operation getProductVariants
+     *
+     * 商品オプション一覧の取得
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  string $model_number 型番で部分一致検索 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
+     * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20010
+     */
+    public function getProductVariants($product_id, $model_number = null, $fields = null, $limit = null, $offset = null)
+    {
+        list($response) = $this->getProductVariantsWithHttpInfo($product_id, $model_number, $fields, $limit, $offset);
+        return $response;
+    }
+
+    /**
+     * Operation getProductVariantsWithHttpInfo
+     *
+     * 商品オプション一覧の取得
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  string $model_number 型番で部分一致検索 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
+     * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20010, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getProductVariantsWithHttpInfo($product_id, $model_number = null, $fields = null, $limit = null, $offset = null)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20010';
+        $request = $this->getProductVariantsRequest($product_id, $model_number, $fields, $limit, $offset);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if (!in_array($returnType, ['string','integer','bool'])) {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse20010',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getProductVariantsAsync
+     *
+     * 商品オプション一覧の取得
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  string $model_number 型番で部分一致検索 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getProductVariantsAsync($product_id, $model_number = null, $fields = null, $limit = null, $offset = null)
+    {
+        return $this->getProductVariantsAsyncWithHttpInfo($product_id, $model_number, $fields, $limit, $offset)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getProductVariantsAsyncWithHttpInfo
+     *
+     * 商品オプション一覧の取得
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  string $model_number 型番で部分一致検索 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getProductVariantsAsyncWithHttpInfo($product_id, $model_number = null, $fields = null, $limit = null, $offset = null)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20010';
+        $request = $this->getProductVariantsRequest($product_id, $model_number, $fields, $limit, $offset);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getProductVariants'
+     *
+     * @param  int $product_id 商品ID (required)
+     * @param  string $model_number 型番で部分一致検索 (optional)
+     * @param  string $fields レスポンスJSONのキーをカンマ区切りで指定 (optional)
+     * @param  int $limit レスポンスの件数を指定。指定がない場合は10。最大50 (optional)
+     * @param  int $offset 指定した数値+1件目以降のデータを返す (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function getProductVariantsRequest($product_id, $model_number = null, $fields = null, $limit = null, $offset = null)
+    {
+        // verify the required parameter 'product_id' is set
+        if ($product_id === null || (is_array($product_id) && count($product_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $product_id when calling getProductVariants'
+            );
+        }
+
+        $resourcePath = '/v1/products/{product_id}/variants';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($model_number !== null) {
+            $queryParams['model_number'] = ObjectSerializer::toQueryValue($model_number, null);
+        }
+        // query params
+        if ($fields !== null) {
+            $queryParams['fields'] = ObjectSerializer::toQueryValue($fields, null);
+        }
+        // query params
+        if ($limit !== null) {
+            $queryParams['limit'] = ObjectSerializer::toQueryValue($limit, null);
+        }
+        // query params
+        if ($offset !== null) {
+            $queryParams['offset'] = ObjectSerializer::toQueryValue($offset, null);
+        }
+
+        // path params
+        if ($product_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'product_id' . '}',
+                ObjectSerializer::toPathValue($product_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                []
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation getProducts
      *
      * 商品一覧の取得
@@ -662,7 +964,7 @@ class ProductApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2007
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2008
      */
     public function getProducts($ids = null, $category_id_big = null, $category_id_small = null, $group_ids = null, $model_number = null, $name = null, $display_state = null, $stocks = null, $stock_managed = null, $recent_zero_stocks = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $fields = null, $limit = null, $offset = null)
     {
@@ -695,11 +997,11 @@ class ProductApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2007, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2008, HTTP status code, HTTP response headers (array of strings)
      */
     public function getProductsWithHttpInfo($ids = null, $category_id_big = null, $category_id_small = null, $group_ids = null, $model_number = null, $name = null, $display_state = null, $stocks = null, $stock_managed = null, $recent_zero_stocks = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $fields = null, $limit = null, $offset = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2007';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
         $request = $this->getProductsRequest($ids, $category_id_big, $category_id_small, $group_ids, $model_number, $name, $display_state, $stocks, $stock_managed, $recent_zero_stocks, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $fields, $limit, $offset);
 
         try {
@@ -751,7 +1053,7 @@ class ProductApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2007',
+                        '\ColorMeShop\Swagger\Model\InlineResponse2008',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -825,7 +1127,7 @@ class ProductApi
      */
     public function getProductsAsyncWithHttpInfo($ids = null, $category_id_big = null, $category_id_small = null, $group_ids = null, $model_number = null, $name = null, $display_state = null, $stocks = null, $stock_managed = null, $recent_zero_stocks = null, $make_date_min = null, $make_date_max = null, $update_date_min = null, $update_date_max = null, $fields = null, $limit = null, $offset = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2007';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
         $request = $this->getProductsRequest($ids, $category_id_big, $category_id_small, $group_ids, $model_number, $name, $display_state, $stocks, $stock_managed, $recent_zero_stocks, $make_date_min, $make_date_max, $update_date_min, $update_date_max, $fields, $limit, $offset);
 
         return $this->client
@@ -1042,12 +1344,12 @@ class ProductApi
      *
      * おすすめ商品情報の追加
      *
-     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody $body body (required)
+     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody1 $body body (required)
      * @param  int $product_id 商品ID (required)
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2009
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20011
      */
     public function postProductPickup($body, $product_id)
     {
@@ -1060,16 +1362,16 @@ class ProductApi
      *
      * おすすめ商品情報の追加
      *
-     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody $body (required)
+     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody1 $body (required)
      * @param  int $product_id 商品ID (required)
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2009, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20011, HTTP status code, HTTP response headers (array of strings)
      */
     public function postProductPickupWithHttpInfo($body, $product_id)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2009';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20011';
         $request = $this->postProductPickupRequest($body, $product_id);
 
         try {
@@ -1121,7 +1423,7 @@ class ProductApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2009',
+                        '\ColorMeShop\Swagger\Model\InlineResponse20011',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1136,7 +1438,7 @@ class ProductApi
      *
      * おすすめ商品情報の追加
      *
-     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody $body (required)
+     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody1 $body (required)
      * @param  int $product_id 商品ID (required)
      *
      * @throws \InvalidArgumentException
@@ -1157,7 +1459,7 @@ class ProductApi
      *
      * おすすめ商品情報の追加
      *
-     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody $body (required)
+     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody1 $body (required)
      * @param  int $product_id 商品ID (required)
      *
      * @throws \InvalidArgumentException
@@ -1165,7 +1467,7 @@ class ProductApi
      */
     public function postProductPickupAsyncWithHttpInfo($body, $product_id)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2009';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20011';
         $request = $this->postProductPickupRequest($body, $product_id);
 
         return $this->client
@@ -1208,7 +1510,7 @@ class ProductApi
     /**
      * Create request for operation 'postProductPickup'
      *
-     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody $body (required)
+     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody1 $body (required)
      * @param  int $product_id 商品ID (required)
      *
      * @throws \InvalidArgumentException
@@ -1326,7 +1628,7 @@ class ProductApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2008
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2009
      */
     public function postProducts($body)
     {
@@ -1343,11 +1645,11 @@ class ProductApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2008, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2009, HTTP status code, HTTP response headers (array of strings)
      */
     public function postProductsWithHttpInfo($body)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2009';
         $request = $this->postProductsRequest($body);
 
         try {
@@ -1399,7 +1701,7 @@ class ProductApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2008',
+                        '\ColorMeShop\Swagger\Model\InlineResponse2009',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1441,7 +1743,7 @@ class ProductApi
      */
     public function postProductsAsyncWithHttpInfo($body)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2009';
         $request = $this->postProductsRequest($body);
 
         return $this->client
@@ -1579,6 +1881,286 @@ class ProductApi
     }
 
     /**
+     * Operation putProductPickup
+     *
+     * おすすめ商品情報の更新
+     *
+     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody $body body (required)
+     * @param  int $product_id 商品ID (required)
+     *
+     * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \ColorMeShop\Swagger\Model\InlineResponse20011
+     */
+    public function putProductPickup($body, $product_id)
+    {
+        list($response) = $this->putProductPickupWithHttpInfo($body, $product_id);
+        return $response;
+    }
+
+    /**
+     * Operation putProductPickupWithHttpInfo
+     *
+     * おすすめ商品情報の更新
+     *
+     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody $body (required)
+     * @param  int $product_id 商品ID (required)
+     *
+     * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse20011, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function putProductPickupWithHttpInfo($body, $product_id)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20011';
+        $request = $this->putProductPickupRequest($body, $product_id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if (!in_array($returnType, ['string','integer','bool'])) {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\ColorMeShop\Swagger\Model\InlineResponse20011',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation putProductPickupAsync
+     *
+     * おすすめ商品情報の更新
+     *
+     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody $body (required)
+     * @param  int $product_id 商品ID (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function putProductPickupAsync($body, $product_id)
+    {
+        return $this->putProductPickupAsyncWithHttpInfo($body, $product_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation putProductPickupAsyncWithHttpInfo
+     *
+     * おすすめ商品情報の更新
+     *
+     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody $body (required)
+     * @param  int $product_id 商品ID (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function putProductPickupAsyncWithHttpInfo($body, $product_id)
+    {
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse20011';
+        $request = $this->putProductPickupRequest($body, $product_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'putProductPickup'
+     *
+     * @param  \ColorMeShop\Swagger\Model\ProductIdPickupsBody $body (required)
+     * @param  int $product_id 商品ID (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function putProductPickupRequest($body, $product_id)
+    {
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling putProductPickup'
+            );
+        }
+        // verify the required parameter 'product_id' is set
+        if ($product_id === null || (is_array($product_id) && count($product_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $product_id when calling putProductPickup'
+            );
+        }
+
+        $resourcePath = '/v1/products/{product_id}/pickups';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($product_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'product_id' . '}',
+                ObjectSerializer::toPathValue($product_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            // \stdClass has no __toString(), so we should encode it manually
+            if ($httpBody instanceof \stdClass && $headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($httpBody);
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+            }
+        }
+
+        // this endpoint requires OAuth (access token)
+        if ($this->config->getAccessToken() !== null) {
+            $headers['Authorization'] = 'Bearer ' . $this->config->getAccessToken();
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\build_query($queryParams);
+        return new Request(
+            'PUT',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation updateProduct
      *
      * 商品データの更新
@@ -1588,7 +2170,7 @@ class ProductApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return \ColorMeShop\Swagger\Model\InlineResponse2008
+     * @return \ColorMeShop\Swagger\Model\InlineResponse2009
      */
     public function updateProduct($product_id, $body = null)
     {
@@ -1606,11 +2188,11 @@ class ProductApi
      *
      * @throws \ColorMeShop\Swagger\ApiException on non-2xx response
      * @throws \InvalidArgumentException
-     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2008, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \ColorMeShop\Swagger\Model\InlineResponse2009, HTTP status code, HTTP response headers (array of strings)
      */
     public function updateProductWithHttpInfo($product_id, $body = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2009';
         $request = $this->updateProductRequest($product_id, $body);
 
         try {
@@ -1662,7 +2244,7 @@ class ProductApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\ColorMeShop\Swagger\Model\InlineResponse2008',
+                        '\ColorMeShop\Swagger\Model\InlineResponse2009',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1706,7 +2288,7 @@ class ProductApi
      */
     public function updateProductAsyncWithHttpInfo($product_id, $body = null)
     {
-        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2008';
+        $returnType = '\ColorMeShop\Swagger\Model\InlineResponse2009';
         $request = $this->updateProductRequest($product_id, $body);
 
         return $this->client
