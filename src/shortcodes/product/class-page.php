@@ -44,6 +44,11 @@ class Page implements Shortcode_Interface {
 
 		try {
 			$product = $container['api.product_api']->fetch( $filtered_atts['product_id'] )['product'];
+		} catch ( \ColorMeShop\Swagger\ApiException $e ) {
+			if ( $container['WP_DEBUG_LOG'] ) {
+				error_log( $e );
+			}
+			return '';
 		} catch ( \RuntimeException $e ) {
 			if ( $container['WP_DEBUG_LOG'] ) {
 				error_log( $e );
