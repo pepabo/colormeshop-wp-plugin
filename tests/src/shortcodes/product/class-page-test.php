@@ -16,10 +16,6 @@ class Page_Test extends \WP_UnitTestCase {
 		parent::setUp();
 
 		$this->container = _get_container();
-		$this->container['token'] = function ( $c ) {
-			return 'dummy';
-		};
-
 		// ログ出力先
 		$this->error_log = tempnam( sys_get_temp_dir(), 'TEST' );
 		$this->original_error_log = ini_set( 'error_log', $this->error_log );
