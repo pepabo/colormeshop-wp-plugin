@@ -52,5 +52,8 @@ jobs:
 
       - run: composer install
 
+      - name: Install subversion
+        run: sudo apt-get update && sudo apt-get install -y subversion
+
       - run: bin/install-wp-tests.sh test root root-password 127.0.0.1:${{ job.services.mysql.ports['3306'] }}
       - run: ./vendor/bin/phpunit
