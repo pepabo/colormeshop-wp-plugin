@@ -15,7 +15,7 @@
     }
   },
   "require": {
-    "guzzlehttp/guzzle": "^6.3",
+    "guzzlehttp/guzzle": "^7.9",
     "pepabo/oauth2-colormeshop": "^1.0",
     "pimple/pimple": "~3.0",
     "psr/container": "2.0.1",
